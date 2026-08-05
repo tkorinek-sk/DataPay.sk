@@ -88,6 +88,56 @@ header{
     .hero h1{
         font-size:42px;
     }
+    .why-us {
+    padding: 100px 0;
+    background: #f7f9fc;
+}
+
+.why-us h2 {
+    text-align: center;
+    color: #0A2F6B;
+    margin-bottom: 15px;
+}
+
+.section-subtitle {
+    text-align: center;
+    max-width: 700px;
+    margin: 0 auto 60px;
+    color: #666;
+}
+
+.benefits-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 30px;
+}
+
+.benefit-card {
+    background: white;
+    padding: 35px;
+    border-radius: 18px;
+    box-shadow: 0 5px 20px rgba(0,0,0,0.05);
+}
+
+.benefit-icon {
+    font-size: 32px;
+    margin-bottom: 15px;
+}
+
+.benefit-card h3 {
+    color: #0A2F6B;
+    margin-bottom: 15px;
+}
+
+.benefit-card p {
+    color: #555;
+    line-height: 1.7;
+}
+
+@media (max-width: 768px) {
+    .benefits-grid {
+        grid-template-columns: 1fr;
+    }
 }
 </style>
 </head>
