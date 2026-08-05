@@ -222,6 +222,51 @@ header{
 .contact-cta .btn:hover {
     background: #f3f4f6;
 }
+    .footer {
+    background: #021b40;
+    color: white;
+    padding: 60px 0 20px;
+}
+
+.footer-content {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 50px;
+}
+
+.footer-column h3 {
+    margin-bottom: 20px;
+    color: white;
+}
+
+.footer-column p {
+    margin-bottom: 10px;
+    color: rgba(255,255,255,0.8);
+    line-height: 1.7;
+}
+
+.footer-column a {
+    color: rgba(255,255,255,0.8);
+    text-decoration: none;
+}
+
+.footer-column a:hover {
+    color: white;
+}
+
+.footer-bottom {
+    margin-top: 40px;
+    padding-top: 20px;
+    border-top: 1px solid rgba(255,255,255,0.15);
+    text-align: center;
+    color: rgba(255,255,255,0.6);
+}
+
+@media (max-width: 900px) {
+    .footer-content {
+        grid-template-columns: 1fr;
+    }
+}
 }
 </style>
 </head>
@@ -375,29 +420,54 @@ Kontaktujte nás
 
     </div>
 </section>
-    <footer class="footer">
+   <footer class="footer">
     <div class="container">
 
         <div class="footer-content">
 
-            <div>
-                <h3>DataPay</h3>
+            <div class="footer-column">
+                <h3>DataPay s.r.o.</h3>
                 <p>
-                    Spracovanie miezd, personalistika a odborné poradenstvo
-                    pre moderné firmy.
+                    Spracovanie miezd, personalistika
+                    a odborné poradenstvo.
+                </p>
+                <p>Bratislava, Slovensko</p>
+            </div>
+
+            <div class="footer-column">
+                <h3>Kontakt</h3>
+
+                <p>
+                    <a href="mailto:datapaysk@gmail.com">
+                        datapaysk@gmail.com
+                    </a>
+                </p>
+
+                <p>
+                    tel:+421900123456
+                        +421 900 123 456
+                    </a>
+                </p>
+
+                <p>
+                    tel:+421911123456
+                        +421 911 123 456
+                    </a>
                 </p>
             </div>
 
-            <div>
-                <h3>Kontakt</h3>
-                <p>datapaysk@gmail.com/p>
-                <p>Bratislava, Slovensko</p>
+            <div class="footer-column">
+                <h3>Firemné údaje</h3>
+
+                <p>IČO: DOPLŇ IČO</p>
+                <p>DIČ: DOPLŇ DIČ</p>
+                <p>IČ DPH: Nie sme platca DPH</p>
             </div>
 
         </div>
 
         <div class="footer-bottom">
-            © 2026 DataPay. Všetky práva vyhradené.
+            © 2026 DataPay s.r.o. Všetky práva vyhradené.
         </div>
 
     </div>
