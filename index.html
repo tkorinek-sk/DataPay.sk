@@ -138,6 +138,60 @@ header{
     .benefits-grid {
         grid-template-columns: 1fr;
     }
+.process {
+    padding: 100px 0;
+    background: white;
+}
+
+.process h2 {
+    text-align: center;
+    color: #0A2F6B;
+    margin-bottom: 15px;
+}
+
+.process-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 25px;
+    margin-top: 50px;
+}
+
+.process-step {
+    text-align: center;
+    background: #f7f9fc;
+    padding: 30px;
+    border-radius: 18px;
+}
+
+.step-number {
+    width: 60px;
+    height: 60px;
+    margin: 0 auto 20px;
+    border-radius: 50%;
+    background: #0d6efd;
+    color: white;
+    font-size: 24px;
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.process-step h3 {
+    color: #0A2F6B;
+    margin-bottom: 15px;
+}
+
+.process-step p {
+    color: #555;
+    line-height: 1.7;
+}
+
+@media (max-width: 900px) {
+    .process-grid {
+        grid-template-columns: 1fr;
+    }
+}
 }
 </style>
 </head>
