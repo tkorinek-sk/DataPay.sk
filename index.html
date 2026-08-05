@@ -87,9 +87,12 @@ header{
 }
 
 @media(max-width:900px){
-    .hero-grid{
-        grid-template-columns:1fr;
-    }
+    .hero-grid {
+    display: grid;
+    grid-template-columns: 55% 45%;
+    gap: 40px;
+    align-items: center;
+}
     .hero h1{
         font-size:42px;
     }
