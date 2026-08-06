@@ -1,502 +1,153 @@
 <!DOCTYPE html>
 <html lang="sk">
+
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>DataPay s.r.o.</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<style>
-body{
-    margin:0;
-    font-family: Arial, Helvetica, sans-serif;
-    background:#f5f8fc;
-    color:#1f2937;
-}
+    <title>DataPay s.r.o.</title>
 
-header{
-    background:#052c64;
-    color:white;
-    padding:20px 0;
-}
-
-.container{
-    width:90%;
-    max-width:1200px;
-    margin:auto;
-}
-
-.nav{
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
-}
-
-.logo{
-    display:flex;
-    align-items:center;
-    gap:15px;
-}
-
-.logo img{
-    height:60px;
-}
-
-.hero {
-    padding: 40px 0;
-}
-
-.hero-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 60px;
-    align-items: center;
-}
-
-.hero h1{
-    font-size:60px;
-    line-height:1.1;
-    margin-bottom:20px;
-    max-width:700px;
-    color:#052c64;
-}
-
-.hero p {
-    font-size: 20px;
-    color: #4b5563;
-    text-align: justify;
-    max-width: 620px;
-    line-height: 1.6;
-}
-
-.hero-image img {
-    width: 100%;
-    max-width: 500px;
-    height: auto;
-    border-radius: 20px;
-    display: block;
-}
-
-.btn{
-    display:inline-block;
-    background:#0d6efd;
-    color:white;
-    padding:14px 24px;
-    border-radius:30px;
-    text-decoration:none;
-    margin-top:25px;
-}
-
-@media(max-width:900px){
-    .hero-grid {
-    display: grid;
-    grid-template-columns: 55% 45%;
-    gap: 40px;
-    align-items: center;
-}
-    .hero h1{
-        font-size:42px;
-    }
-        }
-    .why-us {
-    padding: 60px 0;
-    background: #f7f9fc;
-}
-
-.why-us h2 {
-    text-align: center;
-    color: #0A2F6B;
-    margin-bottom: 15px;
-}
-
-.section-subtitle {
-    text-align: center;
-    max-width: 700px;
-    margin: 0 auto 60px;
-    color: #666;
-}
-
-.benefits-grid {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 30px;
-}
-
-.benefit-card {
-    background: white;
-    padding: 35px;
-    border-radius: 18px;
-    box-shadow: 0 5px 20px rgba(0,0,0,0.05);
-}
-
-.benefit-icon {
-    font-size: 32px;
-    margin-bottom: 15px;
-}
-
-.benefit-card h3 {
-    color: #0A2F6B;
-    margin-bottom: 15px;
-}
-
-.benefit-card p {
-    color: #555;
-    line-height: 1.7;
-}
-
-@media (max-width: 768px) {
-    .benefits-grid {
-        grid-template-columns: 1fr;
-    }
-       }
-.process {
-    padding: 50px 0 100px 0;
-    background: white;
-}
-
-.process h2 {
-    text-align: center;
-    color: #0A2F6B;
-    margin-bottom: 15px;
-}
-
-.process-grid {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 25px;
-    margin-top: 50px;
-}
-
-.process-step {
-    text-align: center;
-    background: #f7f9fc;
-    padding: 30px;
-    border-radius: 18px;
-}
-
-.step-number {
-    width: 60px;
-    height: 60px;
-    margin: 0 auto 20px;
-    border-radius: 50%;
-    background: #0d6efd;
-    color: white;
-    font-size: 24px;
-    font-weight: bold;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-.process-step h3 {
-    color: #0A2F6B;
-    margin-bottom: 15px;
-}
-
-.process-step p {
-    color: #555;
-    line-height: 1.7;
-}
-
-@media (max-width: 900px) {
-    .process-grid {
-        grid-template-columns: 1fr;
-    }
-}
-    .contact-cta {
-    padding: 100px 0;
-    background: #052c64;
-    text-align: center;
-}
-
-.contact-cta h2 {
-    color: white;
-    font-size: 42px;
-    margin-bottom: 20px;
-}
-
-.contact-cta p {
-    color: rgba(255,255,255,0.85);
-    max-width: 700px;
-    margin: 0 auto 30px;
-    font-size: 20px;
-    line-height: 1.7;
-}
-
-.contact-cta .btn {
-    background: white;
-    color: #052c64;
-    font-weight: bold;
-}
-
-.contact-cta .btn:hover {
-    background: #f3f4f6;
-}
-    .footer {
-    background: #021b40;
-    color: white;
-    padding: 60px 0 20px;
-}
-
-.footer-content {
-    display: flex;
-    justify-content: center;
-    gap: 120px;
-    max-width: 1000px;
-    margin: 0 auto;
-}
-
-.footer-column {
-    width: 250px;
-}
-.footer-column p {
-    margin-bottom: 10px;
-    color: rgba(255,255,255,0.8);
-    line-height: 1.7;
-}
-
-.footer-column a {
-    color: rgba(255,255,255,0.8);
-    text-decoration: none;
-}
-
-.footer-column a:hover {
-    color: white;
-}
-
-.footer-bottom {
-    margin-top: 40px;
-    padding-top: 20px;
-    border-top: 1px solid rgba(255,255,255,0.15);
-    text-align: center;
-    color: rgba(255,255,255,0.6);
-}
-
-@media (max-width: 900px) {
-    .footer-content {
-        grid-template-columns: 1fr;
-    }
-}
-    .language-switch {
-display: flex;
-gap: 10px;
-}
- 
-.language-switch a {
-color: white;
-text-decoration: none;
-padding: 6px 12px;
-border: 1px solid rgba(255,255,255,0.4);
-border-radius: 20px;
-font-size: 14px;
-}
- 
-.language-switch a.active {
-background: white;
-color: #003366;
-}
-}
-</style>
+    <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
+
 <header>
-<div class="container nav">
-<div class="logo">
-<img src="logo.png" alt="DataPay Logo">
 
-<div>
-Mzdy • Personalistika • Poradenstvo
-</div>
+    <div class="container nav">
 
-<div class="language-switch">
-    <a href="idex.html"> SK </a>
-    <a href="en.html"> EN </a>
-    
-</div>
+        <div class="logo">
+
+            <img src="logo.png" alt="DataPay Logo">
+
+            <div class="logo-text">
+                <strong>DataPay s.r.o.</strong><br>
+                Mzdy • Personalistika • Poradenstvo
+            </div>
+
+        </div>
+
+        <div class="language-switch">
+            <a href="index.html" class="active">SK</a>
+            <a href="en.html">EN</a>
+        </div>
+
+    </div>
 
 </header>
 
 <section class="hero">
-<div class="container hero-grid">
 
-<div>
-<h1>Mzdy, personalistika a poradenstvo pre moderné firmy.</h1>
+    <div class="container hero-grid">
 
-<p>
-Poskytujeme komplexné služby v oblasti miezd, personalistiky a odborného poradenstva. 
-Spoľahlivo sa postaráme o administratívu aj legislatívne povinnosti, aby ste sa mohli sústrediť na to, čo je pre vaše podnikanie skutočne dôležité.
-</p>
+        <div>
 
-<a href="mailto:datapaysk@gmail.com" class="btn">
-Kontaktujte nás
-</a>
-</div>
-    <div class="hero-image">
-<img src="ai-generated-IMAGE (1).jpg" alt="DataPay">
+            <h1>
+                Mzdy, personalistika a poradenstvo pre moderné firmy.
+            </h1>
+
+            <p>
+                Poskytujeme komplexné služby v oblasti miezd,
+                personalistiky a odborného poradenstva.
+                Spoľahlivo sa postaráme o administratívu aj legislatívne
+                povinnosti, aby ste sa mohli sústrediť na to,
+                čo je pre vaše podnikanie skutočne dôležité.
+            </p>
+
+            <a class="btn" href="mailto:datapaysk@gmail.com">
+                Kontaktujte nás
+            </a>
+
+        </div>
+
+        <div class="hero-image">
+
+            <img src="ai-generated-IMAGE (1).jpg"
+                 alt="DataPay">
+
+        </div>
+
     </div>
-</div>
+
 </section>
 
 <section class="why-us">
+
     <div class="container">
 
         <h2>Prečo DataPay?</h2>
+
         <p class="section-subtitle">
-            Spoľahlivý partner pre mzdy, personalistiku a odborné poradenstvo.
+            Spoľahlivý partner pre mzdy,
+            personalistiku a odborné poradenstvo.
         </p>
 
         <div class="benefits-grid">
 
             <div class="benefit-card">
+
                 <div class="benefit-icon">✓</div>
+
                 <h3>Odbornosť</h3>
+
                 <p>
-                    Sledujeme legislatívne zmeny a zabezpečujeme,
-                    aby vaše procesy boli vždy v súlade s aktuálnymi predpismi.
+                    Sledujeme legislatívne zmeny
+                    a zabezpečujeme,
+                    aby vaše procesy boli
+                    vždy v súlade
+                    s aktuálnymi predpismi.
                 </p>
+
             </div>
 
             <div class="benefit-card">
+
                 <div class="benefit-icon">🤝</div>
+
                 <h3>Individuálny prístup</h3>
+
                 <p>
-                    Každý klient má svoje špecifiká. Hľadáme riešenia
-                    prispôsobené veľkosti a potrebám vašej firmy.
+                    Každý klient je jedinečný.
+                    Navrhujeme riešenia
+                    prispôsobené veľkosti
+                    aj potrebám vašej spoločnosti.
                 </p>
+
             </div>
 
             <div class="benefit-card">
+
                 <div class="benefit-icon">🔒</div>
+
                 <h3>Dôvernosť údajov</h3>
+
                 <p>
-                    Citlivé mzdové a personálne informácie spracovávame
-                    bezpečne a s maximálnou diskrétnosťou.
+                    Citlivé personálne
+                    a mzdové údaje
+                    spracovávame bezpečne,
+                    spoľahlivo
+                    a diskrétne.
                 </p>
+
             </div>
 
             <div class="benefit-card">
+
                 <div class="benefit-icon">💡</div>
+
                 <h3>Moderné riešenia</h3>
+
                 <p>
-                    Využívame digitálne nástroje a efektívne procesy,
-                    ktoré šetria čas aj administratívnu záťaž.
+                    Využívame digitálne nástroje,
+                    ktoré šetria čas,
+                    znižujú administratívu
+                    a zvyšujú efektivitu.
                 </p>
-            </div>
 
-        </div
-                </div>
-</section>
-<section class="process">
-    <div class="container">
-
-        <h2>Ako prebieha spolupráca?</h2>
-        <p class="section-subtitle">
-            Jednoduchý a efektívny proces od prvého kontaktu až po dlhodobú podporu.
-        </p>
-
-        <div class="process-grid">
-
-            <div class="process-step">
-                <div class="step-number">1</div>
-                <h3>Úvodná konzultácia</h3>
-                <p>
-                    Spoločne si prejdeme vaše potreby a nastavíme optimálny rozsah služieb.
-                </p>
-            </div>
-
-            <div class="process-step">
-                <div class="step-number">2</div>
-                <h3>Nastavenie procesov</h3>
-                <p>
-                    Pripravíme všetky potrebné podklady, dokumentáciu a spôsob komunikácie.
-                </p>
-            </div>
-
-            <div class="process-step">
-                <div class="step-number">3</div>
-                <h3>Prevzatie agendy</h3>
-                <p>
-                    Prevezmeme mzdovú alebo personálnu agendu bez zbytočného zaťaženia vášho tímu.
-                </p>
-            </div>
-
-            <div class="process-step">
-                <div class="step-number">4</div>
-                <h3>Priebežná podpora</h3>
-                <p>
-                    Poskytujeme priebežné poradenstvo a podporu pri každodenných otázkach.
-                </p>
             </div>
 
         </div>
 
     </div>
+
 </section>
- <section class="contact-cta">
-    <div class="container">
-
-        <h2>Nechajte mzdy a personalistiku na nás</h2>
-
-        <p>
-            Získajte spoľahlivého partnera pre spracovanie miezd,
-            personálnu administratívu a odborné poradenstvo.
-        </p>
-
-        <a href="mailto:datapaysk@gmail.com" class="btn">
-    Nezáväzná konzultácia
-</a>
-
-    </div>
-</section>
-   <footer class="footer">
-    <div class="container">
-
-        <div class="footer-content">
-
-            <div class="footer-column">
-                <h3>DataPay s.r.o.</h3>
-                <p>
-                    Spracovanie miezd, personalistika
-                    a odborné poradenstvo.
-                </p>
-                <p>Bratislava, Dunajská Streda </p>
-            </div>
-
-            <div class="footer-column">
-                <h3>Kontakt</h3>
-
-                <p>
-                    <a href="mailto:datapaysk@gmail.com">
-                        datapaysk@gmail.com
-                    </a>
-                </p>
-
-                <p>
-                 +421 903 270 664
-                    </a>
-                </p>
-
-                <p>
-                 +421 907 837 030
-                    </a>
-                </p>
-            </div>
-
-            <div class="footer-column">
-                <h3>Firemné údaje</h3>
-
-                <p>IČO: 57456615 </p>
-                <p>DIČ: 2122742622 </p>
-                <p>IČ DPH: Nie sme platca DPH</p>
-            </div>
-
-        </div>
-
-        <div class="footer-bottom">
-            © 2026 DataPay s.r.o. Všetky práva vyhradené.
-        </div>
-
-    </div>
-</footer>
-</body>
-</html>
