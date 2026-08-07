@@ -208,6 +208,8 @@ header {
 
 /* ========= PROCESS ========= */
 
+.container h2{
+    text-align: center;
 .process {
     padding: 70px 0;
     background: white;
