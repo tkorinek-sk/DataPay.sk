@@ -1,1 +1,34 @@
+<section id="payroll-services" class="services-section">
+    <div class="container">
+        <h2>Komplexné spracovanie miezd a personalistiky</h2>
 
+        <p>
+            V DataPay poskytujeme spoľahlivé a profesionálne mzdové služby pre malé,
+            stredné aj veľké spoločnosti. Zabezpečíme kompletnú mzdovú a personálnu
+            agendu v súlade s aktuálnou legislatívou, aby ste sa mohli naplno venovať
+            rozvoju svojho podnikania.
+        </p>
+
+        <ul class="service-list">
+            <li>Príprava pracovných zmlúv, dodatkov a dohôd</li>
+            <li>Registrácia a odhlasovanie zamestnancov v príslušných inštitúciách</li>
+            <li>Spracovanie miezd a výpočet mzdových nárokov</li>
+            <li>Príprava výplatných pások a podkladov na úhradu miezd</li>
+            <li>Generovanie platobných príkazov s možnosťou importu do internet bankingu</li>
+            <li>Spracovanie mesačných výkazov a hlásení pre Sociálnu poisťovňu, zdravotné poisťovne a finančnú správu</li>
+            <li>Elektronická komunikácia s úradmi a inštitúciami</li>
+            <li>Vystavovanie potvrdení o príjme a ďalších pracovnoprávnych dokumentov</li>
+            <li>Ročné zúčtovanie dane zamestnancov</li>
+            <li>Odborné poradenstvo v oblasti miezd, personalistiky a pracovného práva</li>
+        </ul>
+
+        <div class="service-highlight">
+            <p>
+                <strong>Prečo DataPay?</strong><br>
+                Garantujeme presnosť, diskrétnosť a legislatívnu správnosť.
+                Vďaka dlhoročným skúsenostiam získate spoľahlivého partnera,
+                ktorý prevezme starosti s mzdovou a personálnou agendou za vás.
+            </p>
+        </div>
+    </div>
+</section>
