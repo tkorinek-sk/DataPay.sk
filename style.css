@@ -116,10 +116,18 @@ header {
     border-radius: 30px;
     text-decoration: none;
     transition: .25s;
-    margin-bottom: 15px;
 }
 
+.hero-buttons {
+    display: flex;
+    gap: 15px;
+    max-width: 500px;
+}
 
+.hero-buttons .btn {
+    flex: 1;
+    text-align: center;
+}
 
 .btn:hover {
     background: #084fc7;
