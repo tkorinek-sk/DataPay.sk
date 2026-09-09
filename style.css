@@ -337,3 +337,103 @@ header {
     text-align: center;
     color: rgba(255,255,255,.6);
 }
+/* ========= MOBILE ========= */
+@media (max-width: 768px) {
+
+    .container {
+        width: 92%;
+    }
+
+    /* Header */
+    .nav {
+        flex-direction: column;
+        gap: 20px;
+        text-align: center;
+    }
+
+    .logo {
+        flex-direction: column;
+        text-align: center;
+    }
+
+    .logo img {
+        height: 50px;
+    }
+
+    .logo-text {
+        font-size: 16px;
+    }
+
+    /* Hero */
+    .hero {
+        padding: 40px 0;
+    }
+
+    .hero-grid {
+        grid-template-columns: 1fr !important;
+        gap: 35px;
+        text-align: center;
+    }
+
+    .hero h1 {
+        font-size: 38px;
+    }
+
+    .hero p {
+        font-size: 18px;
+        text-align: left;
+    }
+
+    .hero-image img {
+        max-width: 100%;
+        margin: 0 auto;
+    }
+
+    /* Buttons */
+    .hero-buttons {
+        flex-direction: column;
+        max-width: 100%;
+    }
+
+    .hero-buttons .btn {
+        width: 100%;
+    }
+
+    /* Benefits */
+    .benefits {
+        padding: 50px 15px;
+    }
+
+    .benefits-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .benefit-card {
+        padding: 25px;
+    }
+
+    /* Process */
+    .process-grid {
+        grid-template-columns: 1fr;
+    }
+
+    /* Contact */
+    .contact-cta {
+        padding: 60px 15px;
+    }
+
+    .contact-cta h2 {
+        font-size: 32px;
+    }
+
+    .contact-cta p {
+        font-size: 18px;
+    }
+
+    /* Footer */
+    .footer-content {
+        flex-direction: column;
+        text-align: center;
+        gap: 30px;
+    }
+}
