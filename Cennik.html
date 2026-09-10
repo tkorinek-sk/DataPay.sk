@@ -1,0 +1,383 @@
+<!DOCTYPE html>
+<html lang="sk">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cenník | DataPay s.r.o.</title>
+
+<style>
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+body{
+    font-family:'Segoe UI',sans-serif;
+    background:#f8fbff;
+    color:#333;
+    line-height:1.6;
+}
+
+.container{
+    width:90%;
+    max-width:1200px;
+    margin:auto;
+}
+
+header{
+    background:linear-gradient(135deg,#052c64,#0d6efd);
+    color:white;
+    padding:70px 0;
+    text-align:center;
+}
+
+header h1{
+    font-size:52px;
+    margin-bottom:15px;
+}
+
+header p{
+    font-size:20px;
+    opacity:.9;
+}
+
+.back-link{
+    display:inline-block;
+    margin-top:25px;
+    color:white;
+    text-decoration:none;
+    border:1px solid rgba(255,255,255,.4);
+    padding:12px 25px;
+    border-radius:50px;
+    transition:.3s;
+}
+
+.back-link:hover{
+    background:white;
+    color:#052c64;
+}
+
+.pricing-section{
+    padding:90px 0;
+}
+
+.section-title{
+    text-align:center;
+    margin-bottom:60px;
+}
+
+.section-title h2{
+    color:#052c64;
+    font-size:42px;
+    margin-bottom:15px;
+}
+
+.section-title p{
+    color:#6c757d;
+    font-size:18px;
+}
+
+.pricing-cards{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
+    gap:30px;
+}
+
+.price-card{
+    background:white;
+    padding:40px;
+    border-radius:24px;
+    box-shadow:0 15px 40px rgba(0,0,0,.08);
+    text-align:center;
+    transition:.3s;
+}
+
+.price-card:hover{
+    transform:translateY(-8px);
+}
+
+.featured{
+    background:linear-gradient(135deg,#0d6efd,#0856d7);
+    color:white;
+}
+
+.price-card h3{
+    margin-bottom:20px;
+    font-size:24px;
+}
+
+.price{
+    font-size:48px;
+    font-weight:700;
+    margin-bottom:10px;
+}
+
+.price-note{
+    opacity:.8;
+}
+
+.services-section{
+    padding-bottom:100px;
+}
+
+.services-box{
+    background:white;
+    border-radius:24px;
+    overflow:hidden;
+    box-shadow:0 15px 40px rgba(0,0,0,.08);
+}
+
+.services-box table{
+    width:100%;
+    border-collapse:collapse;
+}
+
+.services-box th{
+    background:#052c64;
+    color:white;
+    padding:20px;
+    text-align:left;
+}
+
+.services-box td{
+    padding:18px 20px;
+    border-bottom:1px solid #edf2f7;
+}
+
+.services-box tr:hover{
+    background:#f8fbff;
+}
+
+.services-box td:last-child{
+    white-space:nowrap;
+    color:#0d6efd;
+    font-weight:700;
+}
+
+.cta{
+    background:linear-gradient(135deg,#052c64,#0d6efd);
+    color:white;
+    text-align:center;
+    padding:90px 20px;
+}
+
+.cta h2{
+    font-size:42px;
+    margin-bottom:20px;
+}
+
+.cta p{
+    font-size:18px;
+    max-width:700px;
+    margin:auto;
+}
+
+.cta-button{
+    display:inline-block;
+    margin-top:35px;
+    background:white;
+    color:#052c64;
+    padding:16px 36px;
+    border-radius:50px;
+    text-decoration:none;
+    font-weight:600;
+    transition:.3s;
+}
+
+.cta-button:hover{
+    transform:translateY(-3px);
+}
+
+footer{
+    background:#031b3e;
+    color:white;
+    text-align:center;
+    padding:25px;
+}
+
+@media(max-width:768px){
+
+    header h1{
+        font-size:36px;
+    }
+
+    .section-title h2{
+        font-size:32px;
+    }
+
+    .services-box{
+        overflow-x:auto;
+    }
+
+    .services-box table{
+        min-width:760px;
+    }
+}
+
+</style>
+</head>
+
+<body>
+
+<header>
+    <div class="container">
+        <h1>Cenník služieb</h1>
+        <p>Transparentné ceny bez skrytých poplatkov</p>
+
+        index.html
+            ← Späť na hlavnú stránku
+        </a>
+    </div>
+</header>
+
+<section class="pricing-section">
+
+    <div class="container">
+
+        <div class="section-title">
+            <h2>Spracovanie miezd</h2>
+            <p>Vyberte si rozsah služieb podľa veľkosti vašej spoločnosti.</p>
+        </div>
+
+        <div class="pricing-cards">
+
+            <div class="price-card">
+                <h3>1 - 5 zamestnancov</h3>
+                <div class="price">60 €</div>
+                <div class="price-note">od mesačne</div>
+            </div>
+
+            <div class="price-card featured">
+                <h3>6 - 10 zamestnancov</h3>
+                <div class="price">120 €</div>
+                <div class="price-note">od mesačne</div>
+            </div>
+
+            <div class="price-card">
+                <h3>11+ zamestnancov</h3>
+                <div class="price">Individuálne</div>
+                <div class="price-note">cenová ponuka</div>
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+<section class="services-section">
+
+    <div class="container">
+
+        <div class="section-title">
+            <h2>Doplnkové služby</h2>
+            <p>Služby, ktoré nie sú zahrnuté v mesačnom paušále.</p>
+        </div>
+
+        <div class="services-box">
+
+            <table>
+
+                <thead>
+                    <tr>
+                        <th>Služba</th>
+                        <th>Čas</th>
+                        <th>Cena</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+
+                    <tr>
+                        <td>Zriadenie elektronickej komunikácie s úradmi</td>
+                        <td>cca 1 hodina</td>
+                        <td>38 €</td>
+                    </tr>
+
+                    <tr>
+                        <td>Registrácia zamestnávateľa na daň zo závislej činnosti</td>
+                        <td>cca 30 min.</td>
+                        <td>38 €</td>
+                    </tr>
+
+                    <tr>
+                        <td>Registrácia zamestnávateľa v SP a ZP</td>
+                        <td>cca 1 hodina</td>
+                        <td>100 €</td>
+                    </tr>
+
+                    <tr>
+                        <td>Zriadenie elektronických pobočiek SP a ZP</td>
+                        <td>1 - 2 hodiny</td>
+                        <td>150 €</td>
+                    </tr>
+
+                    <tr>
+                        <td>Registrácia nového zamestnanca</td>
+                        <td>cca 30 min.</td>
+                        <td>38 €</td>
+                    </tr>
+
+                    <tr>
+                        <td>Registrácia cudzinca</td>
+                        <td>cca 1 hodina</td>
+                        <td>38 €/hod.</td>
+                    </tr>
+
+                    <tr>
+                        <td>Pracovná zmluva alebo kontrola zmluvy</td>
+                        <td>cca 1 hodina</td>
+                        <td>38 €/hod.</td>
+                    </tr>
+
+                    <tr>
+                        <td>Ukončenie pracovného pomeru</td>
+                        <td>cca 30 min.</td>
+                        <td>38 €/hod.</td>
+                    </tr>
+
+                    <tr>
+                        <td>Opravy miezd a výkazov</td>
+                        <td>podľa rozsahu</td>
+                        <td>38 €/hod.</td>
+                    </tr>
+
+                    <tr>
+                        <td>Rozúčtovanie miezd na strediská</td>
+                        <td>podľa rozsahu</td>
+                        <td>38 €/hod.</td>
+                    </tr>
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+    </div>
+
+</section>
+
+<section class="cta">
+
+    <h2>Potrebujete individuálnu cenovú ponuku?</h2>
+
+    <p>
+        Každá spoločnosť má odlišné požiadavky.
+        Radi vám pripravíme nezáväznú cenovú ponuku šitú na mieru.
+    </p>
+
+    index.html#kontakt
+        Kontaktujte nás
+    </a>
+
+</section>
+
+<footer>
+    © 2026 DataPay s.r.o. | Mzdy • Personalistika • Poradenstvo
+</footer>
+
+</body>
+</html>
