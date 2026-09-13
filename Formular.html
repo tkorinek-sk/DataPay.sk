@@ -151,31 +151,27 @@ textarea{
     margin:25px 0;
 }
 
-.consent-label{
+.gdpr-consent{
     display:flex;
     align-items:flex-start;
     gap:10px;
-    font-size:14px;
-    line-height:1.5;
-    color:#555;
-    font-weight:normal;
+    margin:20px 0;
 }
 
-.consent-label input{
-    width:auto;
-    margin-top:4px;
+.gdpr-consent input[type="checkbox"]{
+    width:18px !important;
+    height:18px;
+    padding:0 !important;
+    margin-top:3px;
     flex-shrink:0;
 }
 
-.consent-label a{
-    color:#0d6efd;
-    text-decoration:none;
+.gdpr-consent label{
+    margin:0;
+    font-size:14px;
+    font-weight:normal;
+    line-height:1.5;
 }
-
-.consent-label a:hover{
-    text-decoration:underline;
-}
-
 @media(max-width:768px){
 
     header h1{
@@ -237,15 +233,15 @@ textarea{
 
 <div class="gdpr-consent">
 
-    <input type="checkbox"
-           id="gdpr"
-           name="GDPR_Suhlas"
-           required>
+    <input
+        type="checkbox"
+        id="gdpr"
+        name="GDPR_Suhlas"
+        required>
 
-    <label for="gdpr" class="gdpr-label">
-        Súhlasím so spracovaním osobných údajov. 
-        <a href="GDPR.html" target="_blank">
-        </a>.
+    <label for="gdpr">
+        Súhlasím so spracovaním osobných údajov za účelom   <a href="GDPR.html" target="_blank">
+             </a>.
     </label>
 
 </div>
