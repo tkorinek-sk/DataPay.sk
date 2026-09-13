@@ -305,14 +305,16 @@ header {
     padding: 60px 0 20px;
 }
 
-.footer-content {
-    display: flex;
-    justify-content: space-between;
-    gap: 40px;
+.footer-content{
+    display:grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap:80px;
+    max-width:1000px;
+    margin:0 auto;
 }
 
-.footer-column {
-    flex: 1;
+.footer-column{
+    text-align:left;
 }
 
 .footer-column h3 {
