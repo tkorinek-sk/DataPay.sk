@@ -1,1 +1,285 @@
+<!DOCTYPE html>
+<html lang="sk">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Často kladené otázky | DataPay</title>
 
+<style>
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+body{
+    font-family:Arial, sans-serif;
+    background:#f4f8fc;
+    color:#333;
+    line-height:1.6;
+}
+
+.container{
+    width:90%;
+    max-width:1100px;
+    margin:auto;
+}
+
+header{
+    background:linear-gradient(135deg,#052c64,#0d6efd);
+    color:white;
+    padding:80px 0;
+    text-align:center;
+}
+
+header h1{
+    font-size:48px;
+    margin-bottom:15px;
+}
+
+header p{
+    font-size:18px;
+    opacity:0.9;
+}
+
+.faq-section{
+    margin-top:-50px;
+    padding-bottom:80px;
+}
+
+.faq-card{
+    background:white;
+    border-radius:20px;
+    padding:40px;
+    box-shadow:0 10px 40px rgba(0,0,0,0.08);
+}
+
+.section-title{
+    text-align:center;
+    margin-bottom:30px;
+}
+
+.section-title h2{
+    color:#052c64;
+    font-size:34px;
+    margin-bottom:10px;
+}
+
+.accordion{
+    margin-bottom:15px;
+    border:1px solid #e5eaf3;
+    border-radius:12px;
+    overflow:hidden;
+}
+
+.accordion-btn{
+    width:100%;
+    background:white;
+    border:none;
+    padding:20px;
+    text-align:left;
+    font-size:18px;
+    font-weight:600;
+    cursor:pointer;
+    color:#052c64;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+}
+
+.accordion-btn:hover{
+    background:#f7faff;
+}
+
+.accordion-content{
+    display:none;
+    padding:0 20px 20px;
+    color:#555;
+}
+
+.accordion.active .accordion-content{
+    display:block;
+}
+
+.icon{
+    font-size:24px;
+    font-weight:bold;
+}
+
+.cta-box{
+    margin-top:40px;
+    background:#eef5ff;
+    border-radius:16px;
+    padding:30px;
+    text-align:center;
+}
+
+.cta-box h3{
+    color:#052c64;
+    margin-bottom:10px;
+}
+
+.btn{
+    display:inline-block;
+    margin-top:15px;
+    background:#0d6efd;
+    color:white;
+    padding:14px 28px;
+    border-radius:30px;
+    text-decoration:none;
+    font-weight:bold;
+    transition:0.3s;
+}
+
+.btn:hover{
+    background:#094db1;
+}
+
+.back-link{
+    display:inline-block;
+    margin-top:20px;
+    color:#0d6efd;
+    text-decoration:none;
+    font-weight:600;
+}
+
+.back-link:hover{
+    text-decoration:underline;
+}
+
+@media(max-width:768px){
+
+    header h1{
+        font-size:34px;
+    }
+
+    .faq-card{
+        padding:25px;
+    }
+
+    .accordion-btn{
+        font-size:16px;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<header>
+    <div class="container">
+        <h1>Často kladené otázky</h1>
+        <p>Odpovede na najčastejšie otázky našich klientov.</p>
+    </div>
+</header>
+
+<section class="faq-section">
+    <div class="container">
+
+        <div class="faq-card">
+
+            <div class="section-title">
+                <h2>FAQ</h2>
+            </div>
+
+            <div class="accordion">
+                <button class="accordion-btn">
+                    Čo všetko za mňa DataPay zabezpečí?
+                    <span class="icon">+</span>
+                </button>
+                <div class="accordion-content">
+                    <p>Zabezpečujeme kompletné spracovanie miezd a personálnej agendy podľa potrieb vašej spoločnosti. Postaráme sa o výpočet miezd, výplatné pásky, platobné podklady, mesačné výkazy, nástupy a výstupy zamestnancov, pracovnoprávnu agendu a ďalšie činnosti podľa dohodnutého rozsahu služieb.</p>
+                </div>
+            </div>
+
+            <div class="accordion">
+                <button class="accordion-btn">
+                    Koľko stojí spracovanie miezd?
+                    <span class="icon">+</span>
+                </button>
+                <div class="accordion-content">
+                    <p>Cena závisí najmä od počtu zamestnancov a rozsahu služieb. Naše aktuálne ceny nájdete v cenníku služieb. Ak si nie ste istí, ktorý rozsah služieb je pre vás vhodný, radi vám pripravíme nezáväznú cenovú ponuku.</p>
+                </div>
+            </div>
+
+            <div class="accordion">
+                <button class="accordion-btn">
+                    Ako prebieha prechod na DataPay?
+                    <span class="icon">+</span>
+                </button>
+                <div class="accordion-content">
+                    <p>Prechod na DataPay sa snažíme zabezpečiť čo najjednoduchšie. Najskôr si prejdeme vašu aktuálnu mzdovú a personálnu agendu a dohodneme si rozsah spolupráce. Následne si od vás vyžiadame potrebné podklady a zabezpečíme plynulé prevzatie agendy.</p>
+                </div>
+            </div>
+
+            <div class="accordion">
+                <button class="accordion-btn">
+                    Musím vám každý mesiac posielať podklady?
+                    <span class="icon">+</span>
+                </button>
+                <div class="accordion-content">
+                    <p>Áno, každý mesiac potrebujeme informácie o zmenách, ktoré majú vplyv na spracovanie miezd. Napríklad nové pracovné pomery, ukončenia pracovných pomerov, dovolenky, PN, odmeny alebo zmeny pracovného času.</p>
+                </div>
+            </div>
+
+            <div class="accordion">
+                <button class="accordion-btn">
+                    Ako zabezpečujete ochranu osobných údajov?
+                    <span class="icon">+</span>
+                </button>
+                <div class="accordion-content">
+                    <p>Pri spracovaní mzdových a personálnych údajov kladieme dôraz na ochranu osobných údajov a bezpečnosť informácií. Údaje spracúvame v súlade s GDPR a platnou legislatívou.</p>
+                </div>
+            </div>
+
+            <div class="accordion">
+                <button class="accordion-btn">
+                    Pre aké firmy sú vaše služby vhodné?
+                    <span class="icon">+</span>
+                </button>
+                <div class="accordion-content">
+                    <p>Naše služby sú vhodné pre malé a stredné spoločnosti, ktoré chcú preniesť mzdovú a personálnu agendu na externého odborného partnera.</p>
+                </div>
+            </div>
+
+            <div class="accordion">
+                <button class="accordion-btn">
+                    Čo ak potrebujem poradiť s pracovnoprávnou otázkou?
+                    <span class="icon">+</span>
+                </button>
+                <div class="accordion-content">
+                    <p>Súčasťou našich služieb je aj mzdové a HR poradenstvo. Môžete sa na nás obrátiť pri otázkach týkajúcich sa pracovných zmlúv, nástupov, ukončenia pracovného pomeru, odmeňovania alebo personálnej administratívy.</p>
+                </div>
+            </div>
+
+            <div class="cta-box">
+                <h3>Nenašli ste odpoveď na svoju otázku?</h3>
+                <p>Kontaktujte nás a radi Vám pomôžeme.</p>
+
+                kontakt.html
+                    Kontaktujte nás
+                </a>
+
+                <br>
+
+                index.html
+                    ← Späť na hlavnú stránku
+                </a>
+            </div>
+
+        </div>
+
+    </div>
+</section>
+
+<script>
+document.querySelectorAll('.accordion-btn').forEach(button => {
+    button.addEventListener('click', () => {
+        const accordion = button.parentElement;
+        accordion.classList.toggle('active');
+    });
+});
+</script>
+
+</body>
+</html>
