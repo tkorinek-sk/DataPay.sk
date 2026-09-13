@@ -21,10 +21,10 @@ body {
 
 /* ========= HEADER ========= */
 
-header {
-    background: #052c64;
-    color: white;
-    padding: 20px 0;
+header{
+    background:linear-gradient(135deg,#052c64,#0d6efd);
+    color:white;
+    padding:80px 0;
 }
 
 .nav {
