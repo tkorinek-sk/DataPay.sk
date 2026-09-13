@@ -340,6 +340,22 @@ header {
     text-align: center;
     color: rgba(255,255,255,.6);
 }
+
+/* GDPR odkaz vo footeri */
+
+.footer-bottom a,
+.footer-bottom a:link,
+.footer-bottom a:visited,
+.footer-bottom a:active {
+    color: #ffffff !important;
+    text-decoration: none;
+    font-weight: 600;
+}
+
+.footer-bottom a:hover {
+    color: #66b3ff !important;
+    text-decoration: underline;
+}
 /* ========= MOBILE ========= */
 @media (max-width: 768px) {
 
@@ -433,21 +449,5 @@ header {
         font-size: 18px;
     }
 
-    /* Footer */
-    .footer-content {
-        flex-direction: column;
-        text-align: center;
-        gap: 30px;
-    }
-.footer-bottom a,
-.footer-bottom a:visited {
-    color: white;
-    text-decoration: none;
-    font-weight: 600;
-}
 
-.footer-bottom a:hover {
-    color: #66b3ff;
-    text-decoration: underline;
-}
 }
