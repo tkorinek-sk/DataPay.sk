@@ -307,10 +307,13 @@ header {
 
 .footer-content{
     display:flex;
-    justify-content:center;
-    gap:120px;
-    max-width:1200px;
+    justify-content:space-between;
+    max-width:1000px;
     margin:0 auto;
+    gap:80px;
+}
+.footer-section{
+    flex:1;
 }
 
 .footer-column{
