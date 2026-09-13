@@ -100,7 +100,10 @@ header {
     text-align: justify;
     margin-bottom: 30px;
 }
-
+.hero-image{
+    display:flex;
+    justify-content:flex-end;
+}
 .hero-image img {
     width: 100%;
     max-width: 500px;
