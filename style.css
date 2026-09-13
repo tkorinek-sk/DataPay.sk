@@ -305,12 +305,14 @@ header {
     padding: 60px 0 20px;
 }
 
+.footer .container{
+    max-width:1280px;
+}
+
 .footer-content{
     display:grid;
     grid-template-columns: repeat(3, 1fr);
     gap:80px;
-
-    width:100%;
 }
 .footer-section{
     flex:1;
