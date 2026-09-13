@@ -96,6 +96,8 @@ header p{
 
 .price-card:hover{
     transform:translateY(-8px);
+    background:linear-gradient(135deg,#eef5ff,#dbe9ff);
+    box-shadow:0 12px 30px rgba(13,110,253,0.18);
 }
 
 .featured{
@@ -156,6 +158,48 @@ header p{
     font-weight:700;
 }
 
+
+    .included-services{
+    background:white;
+    border-radius:24px;
+    padding:40px;
+    margin:60px auto;
+    max-width:1160px;
+    box-shadow:0 10px 35px rgba(0,0,0,0.05);
+}
+
+.included-services h3{
+    text-align:center;
+    color:#052c64;
+    margin-bottom:30px;
+    font-size:28px;
+}
+
+.included-grid{
+    display:grid;
+    grid-template-columns:repeat(2,1fr);
+    gap:18px 40px;
+}
+
+.included-grid div{
+    background:#f7faff;
+    padding:15px 20px;
+    border-radius:12px;
+    color:#333;
+    font-weight:500;
+}
+
+.price-note{
+    max-width:1160px;
+    margin:2px auto 0;
+    padding:10px 0px;
+   background:#f7faff;
+ 
+}
+`
+
+
+}
 .cta{
     background:linear-gradient(135deg,#052c64,#0d6efd);
     color:white;
@@ -166,12 +210,14 @@ header p{
 .cta h2{
     font-size:42px;
     margin-bottom:20px;
+    text-align:center;
 }
 
 .cta p{
     font-size:18px;
     max-width:700px;
     margin:auto;
+    text-align:center;
 }
 
 .cta-button{
@@ -214,6 +260,13 @@ footer{
     .services-box table{
         min-width:760px;
     }
+      .included-grid{
+        grid-template-columns:1fr;
+    }
+
+    .included-services{
+        padding:25px;
+    }
 }
 
 </style>
@@ -224,13 +277,16 @@ footer{
 <header>
     <div class="container">
         <h1>Cenník služieb</h1>
+        <p>Cenník platný od 1.1.2026</p>
         <p>Transparentné ceny bez skrytých poplatkov</p>
 
-        </a>
+                                                         <a href="index.html"
+                                                               class="back-link">
+                                                                ← Späť na hlavnú stránku
+                                                        </a>
     </div>
 </header>
-<h1>Pripravujeme</h1>
-    <!--  
+  
 <section class="pricing-section">
 
     <div class="container">
@@ -243,26 +299,46 @@ footer{
         <div class="pricing-cards">
 
             <div class="price-card">
-                <h3>1 - 5 zamestnancov</h3>
-                <div class="price">60 €</div>
-                <div class="price-note">od mesačne</div>
-            </div>
-
-            <div class="price-card featured">
-                <h3>6 - 10 zamestnancov</h3>
-                <div class="price">120 €</div>
-                <div class="price-note">od mesačne</div>
+                <h3>1 - 20 zamestnancov</h3>
+                <div class="price"> 19 €</div>
+                <div class="price-note">mesačne za zamestnanca</div>
             </div>
 
             <div class="price-card">
-                <h3>11+ zamestnancov</h3>
-                <div class="price">Individuálne</div>
-                <div class="price-note">cenová ponuka</div>
+                <h3>21 - 70 zamestnancov</h3>
+                <div class="price"> 17 €</div>
+                <div class="price-note">mesačne za zamestnanca</div>
+            </div>
+
+            <div class="price-card">
+                <h3>70+ zamestnancov</h3>
+                <div class="price">15 €</div>
+                <div class="price-note">mesačne za zamestnanca</div>
             </div>
 
         </div>
 
     </div>
+
+    <div class="included-services">
+
+    <h3>✅ Čo je zahrnuté v cene spracovania miezd</h3>
+
+    <div class="included-grid">
+
+        <div>✔ Spracovanie mesačných miezd</div>
+        <div>✔ Výplatné pásky pre zamestnancov</div>
+        <div>✔ Mesačné výkazy pre Sociálnu poisťovňu</div>
+        <div>✔ Mesačné výkazy pre zdravotné poisťovne</div>
+        <div>✔ Platobné podklady na odvody a mzdy</div>
+        <div>✔ Evidencia dovoleniek a PN</div>
+        <div>✔ E-mailová podpora a konzultácie</div>
+        <div>✔ Zriadenie elektronickej komunikácie s úradmi</div>
+        
+
+    </div>
+
+</div>
 
 </section>
 
@@ -282,71 +358,45 @@ footer{
                 <thead>
                     <tr>
                         <th>Služba</th>
-                        <th>Čas</th>
-                        <th>Cena</th>
+                         <th>Cena</th>
                     </tr>
                 </thead>
 
                 <tbody>
 
-                    <tr>
-                        <td>Zriadenie elektronickej komunikácie s úradmi</td>
-                        <td>cca 1 hodina</td>
-                        <td>38 €</td>
-                    </tr>
-
-                    <tr>
+                        <tr>
                         <td>Registrácia zamestnávateľa na daň zo závislej činnosti</td>
-                        <td>cca 30 min.</td>
-                        <td>38 €</td>
+                        <td>25 €</td>
                     </tr>
 
                     <tr>
                         <td>Registrácia zamestnávateľa v SP a ZP</td>
-                        <td>cca 1 hodina</td>
-                        <td>100 €</td>
-                    </tr>
-
-                    <tr>
-                        <td>Zriadenie elektronických pobočiek SP a ZP</td>
-                        <td>1 - 2 hodiny</td>
-                        <td>150 €</td>
+                        <td>25 €</td>
                     </tr>
 
                     <tr>
                         <td>Registrácia nového zamestnanca</td>
-                        <td>cca 30 min.</td>
-                        <td>38 €</td>
+                        <td>20 €</td>
                     </tr>
 
-                    <tr>
-                        <td>Registrácia cudzinca</td>
-                        <td>cca 1 hodina</td>
-                        <td>38 €/hod.</td>
-                    </tr>
-
-                    <tr>
+                     <tr>
                         <td>Pracovná zmluva alebo kontrola zmluvy</td>
-                        <td>cca 1 hodina</td>
-                        <td>38 €/hod.</td>
+                        <td>25 €</td>
                     </tr>
 
                     <tr>
                         <td>Ukončenie pracovného pomeru</td>
-                        <td>cca 30 min.</td>
-                        <td>38 €/hod.</td>
+                        <td>20 €</td>
                     </tr>
 
                     <tr>
-                        <td>Opravy miezd a výkazov</td>
-                        <td>podľa rozsahu</td>
-                        <td>38 €/hod.</td>
+                        <td>Opravy miezd a výkazov (Iniciované zamestnávateľom)</td>
+                        <td>40 €/hod</td>
                     </tr>
 
                     <tr>
-                        <td>Rozúčtovanie miezd na strediská</td>
-                        <td>podľa rozsahu</td>
-                        <td>38 €/hod.</td>
+                        <td>Komplexná príprava mzdovej a personálnej dokumentácie pre účely kontrol štátnych inštitúcií</td>
+                        <td>30 €/hod</td>
                     </tr>
 
                 </tbody>
@@ -354,7 +404,11 @@ footer{
             </table>
 
         </div>
-
+<div class="price-note">
+    <strong>
+        * Uvedené ceny sú konečné. Spoločnosť DataPay s.r.o. nie je platiteľom DPH podľa § 4 zákona o DPH.
+    </strong>
+</div>
     </div>
 
 </section>
@@ -364,12 +418,14 @@ footer{
     <h2>Potrebujete individuálnu cenovú ponuku?</h2>
 
     <p>
-        Každá spoločnosť má odlišné požiadavky.
+        Každá spoločnosť má odlišné požiadavky. <br>
         Radi vám pripravíme nezáväznú cenovú ponuku šitú na mieru.
     </p>
 
-    index.html#kontakt
-        Kontaktujte nás
+        <a href="index.html"
+        class="back-link">
+        ← Späť na hlavnú stránku
+        </a>
     </a>
 
 </section>
