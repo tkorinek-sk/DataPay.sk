@@ -306,15 +306,15 @@ header {
 }
 
 .footer-content{
-    display:grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap:60px;
-    max-width:1100px;
+    display:flex;
+    justify-content:center;
+    gap:120px;
+    max-width:1200px;
     margin:0 auto;
-    align-items:start;
 }
 
 .footer-column{
+    width:280px;
     text-align:left;
 }
 
