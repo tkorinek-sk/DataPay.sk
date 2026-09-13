@@ -36,7 +36,6 @@ img {
     margin: 0 auto;
 }
 
-
 /* =========================================================
    HEADER
 ========================================================= */
@@ -75,24 +74,62 @@ header {
 
 
 /* =========================================================
-   LANGUAGE SWITCH
+   HLAVNÉ MENU
+========================================================= */
+
+.main-menu {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 10px;
+}
+
+.main-menu > a {
+    color: white;
+    text-decoration: none;
+    border: 1px solid rgba(255, 255, 255, 0.4);
+    padding: 8px 15px;
+    border-radius: 22px;
+    font-size: 14px;
+    white-space: nowrap;
+    transition:
+        background 0.25s ease,
+        color 0.25s ease,
+        border-color 0.25s ease;
+}
+
+.main-menu > a:hover {
+    background: rgba(255, 255, 255, 0.15);
+    border-color: rgba(255, 255, 255, 0.7);
+}
+
+.main-menu > a.active {
+    background: white;
+    color: #052c64;
+}
+
+
+/* =========================================================
+   JAZYKY
 ========================================================= */
 
 .language-switch {
     display: flex;
-    gap: 10px;
-    flex-shrink: 0;
+    gap: 8px;
+    margin-left: 2px;
 }
 
 .language-switch a {
     color: white;
     text-decoration: none;
     border: 1px solid rgba(255, 255, 255, 0.4);
-    padding: 6px 14px;
-    border-radius: 20px;
-    transition: 0.25s;
+    padding: 8px 14px;
+    border-radius: 22px;
     font-size: 14px;
     white-space: nowrap;
+    transition:
+        background 0.25s ease,
+        color 0.25s ease;
 }
 
 .language-switch a:hover {
@@ -102,6 +139,27 @@ header {
 .language-switch a.active {
     background: white;
     color: #052c64;
+}
+
+
+/* =========================================================
+   HAMBURGER
+========================================================= */
+
+#menu-toggle {
+    display: none;
+}
+
+.menu-button {
+    display: none;
+    color: white;
+    font-size: 30px;
+    line-height: 1;
+    cursor: pointer;
+    padding: 5px 10px;
+    border: 1px solid rgba(255, 255, 255, 0.35);
+    border-radius: 10px;
+    user-select: none;
 }
 
 
