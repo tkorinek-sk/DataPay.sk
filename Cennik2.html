@@ -156,6 +156,39 @@ header p{
     font-weight:700;
 }
 
+
+    .included-services{
+    background:white;
+    border-radius:24px;
+    padding:40px;
+    margin:60px auto;
+    max-width:1160px;
+    box-shadow:0 10px 35px rgba(0,0,0,0.05);
+}
+
+.included-services h3{
+    text-align:center;
+    color:#052c64;
+    margin-bottom:30px;
+    font-size:28px;
+}
+
+.included-grid{
+    display:grid;
+    grid-template-columns:repeat(2,1fr);
+    gap:18px 40px;
+}
+
+.included-grid div{
+    background:#f7faff;
+    padding:15px 20px;
+    border-radius:12px;
+    color:#333;
+    font-weight:500;
+}
+
+
+}
 .cta{
     background:linear-gradient(135deg,#052c64,#0d6efd);
     color:white;
@@ -214,6 +247,13 @@ footer{
     .services-box table{
         min-width:760px;
     }
+      .included-grid{
+        grid-template-columns:1fr;
+    }
+
+    .included-services{
+        padding:25px;
+    }
 }
 
 </style>
@@ -266,6 +306,25 @@ footer{
         </div>
 
     </div>
+
+    <div class="included-services">
+
+    <h3>✅ Čo je zahrnuté v cene spracovania miezd</h3>
+
+    <div class="included-grid">
+
+        <div>✔ Spracovanie mesačných miezd</div>
+        <div>✔ Výplatné pásky pre zamestnancov</div>
+        <div>✔ Mesačné výkazy pre Sociálnu poisťovňu</div>
+        <div>✔ Mesačné výkazy pre zdravotné poisťovne</div>
+        <div>✔ Platobné podklady na odvody</div>
+        <div>✔ Platobné podklady na mzdy</div>
+        <div>✔ Evidencia dovoleniek a PN</div>
+        <div>✔ E-mailová podpora a konzultácie</div>
+
+    </div>
+
+</div>
 
 </section>
 
