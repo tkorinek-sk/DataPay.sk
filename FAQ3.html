@@ -1,0 +1,991 @@
+
+<!DOCTYPE html>
+<html lang="sk">
+
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Často kladené otázky | DataPay s.r.o.</title>
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            margin: 0;
+            font-family: Arial, Helvetica, sans-serif;
+            background: #f7f9fc;
+            color: #1f2937;
+            line-height: 1.6;
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+
+        /* =========================
+           HEADER
+        ========================= */
+
+        .site-header {
+            background: #ffffff;
+            border-bottom: 1px solid #e6ebf2;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .nav-container {
+            width: 90%;
+            max-width: 1200px;
+            min-height: 88px;
+            margin: 0 auto;
+
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+
+            gap: 35px;
+        }
+
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+        }
+
+        .brand img {
+            width: 54px;
+            height: 54px;
+            object-fit: contain;
+            display: block;
+        }
+
+        .brand-text {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .brand-name {
+            color: #052c64;
+            font-size: 20px;
+            font-weight: 700;
+            line-height: 1.2;
+        }
+
+        .brand-subtitle {
+            color: #718096;
+            font-size: 12px;
+            margin-top: 4px;
+        }
+
+        .main-nav {
+            display: flex;
+            align-items: center;
+            gap: 28px;
+        }
+
+        .main-nav > a {
+            color: #334155;
+            font-size: 14px;
+            font-weight: 500;
+            transition: color 0.2s ease;
+        }
+
+        .main-nav > a:hover {
+            color: #052c64;
+        }
+
+        .main-nav > a.active {
+            color: #052c64;
+            font-weight: 700;
+        }
+
+        .language {
+            display: flex;
+            align-items: center;
+            gap: 7px;
+            margin-left: 5px;
+            font-size: 13px;
+        }
+
+        .language a {
+            color: #94a3b8;
+            font-weight: 500;
+        }
+
+        .language a.active {
+            color: #052c64;
+            font-weight: 700;
+        }
+
+        .language span {
+            color: #cbd5e1;
+        }
+
+
+        /* =========================
+           MAIN
+        ========================= */
+
+        .faq-page {
+            padding: 70px 0 90px;
+        }
+
+        .container {
+            width: 90%;
+            max-width: 1100px;
+            margin: 0 auto;
+        }
+
+
+        /* =========================
+           INTRO
+        ========================= */
+
+        .intro {
+            text-align: center;
+            max-width: 760px;
+            margin: 0 auto 45px;
+        }
+
+        .eyebrow {
+            color: #5279aa;
+            font-size: 12px;
+            font-weight: 700;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            margin-bottom: 14px;
+        }
+
+        .intro h1 {
+            margin: 0 0 18px;
+            color: #052c64;
+            font-size: 42px;
+            line-height: 1.15;
+        }
+
+        .intro p {
+            margin: 0;
+            color: #64748b;
+            font-size: 16px;
+            line-height: 1.7;
+        }
+
+
+        /* =========================
+           FAQ CARD
+        ========================= */
+
+        .faq-card {
+            background: #ffffff;
+            border: 1px solid #e1e8f0;
+            border-radius: 16px;
+            padding: 35px;
+
+            box-shadow: 0 8px 25px rgba(5, 44, 100, 0.04);
+        }
+
+
+        /* =========================
+           ACCORDION
+        ========================= */
+
+        .accordion {
+            margin-bottom: 12px;
+            border: 1px solid #e1e8f0;
+            border-radius: 10px;
+            overflow: hidden;
+            background: #ffffff;
+        }
+
+        .accordion:last-of-type {
+            margin-bottom: 0;
+        }
+
+        .accordion-btn {
+            width: 100%;
+
+            border: none;
+            background: #ffffff;
+
+            padding: 19px 20px;
+
+            text-align: left;
+
+            color: #052c64;
+
+            font-family: inherit;
+            font-size: 15px;
+            font-weight: 600;
+
+            cursor: pointer;
+
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+
+            gap: 20px;
+
+            transition: background 0.2s ease;
+        }
+
+        .accordion-btn:hover {
+            background: #f7faff;
+        }
+
+        .icon {
+            flex-shrink: 0;
+
+            width: 28px;
+            height: 28px;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            border-radius: 50%;
+
+            background: #eef4fb;
+            color: #052c64;
+
+            font-size: 19px;
+            font-weight: 400;
+
+            transition: transform 0.2s ease,
+                        background 0.2s ease;
+        }
+
+        .accordion-content {
+            display: none;
+
+            padding: 0 20px 20px;
+
+            color: #64748b;
+            font-size: 14px;
+            line-height: 1.7;
+        }
+
+        .accordion-content p {
+            margin: 0;
+        }
+
+        .accordion.active .accordion-content {
+            display: block;
+        }
+
+        .accordion.active .icon {
+            background: #052c64;
+            color: #ffffff;
+        }
+
+
+        /* =========================
+           CTA
+        ========================= */
+
+        .cta-box {
+            margin-top: 35px;
+
+            background: #eef4fb;
+            border-radius: 14px;
+
+            padding: 30px;
+
+            text-align: center;
+        }
+
+        .cta-box h3 {
+            margin: 0 0 8px;
+
+            color: #052c64;
+            font-size: 20px;
+        }
+
+        .cta-box p {
+            margin: 0;
+
+            color: #64748b;
+            font-size: 14px;
+        }
+
+        .btn {
+            display: inline-block;
+
+            margin-top: 18px;
+
+            background: #052c64;
+            color: #ffffff;
+
+            padding: 12px 24px;
+
+            border-radius: 7px;
+
+            font-size: 14px;
+            font-weight: 700;
+
+            transition: background 0.2s ease,
+                        transform 0.2s ease;
+        }
+
+        .btn:hover {
+            background: #0d4d94;
+            transform: translateY(-2px);
+        }
+
+        .back-link {
+            display: inline-block;
+
+            margin-top: 18px;
+
+            color: #5279aa;
+
+            font-size: 13px;
+            font-weight: 600;
+        }
+
+        .back-link:hover {
+            color: #052c64;
+        }
+
+
+        /* =========================
+           FOOTER
+        ========================= */
+
+        footer {
+            background: #ffffff;
+            border-top: 1px solid #e6ebf2;
+
+            padding: 50px 0 25px;
+        }
+
+        .footer-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 50px;
+        }
+
+        .footer-column:nth-child(1) {
+            text-align: left;
+        }
+
+        .footer-column:nth-child(2) {
+            text-align: center;
+        }
+
+        .footer-column:nth-child(3) {
+            text-align: right;
+        }
+
+        .footer-column h3 {
+            margin: 0 0 14px;
+
+            color: #052c64;
+            font-size: 15px;
+        }
+
+        .footer-column p {
+            margin: 6px 0;
+
+            color: #718096;
+            font-size: 13px;
+            line-height: 1.5;
+        }
+
+        .footer-column a {
+            color: #718096;
+        }
+
+        .footer-column a:hover {
+            color: #052c64;
+        }
+
+        .footer-bottom {
+            margin-top: 35px;
+
+            padding-top: 20px;
+
+            border-top: 1px solid #edf1f5;
+
+            text-align: center;
+
+            color: #94a3b8;
+            font-size: 11px;
+        }
+
+        .footer-bottom a {
+            color: #718096;
+        }
+
+
+        /* =========================
+           MOBILE
+        ========================= */
+
+        @media (max-width: 900px) {
+
+            .nav-container {
+                flex-direction: column;
+                justify-content: center;
+
+                padding: 18px 0;
+
+                gap: 18px;
+            }
+
+            .main-nav {
+                flex-wrap: wrap;
+                justify-content: center;
+                gap: 16px;
+            }
+
+            .footer-grid {
+                grid-template-columns: 1fr;
+                gap: 30px;
+            }
+
+            .footer-column:nth-child(1),
+            .footer-column:nth-child(2),
+            .footer-column:nth-child(3) {
+                text-align: center;
+            }
+        }
+
+
+        @media (max-width: 600px) {
+
+            .faq-page {
+                padding: 50px 0 60px;
+            }
+
+            .intro h1 {
+                font-size: 32px;
+            }
+
+            .faq-card {
+                padding: 20px;
+            }
+
+            .accordion-btn {
+                font-size: 14px;
+                padding: 17px;
+            }
+
+            .accordion-content {
+                padding: 0 17px 17px;
+                font-size: 13px;
+            }
+
+            .cta-box {
+                padding: 25px 18px;
+            }
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+<!-- =========================
+     HEADER
+========================= -->
+
+<header class="site-header">
+
+    <div class="nav-container">
+
+        <a href="index.html" class="brand">
+
+            <img src="logo.png" alt="DataPay logo">
+
+            <div class="brand-text">
+
+                <div class="brand-name">
+                    DataPay s.r.o.
+                </div>
+
+                <div class="brand-subtitle">
+                    Mzdy • Účtovníctvo • Personalistika
+                </div>
+
+            </div>
+
+        </a>
+
+
+        <nav class="main-nav">
+
+            <a href="index.html">
+                Domov
+            </a>
+
+            <a href="About.html">
+                O nás
+            </a>
+
+            <a href="payroll.html">
+                Služby
+            </a>
+
+            <a href="Cennik.html">
+                Cenník
+            </a>
+
+            <a href="FAQ.html" class="active">
+                FAQ
+            </a>
+
+
+            <div class="language">
+
+                <a href="#" class="active">
+                    SK
+                </a>
+
+                <span>/</span>
+
+                <a href="#">
+                    EN
+                </a>
+
+            </div>
+
+        </nav>
+
+    </div>
+
+</header>
+
+
+
+<!-- =========================
+     MAIN
+========================= -->
+
+<main>
+
+    <div class="faq-page">
+
+        <div class="container">
+
+
+            <!-- INTRO -->
+
+            <section class="intro">
+
+                <div class="eyebrow">
+                    DATAPAY • FAQ
+                </div>
+
+                <h1>
+                    Často kladené otázky
+                </h1>
+
+                <p>
+                    Odpovede na najčastejšie otázky našich klientov
+                    týkajúce sa účtovníctva, miezd a personalistiky.
+                </p>
+
+            </section>
+
+
+
+            <!-- FAQ -->
+
+            <section class="faq-card">
+
+
+                <!-- QUESTION 1 -->
+
+                <div class="accordion">
+
+                    <button class="accordion-btn">
+
+                        Čo všetko za mňa DataPay zabezpečí?
+
+                        <span class="icon">
+                            +
+                        </span>
+
+                    </button>
+
+                    <div class="accordion-content">
+
+                        <p>
+                            Zabezpečujeme kompletné spracovanie účtovníctva,
+                            miezd a personálnej agendy podľa potrieb vašej
+                            spoločnosti. Postaráme sa o spracovanie účtovných
+                            dokladov, výpočet miezd, výplatné pásky, platobné
+                            podklady, mesačné výkazy, nástupy a výstupy
+                            zamestnancov a ďalšiu agendu podľa dohodnutého
+                            rozsahu služieb.
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+
+                <!-- QUESTION 2 -->
+
+                <div class="accordion">
+
+                    <button class="accordion-btn">
+
+                        Koľko stojí spracovanie miezd?
+
+                        <span class="icon">
+                            +
+                        </span>
+
+                    </button>
+
+                    <div class="accordion-content">
+
+                        <p>
+                            Cena závisí najmä od počtu zamestnancov a rozsahu
+                            poskytovaných služieb. Aktuálne ceny nájdete v
+                            našom cenníku. Ak si nie ste istí, ktorý rozsah
+                            služieb je pre vás vhodný, radi vám pripravíme
+                            nezáväznú cenovú ponuku.
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+
+                <!-- QUESTION 3 -->
+
+                <div class="accordion">
+
+                    <button class="accordion-btn">
+
+                        Ako prebieha prechod na DataPay?
+
+                        <span class="icon">
+                            +
+                        </span>
+
+                    </button>
+
+                    <div class="accordion-content">
+
+                        <p>
+                            Prechod na DataPay sa snažíme zabezpečiť čo
+                            najjednoduchšie. Najskôr si prejdeme vašu aktuálnu
+                            účtovnú, mzdovú a personálnu agendu a dohodneme si
+                            rozsah spolupráce. Následne si od vás vyžiadame
+                            potrebné podklady a zabezpečíme plynulé prevzatie
+                            agendy.
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+
+                <!-- QUESTION 4 -->
+
+                <div class="accordion">
+
+                    <button class="accordion-btn">
+
+                        Musím vám každý mesiac posielať podklady?
+
+                        <span class="icon">
+                            +
+                        </span>
+
+                    </button>
+
+                    <div class="accordion-content">
+
+                        <p>
+                            Áno, každý mesiac potrebujeme informácie o zmenách,
+                            ktoré majú vplyv na spracovanie účtovníctva alebo
+                            miezd. Pri mzdách ide napríklad o nové pracovné
+                            pomery, ukončenia pracovných pomerov, dovolenky,
+                            PN, odmeny alebo zmeny pracovného času.
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+
+                <!-- QUESTION 5 -->
+
+                <div class="accordion">
+
+                    <button class="accordion-btn">
+
+                        Ako zabezpečujete ochranu osobných údajov?
+
+                        <span class="icon">
+                            +
+                        </span>
+
+                    </button>
+
+                    <div class="accordion-content">
+
+                        <p>
+                            Pri spracovaní mzdových a personálnych údajov
+                            kladieme dôraz na ochranu osobných údajov a
+                            bezpečnosť informácií. Údaje spracúvame v súlade
+                            s GDPR a platnou legislatívou.
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+
+                <!-- QUESTION 6 -->
+
+                <div class="accordion">
+
+                    <button class="accordion-btn">
+
+                        Pre aké firmy sú vaše služby vhodné?
+
+                        <span class="icon">
+                            +
+                        </span>
+
+                    </button>
+
+                    <div class="accordion-content">
+
+                        <p>
+                            Naše služby sú vhodné pre malé, stredné aj väčšie
+                            spoločnosti, ktoré chcú preniesť účtovnú, mzdovú
+                            alebo personálnu agendu na externého odborného
+                            partnera.
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+
+                <!-- QUESTION 7 -->
+
+                <div class="accordion">
+
+                    <button class="accordion-btn">
+
+                        Čo ak potrebujem poradiť s pracovnoprávnou otázkou?
+
+                        <span class="icon">
+                            +
+                        </span>
+
+                    </button>
+
+                    <div class="accordion-content">
+
+                        <p>
+                            Súčasťou našich služieb je aj mzdové, účtovné
+                            a HR poradenstvo. Môžete sa na nás obrátiť pri
+                            otázkach týkajúcich sa pracovných zmlúv, nástupov,
+                            ukončenia pracovného pomeru, odmeňovania alebo
+                            personálnej administratívy.
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+
+                <!-- CTA -->
+
+                <div class="cta-box">
+
+                    <h3>
+                        Nenašli ste odpoveď na svoju otázku?
+                    </h3>
+
+                    <p>
+                        Radi vám odpovieme individuálne.
+                    </p>
+
+                    <a class="btn" href="Formular.html">
+                        Kontaktujte nás
+                    </a>
+
+                    <br>
+
+                    <a href="index.html" class="back-link">
+                        ← Späť na hlavnú stránku
+                    </a>
+
+                </div>
+
+
+            </section>
+
+        </div>
+
+    </div>
+
+</main>
+
+
+
+<!-- =========================
+     FOOTER
+========================= -->
+
+<footer>
+
+    <div class="container">
+
+        <div class="footer-grid">
+
+
+            <div class="footer-column">
+
+                <h3>
+                    DataPay s.r.o.
+                </h3>
+
+                <p>
+                    Účtovníctvo, mzdy, personalistika
+                    a odborné poradenstvo.
+                </p>
+
+                <p>
+                    Služby poskytujeme firmám
+                    na celom Slovensku.
+                </p>
+
+            </div>
+
+
+
+            <div class="footer-column">
+
+                <h3>
+                    Kontakt
+                </h3>
+
+                <p>
+                    <a href="mailto:datapaysk@gmail.com">
+                        datapaysk@gmail.com
+                    </a>
+                </p>
+
+                <p>
+                    <a href="tel:+421903270664">
+                        +421 903 270 664
+                    </a>
+                </p>
+
+                <p>
+                    <a href="tel:+421907837030">
+                        +421 907 837 030
+                    </a>
+                </p>
+
+            </div>
+
+
+
+            <div class="footer-column">
+
+                <h3>
+                    Spoločnosť
+                </h3>
+
+                <p>
+                    IČO: 57456615
+                </p>
+
+                <p>
+                    DIČ: 2122742622
+                </p>
+
+                <p>
+                    IČ DPH: nie sme platiteľom DPH
+                </p>
+
+            </div>
+
+
+        </div>
+
+
+        <div class="footer-bottom">
+
+            © 2026 DataPay s.r.o. |
+
+            <a href="GDPR.html">
+                Ochrana osobných údajov
+            </a>
+
+        </div>
+
+    </div>
+
+</footer>
+
+
+
+<!-- =========================
+     JAVASCRIPT
+========================= -->
+
+<script>
+
+    document.querySelectorAll(".accordion-btn").forEach(function(button) {
+
+        button.addEventListener("click", function() {
+
+            const accordion = button.parentElement;
+            const icon = button.querySelector(".icon");
+
+            accordion.classList.toggle("active");
+
+            if (accordion.classList.contains("active")) {
+
+                icon.textContent = "−";
+
+            } else {
+
+                icon.textContent = "+";
+
+            }
+
+        });
+
+    });
+
+</script>
+
+
+</body>
+</html>
+
