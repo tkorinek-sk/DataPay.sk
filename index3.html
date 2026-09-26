@@ -34,7 +34,7 @@
 
 <!-- =====================================================
      OPEN GRAPH
-====================================================== -->
+===================================================== -->
 
 <meta property="og:locale"
       content="sk_SK">
@@ -63,7 +63,7 @@
 
 <!-- =====================================================
      STRUCTURED DATA
-====================================================== -->
+===================================================== -->
 
 <script type="application/ld+json">
 
@@ -507,6 +507,11 @@ header {
     justify-content: center;
 }
 
+
+/* =====================================================
+   BACKGROUND GLOW
+===================================================== */
+
 .visual-glow {
 
     position: absolute;
@@ -529,7 +534,14 @@ header {
 
     animation:
         glowPulse 4s ease-in-out infinite;
+
+    z-index: 1;
 }
+
+
+/* =====================================================
+   CENTER
+===================================================== */
 
 .data-center {
 
@@ -561,6 +573,8 @@ header {
     position: relative;
 
     z-index: 5;
+
+    will-change: transform;
 }
 
 .data-center::before {
@@ -611,6 +625,11 @@ header {
     font-weight: 700;
 }
 
+
+/* =====================================================
+   ORBITS
+===================================================== */
+
 .orbit {
 
     position: absolute;
@@ -620,8 +639,12 @@ header {
 
     border-radius: 50%;
 
+    z-index: 2;
+
     animation:
-        rotateOrbit 24s linear infinite;
+        rotateOrbit 18s linear infinite;
+
+    will-change: transform;
 }
 
 .orbit-one {
@@ -637,10 +660,17 @@ header {
 
     height: 460px;
 
-    animation-duration: 35s;
+    animation-duration:
+        26s;
 
-    animation-direction: reverse;
+    animation-direction:
+        reverse;
 }
+
+
+/* =====================================================
+   SERVICE NODES
+===================================================== */
 
 .service-node {
 
@@ -672,6 +702,15 @@ header {
 
     transition:
         box-shadow .3s ease;
+
+    will-change:
+        transform;
+
+    /*
+     * Dôležité:
+     * JS bude meniť transform,
+     * preto tu nepoužívame CSS transform.
+     */
 }
 
 .service-node:hover {
@@ -973,11 +1012,15 @@ header {
 
     animation:
         testimonialScroll 45s linear infinite;
+
+    will-change:
+        transform;
 }
 
 .testimonials-track:hover {
 
-    animation-play-state: paused;
+    animation-play-state:
+        paused;
 }
 
 .testimonial-card {
@@ -1404,66 +1447,107 @@ header {
     }
 }
 
+
 @keyframes glowPulse {
 
-    0%,100% {
-        transform: scale(.95);
-        opacity: .65;
+    0%, 100% {
+
+        transform:
+            scale(.95);
+
+        opacity:
+            .65;
     }
 
     50% {
-        transform: scale(1.08);
-        opacity: 1;
+
+        transform:
+            scale(1.08);
+
+        opacity:
+            1;
     }
 }
+
 
 @keyframes centerPulse {
 
-    0%,100% {
-        transform: scale(.96);
-        opacity: .45;
+    0%, 100% {
+
+        transform:
+            scale(.96);
+
+        opacity:
+            .45;
     }
 
     50% {
-        transform: scale(1.04);
-        opacity: 1;
+
+        transform:
+            scale(1.04);
+
+        opacity:
+            1;
     }
 }
+
 
 @keyframes dotPulse {
 
-    0%,100% {
-        opacity: .5;
-        transform: scale(.85);
+    0%, 100% {
+
+        opacity:
+            .5;
+
+        transform:
+            scale(.85);
     }
 
     50% {
-        opacity: 1;
-        transform: scale(1.2);
+
+        opacity:
+            1;
+
+        transform:
+            scale(1.2);
     }
 }
+
 
 @keyframes announcementFade {
 
     from {
-        opacity: 0;
-        transform: translateY(-5px);
+
+        opacity:
+            0;
+
+        transform:
+            translateY(-5px);
     }
 
     to {
-        opacity: 1;
-        transform: translateY(0);
+
+        opacity:
+            1;
+
+        transform:
+            translateY(0);
     }
 }
+
 
 @keyframes testimonialScroll {
 
     from {
-        transform: translateX(0);
+
+        transform:
+            translateX(0);
     }
 
     to {
-        transform: translateX(-50%);
+
+        transform:
+            translateX(-50%);
     }
 }
 
@@ -1509,23 +1593,29 @@ header {
 
     .nav {
 
-        flex-direction: column;
+        flex-direction:
+            column;
 
-        justify-content: center;
+        justify-content:
+            center;
 
         padding:
             18px 0;
 
-        gap: 15px;
+        gap:
+            15px;
     }
 
     .language-switch {
 
-        flex-wrap: wrap;
+        flex-wrap:
+            wrap;
 
-        justify-content: center;
+        justify-content:
+            center;
 
-        gap: 11px;
+        gap:
+            11px;
     }
 
     .hero {
@@ -1539,34 +1629,41 @@ header {
         grid-template-columns:
             1fr;
 
-        text-align: center;
+        text-align:
+            center;
     }
 
     .hero-label {
 
-        justify-content: center;
+        justify-content:
+            center;
     }
 
     .hero-content > p {
 
-        margin-left: auto;
+        margin-left:
+            auto;
 
-        margin-right: auto;
+        margin-right:
+            auto;
     }
 
     .hero-buttons {
 
-        justify-content: center;
+        justify-content:
+            center;
     }
 
     .hero-visual {
 
-        height: 430px;
+        height:
+            430px;
 
         transform:
             scale(.85);
 
-        margin-top: -15px;
+        margin-top:
+            -15px;
     }
 
     .footer-content {
@@ -1574,7 +1671,8 @@ header {
         grid-template-columns:
             1fr;
 
-        gap: 30px;
+        gap:
+            30px;
     }
 }
 
@@ -1583,49 +1681,59 @@ header {
 
     .logo {
 
-        align-items: center;
+        align-items:
+            center;
     }
 
     .logo img {
 
-        width: 52px;
+        width:
+            52px;
     }
 
     .logo-text {
 
-        font-size: 11px;
+        font-size:
+            11px;
     }
 
     .logo-text strong {
 
-        font-size: 16px;
+        font-size:
+            16px;
     }
 
     .announcement-text {
 
-        font-size: 11px;
+        font-size:
+            11px;
     }
 
     .hero h1 {
 
-        font-size: 38px;
+        font-size:
+            38px;
     }
 
     .hero-content > p {
 
-        font-size: 15px;
+        font-size:
+            15px;
     }
 
     .hero-buttons {
 
-        flex-direction: column;
+        flex-direction:
+            column;
 
-        align-items: stretch;
+        align-items:
+            stretch;
     }
 
     .hero-buttons .btn {
 
-        width: 100%;
+        width:
+            100%;
     }
 
     .hero-visual {
@@ -1633,7 +1741,8 @@ header {
         transform:
             scale(.68);
 
-        height: 350px;
+        height:
+            350px;
 
         margin:
             -10px -60px;
@@ -1647,9 +1756,11 @@ header {
 
     .benefits {
 
-        padding-left: 20px;
+        padding-left:
+            20px;
 
-        padding-right: 20px;
+        padding-right:
+            20px;
     }
 
     .benefits-grid {
@@ -1666,7 +1777,8 @@ header {
 
     .testimonial-card {
 
-        width: 310px;
+        width:
+            310px;
     }
 
 }
@@ -1759,7 +1871,6 @@ header {
 </header>
 
 
-
 <!-- =====================================================
      ANNOUNCEMENT
 ===================================================== -->
@@ -1778,7 +1889,6 @@ header {
     </div>
 
 </div>
-
 
 
 <!-- =====================================================
@@ -1846,7 +1956,6 @@ header {
     </div>
 
 
-
     <!-- =================================================
          DYNAMIC VISUAL
     ================================================== -->
@@ -1888,7 +1997,7 @@ header {
                 </strong>
 
                 <span>
-                    Jednoduché & podvojné
+                    Jednoduché &amp; podvojné
                 </span>
 
             </div>
@@ -1965,7 +2074,6 @@ header {
 </section>
 
 
-
 <!-- =====================================================
      SERVICES
 ===================================================== -->
@@ -2019,7 +2127,6 @@ header {
         </a>
 
 
-
         <a href="payroll.html"
            class="service-card">
 
@@ -2050,7 +2157,6 @@ header {
         </a>
 
 
-
         <a href="payroll.html"
            class="service-card">
 
@@ -2079,7 +2185,6 @@ header {
             </span>
 
         </a>
-
 
 
         <a href="payroll.html"
@@ -2117,7 +2222,6 @@ header {
 </div>
 
 </section>
-
 
 
 <!-- =====================================================
@@ -2204,7 +2308,6 @@ header {
     </article>
 
 
-
     <article class="testimonial-card">
 
         <div class="testimonial-top">
@@ -2261,7 +2364,6 @@ header {
     </article>
 
 
-
     <article class="testimonial-card">
 
         <div class="testimonial-top">
@@ -2316,7 +2418,6 @@ header {
         </div>
 
     </article>
-
 
 
     <article class="testimonial-card">
@@ -2382,7 +2483,6 @@ header {
 </section>
 
 
-
 <!-- =====================================================
      BENEFITS
 ===================================================== -->
@@ -2423,7 +2523,6 @@ header {
     </div>
 
 
-
     <div class="benefit-card">
 
         <h3>
@@ -2439,7 +2538,6 @@ header {
         </p>
 
     </div>
-
 
 
     <div class="benefit-card">
@@ -2458,7 +2556,6 @@ header {
         </p>
 
     </div>
-
 
 
     <div class="benefit-card">
@@ -2482,7 +2579,6 @@ header {
 </div>
 
 </section>
-
 
 
 <!-- =====================================================
@@ -2529,7 +2625,6 @@ header {
         </div>
 
 
-
         <div class="process-step">
 
             <div class="step-number">
@@ -2551,7 +2646,6 @@ header {
         </div>
 
 
-
         <div class="process-step">
 
             <div class="step-number">
@@ -2571,7 +2665,6 @@ header {
             </p>
 
         </div>
-
 
 
         <div class="process-step">
@@ -2599,7 +2692,6 @@ header {
 </div>
 
 </section>
-
 
 
 <!-- =====================================================
@@ -2633,7 +2725,6 @@ header {
 </div>
 
 </section>
-
 
 
 <!-- =====================================================
@@ -2671,7 +2762,6 @@ header {
     </div>
 
 
-
     <div class="footer-column">
 
         <h3>
@@ -2695,7 +2785,6 @@ header {
         </p>
 
     </div>
-
 
 
     <div class="footer-column">
@@ -2740,112 +2829,151 @@ header {
 </footer>
 
 
-
 <!-- =====================================================
      JAVASCRIPT
 ===================================================== -->
 
 <script>
 
-```javascript
 /* =====================================================
    DYNAMIC HERO ANIMATION
 ===================================================== */
 
-document.addEventListener("DOMContentLoaded", function () {
+document.addEventListener(
+    "DOMContentLoaded",
+    function () {
 
-    const nodes = document.querySelectorAll(".service-node");
-    const center = document.querySelector(".data-center");
-    const glow = document.querySelector(".visual-glow");
+        const nodes =
+            document.querySelectorAll(
+                ".service-node"
+            );
 
-    let time = 0;
-
-    function animateHero() {
-
-        time += 0.018;
-
-        /* ---------------------------------------------
-           FLOATING SERVICE CARDS
-        --------------------------------------------- */
-
-        nodes.forEach(function (node, index) {
-
-            const speed = 0.85 + (index * 0.08);
-
-            const vertical =
-                Math.sin(
-                    time * speed + index * 1.7
-                ) * 12;
-
-            const horizontal =
-                Math.cos(
-                    time * 0.65 + index * 1.3
-                ) * 4;
-
-            const rotation =
-                Math.sin(
-                    time * 0.7 + index
-                ) * 1.2;
-
-            node.style.transform =
-                "translate(" +
-                horizontal +
-                "px, " +
-                vertical +
-                "px) rotate(" +
-                rotation +
-                "deg)";
-
-        });
+        const center =
+            document.querySelector(
+                ".data-center"
+            );
 
 
-        /* ---------------------------------------------
-           DATAPAY CENTER
-        --------------------------------------------- */
+        /*
+         * Respektovanie nastavenia
+         * používateľa pre zníženie animácií.
+         */
 
-        if (center) {
+        const reducedMotion =
+            window.matchMedia(
+                "(prefers-reduced-motion: reduce)"
+            ).matches;
 
-            const centerScale =
-                1 +
-                Math.sin(time * 1.5) * 0.025;
 
-            center.style.transform =
-                "scale(" +
-                centerScale +
-                ")";
+        if (reducedMotion) {
+
+            return;
 
         }
 
 
-        /* ---------------------------------------------
-           LIGHT / GLOW
-        --------------------------------------------- */
+        let time = 0;
 
-        if (glow) {
 
-            const glowScale =
-                1 +
-                Math.sin(time * 0.75) * 0.08;
+        function animateHero() {
 
-            glow.style.transform =
-                "scale(" +
-                glowScale +
-                ")";
+            time += 0.018;
+
+
+            /* =========================================
+               FLOATING SERVICE CARDS
+            ========================================= */
+
+            nodes.forEach(
+                function (node, index) {
+
+                    /*
+                     * Každá karta má inú rýchlosť.
+                     */
+
+                    const speed =
+                        0.85 +
+                        (index * 0.10);
+
+
+                    /*
+                     * Pohyb hore a dole.
+                     */
+
+                    const vertical =
+                        Math.sin(
+                            time * speed +
+                            index * 1.7
+                        ) * 14;
+
+
+                    /*
+                     * Jemný pohyb do strán.
+                     */
+
+                    const horizontal =
+                        Math.cos(
+                            time * 0.65 +
+                            index * 1.3
+                        ) * 5;
+
+
+                    /*
+                     * Jemná rotácia.
+                     */
+
+                    const rotation =
+                        Math.sin(
+                            time * 0.7 +
+                            index
+                        ) * 1.3;
+
+
+                    node.style.transform =
+                        "translate(" +
+                        horizontal +
+                        "px, " +
+                        vertical +
+                        "px) rotate(" +
+                        rotation +
+                        "deg)";
+
+                }
+            );
+
+
+            /* =========================================
+               DATAPAY CENTER
+            ========================================= */
+
+            if (center) {
+
+                const centerScale =
+                    1 +
+                    Math.sin(
+                        time * 1.5
+                    ) * 0.025;
+
+
+                center.style.transform =
+                    "scale(" +
+                    centerScale +
+                    ")";
+
+            }
+
+
+            requestAnimationFrame(
+                animateHero
+            );
 
         }
 
 
-        requestAnimationFrame(
-            animateHero
-        );
+        animateHero();
 
     }
-
-
-    animateHero();
-
-});
-```
+);
 
 
 /* =====================================================
@@ -2863,15 +2991,24 @@ document.addEventListener(
 
 
         if (!track) {
+
             return;
+
         }
 
 
         /*
-         * Vytvoríme kópie kariet,
-         * aby carousel mohol plynulo
-         * pokračovať dookola.
+         * Zabránime opakovanému klonovaniu.
          */
+
+        if (
+            track.dataset.cloned === "true"
+        ) {
+
+            return;
+
+        }
+
 
         const cards =
             Array.from(
@@ -2885,10 +3022,12 @@ document.addEventListener(
                 const clone =
                     card.cloneNode(true);
 
+
                 clone.setAttribute(
                     "aria-hidden",
                     "true"
                 );
+
 
                 track.appendChild(
                     clone
@@ -2896,6 +3035,10 @@ document.addEventListener(
 
             }
         );
+
+
+        track.dataset.cloned =
+            "true";
 
     }
 );
@@ -2906,4 +3049,3 @@ document.addEventListener(
 </body>
 
 </html>
-```
