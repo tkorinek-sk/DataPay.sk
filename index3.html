@@ -2747,58 +2747,105 @@ header {
 
 <script>
 
+```javascript
 /* =====================================================
-   DYNAMIC HERO NODES
+   DYNAMIC HERO ANIMATION
 ===================================================== */
 
-document.addEventListener(
-    "DOMContentLoaded",
-    function () {
+document.addEventListener("DOMContentLoaded", function () {
 
-        const nodes =
-            document.querySelectorAll(
-                ".service-node"
-            );
+    const nodes = document.querySelectorAll(".service-node");
+    const center = document.querySelector(".data-center");
+    const glow = document.querySelector(".visual-glow");
+
+    let time = 0;
+
+    function animateHero() {
+
+        time += 0.018;
+
+        /* ---------------------------------------------
+           FLOATING SERVICE CARDS
+        --------------------------------------------- */
+
+        nodes.forEach(function (node, index) {
+
+            const speed = 0.85 + (index * 0.08);
+
+            const vertical =
+                Math.sin(
+                    time * speed + index * 1.7
+                ) * 12;
+
+            const horizontal =
+                Math.cos(
+                    time * 0.65 + index * 1.3
+                ) * 4;
+
+            const rotation =
+                Math.sin(
+                    time * 0.7 + index
+                ) * 1.2;
+
+            node.style.transform =
+                "translate(" +
+                horizontal +
+                "px, " +
+                vertical +
+                "px) rotate(" +
+                rotation +
+                "deg)";
+
+        });
 
 
-        let time = 0;
+        /* ---------------------------------------------
+           DATAPAY CENTER
+        --------------------------------------------- */
 
+        if (center) {
 
-        function animateNodes() {
+            const centerScale =
+                1 +
+                Math.sin(time * 1.5) * 0.025;
 
-            time += 0.012;
-
-
-            nodes.forEach(
-                function (node, index) {
-
-                    const offset =
-                        Math.sin(
-                            time +
-                            index * 1.5
-                        ) * 5;
-
-
-                    node.style.transform =
-                        "translateY(" +
-                        offset +
-                        "px)";
-
-                }
-            );
-
-
-            requestAnimationFrame(
-                animateNodes
-            );
+            center.style.transform =
+                "scale(" +
+                centerScale +
+                ")";
 
         }
 
 
-        animateNodes();
+        /* ---------------------------------------------
+           LIGHT / GLOW
+        --------------------------------------------- */
+
+        if (glow) {
+
+            const glowScale =
+                1 +
+                Math.sin(time * 0.75) * 0.08;
+
+            glow.style.transform =
+                "scale(" +
+                glowScale +
+                ")";
+
+        }
+
+
+        requestAnimationFrame(
+            animateHero
+        );
 
     }
-);
+
+
+    animateHero();
+
+});
+```
 
 
 /* =====================================================
