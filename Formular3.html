@@ -1,0 +1,1009 @@
+```html
+<!DOCTYPE html>
+<html lang="sk">
+
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Kontaktujte nás | DataPay s.r.o.</title>
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            margin: 0;
+            font-family: Arial, Helvetica, sans-serif;
+            background: #f7f9fc;
+            color: #1f2937;
+            line-height: 1.6;
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+
+        /* =========================
+           HEADER
+        ========================= */
+
+        .site-header {
+            background: #ffffff;
+            border-bottom: 1px solid #e6ebf2;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .nav-container {
+            width: 90%;
+            max-width: 1200px;
+            min-height: 88px;
+            margin: 0 auto;
+
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+
+            gap: 35px;
+        }
+
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+        }
+
+        .brand img {
+            width: 54px;
+            height: 54px;
+            object-fit: contain;
+            display: block;
+        }
+
+        .brand-text {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .brand-name {
+            color: #052c64;
+            font-size: 20px;
+            font-weight: 700;
+            line-height: 1.2;
+        }
+
+        .brand-subtitle {
+            color: #718096;
+            font-size: 12px;
+            margin-top: 4px;
+        }
+
+        .main-nav {
+            display: flex;
+            align-items: center;
+            gap: 28px;
+        }
+
+        .main-nav > a {
+            color: #334155;
+            font-size: 14px;
+            font-weight: 500;
+            transition: color 0.2s ease;
+        }
+
+        .main-nav > a:hover {
+            color: #052c64;
+        }
+
+        .main-nav > a.active {
+            color: #052c64;
+            font-weight: 700;
+        }
+
+        .language {
+            display: flex;
+            align-items: center;
+            gap: 7px;
+            margin-left: 5px;
+            font-size: 13px;
+        }
+
+        .language a {
+            color: #94a3b8;
+            font-weight: 500;
+        }
+
+        .language a.active {
+            color: #052c64;
+            font-weight: 700;
+        }
+
+        .language span {
+            color: #cbd5e1;
+        }
+
+
+        /* =========================
+           MAIN
+        ========================= */
+
+        .contact-page {
+            padding: 70px 0 90px;
+        }
+
+        .container {
+            width: 90%;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+
+        /* =========================
+           INTRO
+        ========================= */
+
+        .intro {
+            text-align: center;
+            max-width: 720px;
+            margin: 0 auto 45px;
+        }
+
+        .eyebrow {
+            color: #5279aa;
+            font-size: 12px;
+            font-weight: 700;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            margin-bottom: 14px;
+        }
+
+        .intro h1 {
+            margin: 0 0 18px;
+            color: #052c64;
+            font-size: 42px;
+            line-height: 1.15;
+        }
+
+        .intro p {
+            margin: 0;
+            color: #64748b;
+            font-size: 16px;
+            line-height: 1.7;
+        }
+
+
+        /* =========================
+           FORM CARD
+        ========================= */
+
+        .form-card {
+            background: #ffffff;
+            border: 1px solid #e1e8f0;
+            border-radius: 16px;
+
+            padding: 40px;
+
+            box-shadow: 0 8px 25px rgba(5, 44, 100, 0.04);
+        }
+
+        .form-card h2 {
+            margin: 0 0 8px;
+
+            color: #052c64;
+            font-size: 24px;
+        }
+
+        .form-card > p {
+            margin: 0 0 30px;
+
+            color: #64748b;
+            font-size: 14px;
+        }
+
+
+        /* =========================
+           FORM
+        ========================= */
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+
+            margin-bottom: 8px;
+
+            color: #334155;
+
+            font-size: 14px;
+            font-weight: 600;
+        }
+
+        input,
+        textarea {
+
+            width: 100%;
+
+            padding: 13px 14px;
+
+            border: 1px solid #d8e0ea;
+            border-radius: 8px;
+
+            background: #ffffff;
+
+            color: #1f2937;
+
+            font-family: inherit;
+            font-size: 14px;
+
+            transition:
+                border-color 0.2s ease,
+                box-shadow 0.2s ease;
+        }
+
+        input:focus,
+        textarea:focus {
+
+            outline: none;
+
+            border-color: #5279aa;
+
+            box-shadow:
+                0 0 0 3px rgba(82, 121, 170, 0.12);
+        }
+
+        textarea {
+
+            min-height: 160px;
+
+            resize: vertical;
+        }
+
+
+        /* =========================
+           GDPR
+        ========================= */
+
+        .gdpr-consent {
+
+            display: flex;
+
+            align-items: flex-start;
+
+            gap: 10px;
+
+            margin: 25px 0;
+        }
+
+        .gdpr-consent input[type="checkbox"] {
+
+            width: 18px;
+            height: 18px;
+
+            padding: 0;
+
+            margin: 3px 0 0;
+
+            flex-shrink: 0;
+
+            accent-color: #052c64;
+        }
+
+        .gdpr-consent label {
+
+            margin: 0;
+
+            color: #64748b;
+
+            font-size: 13px;
+            line-height: 1.5;
+        }
+
+        .gdpr-consent a {
+
+            color: #5279aa;
+            text-decoration: underline;
+        }
+
+        .gdpr-consent a:hover {
+            color: #052c64;
+        }
+
+
+        /* =========================
+           BUTTON
+        ========================= */
+
+        .btn {
+
+            display: inline-block;
+
+            background: #052c64;
+            color: #ffffff;
+
+            border: none;
+
+            padding: 13px 27px;
+
+            border-radius: 7px;
+
+            font-family: inherit;
+
+            font-size: 14px;
+            font-weight: 700;
+
+            cursor: pointer;
+
+            transition:
+                background 0.2s ease,
+                transform 0.2s ease;
+        }
+
+        .btn:hover {
+
+            background: #0d4d94;
+
+            transform: translateY(-2px);
+        }
+
+
+        /* =========================
+           CONTACT INFO
+        ========================= */
+
+        .info-box {
+
+            margin-top: 30px;
+
+            background: #eef4fb;
+
+            border-radius: 12px;
+
+            padding: 22px;
+
+            color: #052c64;
+
+            text-align: center;
+        }
+
+        .info-box strong {
+            display: block;
+
+            margin-bottom: 7px;
+
+            font-size: 15px;
+        }
+
+        .info-box span {
+            color: #64748b;
+            font-size: 13px;
+        }
+
+
+        /* =========================
+           BACK LINK
+        ========================= */
+
+        .back-link-wrap {
+
+            text-align: center;
+
+            margin-top: 25px;
+        }
+
+        .back-link {
+
+            color: #5279aa;
+
+            font-size: 13px;
+
+            font-weight: 600;
+
+            transition: color 0.2s ease;
+        }
+
+        .back-link:hover {
+
+            color: #052c64;
+
+            text-decoration: underline;
+        }
+
+
+        /* =========================
+           FOOTER
+        ========================= */
+
+        footer {
+
+            background: #ffffff;
+
+            border-top: 1px solid #e6ebf2;
+
+            padding: 50px 0 25px;
+        }
+
+        .footer-container {
+
+            width: 90%;
+            max-width: 1200px;
+
+            margin: 0 auto;
+        }
+
+        .footer-grid {
+
+            display: grid;
+
+            grid-template-columns: 1fr 1fr 1fr;
+
+            gap: 50px;
+        }
+
+        .footer-column:nth-child(1) {
+            text-align: left;
+        }
+
+        .footer-column:nth-child(2) {
+            text-align: center;
+        }
+
+        .footer-column:nth-child(3) {
+            text-align: right;
+        }
+
+        .footer-column h3 {
+
+            margin: 0 0 14px;
+
+            color: #052c64;
+
+            font-size: 15px;
+        }
+
+        .footer-column p {
+
+            margin: 6px 0;
+
+            color: #718096;
+
+            font-size: 13px;
+
+            line-height: 1.5;
+        }
+
+        .footer-column a {
+
+            color: #718096;
+        }
+
+        .footer-column a:hover {
+
+            color: #052c64;
+        }
+
+        .footer-bottom {
+
+            margin-top: 35px;
+
+            padding-top: 20px;
+
+            border-top: 1px solid #edf1f5;
+
+            text-align: center;
+
+            color: #94a3b8;
+
+            font-size: 11px;
+        }
+
+        .footer-bottom a {
+
+            color: #718096;
+        }
+
+
+        /* =========================
+           MOBILE
+        ========================= */
+
+        @media (max-width: 900px) {
+
+            .nav-container {
+
+                flex-direction: column;
+
+                justify-content: center;
+
+                padding: 18px 0;
+
+                gap: 18px;
+            }
+
+            .main-nav {
+
+                flex-wrap: wrap;
+
+                justify-content: center;
+
+                gap: 16px;
+            }
+
+            .footer-grid {
+
+                grid-template-columns: 1fr;
+
+                gap: 30px;
+            }
+
+            .footer-column:nth-child(1),
+            .footer-column:nth-child(2),
+            .footer-column:nth-child(3) {
+
+                text-align: center;
+            }
+
+        }
+
+
+        @media (max-width: 600px) {
+
+            .contact-page {
+
+                padding: 50px 0 60px;
+            }
+
+            .intro h1 {
+
+                font-size: 32px;
+            }
+
+            .form-card {
+
+                padding: 25px 20px;
+            }
+
+            .gdpr-consent label {
+
+                font-size: 12px;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+<!-- =========================
+     HEADER
+========================= -->
+
+<header class="site-header">
+
+    <div class="nav-container">
+
+        <a href="index.html" class="brand">
+
+            <img src="logo.png" alt="DataPay logo">
+
+            <div class="brand-text">
+
+                <div class="brand-name">
+                    DataPay s.r.o.
+                </div>
+
+                <div class="brand-subtitle">
+                    Mzdy • Účtovníctvo • Personalistika
+                </div>
+
+            </div>
+
+        </a>
+
+
+        <nav class="main-nav">
+
+            <a href="index.html">
+                Domov
+            </a>
+
+            <a href="About.html">
+                O nás
+            </a>
+
+            <a href="payroll.html">
+                Služby
+            </a>
+
+            <a href="Cennik.html">
+                Cenník
+            </a>
+
+            <a href="FAQ.html">
+                FAQ
+            </a>
+
+
+            <div class="language">
+
+                <a href="#" class="active">
+                    SK
+                </a>
+
+                <span>/</span>
+
+                <a href="#">
+                    EN
+                </a>
+
+            </div>
+
+        </nav>
+
+    </div>
+
+</header>
+
+
+
+<!-- =========================
+     MAIN
+========================= -->
+
+<main>
+
+    <div class="contact-page">
+
+        <div class="container">
+
+
+            <!-- INTRO -->
+
+            <section class="intro">
+
+                <div class="eyebrow">
+                    DATAPAY • KONTAKT
+                </div>
+
+                <h1>
+                    Kontaktujte nás
+                </h1>
+
+                <p>
+                    Máte záujem o naše služby alebo máte otázku?
+                    Napíšte nám a radi sa vám ozveme.
+                </p>
+
+            </section>
+
+
+
+            <!-- FORM -->
+
+            <section class="form-card">
+
+                <h2>
+                    Odpovieme vám čo najskôr.
+                </h2>
+
+                <p>
+                    Vyplňte krátky formulár a ozveme sa vám
+                    s odpoveďou alebo nezáväznou ponukou.
+                </p>
+
+
+                <form
+                    action="https://formsubmit.co/datapaysk@gmail.com"
+                    method="POST"
+                >
+
+                    <input
+                        type="hidden"
+                        name="_subject"
+                        value="Nový dopyt z webu DataPay"
+                    >
+
+                    <input
+                        type="hidden"
+                        name="_captcha"
+                        value="false"
+                    >
+
+
+                    <!-- NAME -->
+
+                    <div class="form-group">
+
+                        <label for="meno">
+                            Meno a priezvisko
+                        </label>
+
+                        <input
+                            type="text"
+                            id="meno"
+                            name="Meno"
+                            required
+                        >
+
+                    </div>
+
+
+                    <!-- COMPANY -->
+
+                    <div class="form-group">
+
+                        <label for="spolocnost">
+                            Spoločnosť
+                        </label>
+
+                        <input
+                            type="text"
+                            id="spolocnost"
+                            name="Spolocnost"
+                        >
+
+                    </div>
+
+
+                    <!-- EMAIL -->
+
+                    <div class="form-group">
+
+                        <label for="email">
+                            E-mail
+                        </label>
+
+                        <input
+                            type="email"
+                            id="email"
+                            name="Email"
+                            required
+                        >
+
+                    </div>
+
+
+                    <!-- PHONE -->
+
+                    <div class="form-group">
+
+                        <label for="telefon">
+                            Telefón
+                        </label>
+
+                        <input
+                            type="tel"
+                            id="telefon"
+                            name="Telefon"
+                        >
+
+                    </div>
+
+
+                    <!-- MESSAGE -->
+
+                    <div class="form-group">
+
+                        <label for="sprava">
+                            Vaša správa
+                        </label>
+
+                        <textarea
+                            id="sprava"
+                            name="Sprava"
+                            rows="5"
+                            required
+                        ></textarea>
+
+                    </div>
+
+
+                    <!-- GDPR -->
+
+                    <div class="gdpr-consent">
+
+                        <input
+                            type="checkbox"
+                            id="gdpr"
+                            name="GDPR_Suhlas"
+                            value="Ano"
+                            required
+                        >
+
+                        <label for="gdpr">
+
+                            Súhlasím so spracovaním osobných údajov
+                            za účelom vybavenia mojej požiadavky.
+
+                            <a
+                                href="GDPR.html"
+                                target="_blank"
+                                rel="noopener"
+                            >
+                                Ochrana osobných údajov
+                            </a>
+
+                        </label>
+
+                    </div>
+
+
+                    <!-- SUBMIT -->
+
+                    <button
+                        class="btn"
+                        type="submit"
+                    >
+                        Odoslať správu
+                    </button>
+
+                </form>
+
+
+                <!-- INFO -->
+
+                <div class="info-box">
+
+                    <strong>
+                        Môžete nás kontaktovať aj priamo
+                    </strong>
+
+                    <span>
+                        datapaysk@gmail.com
+                        &nbsp; • &nbsp;
+                        +421 903 270 664
+                        &nbsp; • &nbsp;
+                        +421 907 837 030
+                    </span>
+
+                </div>
+
+
+                <!-- BACK -->
+
+                <div class="back-link-wrap">
+
+                    <a
+                        href="index.html"
+                        class="back-link"
+                    >
+                        ← Späť na hlavnú stránku
+                    </a>
+
+                </div>
+
+
+            </section>
+
+        </div>
+
+    </div>
+
+</main>
+
+
+
+<!-- =========================
+     FOOTER
+========================= -->
+
+<footer>
+
+    <div class="footer-container">
+
+        <div class="footer-grid">
+
+
+            <div class="footer-column">
+
+                <h3>
+                    DataPay s.r.o.
+                </h3>
+
+                <p>
+                    Účtovníctvo, mzdy, personalistika
+                    a odborné poradenstvo.
+                </p>
+
+                <p>
+                    Služby poskytujeme firmám
+                    na celom Slovensku.
+                </p>
+
+            </div>
+
+
+
+            <div class="footer-column">
+
+                <h3>
+                    Kontakt
+                </h3>
+
+                <p>
+
+                    <a href="mailto:datapaysk@gmail.com">
+                        datapaysk@gmail.com
+                    </a>
+
+                </p>
+
+                <p>
+
+                    <a href="tel:+421903270664">
+                        +421 903 270 664
+                    </a>
+
+                </p>
+
+                <p>
+
+                    <a href="tel:+421907837030">
+                        +421 907 837 030
+                    </a>
+
+                </p>
+
+            </div>
+
+
+
+            <div class="footer-column">
+
+                <h3>
+                    Spoločnosť
+                </h3>
+
+                <p>
+                    IČO: 57456615
+                </p>
+
+                <p>
+                    DIČ: 2122742622
+                </p>
+
+                <p>
+                    IČ DPH: nie sme platiteľom DPH
+                </p>
+
+            </div>
+
+
+        </div>
+
+
+        <div class="footer-bottom">
+
+            © 2026 DataPay s.r.o. |
+
+            <a href="GDPR.html">
+                Ochrana osobných údajov
+            </a>
+
+        </div>
+
+    </div>
+
+</footer>
+
+
+</body>
+
+</html>
+```
