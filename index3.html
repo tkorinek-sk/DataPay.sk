@@ -1384,13 +1384,28 @@ header {
     display: grid;
 
     grid-template-columns:
-        2fr
+        1fr
         1fr
         1fr;
 
     gap: 50px;
 
     padding-bottom: 40px;
+}
+
+/* Ľavý stĺpec */
+.footer-column:nth-child(1) {
+    text-align: left;
+}
+
+/* Stredný stĺpec */
+.footer-column:nth-child(2) {
+    text-align: center;
+}
+
+/* Pravý stĺpec */
+.footer-column:nth-child(3) {
+    text-align: right;
 }
 
 .footer-column h3 {
