@@ -1,0 +1,852 @@
+<!DOCTYPE html>
+
+<html lang="sk">
+<head>
+
+```
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Ochrana osobných údajov | DataPay</title>
+
+<meta name="description"
+      content="Zásady ochrany osobných údajov spoločnosti DataPay s. r. o.">
+
+<meta name="theme-color" content="#ffffff">
+
+<link rel="icon" type="image/png" href="logo.png">
+
+<style>
+
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
+
+    html {
+        scroll-behavior: smooth;
+    }
+
+    body {
+        font-family: Arial, Helvetica, sans-serif;
+        background: #f7f9fc;
+        color: #1f2937;
+        line-height: 1.7;
+    }
+
+    a {
+        text-decoration: none;
+    }
+
+
+    /* =========================================
+       HEADER – SAME AS FAQ / CENNIK
+    ========================================= */
+
+    .site-header {
+        background: #ffffff;
+        border-bottom: 1px solid #e6ebf2;
+        position: sticky;
+        top: 0;
+        z-index: 1000;
+    }
+
+    .nav-container {
+        width: min(1180px, 92%);
+        min-height: 78px;
+        margin: 0 auto;
+
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+
+        gap: 30px;
+    }
+
+    .brand {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+
+        color: #052c64;
+        flex-shrink: 0;
+    }
+
+    .brand img {
+        width: 54px;
+        height: 54px;
+        object-fit: contain;
+    }
+
+    .brand-text {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+    }
+
+    .brand-name {
+        font-size: 18px;
+        font-weight: 700;
+        line-height: 1.2;
+        color: #052c64;
+    }
+
+    .brand-subtitle {
+        margin-top: 3px;
+        font-size: 11px;
+        line-height: 1.2;
+        color: #718096;
+        white-space: nowrap;
+    }
+
+    .main-nav {
+        display: flex;
+        align-items: center;
+        gap: 26px;
+    }
+
+    .main-nav > a {
+        color: #64748b;
+        font-size: 14px;
+        font-weight: 600;
+        transition: color 0.2s ease;
+    }
+
+    .main-nav > a:hover,
+    .main-nav > a.active {
+        color: #052c64;
+    }
+
+    .language {
+        display: flex;
+        align-items: center;
+        gap: 7px;
+        margin-left: 8px;
+    }
+
+    .language a {
+        color: #9aa6b5;
+        font-size: 12px;
+        font-weight: 700;
+    }
+
+    .language a.active {
+        color: #052c64;
+    }
+
+    .language span {
+        color: #cbd5e1;
+        font-size: 12px;
+    }
+
+
+    /* =========================================
+       MAIN
+    ========================================= */
+
+    main {
+        padding: 55px 0 80px;
+    }
+
+    .container {
+        width: min(1180px, 92%);
+        margin: 0 auto;
+    }
+
+
+    /* =========================================
+       PAGE INTRO
+    ========================================= */
+
+    .page-intro {
+        text-align: center;
+        margin-bottom: 35px;
+    }
+
+    .eyebrow {
+        margin-bottom: 10px;
+
+        color: #315f91;
+        font-size: 12px;
+        font-weight: 700;
+        letter-spacing: 1.5px;
+        text-transform: uppercase;
+    }
+
+    .page-intro h1 {
+        margin-bottom: 12px;
+
+        color: #052c64;
+        font-size: clamp(32px, 4vw, 46px);
+        line-height: 1.15;
+    }
+
+    .page-intro p {
+        max-width: 760px;
+        margin: 0 auto;
+
+        color: #64748b;
+        font-size: 16px;
+    }
+
+
+    /* =========================================
+       CONTENT CARD
+    ========================================= */
+
+    .content-card {
+        background: #ffffff;
+
+        padding: 50px;
+
+        border: 1px solid #e3e8ef;
+        border-radius: 18px;
+
+        box-shadow: 0 8px 30px rgba(15, 23, 42, 0.04);
+    }
+
+    .content-card > p:first-child {
+        margin-bottom: 30px;
+    }
+
+    .content-card h2 {
+        margin-top: 38px;
+        margin-bottom: 15px;
+
+        color: #052c64;
+        font-size: 24px;
+        line-height: 1.3;
+    }
+
+    .content-card h3 {
+        margin-top: 25px;
+        margin-bottom: 10px;
+
+        color: #315f91;
+        font-size: 18px;
+    }
+
+    .content-card p {
+        margin-bottom: 15px;
+    }
+
+    .content-card ul {
+        padding-left: 22px;
+        margin-bottom: 18px;
+    }
+
+    .content-card li {
+        margin-bottom: 8px;
+    }
+
+    .highlight {
+        background: #eef5ff;
+
+        padding: 20px;
+
+        border: 1px solid #dce9f8;
+        border-radius: 12px;
+
+        margin: 20px 0;
+    }
+
+    .back-link {
+        display: inline-block;
+
+        margin-top: 40px;
+
+        color: #315f91;
+        font-weight: 700;
+
+        transition: color 0.2s ease;
+    }
+
+    .back-link:hover {
+        color: #052c64;
+        text-decoration: underline;
+    }
+
+
+    /* =========================================
+       FOOTER – SAME AS FAQ / CENNIK
+    ========================================= */
+
+    footer {
+        background: #071c35;
+        color: #ffffff;
+        padding: 55px 0 20px;
+    }
+
+    .footer-container {
+        width: min(1180px, 92%);
+        margin: 0 auto;
+    }
+
+    .footer-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 40px;
+
+        padding-bottom: 35px;
+    }
+
+    .footer-column {
+        font-size: 14px;
+    }
+
+    .footer-column:nth-child(1) {
+        text-align: left;
+    }
+
+    .footer-column:nth-child(2) {
+        text-align: center;
+    }
+
+    .footer-column:nth-child(3) {
+        text-align: right;
+    }
+
+    .footer-column h3 {
+        margin-bottom: 14px;
+
+        color: #ffffff;
+        font-size: 16px;
+    }
+
+    .footer-column p {
+        margin-bottom: 7px;
+
+        color: #b8c5d4;
+    }
+
+    .footer-column a {
+        color: #b8c5d4;
+        transition: color 0.2s ease;
+    }
+
+    .footer-column a:hover {
+        color: #ffffff;
+    }
+
+    .footer-bottom {
+        padding-top: 20px;
+
+        border-top: 1px solid rgba(255, 255, 255, 0.12);
+
+        color: #8fa0b4;
+        font-size: 13px;
+        text-align: center;
+    }
+
+    .footer-bottom a {
+        color: #b8c5d4;
+    }
+
+    .footer-bottom a:hover {
+        color: #ffffff;
+    }
+
+
+    /* =========================================
+       MOBILE
+    ========================================= */
+
+    @media (max-width: 850px) {
+
+        .nav-container {
+            min-height: auto;
+            padding: 12px 0;
+            flex-wrap: wrap;
+        }
+
+        .main-nav {
+            order: 3;
+            width: 100%;
+
+            justify-content: center;
+            flex-wrap: wrap;
+
+            gap: 15px;
+        }
+
+        .language {
+            margin-left: 0;
+        }
+
+        .content-card {
+            padding: 35px 28px;
+        }
+
+        .footer-grid {
+            grid-template-columns: 1fr;
+            gap: 30px;
+        }
+
+        .footer-column:nth-child(1),
+        .footer-column:nth-child(2),
+        .footer-column:nth-child(3) {
+            text-align: center;
+        }
+    }
+
+    @media (max-width: 520px) {
+
+        .brand-subtitle {
+            font-size: 10px;
+        }
+
+        .brand img {
+            width: 48px;
+            height: 48px;
+        }
+
+        .brand-name {
+            font-size: 17px;
+        }
+
+        main {
+            padding-top: 35px;
+        }
+
+        .content-card {
+            padding: 28px 20px;
+        }
+
+        .content-card h2 {
+            font-size: 21px;
+        }
+
+        .page-intro h1 {
+            font-size: 32px;
+        }
+    }
+
+</style>
+```
+
+</head>
+
+<body>
+
+<!-- =========================================
+     HEADER
+========================================= -->
+
+<header class="site-header">
+
+```
+<div class="nav-container">
+
+    <a href="index.html" class="brand">
+
+        <img src="logo.png" alt="DataPay logo">
+
+        <div class="brand-text">
+
+            <div class="brand-name">
+                DataPay s.r.o.
+            </div>
+
+            <div class="brand-subtitle">
+                Mzdy • Účtovníctvo • Personalistika
+            </div>
+
+        </div>
+
+    </a>
+
+
+    <nav class="main-nav">
+
+        <a href="index.html">
+            Domov
+        </a>
+
+        <a href="About.html">
+            O nás
+        </a>
+
+        <a href="payroll.html">
+            Služby
+        </a>
+
+        <a href="Cennik.html">
+            Cenník
+        </a>
+
+        <a href="FAQ.html">
+            FAQ
+        </a>
+
+        <div class="language">
+
+            <a href="#" class="active">
+                SK
+            </a>
+
+            <span>/</span>
+
+            <a href="#">
+                EN
+            </a>
+
+        </div>
+
+    </nav>
+
+</div>
+```
+
+</header>
+
+<!-- =========================================
+     MAIN
+========================================= -->
+
+<main>
+
+```
+<div class="container">
+
+
+    <div class="page-intro">
+
+        <div class="eyebrow">
+            DATAPAY • GDPR
+        </div>
+
+        <h1>
+            Ochrana osobných údajov
+        </h1>
+
+        <p>
+            Zásady ochrany osobných údajov spoločnosti DataPay s. r. o.
+        </p>
+
+    </div>
+
+
+    <div class="content-card">
+
+        <p>
+            <strong>Účinnosť od:</strong> 01.01.2026
+        </p>
+
+
+        <h2>1. Prevádzkovateľ</h2>
+
+        <p>
+            <strong>DataPay s. r. o.</strong><br>
+            IČO: 57456615<br>
+            Sídlo: Jastrabie Kračany 92<br>
+            Slovenská republika
+        </p>
+
+        <p>
+            <strong>Kontaktné údaje:</strong><br>
+            E-mail: datapaysk@gmail.com<br>
+            Telefón: +421 903 270 664, +421 907 837 030
+        </p>
+
+
+        <h2>2. Úvod</h2>
+
+        <p>
+            Spoločnosť DataPay s. r. o. rešpektuje právo na ochranu osobných údajov
+            a zaväzuje sa chrániť osobné údaje všetkých návštevníkov webovej stránky,
+            klientov a obchodných partnerov.
+        </p>
+
+        <p>
+            Osobné údaje spracúvame v súlade s:
+        </p>
+
+        <ul>
+            <li>
+                Nariadením Európskeho parlamentu a Rady (EÚ) 2016/679 (GDPR)
+            </li>
+
+            <li>
+                Zákonom č. 18/2018 Z. z. o ochrane osobných údajov
+            </li>
+        </ul>
+
+
+        <h2>3. Aké osobné údaje spracúvame</h2>
+
+        <p>
+            Prostredníctvom kontaktného formulára môžeme spracúvať:
+        </p>
+
+        <ul>
+            <li>Meno a priezvisko</li>
+            <li>Názov spoločnosti</li>
+            <li>E-mailovú adresu</li>
+            <li>Telefónne číslo</li>
+            <li>Obsah správy</li>
+        </ul>
+
+        <p>
+            Pri návšteve webovej stránky môžeme spracúvať:
+        </p>
+
+        <ul>
+            <li>IP adresu</li>
+            <li>Typ zariadenia a prehliadača</li>
+            <li>Dátum a čas návštevy</li>
+            <li>Technické údaje potrebné na fungovanie stránky</li>
+            <li>Cookies</li>
+        </ul>
+
+
+        <h2>4. Účel spracúvania osobných údajov</h2>
+
+        <ul>
+            <li>Komunikácia s klientmi a záujemcami o služby</li>
+            <li>Odpovedanie na otázky zaslané cez formulár</li>
+            <li>Príprava cenových ponúk</li>
+            <li>Poskytovanie mzdových, personálnych a poradenských služieb</li>
+            <li>Zabezpečenie funkčnosti a bezpečnosti webovej stránky</li>
+        </ul>
+
+
+        <h2>5. Právny základ spracúvania</h2>
+
+        <h3>Predzmluvné a zmluvné vzťahy</h3>
+
+        <p>
+            Článok 6 ods. 1 písm. b) GDPR
+        </p>
+
+        <p>
+            Spracúvanie je nevyhnutné na vykonanie opatrení pred uzatvorením zmluvy
+            a na plnenie zmluvných povinností.
+        </p>
+
+        <h3>Oprávnený záujem</h3>
+
+        <p>
+            Článok 6 ods. 1 písm. f) GDPR
+        </p>
+
+        <p>
+            Komunikácia s klientmi a ochrana webovej stránky.
+        </p>
+
+        <h3>Súhlas</h3>
+
+        <p>
+            Článok 6 ods. 1 písm. a) GDPR
+        </p>
+
+        <p>
+            Ak sa vyžaduje súhlas, môžete ho kedykoľvek odvolať.
+        </p>
+
+
+        <h2>6. Doba uchovávania údajov</h2>
+
+        <ul>
+            <li>
+                Údaje z kontaktného formulára: maximálne 24 mesiacov od poslednej komunikácie
+            </li>
+
+            <li>
+                Údaje spracúvané na základe zmluvy: podľa zákonných lehôt
+            </li>
+
+            <li>
+                Marketingové údaje: do odvolania súhlasu
+            </li>
+        </ul>
+
+
+        <h2>7. Príjemcovia osobných údajov</h2>
+
+        <p>
+            Osobné údaje môžu byť sprístupnené:
+        </p>
+
+        <ul>
+            <li>Poskytovateľovi hostingu webovej stránky</li>
+            <li>Poskytovateľovi e-mailových služieb</li>
+            <li>Službe FormSubmit používanej pre kontaktný formulár</li>
+            <li>Orgánom verejnej moci, ak to vyžaduje zákon</li>
+        </ul>
+
+        <p>
+            Vaše údaje neposkytujeme tretím stranám na reklamné alebo komerčné účely.
+        </p>
+
+
+        <h2>8. Bezpečnosť osobných údajov</h2>
+
+        <ul>
+            <li>Šifrované HTTPS spojenie</li>
+            <li>Obmedzený prístup k údajom</li>
+            <li>Pravidelné aktualizácie systémov</li>
+            <li>Primerané technické a organizačné opatrenia</li>
+        </ul>
+
+
+        <h2>9. Vaše práva</h2>
+
+        <p>
+            Máte právo:
+        </p>
+
+        <ul>
+            <li>Na prístup k osobným údajom</li>
+            <li>Na opravu údajov</li>
+            <li>Na vymazanie údajov</li>
+            <li>Na obmedzenie spracúvania</li>
+            <li>Na prenosnosť údajov</li>
+            <li>Namietať proti spracúvaniu</li>
+            <li>Odvolať súhlas</li>
+            <li>Podať sťažnosť dozornému orgánu</li>
+        </ul>
+
+
+        <h2>10. Dozorný orgán</h2>
+
+        <div class="highlight">
+
+            <strong>
+                Úrad na ochranu osobných údajov Slovenskej republiky
+            </strong>
+
+            <br><br>
+
+            Hraničná 12<br>
+            820 07 Bratislava 27<br>
+            Slovenská republika
+
+        </div>
+
+
+        <h2>11. Cookies</h2>
+
+        <p>
+            Webová stránka môže používať nevyhnutné cookies potrebné na jej správne fungovanie.
+        </p>
+
+        <p>
+            Ak sú na stránke využívané analytické alebo marketingové cookies,
+            budú používané iba po udelení súhlasu návštevníkom.
+        </p>
+
+
+        <h2>12. Zmeny zásad ochrany osobných údajov</h2>
+
+        <p>
+            Tieto zásady môžeme priebežne aktualizovať.
+            Aktuálna verzia je vždy zverejnená na tejto stránke.
+        </p>
+
+
+        <h2>13. Kontakt</h2>
+
+        <p>
+            Ak máte otázky týkajúce sa ochrany osobných údajov, kontaktujte nás:
+        </p>
+
+        <p>
+            <strong>DataPay s. r. o.</strong><br>
+            E-mail: datapaysk@gmail.com<br>
+            Telefón: +421 903 270 664, +421 907 837 030
+        </p>
+
+
+        <div style="text-align:center;">
+
+            <a href="index.html" class="back-link">
+                ← Späť na hlavnú stránku
+            </a>
+
+        </div>
+
+    </div>
+
+</div>
+```
+
+</main>
+
+<!-- =========================================
+     FOOTER
+========================================= -->
+
+<footer>
+
+```
+<div class="footer-container">
+
+    <div class="footer-grid">
+
+
+        <div class="footer-column">
+
+            <h3>
+                DataPay s.r.o.
+            </h3>
+
+            <p>
+                Účtovníctvo, mzdy, personalistika
+                a odborné poradenstvo.
+            </p>
+
+            <p>
+                Služby poskytujeme firmám
+                na celom Slovensku.
+            </p>
+
+        </div>
+
+
+
+        <div class="footer-column">
+
+            <h3>
+                Kontakt
+            </h3>
+
+            <p>
+                <a href="mailto:datapaysk@gmail.com">
+                    datapaysk@gmail.com
+                </a>
+            </p>
+
+            <p>
+                <a href="tel:+421903270664">
+                    +421 903 270 664
+                </a>
+            </p>
+
+            <p>
+                <a href="tel:+421907837030">
+                    +421 907 837 030
+                </a>
+            </p>
+
+        </div>
+
+
+
+        <div class="footer-column">
+
+            <h3>
+                Spoločnosť
+            </h3>
+
+            <p>
+                IČO: 57456615
+            </p>
+
+            <p>
+                DIČ: 2122742622
+            </p>
+
+            <p>
+                IČ DPH
+```
