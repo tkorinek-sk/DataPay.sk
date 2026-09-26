@@ -1,25 +1,33 @@
 <!DOCTYPE html>
 <html lang="sk">
+
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Cenník služieb | DataPay s.r.o.</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<meta name="description" content="Cenník služieb DataPay – účtovníctvo, mzdy, personalistika a odborné poradenstvo pre firmy.">
+    <title>Cenník služieb | DataPay s.r.o.</title>
 
-<link rel="canonical" href="https://datapay.sk/Cennik.html">
+    <meta name="description"
+          content="Transparentný cenník služieb DataPay – účtovníctvo, mzdy, personalistika a odborné poradenstvo pre firmy.">
 
-<meta property="og:title" content="Cenník služieb | DataPay s.r.o.">
-<meta property="og:description" content="Transparentný cenník účtovníctva, miezd a doplnkových služieb DataPay.">
-<meta property="og:url" content="https://datapay.sk/Cennik.html">
-<meta property="og:type" content="website">
-<meta property="og:image" content="https://datapay.sk/logo.png">
+    <link rel="canonical" href="https://datapay.sk/Cennik.html">
+
+    <meta property="og:title" content="Cenník služieb | DataPay s.r.o.">
+    <meta property="og:description"
+          content="Transparentný cenník účtovníctva, miezd a doplnkových služieb DataPay.">
+    <meta property="og:url" content="https://datapay.sk/Cennik.html">
+    <meta property="og:type" content="website">
+    <meta property="og:image" content="https://datapay.sk/logo.png">
+
+    <!-- SHARED HEADER + FOOTER -->
+    <link rel="stylesheet" href="components.css">
+
 
 <style>
 
 /* =========================================================
-   RESET
+   RESET / BASE
 ========================================================= */
 
 *{
@@ -39,110 +47,10 @@ body{
     line-height:1.6;
 }
 
-a{
-    text-decoration:none;
-    color:inherit;
-}
-
 .container{
     width:90%;
     max-width:1200px;
     margin:0 auto;
-}
-
-
-/* =========================================================
-   HEADER
-========================================================= */
-
-.site-header{
-    background:#ffffff;
-    border-bottom:1px solid #e6ebf2;
-    position:sticky;
-    top:0;
-    z-index:1000;
-}
-
-.nav-container{
-    width:90%;
-    max-width:1200px;
-    margin:0 auto;
-
-    min-height:88px;
-
-    display:flex;
-    align-items:center;
-    justify-content:space-between;
-    gap:35px;
-}
-
-.brand{
-    display:flex;
-    align-items:center;
-    gap:14px;
-    flex-shrink:0;
-}
-
-.brand img{
-    width:54px;
-    height:54px;
-    object-fit:contain;
-}
-
-.brand-text{
-    display:flex;
-    flex-direction:column;
-}
-
-.brand-name{
-    color:#052c64;
-    font-size:20px;
-    font-weight:700;
-    line-height:1.1;
-}
-
-.brand-subtitle{
-    color:#718096;
-    font-size:12px;
-    margin-top:4px;
-}
-
-.main-nav{
-    display:flex;
-    align-items:center;
-    gap:28px;
-}
-
-.main-nav a{
-    color:#334155;
-    font-size:14px;
-    font-weight:500;
-    transition:.25s ease;
-}
-
-.main-nav a:hover{
-    color:#0d6efd;
-}
-
-.main-nav a.active{
-    color:#052c64;
-    font-weight:700;
-}
-
-.language{
-    display:flex;
-    gap:7px;
-    margin-left:4px;
-}
-
-.language a{
-    font-size:12px;
-    color:#7b8794;
-}
-
-.language a.active{
-    color:#052c64;
-    font-weight:700;
 }
 
 
@@ -218,7 +126,7 @@ a{
 
 
 /* =========================================================
-   ACCOUNTING CARDS
+   ACCOUNTING
 ========================================================= */
 
 .accounting-grid{
@@ -322,6 +230,7 @@ a{
 
 .card-list li::before{
     content:"✓";
+
     position:absolute;
     left:0;
     top:0;
@@ -333,6 +242,7 @@ a{
 .card-note{
     margin-top:20px;
     padding-top:16px;
+
     border-top:1px solid #edf1f5;
 
     color:#8491a0;
@@ -358,7 +268,9 @@ a{
     background:#ffffff;
     border:1px solid #e3e9f0;
     border-radius:18px;
+
     padding:30px;
+
     text-align:center;
 
     box-shadow:0 10px 30px rgba(5,44,100,.05);
@@ -401,6 +313,7 @@ a{
     background:#ffffff;
     border:1px solid #e3e9f0;
     border-radius:18px;
+
     padding:32px;
 
     box-shadow:0 10px 30px rgba(5,44,100,.045);
@@ -429,7 +342,9 @@ a{
 
 .included-item{
     background:#f6f9fc;
+
     border-radius:10px;
+
     padding:13px 16px;
 
     color:#445365;
@@ -453,8 +368,10 @@ a{
 
 .table-wrapper{
     background:#ffffff;
+
     border:1px solid #e3e9f0;
     border-radius:18px;
+
     overflow:hidden;
 
     box-shadow:0 10px 30px rgba(5,44,100,.05);
@@ -472,12 +389,14 @@ a{
     padding:17px 20px;
 
     text-align:left;
+
     font-size:14px;
     font-weight:600;
 }
 
 .services-table td{
     padding:16px 20px;
+
     border-bottom:1px solid #edf1f5;
 
     color:#445365;
@@ -525,18 +444,21 @@ a{
     color:white;
 
     padding:75px 20px;
+
     text-align:center;
 }
 
 .cta h2{
     font-size:36px;
     line-height:1.2;
+
     margin-bottom:15px;
 }
 
 .cta p{
     max-width:680px;
     margin:0 auto;
+
     color:rgba(255,255,255,.78);
     font-size:16px;
 }
@@ -550,6 +472,7 @@ a{
     color:#052c64;
 
     padding:14px 30px;
+
     border-radius:50px;
 
     font-size:14px;
@@ -564,74 +487,10 @@ a{
 
 
 /* =========================================================
-   FOOTER
-========================================================= */
-
-footer{
-    background:#031b3e;
-    color:white;
-    padding:55px 0 25px;
-}
-
-.footer-grid{
-    display:grid;
-    grid-template-columns:1fr 1fr 1fr;
-    gap:50px;
-}
-
-.footer-column:nth-child(1){
-    text-align:left;
-}
-
-.footer-column:nth-child(2){
-    text-align:center;
-}
-
-.footer-column:nth-child(3){
-    text-align:right;
-}
-
-.footer-column h3{
-    font-size:17px;
-    margin-bottom:15px;
-}
-
-.footer-column p{
-    color:rgba(255,255,255,.68);
-    font-size:13px;
-    margin-bottom:6px;
-}
-
-.footer-column a{
-    color:rgba(255,255,255,.78);
-    transition:.2s ease;
-}
-
-.footer-column a:hover{
-    color:white;
-}
-
-.footer-bottom{
-    margin-top:40px;
-    padding-top:20px;
-
-    border-top:1px solid rgba(255,255,255,.12);
-
-    text-align:center;
-    color:rgba(255,255,255,.45);
-    font-size:12px;
-}
-
-
-/* =========================================================
    RESPONSIVE
 ========================================================= */
 
 @media(max-width:900px){
-
-    .main-nav{
-        gap:16px;
-    }
 
     .accounting-grid,
     .payroll-cards{
@@ -647,18 +506,6 @@ footer{
 }
 
 @media(max-width:768px){
-
-    .nav-container{
-        min-height:76px;
-    }
-
-    .main-nav{
-        display:none;
-    }
-
-    .brand-subtitle{
-        font-size:11px;
-    }
 
     .page-intro{
         padding:55px 0 40px;
@@ -692,23 +539,14 @@ footer{
         min-width:700px;
     }
 
-    .footer-grid{
-        grid-template-columns:1fr;
-        gap:30px;
-    }
-
-    .footer-column:nth-child(1),
-    .footer-column:nth-child(2),
-    .footer-column:nth-child(3){
-        text-align:left;
-    }
-
     .cta h2{
         font-size:29px;
     }
+
 }
 
 </style>
+
 </head>
 
 
@@ -716,69 +554,14 @@ footer{
 
 
 <!-- =====================================================
-     HEADER
+     SHARED HEADER
 ===================================================== -->
 
-<header class="site-header">
-
-    <div class="nav-container">
-
-        <a href="index.html" class="brand">
-
-            <img src="logo.png" alt="DataPay logo">
-
-            <div class="brand-text">
-
-                <div class="brand-name">
-                    DataPay s.r.o.
-                </div>
-
-                <div class="brand-subtitle">
-                    Mzdy • Účtovníctvo • Personalistika
-                </div>
-
-            </div>
-
-        </a>
-
-
-        <nav class="main-nav">
-
-            <a href="index.html">
-                Domov
-            </a>
-
-            <a href="About.html">
-                O nás
-            </a>
-
-            <a href="payroll.html">
-                Služby
-            </a>
-
-            <a href="Cennik.html" class="active">
-                Cenník
-            </a>
-
-            <a href="FAQ.html">
-                FAQ
-            </a>
-
-            <div class="language">
-                <a href="Cennik.html" class="active">SK</a>
-                <span>/</span>
-                <a href="Cennik-en.html">EN</a>
-            </div>
-
-        </nav>
-
-    </div>
-
-</header>
+<div id="site-header"></div>
 
 
 <!-- =====================================================
-     INTRO
+     PAGE INTRO
 ===================================================== -->
 
 <section class="page-intro">
@@ -827,8 +610,6 @@ footer{
         <div class="accounting-grid">
 
 
-            <!-- BASIC -->
-
             <div class="accounting-card">
 
                 <div class="card-number">
@@ -871,8 +652,6 @@ footer{
 
             </div>
 
-
-            <!-- MEDIUM -->
 
             <div class="accounting-card featured">
 
@@ -920,8 +699,6 @@ footer{
 
             </div>
 
-
-            <!-- COMPLEX -->
 
             <div class="accounting-card">
 
@@ -1143,6 +920,7 @@ footer{
                 <thead>
 
                     <tr>
+
                         <th>
                             Služba
                         </th>
@@ -1150,6 +928,7 @@ footer{
                         <th>
                             Cena
                         </th>
+
                     </tr>
 
                 </thead>
@@ -1158,6 +937,7 @@ footer{
                 <tbody>
 
                     <tr>
+
                         <td>
                             Registrácia zamestnávateľa na daň zo závislej činnosti
                         </td>
@@ -1165,10 +945,12 @@ footer{
                         <td>
                             25 €
                         </td>
+
                     </tr>
 
 
                     <tr>
+
                         <td>
                             Registrácia zamestnávateľa v SP a ZP
                         </td>
@@ -1176,10 +958,12 @@ footer{
                         <td>
                             25 €
                         </td>
+
                     </tr>
 
 
                     <tr>
+
                         <td>
                             Registrácia nového zamestnanca
                         </td>
@@ -1187,10 +971,12 @@ footer{
                         <td>
                             20 €
                         </td>
+
                     </tr>
 
 
                     <tr>
+
                         <td>
                             Pracovná zmluva alebo kontrola zmluvy
                         </td>
@@ -1198,10 +984,12 @@ footer{
                         <td>
                             25 €
                         </td>
+
                     </tr>
 
 
                     <tr>
+
                         <td>
                             Ukončenie pracovného pomeru
                         </td>
@@ -1209,10 +997,12 @@ footer{
                         <td>
                             20 €
                         </td>
+
                     </tr>
 
 
                     <tr>
+
                         <td>
                             Opravy miezd a výkazov (iniciované zamestnávateľom)
                         </td>
@@ -1220,10 +1010,12 @@ footer{
                         <td>
                             40 €/hod
                         </td>
+
                     </tr>
 
 
                     <tr>
+
                         <td>
                             Komplexná príprava mzdovej a personálnej dokumentácie pre účely kontrol štátnych inštitúcií
                         </td>
@@ -1231,6 +1023,7 @@ footer{
                         <td>
                             30 €/hod
                         </td>
+
                     </tr>
 
                 </tbody>
@@ -1281,102 +1074,17 @@ footer{
 
 
 <!-- =====================================================
-     FOOTER
+     SHARED FOOTER
 ===================================================== -->
 
-<footer>
-
-    <div class="container">
-
-        <div class="footer-grid">
+<div id="site-footer"></div>
 
 
-            <!-- LEFT -->
+<!-- =====================================================
+     SHARED COMPONENTS
+===================================================== -->
 
-            <div class="footer-column">
-
-                <h3>
-                    DataPay s.r.o.
-                </h3>
-
-                <p>
-                    Účtovníctvo, mzdy, personalistika
-                    a odborné poradenstvo.
-                </p>
-
-                <p>
-                    Služby poskytujeme firmám
-                    na celom Slovensku.
-                </p>
-
-            </div>
-
-
-            <!-- CENTER -->
-
-            <div class="footer-column">
-
-                <h3>
-                    Kontakt
-                </h3>
-
-                <p>
-                    <a href="mailto:datapaysk@gmail.com">
-                        datapaysk@gmail.com
-                    </a>
-                </p>
-
-                <p>
-                    <a href="tel:+421903270664">
-                        +421 903 270 664
-                    </a>
-                </p>
-
-                <p>
-                    <a href="tel:+421907837030">
-                        +421 907 837 030
-                    </a>
-                </p>
-
-            </div>
-
-
-            <!-- RIGHT -->
-
-            <div class="footer-column">
-
-                <h3>
-                    Spoločnosť
-                </h3>
-
-                <p>
-                    IČO: 57456615
-                </p>
-
-                <p>
-                    DIČ: 2122742622
-                </p>
-
-                <p>
-                    IČ DPH: nie sme platiteľom DPH
-                </p>
-
-            </div>
-
-        </div>
-
-
-        <div class="footer-bottom">
-
-            © 2026 DataPay s.r.o. |
-            <a href="GDPR.html">Ochrana osobných údajov</a>
-
-        </div>
-
-    </div>
-
-</footer>
-
+<script src="components.js"></script>
 
 </body>
 </html>
