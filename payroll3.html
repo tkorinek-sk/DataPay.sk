@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="sk">
 
@@ -5,43 +6,34 @@
 
     <meta charset="UTF-8">
 
-    <meta name="viewport"
-          content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <meta name="theme-color"
-          content="#052c64">
+    <meta name="theme-color" content="#052c64">
 
     <meta name="description"
           content="DataPay poskytuje účtovníctvo, spracovanie miezd, personalistiku a odborné poradenstvo pre firmy na celom Slovensku.">
 
-    <meta name="robots"
-          content="index, follow">
+    <meta name="robots" content="index, follow">
 
-    <meta name="author"
-          content="DataPay s.r.o.">
+    <meta name="author" content="DataPay s.r.o.">
 
-    <title>
-        Naše služby | Účtovníctvo, mzdy a personalistika | DataPay
-    </title>
+    <title>Naše služby | Účtovníctvo, mzdy a personalistika | DataPay</title>
 
     <link rel="canonical"
           href="https://datapay.sk/payroll.html">
 
     <link rel="icon"
-          href="favicon.png"
-          type="image/png">
+          type="image/png"
+          href="logo.png">
 
 
     <!-- OPEN GRAPH -->
 
-    <meta property="og:locale"
-          content="sk_SK">
+    <meta property="og:locale" content="sk_SK">
 
-    <meta property="og:type"
-          content="website">
+    <meta property="og:type" content="website">
 
-    <meta property="og:site_name"
-          content="DataPay">
+    <meta property="og:site_name" content="DataPay">
 
     <meta property="og:title"
           content="Naše služby | DataPay">
@@ -76,9 +68,9 @@
 
     <style>
 
-        /* =====================================================
+        /* ========================================
            RESET
-        ===================================================== */
+        ======================================== */
 
         * {
             margin: 0;
@@ -86,466 +78,235 @@
             box-sizing: border-box;
         }
 
-
         html {
             scroll-behavior: smooth;
         }
 
-
         body {
-
-            font-family:
-                Arial,
-                Helvetica,
-                sans-serif;
-
+            font-family: Arial, Helvetica, sans-serif;
             background: #f7f9fc;
-
-            color: #172b4d;
-
-            line-height: 1.6;
-
+            color: #1f2937;
+            line-height: 1.7;
             overflow-x: hidden;
         }
-
 
         a {
             text-decoration: none;
         }
 
-
         .container {
-
-            width: min(
-                1180px,
-                92%
-            );
-
+            width: 90%;
+            max-width: 1200px;
             margin: 0 auto;
         }
 
 
-        /* =====================================================
+        /* ========================================
            HEADER
-        ===================================================== */
+        ======================================== */
 
         .site-header {
-
-            background:
-                linear-gradient(
-                    135deg,
-                    #052c64,
-                    #0b4f91
-                );
-
-            color: white;
-
-            padding: 18px 0;
-
-            position: relative;
-
-            z-index: 10;
+            background: #ffffff;
+            border-bottom: 1px solid #e6ebf2;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
         }
 
-
         .nav-container {
+            min-height: 82px;
 
             display: flex;
-
             align-items: center;
-
             justify-content: space-between;
 
             gap: 30px;
         }
 
-
-        .logo {
-
+        .brand {
             display: flex;
-
             align-items: center;
+            gap: 12px;
 
-            gap: 14px;
-
-            color: white;
+            color: #052c64;
+            flex-shrink: 0;
         }
 
-
-        .logo img {
-
-            width: auto;
-
-            height: 58px;
-
-            display: block;
+        .brand img {
+            width: 54px;
+            height: 54px;
+            object-fit: contain;
         }
 
-
-        .logo-text strong {
-
-            display: block;
-
-            font-size: 18px;
-
-            line-height: 1.3;
+        .brand-text {
+            display: flex;
+            flex-direction: column;
+            line-height: 1.2;
         }
 
-
-        .logo-text span {
-
-            display: block;
-
-            margin-top: 3px;
-
-            color:
-                rgba(
-                    255,
-                    255,
-                    255,
-                    .78
-                );
-
-            font-size: 12px;
+        .brand-name {
+            font-size: 21px;
+            font-weight: 700;
+            color: #052c64;
         }
 
+        .brand-subtitle {
+            margin-top: 4px;
+            font-size: 11px;
+            color: #718096;
+            letter-spacing: 0.2px;
+        }
 
         .main-nav {
-
             display: flex;
-
             align-items: center;
-
-            gap: 25px;
+            gap: 28px;
         }
 
-
-        .main-nav a {
-
-            color:
-                rgba(
-                    255,
-                    255,
-                    255,
-                    .88
-                );
-
+        .main-nav > a {
+            color: #475569;
             font-size: 14px;
-
             font-weight: 600;
 
-            transition:
-                color .2s ease;
+            transition: color 0.2s ease;
         }
 
-
-        .main-nav a:hover {
-
-            color: white;
+        .main-nav > a:hover {
+            color: #0d4d94;
         }
 
+        .main-nav > a.active {
+            color: #052c64;
+        }
 
-        .language-switch {
-
+        .language {
             display: flex;
-
             align-items: center;
-
             gap: 7px;
+
+            margin-left: 4px;
+
+            font-size: 13px;
+            font-weight: 600;
+        }
+
+        .language a {
+            color: #9aa4b2;
+        }
+
+        .language a.active {
+            color: #052c64;
+        }
+
+        .language span {
+            color: #c5ccd5;
         }
 
 
-        .language-switch a {
-
-            display: inline-flex;
-
-            align-items: center;
-
-            justify-content: center;
-
-            min-width: 34px;
-
-            height: 30px;
-
-            border-radius: 7px;
-
-            color:
-                rgba(
-                    255,
-                    255,
-                    255,
-                    .72
-                );
-
-            font-size: 11px;
-
-            font-weight: 700;
-
-            transition:
-                background .2s ease,
-                color .2s ease;
-        }
-
-
-        .language-switch a.active,
-        .language-switch a:hover {
-
-            background:
-                rgba(
-                    255,
-                    255,
-                    255,
-                    .12
-                );
-
-            color: white;
-        }
-
-
-        /* =====================================================
-           ANNOUNCEMENT
-        ===================================================== */
-
-        .announcement {
-
-            padding: 10px 15px;
-
-            background: #041f47;
-
-            color:
-                rgba(
-                    255,
-                    255,
-                    255,
-                    .88
-                );
-
-            text-align: center;
-
-            font-size: 12px;
-        }
-
-
-        /* =====================================================
-           PAGE INTRO
-        ===================================================== */
+        /* ========================================
+           INTRO
+        ======================================== */
 
         .services-intro {
-
-            position: relative;
-
-            overflow: hidden;
-
-            padding: 75px 0 55px;
-
-            background:
-
-                radial-gradient(
-                    circle at 85% 25%,
-                    rgba(
-                        13,
-                        110,
-                        253,
-                        .11
-                    ),
-                    transparent 27%
-                ),
-
-                linear-gradient(
-                    135deg,
-                    #f8fbff,
-                    #edf5ff
-                );
-
+            padding: 70px 0 55px;
+            background: #ffffff;
             text-align: center;
+
+            border-bottom: 1px solid #edf1f5;
         }
-
-
-        .services-intro::before {
-
-            content: "";
-
-            position: absolute;
-
-            width: 360px;
-
-            height: 360px;
-
-            top: -220px;
-
-            right: -80px;
-
-            border-radius: 50%;
-
-            background:
-                rgba(
-                    13,
-                    110,
-                    253,
-                    .045
-                );
-        }
-
 
         .intro-content {
-
-            position: relative;
-
-            z-index: 2;
-
             max-width: 800px;
-
             margin: 0 auto;
         }
 
-
         .intro-label {
+            display: inline-block;
 
-            display: inline-flex;
+            margin-bottom: 10px;
 
-            align-items: center;
+            color: #5279aa;
 
-            gap: 8px;
-
-            margin-bottom: 18px;
-
-            color: #3972a8;
-
-            font-size: 12px;
-
+            font-size: 13px;
             font-weight: 700;
 
-            letter-spacing: 2px;
-
             text-transform: uppercase;
+            letter-spacing: 1.8px;
         }
 
-
-        .intro-label::before,
-        .intro-label::after {
-
-            content: "";
-
-            width: 25px;
-
-            height: 2px;
-
-            background: #3972a8;
+        .intro-label span {
+            color: #5279aa;
         }
-
 
         .intro-content h1 {
-
-            margin-bottom: 18px;
+            margin-bottom: 15px;
 
             color: #052c64;
 
-            font-size:
-                clamp(
-                    38px,
-                    5vw,
-                    58px
-                );
-
-            line-height: 1.1;
-
-            letter-spacing: -1.5px;
+            font-size: 44px;
+            line-height: 1.2;
+            letter-spacing: -0.8px;
         }
-
 
         .intro-content p {
-
-            max-width: 680px;
-
+            max-width: 700px;
             margin: 0 auto;
 
-            color: #66758a;
+            color: #64748b;
 
             font-size: 17px;
-
-            line-height: 1.8;
         }
 
 
-        /* =====================================================
-           SERVICES ACCORDION
-        ===================================================== */
+        /* ========================================
+           SERVICES
+        ======================================== */
 
         .services-section {
-
-            padding: 55px 0 95px;
-
+            padding: 55px 0 85px;
             background: #f7f9fc;
         }
 
-
         .services-list {
-
             max-width: 980px;
-
             margin: 0 auto;
 
             display: grid;
-
             gap: 14px;
         }
 
-
         .service-item {
-
             position: relative;
 
-            background: white;
+            background: #ffffff;
 
-            border:
-                1px solid #dfe7f1;
-
+            border: 1px solid #dfe7f1;
             border-radius: 18px;
 
             overflow: hidden;
 
             box-shadow:
                 0 5px 20px
-                rgba(
-                    5,
-                    44,
-                    100,
-                    .035
-                );
+                rgba(5, 44, 100, 0.035);
 
             transition:
-                border-color .3s ease,
-                box-shadow .3s ease;
+                border-color 0.3s ease,
+                box-shadow 0.3s ease;
         }
 
-
         .service-item.active {
-
-            border-color:
-                rgba(
-                    13,
-                    110,
-                    253,
-                    .32
-                );
+            border-color: #c8d8e9;
 
             box-shadow:
                 0 12px 32px
-                rgba(
-                    5,
-                    44,
-                    100,
-                    .08
-                );
+                rgba(5, 44, 100, 0.08);
         }
 
 
-        /* HEADER OF ACCORDION */
+        /* ACCORDION HEADER */
 
         .service-trigger {
-
             width: 100%;
-
             min-height: 105px;
 
             display: grid;
@@ -574,129 +335,80 @@
             font-family: inherit;
         }
 
-
         .service-number {
-
-            color:
-                rgba(
-                    13,
-                    110,
-                    253,
-                    .42
-                );
+            color: #9aafc6;
 
             font-size: 12px;
-
             font-weight: 800;
 
             letter-spacing: 2px;
         }
 
-
         .service-main {
-
             display: flex;
-
             align-items: center;
-
             gap: 18px;
         }
 
-
         .service-icon {
-
             flex: 0 0 52px;
 
             width: 52px;
-
             height: 52px;
 
             display: flex;
-
             align-items: center;
-
             justify-content: center;
 
             border-radius: 15px;
 
-            background:
-                linear-gradient(
-                    135deg,
-                    #e7f1ff,
-                    #f3f7fc
-                );
-
-            color: #0d6efd;
+            background: #eef4fb;
+            color: #5279aa;
 
             transition:
-                transform .3s ease,
-                background .3s ease;
+                transform 0.3s ease,
+                background 0.3s ease;
         }
 
+        .service-item.active .service-icon {
+            transform: scale(1.05);
 
-        .service-item.active
-        .service-icon {
-
-            transform:
-                scale(1.05);
-
-            background:
-                linear-gradient(
-                    135deg,
-                    #dcecff,
-                    #edf5ff
-                );
+            background: #e5eef8;
+            color: #0d4d94;
         }
-
 
         .service-icon svg {
-
             width: 25px;
-
             height: 25px;
 
             fill: none;
-
             stroke: currentColor;
 
             stroke-width: 1.8;
-
             stroke-linecap: round;
-
             stroke-linejoin: round;
         }
 
-
         .service-title h2 {
-
             color: #052c64;
 
             font-size: 22px;
-
             line-height: 1.3;
 
             margin-bottom: 3px;
         }
 
-
         .service-title p {
-
             color: #7a8797;
-
             font-size: 13px;
         }
 
-
         .service-toggle {
-
             width: 40px;
-
             height: 40px;
 
             display: flex;
-
             align-items: center;
-
             justify-content: center;
 
             margin-left: auto;
@@ -704,66 +416,50 @@
             border-radius: 50%;
 
             background: #f1f5f9;
-
             color: #052c64;
 
             font-size: 23px;
-
             font-weight: 300;
 
             line-height: 1;
 
             transition:
-                transform .35s ease,
-                background .25s ease,
-                color .25s ease;
+                transform 0.35s ease,
+                background 0.25s ease,
+                color 0.25s ease;
+        }
+
+        .service-item.active .service-toggle {
+            transform: rotate(45deg);
+
+            background: #052c64;
+            color: #ffffff;
         }
 
 
-        .service-item.active
-        .service-toggle {
-
-            transform:
-                rotate(45deg);
-
-            background: #0d6efd;
-
-            color: white;
-        }
-
-
-        /* =====================================================
+        /* ========================================
            ACCORDION CONTENT
-        ===================================================== */
+        ======================================== */
 
         .service-details {
-
             display: grid;
 
             grid-template-rows: 0fr;
 
             transition:
-                grid-template-rows .4s ease;
+                grid-template-rows 0.4s ease;
         }
 
-
-        .service-item.active
-        .service-details {
-
+        .service-item.active .service-details {
             grid-template-rows: 1fr;
         }
 
-
         .service-details-inner {
-
             min-height: 0;
-
             overflow: hidden;
         }
 
-
         .service-details-content {
-
             margin:
                 0 28px
                 25px
@@ -775,43 +471,27 @@
 
             border-radius: 14px;
 
-            background:
-                linear-gradient(
-                    135deg,
-                    #f7faff,
-                    #f1f6fc
-                );
+            background: #f7faff;
 
-            border:
-                1px solid #e1eaf4;
+            border: 1px solid #e1eaf4;
         }
 
-
         .details-heading {
-
             margin-bottom: 17px;
 
             color: #052c64;
 
             font-size: 14px;
-
             font-weight: 700;
-
-            letter-spacing: .2px;
         }
 
-
         .details-grid {
-
             display: grid;
 
             grid-template-columns:
                 repeat(
                     2,
-                    minmax(
-                        0,
-                        1fr
-                    )
+                    minmax(0, 1fr)
                 );
 
             gap:
@@ -821,9 +501,7 @@
             list-style: none;
         }
 
-
         .details-grid li {
-
             position: relative;
 
             padding-left: 22px;
@@ -831,33 +509,28 @@
             color: #4e5f73;
 
             font-size: 14px;
-
             line-height: 1.6;
         }
 
-
         .details-grid li::before {
-
             content: "✓";
 
             position: absolute;
 
             left: 0;
-
             top: 0;
 
-            color: #0d6efd;
+            color: #5279aa;
 
             font-weight: 700;
         }
 
 
-        /* =====================================================
-           SMALL CTA
-        ===================================================== */
+        /* ========================================
+           CTA
+        ======================================== */
 
         .services-note {
-
             max-width: 980px;
 
             margin: 35px auto 0;
@@ -865,7 +538,6 @@
             display: flex;
 
             align-items: center;
-
             justify-content: space-between;
 
             gap: 30px;
@@ -876,223 +548,164 @@
 
             border-radius: 18px;
 
-            color: white;
+            color: #ffffff;
 
             box-shadow:
                 0 15px 35px
-                rgba(
-                    5,
-                    44,
-                    100,
-                    .12
-                );
+                rgba(5, 44, 100, 0.12);
         }
 
-
         .services-note p {
-
-            color:
-                rgba(
-                    255,
-                    255,
-                    255,
-                    .78
-                );
+            color: rgba(255,255,255,0.78);
 
             font-size: 14px;
-
             line-height: 1.6;
         }
 
-
         .services-note strong {
-
             display: block;
 
             margin-bottom: 3px;
 
-            color: white;
+            color: #ffffff;
 
             font-size: 16px;
         }
 
-
         .services-note a {
-
             flex: 0 0 auto;
 
             display: inline-flex;
 
             align-items: center;
-
             justify-content: center;
 
             min-height: 44px;
 
             padding: 10px 21px;
 
-            border-radius: 24px;
+            border-radius: 7px;
 
-            background: white;
-
+            background: #ffffff;
             color: #052c64;
 
             font-size: 13px;
-
             font-weight: 700;
 
             transition:
-                transform .2s ease,
-                background .2s ease;
+                transform 0.2s ease,
+                background 0.2s ease;
         }
-
 
         .services-note a:hover {
+            transform: translateY(-2px);
 
-            transform:
-                translateY(-2px);
-
-            background: #edf4ff;
+            background: #eef4fb;
         }
 
 
-        /* =====================================================
+        /* ========================================
            FOOTER
-        ===================================================== */
+        ======================================== */
 
-        .footer {
-
-            padding: 60px 0 24px;
-
-            background: #071c35;
-
-            color: white;
+        footer {
+            background: #ffffff;
+            border-top: 1px solid #e1e8f0;
         }
 
+        .footer-container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
 
         .footer-grid {
+            padding: 45px 0 35px;
 
             display: grid;
 
             grid-template-columns:
-                1fr
-                1fr
-                1fr;
+                repeat(3, 1fr);
 
-            gap: 50px;
-
-            padding-bottom: 40px;
+            gap: 40px;
         }
 
+        .footer-column h3 {
+            color: #052c64;
 
-        .footer-column:nth-child(1) {
+            font-size: 17px;
 
-            text-align: left;
+            margin-bottom: 12px;
         }
 
+        .footer-column p {
+            color: #718096;
 
-        .footer-column:nth-child(2) {
+            font-size: 14px;
 
+            margin-bottom: 5px;
+        }
+
+        .footer-column a {
+            color: #718096;
+
+            transition: color 0.2s ease;
+        }
+
+        .footer-column a:hover {
+            color: #052c64;
+        }
+
+        .footer-grid .footer-column:nth-child(2) {
             text-align: center;
         }
 
-
-        .footer-column:nth-child(3) {
-
+        .footer-grid .footer-column:nth-child(3) {
             text-align: right;
         }
 
-
-        .footer-column h3 {
-
-            margin-bottom: 16px;
-
-            font-size: 16px;
-        }
-
-
-        .footer-column p {
-
-            margin-bottom: 8px;
-
-            color:
-                rgba(
-                    255,
-                    255,
-                    255,
-                    .72
-                );
-
-            font-size: 13px;
-
-            line-height: 1.75;
-        }
-
-
-        .footer-column a {
-
-            color:
-                rgba(
-                    255,
-                    255,
-                    255,
-                    .82
-                );
-
-            transition:
-                color .2s ease;
-        }
-
-
-        .footer-column a:hover {
-
-            color: white;
-        }
-
-
         .footer-bottom {
+            border-top: 1px solid #e6ebf2;
 
-            padding-top: 22px;
-
-            border-top:
-                1px solid
-                rgba(
-                    255,
-                    255,
-                    255,
-                    .10
-                );
-
-            color:
-                rgba(
-                    255,
-                    255,
-                    255,
-                    .48
-                );
+            padding: 18px 0 22px;
 
             text-align: center;
 
-            font-size: 11px;
+            color: #8a96a6;
+
+            font-size: 13px;
+        }
+
+        .footer-bottom a {
+            color: #718096;
+        }
+
+        .footer-bottom a:hover {
+            color: #052c64;
         }
 
 
-        /* =====================================================
+        /* ========================================
            RESPONSIVE
-        ===================================================== */
+        ======================================== */
+
+        @media (max-width: 950px) {
+
+            .main-nav {
+                gap: 18px;
+            }
+
+        }
+
 
         @media (max-width: 800px) {
 
             .nav-container {
-
                 flex-wrap: wrap;
-
-                gap: 18px;
+                gap: 16px;
             }
 
-
             .main-nav {
-
                 order: 3;
 
                 width: 100%;
@@ -1101,12 +714,10 @@
 
                 flex-wrap: wrap;
 
-                gap: 16px;
+                gap: 14px 20px;
             }
 
-
             .service-trigger {
-
                 grid-template-columns:
                     55px
                     1fr
@@ -1117,37 +728,25 @@
                 padding: 18px 20px;
             }
 
-
             .service-main {
-
                 gap: 13px;
             }
 
-
             .service-title h2 {
-
                 font-size: 19px;
             }
 
-
             .service-title p {
-
                 font-size: 12px;
             }
 
-
             .service-icon {
-
                 width: 46px;
-
                 height: 46px;
-
                 flex-basis: 46px;
             }
 
-
             .service-details-content {
-
                 margin:
                     0 20px
                     20px
@@ -1156,113 +755,76 @@
                 padding: 22px;
             }
 
-
             .details-grid {
-
                 grid-template-columns: 1fr;
             }
 
-
             .services-note {
-
                 flex-direction: column;
-
                 align-items: flex-start;
             }
 
-
             .services-note a {
-
                 width: 100%;
             }
 
-
             .footer-grid {
-
                 grid-template-columns: 1fr;
-
-                gap: 30px;
+                gap: 25px;
             }
 
-
-            .footer-column:nth-child(1),
-            .footer-column:nth-child(2),
-            .footer-column:nth-child(3) {
-
-                text-align: left;
+            .footer-grid .footer-column:nth-child(2),
+            .footer-grid .footer-column:nth-child(3) {
+                text-align: center;
             }
+
         }
 
 
-        @media (max-width: 560px) {
+        @media (max-width: 750px) {
 
-            .container {
-
-                width: 92%;
+            .nav-container {
+                padding: 16px 0;
             }
-
-
-            .logo img {
-
-                height: 50px;
-            }
-
-
-            .logo-text strong {
-
-                font-size: 16px;
-            }
-
-
-            .logo-text span {
-
-                font-size: 11px;
-            }
-
-
-            .main-nav {
-
-                gap: 11px;
-            }
-
-
-            .main-nav a {
-
-                font-size: 12px;
-            }
-
 
             .services-intro {
-
-                padding: 60px 0 45px;
+                padding: 50px 0 40px;
             }
-
 
             .intro-content h1 {
-
                 font-size: 36px;
-
-                letter-spacing: -1px;
             }
 
-
             .intro-content p {
-
                 font-size: 15px;
             }
 
+        }
 
-            .services-section {
 
-                padding:
-                    40px
-                    0
-                    70px;
+        @media (max-width: 550px) {
+
+            .brand-subtitle {
+                font-size: 10px;
             }
 
+            .main-nav {
+                gap: 12px 16px;
+            }
+
+            .main-nav > a {
+                font-size: 13px;
+            }
+
+            .language {
+                font-size: 12px;
+            }
+
+            .intro-content h1 {
+                font-size: 32px;
+            }
 
             .service-trigger {
-
                 min-height: 92px;
 
                 grid-template-columns:
@@ -1274,65 +836,45 @@
                 padding: 17px;
             }
 
-
             .service-number {
-
                 display: none;
             }
 
-
             .service-main {
-
                 gap: 12px;
             }
 
-
             .service-icon {
-
                 flex: 0 0 44px;
 
                 width: 44px;
-
                 height: 44px;
 
                 border-radius: 13px;
             }
 
-
             .service-icon svg {
-
                 width: 22px;
-
                 height: 22px;
             }
 
-
             .service-title h2 {
-
                 font-size: 18px;
             }
 
-
             .service-title p {
-
                 font-size: 11px;
             }
 
-
             .service-toggle {
-
                 grid-column: 2;
-
                 grid-row: 1;
 
                 width: 36px;
-
                 height: 36px;
             }
 
-
             .service-details-content {
-
                 margin:
                     0 15px
                     15px
@@ -1341,25 +883,17 @@
                 padding: 20px 17px;
             }
 
-
             .details-grid li {
-
                 font-size: 13px;
             }
 
-
             .services-note {
-
                 margin-top: 25px;
-
                 padding: 22px;
             }
+
         }
 
-
-        /* =====================================================
-           REDUCED MOTION
-        ===================================================== */
 
         @media (prefers-reduced-motion: reduce) {
 
@@ -1367,14 +901,12 @@
                 scroll-behavior: auto;
             }
 
-
             *,
             *::before,
             *::after {
-
-                transition-duration:
-                    .01ms !important;
+                transition-duration: 0.01ms !important;
             }
+
         }
 
     </style>
@@ -1385,863 +917,735 @@
 <body>
 
 
-    <!-- =====================================================
-         HEADER
-    ===================================================== -->
+<!-- ========================================
+     HEADER
+======================================== -->
 
-    <header class="site-header">
+<header class="site-header">
 
-        <div class="container nav-container">
+    <div class="nav-container">
 
+        <a href="index.html" class="brand">
 
-            <a href="index.html"
-               class="logo"
-               aria-label="DataPay hlavná stránka">
+            <img src="logo.png"
+                 alt="DataPay logo">
 
-                <img src="logo.png"
-                     alt="DataPay Logo">
+            <div class="brand-text">
 
-                <div class="logo-text">
-
-                    <strong>
-                        DataPay s.r.o.
-                    </strong>
-
-                    <span>
-                        Mzdy • Účtovníctvo • Personalistika
-                    </span>
-
+                <div class="brand-name">
+                    DataPay s.r.o.
                 </div>
 
+                <div class="brand-subtitle">
+                    Mzdy • Účtovníctvo • Personalistika
+                </div>
+
+            </div>
+
+        </a>
+
+
+        <nav class="main-nav">
+
+            <a href="index.html">
+                Domov
             </a>
 
+            <a href="About.html">
+                O nás
+            </a>
 
-            <nav class="main-nav"
-                 aria-label="Hlavná navigácia">
+            <a href="payroll.html" class="active">
+                Služby
+            </a>
 
-                <a href="index.html">
-                    Domov
-                </a>
+            <a href="Cennik.html">
+                Cenník
+            </a>
 
-                <a href="About.html">
-                    O nás
-                </a>
+            <a href="FAQ.html">
+                FAQ
+            </a>
 
-                <a href="payroll.html">
-                    Služby
-                </a>
+            <div class="language">
 
-                <a href="Cennik.html">
-                    Cenník
-                </a>
-
-                <a href="FAQ.html">
-                    FAQ
-                </a>
-
-            </nav>
-
-
-            <div class="language-switch">
-
-                <a href="payroll.html"
-                   class="active">
+                <a href="#" class="active">
                     SK
                 </a>
 
-                <a href="payroll-en.html">
+                <span>/</span>
+
+                <a href="#">
                     EN
                 </a>
 
             </div>
 
+        </nav>
+
+    </div>
+
+</header>
+
+
+
+<main>
+
+
+<!-- ========================================
+     INTRO
+======================================== -->
+
+<section class="services-intro">
+
+    <div class="container">
+
+        <div class="intro-content">
+
+            <div class="intro-label">
+                DATAPAY • NAŠE SLUŽBY
+            </div>
+
+            <h1>
+                Služby, ktoré vaša firma potrebuje.
+            </h1>
+
+            <p>
+                Od účtovníctva cez mzdy a personalistiku
+                až po odborné poradenstvo. Vyberte si
+                oblasť, ktorá vás zaujíma.
+            </p>
 
         </div>
 
-    </header>
+    </div>
+
+</section>
 
 
-    <!-- =====================================================
-         ANNOUNCEMENT
-    ===================================================== -->
 
-  <!--  <div class="announcement">
+<!-- ========================================
+     SERVICES ACCORDION
+======================================== -->
 
-        NOVINKA: DataPay rozšíril svoje služby o účtovníctvo –
-        jednoduché aj podvojné účtovníctvo pre firmy.
+<section class="services-section">
 
-    </div> -->
+    <div class="container">
 
-
-    <main>
+        <div class="services-list">
 
 
-        <!-- =================================================
-             INTRO
-        ================================================= -->
+            <!-- ÚČTOVNÍCTVO -->
 
-        <section class="services-intro">
+            <article class="service-item active">
 
-            <div class="container">
+                <button class="service-trigger"
+                        type="button"
+                        aria-expanded="true">
 
-                <div class="intro-content">
+                    <span class="service-number">
+                        01
+                    </span>
+
+                    <span class="service-main">
+
+                        <span class="service-icon">
+
+                            <svg viewBox="0 0 24 24">
+
+                                <rect x="4"
+                                      y="3"
+                                      width="16"
+                                      height="18"
+                                      rx="2"></rect>
+
+                                <path d="M8 7h8"></path>
+
+                                <path d="M8 11h2"></path>
+
+                                <path d="M14 11h2"></path>
+
+                                <path d="M8 15h2"></path>
+
+                                <path d="M14 15h2"></path>
+
+                            </svg>
+
+                        </span>
+
+                        <span class="service-title">
+
+                            <h2>
+                                Účtovníctvo
+                            </h2>
+
+                            <p>
+                                Jednoduché aj podvojné účtovníctvo
+                            </p>
+
+                        </span>
+
+                    </span>
+
+                    <span class="service-toggle">
+                        +
+                    </span>
+
+                </button>
 
 
-                    <div class="intro-label">
+                <div class="service-details">
 
-                        DATA PAY
-                        <span>NAŠE SLUŽBY</span>
+                    <div class="service-details-inner">
+
+                        <div class="service-details-content">
+
+                            <div class="details-heading">
+                                Čo pre vás zabezpečíme
+                            </div>
+
+                            <ul class="details-grid">
+
+                                <li>
+                                    Jednoduché účtovníctvo
+                                </li>
+
+                                <li>
+                                    Podvojné účtovníctvo
+                                </li>
+
+                                <li>
+                                    Spracovanie účtovných dokladov
+                                </li>
+
+                                <li>
+                                    Evidencia a kontrola dokladov
+                                </li>
+
+                                <li>
+                                    Účtovné výstupy a podklady
+                                </li>
+
+                                <li>
+                                    Účtovné poradenstvo
+                                </li>
+
+                            </ul>
+
+                        </div>
 
                     </div>
 
+                </div>
 
-                    <h1>
-                        Služby, ktoré vaša firma potrebuje.
-                    </h1>
+            </article>
 
 
-                    <p>
 
-                        Od účtovníctva cez mzdy a personalistiku
-                        až po odborné poradenstvo. Vyberte si
-                        oblasť, ktorá vás zaujíma.
+            <!-- MZDY -->
 
-                    </p>
+            <article class="service-item">
 
+                <button class="service-trigger"
+                        type="button"
+                        aria-expanded="false">
+
+                    <span class="service-number">
+                        02
+                    </span>
+
+                    <span class="service-main">
+
+                        <span class="service-icon">
+
+                            <svg viewBox="0 0 24 24">
+
+                                <circle cx="12"
+                                        cy="12"
+                                        r="9"></circle>
+
+                                <path d="M15 8.5A4 4 0 1 0 15 15.5"></path>
+
+                                <path d="M7 11h7"></path>
+
+                                <path d="M7 14h6"></path>
+
+                            </svg>
+
+                        </span>
+
+                        <span class="service-title">
+
+                            <h2>
+                                Mzdy
+                            </h2>
+
+                            <p>
+                                Kompletné spracovanie mzdovej agendy
+                            </p>
+
+                        </span>
+
+                    </span>
+
+                    <span class="service-toggle">
+                        +
+                    </span>
+
+                </button>
+
+
+                <div class="service-details">
+
+                    <div class="service-details-inner">
+
+                        <div class="service-details-content">
+
+                            <div class="details-heading">
+                                Čo pre vás zabezpečíme
+                            </div>
+
+                            <ul class="details-grid">
+
+                                <li>
+                                    Mesačné spracovanie miezd
+                                </li>
+
+                                <li>
+                                    Výpočet miezd a odmien
+                                </li>
+
+                                <li>
+                                    Výplatné pásky
+                                </li>
+
+                                <li>
+                                    Platobné podklady
+                                </li>
+
+                                <li>
+                                    Mesačné hlásenia a výkazy
+                                </li>
+
+                                <li>
+                                    Ročné zúčtovanie dane
+                                </li>
+
+                                <li>
+                                    Komunikáciu s príslušnými inštitúciami
+                                </li>
+
+                                <li>
+                                    Mzdové poradenstvo
+                                </li>
+
+                            </ul>
+
+                        </div>
+
+                    </div>
 
                 </div>
+
+            </article>
+
+
+
+            <!-- PERSONALISTIKA -->
+
+            <article class="service-item">
+
+                <button class="service-trigger"
+                        type="button"
+                        aria-expanded="false">
+
+                    <span class="service-number">
+                        03
+                    </span>
+
+                    <span class="service-main">
+
+                        <span class="service-icon">
+
+                            <svg viewBox="0 0 24 24">
+
+                                <circle cx="9"
+                                        cy="8"
+                                        r="4"></circle>
+
+                                <path d="M2 21v-2a6 6 0 0 1 6-6h2"></path>
+
+                                <path d="M16 11v6"></path>
+
+                                <path d="M13 14h6"></path>
+
+                            </svg>
+
+                        </span>
+
+                        <span class="service-title">
+
+                            <h2>
+                                Personalistika
+                            </h2>
+
+                            <p>
+                                Personálna a pracovnoprávna agenda
+                            </p>
+
+                        </span>
+
+                    </span>
+
+                    <span class="service-toggle">
+                        +
+                    </span>
+
+                </button>
+
+
+                <div class="service-details">
+
+                    <div class="service-details-inner">
+
+                        <div class="service-details-content">
+
+                            <div class="details-heading">
+                                Čo pre vás zabezpečíme
+                            </div>
+
+                            <ul class="details-grid">
+
+                                <li>
+                                    Pracovné zmluvy a dohody
+                                </li>
+
+                                <li>
+                                    Dodatky a personálna dokumentácia
+                                </li>
+
+                                <li>
+                                    Nástupy a výstupy zamestnancov
+                                </li>
+
+                                <li>
+                                    Registrácie a odhlásenia
+                                </li>
+
+                                <li>
+                                    Personálna evidencia
+                                </li>
+
+                                <li>
+                                    Administratíva zamestnancov
+                                </li>
+
+                                <li>
+                                    Pracovnoprávna agenda
+                                </li>
+
+                                <li>
+                                    HR administratívna podpora
+                                </li>
+
+                            </ul>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </article>
+
+
+
+            <!-- PORADENSTVO -->
+
+            <article class="service-item">
+
+                <button class="service-trigger"
+                        type="button"
+                        aria-expanded="false">
+
+                    <span class="service-number">
+                        04
+                    </span>
+
+                    <span class="service-main">
+
+                        <span class="service-icon">
+
+                            <svg viewBox="0 0 24 24">
+
+                                <path d="M21 15a4 4 0 0 1-4 4H8l-5 3v-7a8 8 0 1 1 18 0z"></path>
+
+                                <path d="M8 11h8"></path>
+
+                                <path d="M8 15h5"></path>
+
+                            </svg>
+
+                        </span>
+
+                        <span class="service-title">
+
+                            <h2>
+                                Poradenstvo
+                            </h2>
+
+                            <p>
+                                Odborná podpora pri vašich otázkach
+                            </p>
+
+                        </span>
+
+                    </span>
+
+                    <span class="service-toggle">
+                        +
+                    </span>
+
+                </button>
+
+
+                <div class="service-details">
+
+                    <div class="service-details-inner">
+
+                        <div class="service-details-content">
+
+                            <div class="details-heading">
+                                Oblasti, v ktorých vám pomôžeme
+                            </div>
+
+                            <ul class="details-grid">
+
+                                <li>
+                                    Účtovné poradenstvo
+                                </li>
+
+                                <li>
+                                    Mzdové poradenstvo
+                                </li>
+
+                                <li>
+                                    Personálne a HR poradenstvo
+                                </li>
+
+                                <li>
+                                    Pracovnoprávne otázky
+                                </li>
+
+                                <li>
+                                    Konzultácie pri nastavení procesov
+                                </li>
+
+                                <li>
+                                    Administratívna podpora
+                                </li>
+
+                            </ul>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </article>
+
+
+        </div>
+
+
+
+        <!-- CTA -->
+
+        <div class="services-note">
+
+            <div>
+
+                <strong>
+                    Neviete, ktoré služby potrebujete?
+                </strong>
+
+                <p>
+                    Radi s vami prejdeme vašu aktuálnu agendu
+                    a navrhneme vhodný rozsah spolupráce.
+                </p>
 
             </div>
 
-        </section>
+            <a href="Formular.html">
+                Kontaktujte nás →
+            </a>
 
+        </div>
 
-        <!-- =================================================
-             ACCORDION
-        ================================================= -->
+    </div>
 
-        <section class="services-section">
+</section>
 
-            <div class="container">
+</main>
 
 
-                <div class="services-list">
 
+<!-- ========================================
+     FOOTER
+======================================== -->
 
-                    <!-- =================================================
-                         ÚČTOVNÍCTVO
-                    ================================================= -->
+<footer>
 
-                    <article class="service-item active">
+    <div class="footer-container">
 
+        <div class="footer-grid">
 
-                        <button class="service-trigger"
-                                type="button"
-                                aria-expanded="true">
 
+            <div class="footer-column">
 
-                            <span class="service-number">
-                                01
-                            </span>
+                <h3>
+                    DataPay s.r.o.
+                </h3>
 
+                <p>
+                    Účtovníctvo, mzdy, personalistika
+                    a odborné poradenstvo.
+                </p>
 
-                            <span class="service-main">
+                <p>
+                    Služby poskytujeme firmám
+                    na celom Slovensku.
+                </p>
 
+            </div>
 
-                                <span class="service-icon">
 
-                                    <svg viewBox="0 0 24 24">
+            <div class="footer-column">
 
-                                        <rect x="4"
-                                              y="3"
-                                              width="16"
-                                              height="18"
-                                              rx="2"></rect>
+                <h3>
+                    Kontakt
+                </h3>
 
-                                        <path d="M8 7h8"></path>
-
-                                        <path d="M8 11h2"></path>
-
-                                        <path d="M14 11h2"></path>
-
-                                        <path d="M8 15h2"></path>
-
-                                        <path d="M14 15h2"></path>
-
-                                    </svg>
-
-                                </span>
-
-
-                                <span class="service-title">
-
-                                    <h2>
-                                        Účtovníctvo
-                                    </h2>
-
-                                    <p>
-                                        Jednoduché aj podvojné účtovníctvo
-                                    </p>
-
-                                </span>
-
-
-                            </span>
-
-
-                            <span class="service-toggle">
-                                +
-                            </span>
-
-
-                        </button>
-
-
-                        <div class="service-details">
-
-                            <div class="service-details-inner">
-
-                                <div class="service-details-content">
-
-
-                                    <div class="details-heading">
-                                        Čo pre vás zabezpečíme
-                                    </div>
-
-
-                                    <ul class="details-grid">
-
-                                        <li>
-                                            Jednoduché účtovníctvo
-                                        </li>
-
-                                        <li>
-                                            Podvojné účtovníctvo
-                                        </li>
-
-                                        <li>
-                                            Spracovanie účtovných dokladov
-                                        </li>
-
-                                        <li>
-                                            Evidencia a kontrola dokladov
-                                        </li>
-
-                                        <li>
-                                            Účtovné výstupy a podklady
-                                        </li>
-
-                                        <li>
-                                            Účtovné poradenstvo
-                                        </li>
-
-                                    </ul>
-
-
-                                </div>
-
-                            </div>
-
-                        </div>
-
-
-                    </article>
-
-
-                    <!-- =================================================
-                         MZDY
-                    ================================================= -->
-
-                    <article class="service-item">
-
-
-                        <button class="service-trigger"
-                                type="button"
-                                aria-expanded="false">
-
-
-                            <span class="service-number">
-                                02
-                            </span>
-
-
-                            <span class="service-main">
-
-
-                                <span class="service-icon">
-
-                                    <svg viewBox="0 0 24 24">
-
-                                        <circle cx="12"
-                                                cy="12"
-                                                r="9"></circle>
-
-                                        <path d="M15 8.5A4 4 0 1 0 15 15.5"></path>
-
-                                        <path d="M7 11h7"></path>
-
-                                        <path d="M7 14h6"></path>
-
-                                    </svg>
-
-                                </span>
-
-
-                                <span class="service-title">
-
-                                    <h2>
-                                        Mzdy
-                                    </h2>
-
-                                    <p>
-                                        Kompletné spracovanie mzdovej agendy
-                                    </p>
-
-                                </span>
-
-
-                            </span>
-
-
-                            <span class="service-toggle">
-                                +
-                            </span>
-
-
-                        </button>
-
-
-                        <div class="service-details">
-
-                            <div class="service-details-inner">
-
-                                <div class="service-details-content">
-
-
-                                    <div class="details-heading">
-                                        Čo pre vás zabezpečíme
-                                    </div>
-
-
-                                    <ul class="details-grid">
-
-                                        <li>
-                                            Mesačné spracovanie miezd
-                                        </li>
-
-                                        <li>
-                                            Výpočet miezd a odmien
-                                        </li>
-
-                                        <li>
-                                            Výplatné pásky
-                                        </li>
-
-                                        <li>
-                                            Platobné podklady
-                                        </li>
-
-                                        <li>
-                                            Mesačné hlásenia a výkazy
-                                        </li>
-
-                                        <li>
-                                            Ročné zúčtovanie dane
-                                        </li>
-
-                                        <li>
-                                            Komunikáciu s príslušnými inštitúciami
-                                        </li>
-
-                                        <li>
-                                            Mzdové poradenstvo
-                                        </li>
-
-                                    </ul>
-
-
-                                </div>
-
-                            </div>
-
-                        </div>
-
-
-                    </article>
-
-
-                    <!-- =================================================
-                         PERSONALISTIKA
-                    ================================================= -->
-
-                    <article class="service-item">
-
-
-                        <button class="service-trigger"
-                                type="button"
-                                aria-expanded="false">
-
-
-                            <span class="service-number">
-                                03
-                            </span>
-
-
-                            <span class="service-main">
-
-
-                                <span class="service-icon">
-
-                                    <svg viewBox="0 0 24 24">
-
-                                        <circle cx="9"
-                                                cy="8"
-                                                r="4"></circle>
-
-                                        <path d="M2 21v-2a6 6 0 0 1 6-6h2"></path>
-
-                                        <path d="M16 11v6"></path>
-
-                                        <path d="M13 14h6"></path>
-
-                                    </svg>
-
-                                </span>
-
-
-                                <span class="service-title">
-
-                                    <h2>
-                                        Personalistika
-                                    </h2>
-
-                                    <p>
-                                        Personálna a pracovnoprávna agenda
-                                    </p>
-
-                                </span>
-
-
-                            </span>
-
-
-                            <span class="service-toggle">
-                                +
-                            </span>
-
-
-                        </button>
-
-
-                        <div class="service-details">
-
-                            <div class="service-details-inner">
-
-                                <div class="service-details-content">
-
-
-                                    <div class="details-heading">
-                                        Čo pre vás zabezpečíme
-                                    </div>
-
-
-                                    <ul class="details-grid">
-
-                                        <li>
-                                            Pracovné zmluvy a dohody
-                                        </li>
-
-                                        <li>
-                                            Dodatky a personálna dokumentácia
-                                        </li>
-
-                                        <li>
-                                            Nástupy a výstupy zamestnancov
-                                        </li>
-
-                                        <li>
-                                            Registrácie a odhlásenia
-                                        </li>
-
-                                        <li>
-                                            Personálna evidencia
-                                        </li>
-
-                                        <li>
-                                            Administratíva zamestnancov
-                                        </li>
-
-                                        <li>
-                                            Pracovnoprávna agenda
-                                        </li>
-
-                                        <li>
-                                            HR administratívna podpora
-                                        </li>
-
-                                    </ul>
-
-
-                                </div>
-
-                            </div>
-
-                        </div>
-
-
-                    </article>
-
-
-                    <!-- =================================================
-                         PORADENSTVO
-                    ================================================= -->
-
-                    <article class="service-item">
-
-
-                        <button class="service-trigger"
-                                type="button"
-                                aria-expanded="false">
-
-
-                            <span class="service-number">
-                                04
-                            </span>
-
-
-                            <span class="service-main">
-
-
-                                <span class="service-icon">
-
-                                    <svg viewBox="0 0 24 24">
-
-                                        <path d="M21 15a4 4 0 0 1-4 4H8l-5 3v-7a8 8 0 1 1 18 0z"></path>
-
-                                        <path d="M8 11h8"></path>
-
-                                        <path d="M8 15h5"></path>
-
-                                    </svg>
-
-                                </span>
-
-
-                                <span class="service-title">
-
-                                    <h2>
-                                        Poradenstvo
-                                    </h2>
-
-                                    <p>
-                                        Odborná podpora pri vašich otázkach
-                                    </p>
-
-                                </span>
-
-
-                            </span>
-
-
-                            <span class="service-toggle">
-                                +
-                            </span>
-
-
-                        </button>
-
-
-                        <div class="service-details">
-
-                            <div class="service-details-inner">
-
-                                <div class="service-details-content">
-
-
-                                    <div class="details-heading">
-                                        Oblasti, v ktorých vám pomôžeme
-                                    </div>
-
-
-                                    <ul class="details-grid">
-
-                                        <li>
-                                            Účtovné poradenstvo
-                                        </li>
-
-                                        <li>
-                                            Mzdové poradenstvo
-                                        </li>
-
-                                        <li>
-                                            Personálne a HR poradenstvo
-                                        </li>
-
-                                        <li>
-                                            Pracovnoprávne otázky
-                                        </li>
-
-                                        <li>
-                                            Konzultácie pri nastavení procesov
-                                        </li>
-
-                                        <li>
-                                            Administratívna podpora
-                                        </li>
-
-                                    </ul>
-
-
-                                </div>
-
-                            </div>
-
-                        </div>
-
-
-                    </article>
-
-
-                </div>
-
-
-                <!-- =================================================
-                     SMALL CTA
-                ================================================= -->
-
-                <div class="services-note">
-
-                    <div>
-
-                        <strong>
-                            Neviete, ktoré služby potrebujete?
-                        </strong>
-
-                        <p>
-
-                            Radi s vami prejdeme vašu aktuálnu agendu
-                            a navrhneme vhodný rozsah spolupráce.
-
-                        </p>
-
-                    </div>
-
-
+                <p>
                     <a href="mailto:datapaysk@gmail.com">
-                        Kontaktujte nás →
+                        datapaysk@gmail.com
                     </a>
+                </p>
 
-                </div>
-
-
-            </div>
-
-        </section>
-
-
-    </main>
-
-
-    <!-- =====================================================
-         FOOTER
-    ===================================================== -->
-
-    <footer class="footer">
-
-        <div class="container">
-
-
-            <div class="footer-grid">
-
-
-                <div class="footer-column">
-
-                    <h3>
-                        DataPay s.r.o.
-                    </h3>
-
-
-                    <p>
-
-                        Účtovníctvo, mzdy, personalistika
-                        a odborné poradenstvo.
-
-                    </p>
-
-
-                    <p>
-
-                        Služby poskytujeme firmám
-                        na celom Slovensku.
-
-                    </p>
-
-                </div>
-
-
-                <div class="footer-column">
-
-                    <h3>
-                        Kontakt
-                    </h3>
-
-
-                    <p>
-
-                        <a href="mailto:datapaysk@gmail.com">
-                            datapaysk@gmail.com
-                        </a>
-
-                    </p>
-
-
-                    <p>
+                <p>
+                    <a href="tel:+421903270664">
                         +421 903 270 664
-                    </p>
+                    </a>
+                </p>
 
-
-                    <p>
+                <p>
+                    <a href="tel:+421907837030">
                         +421 907 837 030
-                    </p>
-
-                </div>
-
-
-                <div class="footer-column">
-
-                    <h3>
-                        Firemné údaje
-                    </h3>
-
-
-                    <p>
-                        IČO: 57456615
-                    </p>
-
-
-                    <p>
-                        DIČ: 2122742622
-                    </p>
-
-
-                    <p>
-                        IČ DPH: Nie sme platca DPH
-                    </p>
-
-                </div>
-
+                    </a>
+                </p>
 
             </div>
 
 
-            <div class="footer-bottom">
+            <div class="footer-column">
 
-                © 2026 DataPay s.r.o.
-                Všetky práva vyhradené.
+                <h3>
+                    Spoločnosť
+                </h3>
+
+                <p>
+                    IČO: 57456615
+                </p>
+
+                <p>
+                    DIČ: 2122742622
+                </p>
+
+                <p>
+                    IČ DPH: nie sme platiteľom DPH
+                </p>
 
             </div>
 
 
         </div>
 
-    </footer>
+
+        <div class="footer-bottom">
+
+            © 2026 DataPay s.r.o. |
+
+            <a href="GDPR.html">
+                Ochrana osobných údajov
+            </a>
+
+        </div>
+
+    </div>
+
+</footer>
 
 
-    <!-- =====================================================
-         ACCORDION JAVASCRIPT
-    ===================================================== -->
 
-    <script>
+<!-- ========================================
+     ACCORDION JAVASCRIPT
+======================================== -->
 
-        document.addEventListener(
-            "DOMContentLoaded",
-            function () {
+<script>
 
-                const items =
-                    document.querySelectorAll(
-                        ".service-item"
+document.addEventListener(
+    "DOMContentLoaded",
+    function () {
+
+        const items =
+            document.querySelectorAll(
+                ".service-item"
+            );
+
+
+        items.forEach(
+            function (item) {
+
+                const button =
+                    item.querySelector(
+                        ".service-trigger"
                     );
 
 
-                items.forEach(
-                    function (item) {
+                button.addEventListener(
+                    "click",
+                    function () {
 
-                        const button =
-                            item.querySelector(
-                                ".service-trigger"
+                        const isOpen =
+                            item.classList.contains(
+                                "active"
                             );
 
 
-                        button.addEventListener(
-                            "click",
-                            function () {
+                        /* Zavrieť ostatné */
 
+                        items.forEach(
+                            function (otherItem) {
 
-                                const isOpen =
-                                    item.classList.contains(
+                                if (
+                                    otherItem !== item
+                                ) {
+
+                                    otherItem.classList.remove(
                                         "active"
                                     );
 
 
-                                /*
-                                 * Zavrieme ostatné
-                                 * otvorené kategórie.
-                                 */
-
-                                items.forEach(
-                                    function (otherItem) {
-
-                                        if (
-                                            otherItem !== item
-                                        ) {
-
-                                            otherItem.classList.remove(
-                                                "active"
-                                            );
+                                    const otherButton =
+                                        otherItem.querySelector(
+                                            ".service-trigger"
+                                        );
 
 
-                                            const otherButton =
-                                                otherItem.querySelector(
-                                                    ".service-trigger"
-                                                );
-
-
-                                            otherButton.setAttribute(
-                                                "aria-expanded",
-                                                "false"
-                                            );
-
-                                        }
-
-                                    }
-                                );
-
-
-                                /*
-                                 * Otvoríme / zavrieme
-                                 * aktuálnu kategóriu.
-                                 */
-
-                                if (isOpen) {
-
-                                    item.classList.remove(
-                                        "active"
-                                    );
-
-                                    button.setAttribute(
+                                    otherButton.setAttribute(
                                         "aria-expanded",
                                         "false"
-                                    );
-
-                                } else {
-
-                                    item.classList.add(
-                                        "active"
-                                    );
-
-                                    button.setAttribute(
-                                        "aria-expanded",
-                                        "true"
                                     );
 
                                 }
@@ -2249,13 +1653,43 @@
                             }
                         );
 
+
+                        /* Otvoriť / zavrieť aktuálnu */
+
+                        if (isOpen) {
+
+                            item.classList.remove(
+                                "active"
+                            );
+
+                            button.setAttribute(
+                                "aria-expanded",
+                                "false"
+                            );
+
+                        } else {
+
+                            item.classList.add(
+                                "active"
+                            );
+
+                            button.setAttribute(
+                                "aria-expanded",
+                                "true"
+                            );
+
+                        }
+
                     }
                 );
 
             }
         );
 
-    </script>
+    }
+);
+
+</script>
 
 
 </body>
