@@ -277,12 +277,6 @@
                 0 8px 20px rgba(11,99,199,.22);
         }
 
-        .accounting-switch-note {
-            margin-top: 7px;
-            color: #7b8ba0;
-            font-size: 11px;
-            text-align: center;
-        }
 
         /* PACKAGES */
 
@@ -580,33 +574,31 @@
             border-collapse: collapse;
         }
 
-        .payroll-table th {
-            background: #052c64;
-            color: white;
+       .payroll-table th {
+    background: #052c64;
+    color: white;
+    text-align: left;
+    padding: 18px 22px;
+    font-size: 14px;
+}
 
-            text-align: left;
+.payroll-table th:last-child {
+    text-align: right;
+}
 
-            padding: 18px 22px;
+.payroll-table td {
+    padding: 20px 22px;
+    border-bottom: 1px solid #edf1f5;
+    color: #475569;
+    font-size: 14px;
+}
 
-            font-size: 14px;
-        }
-
-        .payroll-table td {
-            padding: 20px 22px;
-
-            border-bottom: 1px solid #edf1f5;
-
-            color: #475569;
-
-            font-size: 14px;
-        }
-
-        .payroll-table td.price-cell {
-            color: #052c64;
-
-            font-weight: 700;
-            font-size: 17px;
-        }
+.payroll-table td.price-cell {
+    color: #052c64;
+    font-weight: 700;
+    font-size: 17px;
+    text-align: right;
+}
 
         .included-box {
             margin-top: 24px;
