@@ -206,6 +206,130 @@
     }
 
 
+
+    /* =========================================
+       SUBTLE HERO BACKGROUND ANIMATION
+    ========================================= */
+
+    .services-hero {
+        position: relative;
+        overflow: hidden;
+        isolation: isolate;
+    }
+
+    .services-hero > .eyebrow,
+    .services-hero > h1,
+    .services-hero > p {
+        position: relative;
+        z-index: 2;
+    }
+
+    .hero-money-art {
+        position: absolute;
+        inset: 0;
+        z-index: 0;
+        pointer-events: none;
+        overflow: hidden;
+        border-radius: inherit;
+    }
+
+    .money-symbol {
+        position: absolute;
+        display: block;
+        color: #0b63ce;
+        font-family: Arial, sans-serif;
+        font-weight: 700;
+        line-height: 1;
+        user-select: none;
+        will-change: transform;
+    }
+
+    .money-one {
+        top: 22%;
+        right: 7%;
+        font-size: 118px;
+        opacity: 0.045;
+        animation: euroFloatOne 16s ease-in-out infinite;
+    }
+
+    .money-two {
+        left: 6%;
+        bottom: 8%;
+        font-size: 72px;
+        opacity: 0.035;
+        animation: euroFloatTwo 19s ease-in-out infinite;
+    }
+
+    .money-dot {
+        position: absolute;
+        width: 7px;
+        height: 7px;
+        background: #0b63ce;
+        border-radius: 50%;
+        opacity: 0.10;
+    }
+
+    .money-dot-one {
+        top: 23%;
+        left: 17%;
+        animation: moneyDotFloat 10s ease-in-out infinite;
+    }
+
+    .money-dot-two {
+        right: 20%;
+        bottom: 18%;
+        width: 5px;
+        height: 5px;
+        opacity: 0.08;
+        animation: moneyDotFloat 13s ease-in-out infinite reverse;
+    }
+
+    @keyframes euroFloatOne {
+        0%, 100% {
+            transform: translate3d(0, 0, 0) rotate(-8deg);
+        }
+        50% {
+            transform: translate3d(-18px, 12px, 0) rotate(4deg);
+        }
+    }
+
+    @keyframes euroFloatTwo {
+        0%, 100% {
+            transform: translate3d(0, 0, 0) rotate(7deg);
+        }
+        50% {
+            transform: translate3d(14px, -13px, 0) rotate(-4deg);
+        }
+    }
+
+    @keyframes moneyDotFloat {
+        0%, 100% {
+            transform: translateY(0);
+        }
+        50% {
+            transform: translateY(-13px);
+        }
+    }
+
+    @media (max-width: 520px) {
+        .money-one {
+            right: -4%;
+            font-size: 90px;
+        }
+
+        .money-two {
+            left: 1%;
+            font-size: 58px;
+        }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+        .money-symbol,
+        .money-dot {
+            animation: none;
+        }
+    }
+
     /* =========================================
        DYNAMIC SERVICES
     ========================================= */
@@ -745,6 +869,13 @@
     <!-- SERVICES INTRO -->
 
     <section class="services-hero">
+        <div class="hero-money-art" aria-hidden="true">
+            <span class="money-symbol money-one">€</span>
+            <span class="money-symbol money-two">€</span>
+            <span class="money-dot money-dot-one"></span>
+            <span class="money-dot money-dot-two"></span>
+        </div>
+
 
         <div class="eyebrow">
             DATAPAY • SLUŽBY
