@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="sk">
 
@@ -185,6 +184,38 @@
 
 
         /* =========================
+           FAQ NAVIGATION
+        ========================= */
+
+        .faq-navigation {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-bottom: 30px;
+        }
+
+        .faq-navigation a {
+            padding: 10px 18px;
+            background: #ffffff;
+            border: 1px solid #dfe7f0;
+            border-radius: 999px;
+
+            color: #52657e;
+            font-size: 12px;
+            font-weight: 700;
+
+            transition: all 0.2s ease;
+        }
+
+        .faq-navigation a:hover {
+            background: #052c64;
+            border-color: #052c64;
+            color: #ffffff;
+        }
+
+
+        /* =========================
            FAQ CARD
         ========================= */
 
@@ -195,6 +226,51 @@
             padding: 35px;
 
             box-shadow: 0 8px 25px rgba(5, 44, 100, 0.04);
+        }
+
+
+        /* =========================
+           FAQ SECTION
+        ========================= */
+
+        .faq-section {
+            scroll-margin-top: 120px;
+        }
+
+        .faq-section + .faq-section {
+            margin-top: 48px;
+            padding-top: 42px;
+            border-top: 1px solid #e6edf5;
+        }
+
+        .faq-section-heading {
+            margin-bottom: 22px;
+        }
+
+        .faq-section-label {
+            display: inline-block;
+            margin-bottom: 7px;
+
+            color: #5279aa;
+            font-size: 10px;
+            font-weight: 700;
+            letter-spacing: 1.6px;
+            text-transform: uppercase;
+        }
+
+        .faq-section-heading h2 {
+            margin: 0 0 7px;
+            color: #052c64;
+            font-size: 24px;
+            line-height: 1.2;
+        }
+
+        .faq-section-heading p {
+            max-width: 720px;
+            margin: 0;
+            color: #718096;
+            font-size: 13px;
+            line-height: 1.6;
         }
 
 
@@ -263,8 +339,9 @@
             font-size: 19px;
             font-weight: 400;
 
-            transition: transform 0.2s ease,
-                        background 0.2s ease;
+            transition:
+                transform 0.2s ease,
+                background 0.2s ease;
         }
 
         .accordion-content {
@@ -279,6 +356,10 @@
 
         .accordion-content p {
             margin: 0;
+        }
+
+        .accordion-content p + p {
+            margin-top: 10px;
         }
 
         .accordion.active .accordion-content {
@@ -296,7 +377,7 @@
         ========================= */
 
         .cta-box {
-            margin-top: 35px;
+            margin-top: 40px;
 
             background: #eef4fb;
             border-radius: 14px;
@@ -335,8 +416,9 @@
             font-size: 14px;
             font-weight: 700;
 
-            transition: background 0.2s ease,
-                        transform 0.2s ease;
+            transition:
+                background 0.2s ease,
+                transform 0.2s ease;
         }
 
         .btn:hover {
@@ -478,6 +560,15 @@
                 padding: 20px;
             }
 
+            .faq-section + .faq-section {
+                margin-top: 35px;
+                padding-top: 32px;
+            }
+
+            .faq-section-heading h2 {
+                font-size: 21px;
+            }
+
             .accordion-btn {
                 font-size: 14px;
                 padding: 17px;
@@ -598,43 +689,328 @@
 
                 <p>
                     Odpovede na najčastejšie otázky našich klientov
-                    týkajúce sa účtovníctva, miezd a personalistiky.
+                    týkajúce sa účtovníctva, miezd, personalistiky
+                    a spolupráce s DataPay.
                 </p>
 
             </section>
 
 
+            <!-- NAVIGATION -->
 
-            <!-- FAQ -->
+            <div class="faq-navigation">
+
+                <a href="#uctovnictvo">
+                    Účtovníctvo
+                </a>
+
+                <a href="#mzdy">
+                    Mzdy a personalistika
+                </a>
+
+                <a href="#spolupraca">
+                    Spolupráca s DataPay
+                </a>
+
+            </div>
+
+
+
+            <!-- FAQ CARD -->
 
             <section class="faq-card">
 
 
-                <!-- QUESTION 1 -->
+                <!-- =========================
+                     ÚČTOVNÍCTVO
+                ========================= -->
 
-                <div class="accordion">
+                <div class="faq-section" id="uctovnictvo">
 
-                    <button class="accordion-btn">
+                    <div class="faq-section-heading">
 
-                        Čo všetko za mňa DataPay zabezpečí?
-
-                        <span class="icon">
-                            +
+                        <span class="faq-section-label">
+                            ÚČTOVNÍCTVO
                         </span>
 
-                    </button>
-
-                    <div class="accordion-content">
+                        <h2>
+                            Otázky k účtovníctvu
+                        </h2>
 
                         <p>
-                            Zabezpečujeme kompletné spracovanie účtovníctva,
-                            miezd a personálnej agendy podľa potrieb vašej
-                            spoločnosti. Postaráme sa o spracovanie účtovných
-                            dokladov, výpočet miezd, výplatné pásky, platobné
-                            podklady, mesačné výkazy, nástupy a výstupy
-                            zamestnancov a ďalšiu agendu podľa dohodnutého
-                            rozsahu služieb.
+                            Informácie o cenách, účtovných položkách,
+                            dokladoch a rozsahu našich účtovných služieb.
                         </p>
+
+                    </div>
+
+
+                    <!-- QUESTION -->
+
+                    <div class="accordion">
+
+                        <button class="accordion-btn">
+
+                            Čo sa považuje za jednu účtovnú položku?
+
+                            <span class="icon">
+                                +
+                            </span>
+
+                        </button>
+
+                        <div class="accordion-content">
+
+                            <p>
+                                Účtovná položka predstavuje jeden zápis
+                                v účtovnom denníku alebo príslušnej účtovnej
+                                evidencii. Počet účtovných položiek preto
+                                nemusí byť totožný s počtom faktúr alebo
+                                dokladov.
+                            </p>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- QUESTION -->
+
+                    <div class="accordion">
+
+                        <button class="accordion-btn">
+
+                            Ako zistím, ktorý rozsah účtovníctva je pre moju firmu vhodný?
+
+                            <span class="icon">
+                                +
+                            </span>
+
+                        </button>
+
+                        <div class="accordion-content">
+
+                            <p>
+                                Rozhodujúci je najmä počet účtovných položiek
+                                za mesiac a rozsah vašej účtovnej agendy.
+                                Ak počet položiek nepoznáte, stačí nám
+                                poskytnúť základné informácie o firme
+                                a objeme dokladov a pomôžeme vám určiť
+                                vhodný rozsah služby.
+                            </p>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- QUESTION -->
+
+                    <div class="accordion">
+
+                        <button class="accordion-btn">
+
+                            Čo sa stane, ak prekročím počet položiek zahrnutých v cene?
+
+                            <span class="icon">
+                                +
+                            </span>
+
+                        </button>
+
+                        <div class="accordion-content">
+
+                            <p>
+                                Pri prekročení stanoveného mesačného limitu
+                                sa dodatočné položky účtujú podľa ceny
+                                za ďalšiu položku uvedenej v aktuálnom
+                                cenníku.
+                            </p>
+
+                            <p>
+                                Ak firma pravidelne prekračuje daný rozsah,
+                                môžeme spoločne nastaviť vhodnejší rozsah
+                                služby.
+                            </p>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- QUESTION -->
+
+                    <div class="accordion">
+
+                        <button class="accordion-btn">
+
+                            Je cena účtovníctva každý mesiac rovnaká?
+
+                            <span class="icon">
+                                +
+                            </span>
+
+                        </button>
+
+                        <div class="accordion-content">
+
+                            <p>
+                                Cena vychádza z rozsahu účtovnej agendy
+                                a počtu spracovaných účtovných položiek.
+                                Ak sa počet položiek alebo rozsah spracovania
+                                výraznejšie zmení, výsledná cena sa môže
+                                prispôsobiť aktuálnemu rozsahu účtovníctva.
+                            </p>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- QUESTION -->
+
+                    <div class="accordion">
+
+                        <button class="accordion-btn">
+
+                            Aký je rozdiel medzi jednoduchým a podvojným účtovníctvom?
+
+                            <span class="icon">
+                                +
+                            </span>
+
+                        </button>
+
+                        <div class="accordion-content">
+
+                            <p>
+                                Jednoduché a podvojné účtovníctvo predstavujú
+                                rozdielne spôsoby vedenia účtovnej evidencie.
+                                To, ktorý spôsob sa vás týka, závisí najmä
+                                od právnej formy a charakteru podnikania.
+                            </p>
+
+                            <p>
+                                Ak si nie ste istí, aký spôsob účtovania
+                                sa vzťahuje na vašu firmu alebo podnikanie,
+                                radi vám pomôžeme.
+                            </p>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- QUESTION -->
+
+                    <div class="accordion">
+
+                        <button class="accordion-btn">
+
+                            Spracujete aj DPH a kontrolný výkaz?
+
+                            <span class="icon">
+                                +
+                            </span>
+
+                        </button>
+
+                        <div class="accordion-content">
+
+                            <p>
+                                Áno. V rámci dohodnutého rozsahu služieb
+                                zabezpečujeme aj evidenciu DPH, prípravu
+                                daňového priznania k DPH, kontrolného výkazu
+                                a podľa potreby aj súhrnného výkazu.
+                            </p>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- QUESTION -->
+
+                    <div class="accordion">
+
+                        <button class="accordion-btn">
+
+                            Musím účtovné doklady nosiť osobne?
+
+                            <span class="icon">
+                                +
+                            </span>
+
+                        </button>
+
+                        <div class="accordion-content">
+
+                            <p>
+                                Nie. Spolupráca môže prebiehať elektronicky
+                                a služby poskytujeme firmám na celom
+                                Slovensku. Spôsob odovzdávania účtovných
+                                dokladov si nastavíme pri začiatku spolupráce.
+                            </p>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- QUESTION -->
+
+                    <div class="accordion">
+
+                        <button class="accordion-btn">
+
+                            Môžem prejsť k DataPay aj počas roka?
+
+                            <span class="icon">
+                                +
+                            </span>
+
+                        </button>
+
+                        <div class="accordion-content">
+
+                            <p>
+                                Áno. Účtovnú agendu môžeme prevziať
+                                aj v priebehu účtovného obdobia.
+                                Najskôr si prejdeme aktuálny stav účtovníctva,
+                                dohodneme potrebné podklady a následne
+                                zabezpečíme plynulé prevzatie agendy.
+                            </p>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- QUESTION -->
+
+                    <div class="accordion">
+
+                        <button class="accordion-btn">
+
+                            Čo potrebujete na prevzatie účtovníctva od pôvodnej účtovníčky?
+
+                            <span class="icon">
+                                +
+                            </span>
+
+                        </button>
+
+                        <div class="accordion-content">
+
+                            <p>
+                                Rozsah potrebných podkladov závisí od typu
+                                účtovníctva a aktuálneho stavu účtovnej agendy.
+                                Pred prechodom vám pripravíme konkrétny zoznam
+                                dokumentov a údajov potrebných na prevzatie
+                                účtovníctva.
+                            </p>
+
+                        </div>
 
                     </div>
 
@@ -642,29 +1018,200 @@
 
 
 
-                <!-- QUESTION 2 -->
+                <!-- =========================
+                     MZDY A PERSONALISTIKA
+                ========================= -->
 
-                <div class="accordion">
+                <div class="faq-section" id="mzdy">
 
-                    <button class="accordion-btn">
+                    <div class="faq-section-heading">
 
-                        Koľko stojí spracovanie miezd?
-
-                        <span class="icon">
-                            +
+                        <span class="faq-section-label">
+                            MZDY A PERSONALISTIKA
                         </span>
 
-                    </button>
-
-                    <div class="accordion-content">
+                        <h2>
+                            Otázky k mzdám a HR
+                        </h2>
 
                         <p>
-                            Cena závisí najmä od počtu zamestnancov a rozsahu
-                            poskytovaných služieb. Aktuálne ceny nájdete v
-                            našom cenníku. Ak si nie ste istí, ktorý rozsah
-                            služieb je pre vás vhodný, radi vám pripravíme
-                            nezáväznú cenovú ponuku.
+                            Najčastejšie otázky týkajúce sa spracovania
+                            miezd, zamestnancov a personálnej administratívy.
                         </p>
+
+                    </div>
+
+
+                    <!-- QUESTION -->
+
+                    <div class="accordion">
+
+                        <button class="accordion-btn">
+
+                            Koľko stojí spracovanie miezd?
+
+                            <span class="icon">
+                                +
+                            </span>
+
+                        </button>
+
+                        <div class="accordion-content">
+
+                            <p>
+                                Cena závisí najmä od počtu zamestnancov
+                                a rozsahu poskytovaných služieb.
+                                Aktuálne ceny nájdete v našom cenníku.
+                                Ak si nie ste istí rozsahom služieb,
+                                radi vám pripravíme nezáväznú cenovú ponuku.
+                            </p>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- QUESTION -->
+
+                    <div class="accordion">
+
+                        <button class="accordion-btn">
+
+                            Čo všetko zahŕňa spracovanie miezd?
+
+                            <span class="icon">
+                                +
+                            </span>
+
+                        </button>
+
+                        <div class="accordion-content">
+
+                            <p>
+                                Spracovanie zahŕňa mesačný výpočet miezd,
+                                výplatné pásky, platobné podklady,
+                                výkazy pre Sociálnu poisťovňu a zdravotné
+                                poisťovne, evidenciu dovoleniek a PN
+                                a ďalšiu súvisiacu agendu podľa dohodnutého
+                                rozsahu služieb.
+                            </p>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- QUESTION -->
+
+                    <div class="accordion">
+
+                        <button class="accordion-btn">
+
+                            Aké informácie vám musím každý mesiac posielať?
+
+                            <span class="icon">
+                                +
+                            </span>
+
+                        </button>
+
+                        <div class="accordion-content">
+
+                            <p>
+                                Potrebujeme najmä informácie o zmenách,
+                                ktoré majú vplyv na spracovanie miezd.
+                                Ide napríklad o nové pracovné pomery,
+                                ukončenia pracovných pomerov, dovolenky,
+                                PN, odmeny, absencie alebo zmeny pracovného
+                                času.
+                            </p>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- QUESTION -->
+
+                    <div class="accordion">
+
+                        <button class="accordion-btn">
+
+                            Zabezpečujete aj prihlásenie a odhlásenie zamestnancov?
+
+                            <span class="icon">
+                                +
+                            </span>
+
+                        </button>
+
+                        <div class="accordion-content">
+
+                            <p>
+                                Áno. V rámci personálnej a mzdovej agendy
+                                vieme zabezpečiť registráciu zamestnancov,
+                                ich prihlásenie a odhlásenie v príslušných
+                                inštitúciách a súvisiacu administratívu.
+                            </p>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- QUESTION -->
+
+                    <div class="accordion">
+
+                        <button class="accordion-btn">
+
+                            Pomôžete nám aj s pracovnými zmluvami?
+
+                            <span class="icon">
+                                +
+                            </span>
+
+                        </button>
+
+                        <div class="accordion-content">
+
+                            <p>
+                                V rámci personálnej administratívy poskytujeme
+                                podporu pri príprave a kontrole pracovnej
+                                dokumentácie a pri administratíve spojenej
+                                s nástupom alebo ukončením pracovného pomeru.
+                            </p>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- QUESTION -->
+
+                    <div class="accordion">
+
+                        <button class="accordion-btn">
+
+                            Čo ak potrebujem poradiť s pracovnoprávnou otázkou?
+
+                            <span class="icon">
+                                +
+                            </span>
+
+                        </button>
+
+                        <div class="accordion-content">
+
+                            <p>
+                                Môžete sa na nás obrátiť pri otázkach
+                                týkajúcich sa mzdovej a personálnej agendy,
+                                pracovných zmlúv, nástupov, ukončenia
+                                pracovného pomeru, odmeňovania alebo
+                                personálnej administratívy.
+                            </p>
+
+                        </div>
 
                     </div>
 
@@ -672,148 +1219,207 @@
 
 
 
-                <!-- QUESTION 3 -->
+                <!-- =========================
+                     SPOLUPRÁCA
+                ========================= -->
 
-                <div class="accordion">
+                <div class="faq-section" id="spolupraca">
 
-                    <button class="accordion-btn">
+                    <div class="faq-section-heading">
 
-                        Ako prebieha prechod na DataPay?
-
-                        <span class="icon">
-                            +
+                        <span class="faq-section-label">
+                            SPOLUPRÁCA
                         </span>
 
-                    </button>
-
-                    <div class="accordion-content">
+                        <h2>
+                            Spolupráca s DataPay
+                        </h2>
 
                         <p>
-                            Prechod na DataPay sa snažíme zabezpečiť čo
-                            najjednoduchšie. Najskôr si prejdeme vašu aktuálnu
-                            účtovnú, mzdovú a personálnu agendu a dohodneme si
-                            rozsah spolupráce. Následne si od vás vyžiadame
-                            potrebné podklady a zabezpečíme plynulé prevzatie
-                            agendy.
+                            Ako začať spoluprácu, odovzdávať podklady
+                            a komunikovať s naším tímom.
                         </p>
 
                     </div>
 
-                </div>
 
+                    <!-- QUESTION -->
 
+                    <div class="accordion">
 
-                <!-- QUESTION 4 -->
+                        <button class="accordion-btn">
 
-                <div class="accordion">
+                            Čo všetko za mňa DataPay zabezpečí?
 
-                    <button class="accordion-btn">
+                            <span class="icon">
+                                +
+                            </span>
 
-                        Musím vám každý mesiac posielať podklady?
+                        </button>
 
-                        <span class="icon">
-                            +
-                        </span>
+                        <div class="accordion-content">
 
-                    </button>
+                            <p>
+                                Zabezpečujeme spracovanie účtovníctva,
+                                miezd a personálnej agendy podľa potrieb
+                                vašej spoločnosti.
+                            </p>
 
-                    <div class="accordion-content">
+                            <p>
+                                Konkrétny rozsah spolupráce nastavíme podľa
+                                typu firmy, počtu účtovných položiek,
+                                počtu zamestnancov a služieb, ktoré
+                                potrebujete.
+                            </p>
 
-                        <p>
-                            Áno, každý mesiac potrebujeme informácie o zmenách,
-                            ktoré majú vplyv na spracovanie účtovníctva alebo
-                            miezd. Pri mzdách ide napríklad o nové pracovné
-                            pomery, ukončenia pracovných pomerov, dovolenky,
-                            PN, odmeny alebo zmeny pracovného času.
-                        </p>
-
-                    </div>
-
-                </div>
-
-
-
-                <!-- QUESTION 5 -->
-
-                <div class="accordion">
-
-                    <button class="accordion-btn">
-
-                        Ako zabezpečujete ochranu osobných údajov?
-
-                        <span class="icon">
-                            +
-                        </span>
-
-                    </button>
-
-                    <div class="accordion-content">
-
-                        <p>
-                            Pri spracovaní mzdových a personálnych údajov
-                            kladieme dôraz na ochranu osobných údajov a
-                            bezpečnosť informácií. Údaje spracúvame v súlade
-                            s GDPR a platnou legislatívou.
-                        </p>
+                        </div>
 
                     </div>
 
-                </div>
 
+                    <!-- QUESTION -->
 
+                    <div class="accordion">
 
-                <!-- QUESTION 6 -->
+                        <button class="accordion-btn">
 
-                <div class="accordion">
+                            Ako prebieha začiatok spolupráce s DataPay?
 
-                    <button class="accordion-btn">
+                            <span class="icon">
+                                +
+                            </span>
 
-                        Pre aké firmy sú vaše služby vhodné?
+                        </button>
 
-                        <span class="icon">
-                            +
-                        </span>
+                        <div class="accordion-content">
 
-                    </button>
+                            <p>
+                                Najskôr si prejdeme vašu aktuálnu účtovnú,
+                                mzdovú alebo personálnu agendu a dohodneme
+                                rozsah spolupráce.
+                            </p>
 
-                    <div class="accordion-content">
+                            <p>
+                                Následne si od vás vyžiadame potrebné
+                                podklady a nastavíme spôsob ich pravidelného
+                                odovzdávania a vzájomnej komunikácie.
+                            </p>
 
-                        <p>
-                            Naše služby sú vhodné pre malé, stredné aj väčšie
-                            spoločnosti, ktoré chcú preniesť účtovnú, mzdovú
-                            alebo personálnu agendu na externého odborného
-                            partnera.
-                        </p>
+                        </div>
 
                     </div>
 
-                </div>
+
+                    <!-- QUESTION -->
+
+                    <div class="accordion">
+
+                        <button class="accordion-btn">
+
+                            Pre aké firmy sú vaše služby vhodné?
+
+                            <span class="icon">
+                                +
+                            </span>
+
+                        </button>
+
+                        <div class="accordion-content">
+
+                            <p>
+                                Naše služby sú vhodné pre malé, stredné
+                                aj väčšie spoločnosti, ktoré chcú preniesť
+                                účtovnú, mzdovú alebo personálnu agendu
+                                na externého odborného partnera.
+                            </p>
+
+                        </div>
+
+                    </div>
 
 
+                    <!-- QUESTION -->
 
-                <!-- QUESTION 7 -->
+                    <div class="accordion">
 
-                <div class="accordion">
+                        <button class="accordion-btn">
 
-                    <button class="accordion-btn">
+                            Poskytujete služby firmám z celého Slovenska?
 
-                        Čo ak potrebujem poradiť s pracovnoprávnou otázkou?
+                            <span class="icon">
+                                +
+                            </span>
 
-                        <span class="icon">
-                            +
-                        </span>
+                        </button>
 
-                    </button>
+                        <div class="accordion-content">
 
-                    <div class="accordion-content">
+                            <p>
+                                Áno. Vďaka elektronickému odovzdávaniu
+                                dokumentov a online komunikácii môžeme
+                                poskytovať naše služby spoločnostiam
+                                na celom Slovensku.
+                            </p>
 
-                        <p>
-                            Súčasťou našich služieb je aj mzdové, účtovné
-                            a HR poradenstvo. Môžete sa na nás obrátiť pri
-                            otázkach týkajúcich sa pracovných zmlúv, nástupov,
-                            ukončenia pracovného pomeru, odmeňovania alebo
-                            personálnej administratívy.
-                        </p>
+                        </div>
+
+                    </div>
+
+
+                    <!-- QUESTION -->
+
+                    <div class="accordion">
+
+                        <button class="accordion-btn">
+
+                            Ako zabezpečujete ochranu osobných údajov?
+
+                            <span class="icon">
+                                +
+                            </span>
+
+                        </button>
+
+                        <div class="accordion-content">
+
+                            <p>
+                                Pri spracovaní účtovných, mzdových
+                                a personálnych údajov kladieme dôraz
+                                na ochranu osobných údajov a bezpečnosť
+                                informácií. Údaje spracúvame v súlade
+                                s GDPR a platnou legislatívou.
+                            </p>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- QUESTION -->
+
+                    <div class="accordion">
+
+                        <button class="accordion-btn">
+
+                            Ako vás môžem kontaktovať?
+
+                            <span class="icon">
+                                +
+                            </span>
+
+                        </button>
+
+                        <div class="accordion-content">
+
+                            <p>
+                                Kontaktovať nás môžete prostredníctvom
+                                kontaktného formulára, e-mailom na
+                                datapaysk@gmail.com alebo telefonicky.
+                                Radi si s vami prejdeme vaše požiadavky
+                                a navrhneme vhodný rozsah spolupráce.
+                            </p>
+
+                        </div>
 
                     </div>
 
@@ -989,4 +1595,3 @@
 
 </body>
 </html>
-
