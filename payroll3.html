@@ -43,106 +43,105 @@
     }
 
 
-    /* =========================================
-       HEADER – SAME AS FAQ / CENNIK
-    ========================================= */
+   /* =========================
+   HEADER
+========================= */
 
-    .site-header {
-        background: #ffffff;
-        border-bottom: 1px solid #e6ebf2;
-        position: sticky;
-        top: 0;
-        z-index: 1000;
-    }
+.site-header {
+    background: #ffffff;
+    border-bottom: 1px solid #e6ebf2;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+}
 
-    .nav-container {
-        width: min(1180px, 92%);
-        min-height: 78px;
-        margin: 0 auto;
+.nav-container {
+    width: 90%;
+    max-width: 1200px;
+    min-height: 88px;
+    margin: 0 auto;
 
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
 
-        gap: 30px;
-    }
+    gap: 35px;
+}
 
-    .brand {
-        display: flex;
-        align-items: center;
-        gap: 12px;
+.brand {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+}
 
-        color: #052c64;
-        flex-shrink: 0;
-    }
+.brand img {
+    width: 54px;
+    height: 54px;
+    object-fit: contain;
+    display: block;
+}
 
-    .brand img {
-        width: 54px;
-        height: 54px;
-        object-fit: contain;
-    }
+.brand-text {
+    display: flex;
+    flex-direction: column;
+}
 
-    .brand-text {
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-    }
+.brand-name {
+    color: #052c64;
+    font-size: 20px;
+    font-weight: 700;
+    line-height: 1.2;
+}
 
-    .brand-name {
-        font-size: 18px;
-        font-weight: 700;
-        line-height: 1.2;
-        color: #052c64;
-    }
+.brand-subtitle {
+    color: #718096;
+    font-size: 12px;
+    margin-top: 4px;
+}
 
-    .brand-subtitle {
-        margin-top: 3px;
-        font-size: 11px;
-        line-height: 1.2;
-        color: #718096;
-        white-space: nowrap;
-    }
+.main-nav {
+    display: flex;
+    align-items: center;
+    gap: 28px;
+}
 
-    .main-nav {
-        display: flex;
-        align-items: center;
-        gap: 26px;
-    }
+.main-nav > a {
+    color: #334155;
+    font-size: 14px;
+    font-weight: 500;
+    transition: color 0.2s ease;
+}
 
-    .main-nav > a {
-        color: #64748b;
-        font-size: 14px;
-        font-weight: 600;
-        transition: color 0.2s ease;
-    }
+.main-nav > a:hover {
+    color: #052c64;
+}
 
-    .main-nav > a:hover,
-    .main-nav > a.active {
-        color: #052c64;
-    }
+.main-nav > a.active {
+    color: #052c64;
+    font-weight: 700;
+}
 
-    .language {
-        display: flex;
-        align-items: center;
-        gap: 7px;
-        margin-left: 8px;
-    }
+.language {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    margin-left: 5px;
+    font-size: 13px;
+}
 
-    .language a {
-        color: #9aa6b5;
-        font-size: 12px;
-        font-weight: 700;
-    }
+.language a {
+    color: #94a3b8;
+    font-weight: 500;
+}
 
-    .language a.active {
-        color: #052c64;
-    }
+.language a.active {
+    color: #052c64;
+    font-weight: 700;
+}
 
-    .language span {
-        color: #cbd5e1;
-        font-size: 12px;
-    }
-
+.language span {
+    color: #cbd5e1;
+}
 
     /* =========================================
        MAIN
