@@ -207,90 +207,221 @@
 
 
     /* =========================================
-       SERVICES ACCORDION
+       DYNAMIC SERVICES
     ========================================= */
 
     .services-section {
         margin-top: 45px;
     }
 
-    .service-item {
-        background: #ffffff;
-        border: 1px solid #e2e8f0;
-        border-radius: 14px;
-
-        margin-bottom: 16px;
-
-        overflow: hidden;
-
-        box-shadow: 0 5px 18px rgba(15, 23, 42, 0.04);
+    .services-grid {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 16px;
     }
 
-    .service-header {
+    .service-card {
+        position: relative;
+        min-height: 220px;
+        padding: 26px 24px 24px;
+        background: #ffffff;
+        border: 1px solid #e2e8f0;
+        border-radius: 16px;
+        overflow: hidden;
+        cursor: pointer;
+        text-align: left;
+        font-family: inherit;
+        color: inherit;
+        box-shadow: 0 5px 18px rgba(15, 23, 42, 0.04);
+        transition:
+            transform 0.25s ease,
+            box-shadow 0.25s ease,
+            border-color 0.25s ease,
+            background 0.25s ease;
+    }
+
+    .service-card::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
         width: 100%;
+        height: 3px;
+        background: #0b63ce;
+        transform: scaleX(0);
+        transform-origin: left;
+        transition: transform 0.3s ease;
+    }
 
-        padding: 22px 26px;
+    .service-card:hover {
+        transform: translateY(-6px);
+        border-color: #c8d9ee;
+        box-shadow: 0 16px 35px rgba(15, 23, 42, 0.10);
+    }
 
+    .service-card:hover::before,
+    .service-card.active::before {
+        transform: scaleX(1);
+    }
+
+    .service-card.active {
+        background: linear-gradient(145deg, #f7fbff 0%, #ffffff 100%);
+        border-color: #9fc2e9;
+        box-shadow: 0 12px 30px rgba(5, 44, 100, 0.09);
+    }
+
+    .service-card-top {
         display: flex;
         align-items: center;
         justify-content: space-between;
+        gap: 15px;
+        margin-bottom: 24px;
+    }
 
-        background: #ffffff;
-        border: none;
-
-        color: #052c64;
-        font-family: inherit;
-        font-size: 18px;
+    .service-number {
+        color: #9aabc0;
+        font-size: 12px;
         font-weight: 700;
-
-        text-align: left;
-        cursor: pointer;
-
-        transition: background 0.2s ease;
+        letter-spacing: 1.4px;
     }
 
-    .service-header:hover {
-        background: #f8fafc;
-    }
-
-    .service-icon {
-        width: 30px;
-        height: 30px;
-
-        display: flex;
+    .service-symbol {
+        width: 44px;
+        height: 44px;
+        display: inline-flex;
         align-items: center;
         justify-content: center;
-
-        color: #315f91;
-        font-size: 24px;
-        font-weight: 400;
+        border-radius: 12px;
+        background: #eef5fd;
+        color: #0b63ce;
+        font-size: 21px;
+        font-weight: 700;
+        transition: transform 0.25s ease, background 0.25s ease;
     }
 
-    .service-content {
-        display: none;
+    .service-card:hover .service-symbol,
+    .service-card.active .service-symbol {
+        transform: scale(1.06);
+        background: #e1eefc;
+    }
 
-        padding: 0 26px 26px;
+    .service-card h2 {
+        margin-bottom: 10px;
+        color: #052c64;
+        font-size: 20px;
+        line-height: 1.25;
+    }
 
+    .service-card p {
         color: #64748b;
+        font-size: 14px;
+        line-height: 1.65;
     }
 
-    .service-content.active {
-        display: block;
+    .service-more {
+        display: inline-flex;
+        align-items: center;
+        gap: 7px;
+        margin-top: 20px;
+        color: #0b63ce;
+        font-size: 13px;
+        font-weight: 700;
     }
 
-    .service-content p {
-        margin-bottom: 16px;
+    .service-more span {
+        transition: transform 0.2s ease;
     }
 
-    .service-content ul {
+    .service-card:hover .service-more span {
+        transform: translateX(4px);
+    }
+
+    .service-detail {
+        margin-top: 18px;
+        padding: 36px 38px;
+        display: grid;
+        grid-template-columns: 0.85fr 1.15fr;
+        gap: 45px;
+        align-items: start;
+        background: #ffffff;
+        border: 1px solid #dce6f2;
+        border-radius: 18px;
+        box-shadow: 0 8px 28px rgba(15, 23, 42, 0.05);
+    }
+
+    .service-detail-copy {
+        position: sticky;
+        top: 115px;
+    }
+
+    .service-detail-kicker {
+        margin-bottom: 10px;
+        color: #315f91;
+        font-size: 11px;
+        font-weight: 700;
+        letter-spacing: 1.4px;
+        text-transform: uppercase;
+    }
+
+    .service-detail h3 {
+        margin-bottom: 14px;
+        color: #052c64;
+        font-size: 29px;
+        line-height: 1.2;
+    }
+
+    .service-detail-description {
+        color: #64748b;
+        font-size: 15px;
+    }
+
+    .service-detail-list {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 11px 22px;
+        list-style: none;
+        padding: 0;
         margin: 0;
-        padding-left: 20px;
     }
 
-    .service-content li {
-        margin-bottom: 8px;
+    .service-detail-list li {
+        position: relative;
+        min-height: 48px;
+        padding: 13px 14px 13px 40px;
+        display: flex;
+        align-items: center;
+        background: #f8fafc;
+        border: 1px solid #edf1f6;
+        border-radius: 10px;
+        color: #334155;
+        font-size: 14px;
+        line-height: 1.45;
     }
 
+    .service-detail-list li::before {
+        content: "✓";
+        position: absolute;
+        left: 15px;
+        top: 50%;
+        transform: translateY(-50%);
+        color: #17865f;
+        font-weight: 700;
+    }
+
+    .service-detail.is-changing {
+        animation: detailFade 0.24s ease;
+    }
+
+    @keyframes detailFade {
+        from {
+            opacity: 0.35;
+            transform: translateY(5px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
 
     /* =========================================
        CTA
@@ -451,6 +582,19 @@
             margin-left: 0;
         }
 
+        .services-grid {
+            grid-template-columns: repeat(2, 1fr);
+        }
+
+        .service-detail {
+            grid-template-columns: 1fr;
+            gap: 25px;
+        }
+
+        .service-detail-copy {
+            position: static;
+        }
+
         .services-hero {
             margin-top: 30px;
             padding: 45px 25px;
@@ -487,13 +631,25 @@
             font-size: 32px;
         }
 
-        .service-header {
-            padding: 19px 20px;
-            font-size: 16px;
+        .services-grid {
+            grid-template-columns: 1fr;
         }
 
-        .service-content {
-            padding: 0 20px 22px;
+        .service-card {
+            min-height: 0;
+            padding: 22px 20px;
+        }
+
+        .service-detail {
+            padding: 28px 22px;
+        }
+
+        .service-detail h3 {
+            font-size: 25px;
+        }
+
+        .service-detail-list {
+            grid-template-columns: 1fr;
         }
 
         .cta {
@@ -612,257 +768,122 @@
 
     <section class="services-section">
 
+        <div class="services-grid" role="tablist" aria-label="Naše služby">
 
-        <!-- ACCOUNTING -->
+            <button class="service-card active" type="button" data-service="accounting"
+                    role="tab" aria-selected="true">
+                <div class="service-card-top">
+                    <span class="service-number">01</span>
+                    <span class="service-symbol" aria-hidden="true">∑</span>
+                </div>
 
-        <div class="service-item">
-
-            <button class="service-header" type="button">
-
-                <span>
-                    Účtovníctvo
-                </span>
-
-                <span class="service-icon">
-                    +
-                </span>
-
-            </button>
-
-            <div class="service-content">
+                <h2>Účtovníctvo</h2>
 
                 <p>
+                    Kompletné vedenie jednoduchého a podvojného účtovníctva
+                    pre podnikateľov a spoločnosti.
+                </p>
+
+                <span class="service-more">
+                    Zobraziť služby <span>→</span>
+                </span>
+            </button>
+
+
+            <button class="service-card" type="button" data-service="payroll"
+                    role="tab" aria-selected="false">
+                <div class="service-card-top">
+                    <span class="service-number">02</span>
+                    <span class="service-symbol" aria-hidden="true">€</span>
+                </div>
+
+                <h2>Mzdy</h2>
+
+                <p>
+                    Komplexné spracovanie mzdovej agendy a komunikácia
+                    s príslušnými inštitúciami.
+                </p>
+
+                <span class="service-more">
+                    Zobraziť služby <span>→</span>
+                </span>
+            </button>
+
+
+            <button class="service-card" type="button" data-service="hr"
+                    role="tab" aria-selected="false">
+                <div class="service-card-top">
+                    <span class="service-number">03</span>
+                    <span class="service-symbol" aria-hidden="true">◎</span>
+                </div>
+
+                <h2>Personalistika</h2>
+
+                <p>
+                    Personálna agenda a dokumentácia počas celého
+                    pracovného pomeru zamestnanca.
+                </p>
+
+                <span class="service-more">
+                    Zobraziť služby <span>→</span>
+                </span>
+            </button>
+
+
+            <button class="service-card" type="button" data-service="consulting"
+                    role="tab" aria-selected="false">
+                <div class="service-card-top">
+                    <span class="service-number">04</span>
+                    <span class="service-symbol" aria-hidden="true">?</span>
+                </div>
+
+                <h2>Poradenstvo</h2>
+
+                <p>
+                    Odborná podpora pri účtovných, mzdových
+                    a personálnych otázkach.
+                </p>
+
+                <span class="service-more">
+                    Zobraziť služby <span>→</span>
+                </span>
+            </button>
+
+        </div>
+
+
+        <div class="service-detail" id="serviceDetail" aria-live="polite">
+
+            <div class="service-detail-copy">
+
+                <div class="service-detail-kicker" id="detailKicker">
+                    DATAPAY • ÚČTOVNÍCTVO
+                </div>
+
+                <h3 id="detailTitle">
+                    Účtovníctvo
+                </h3>
+
+                <p class="service-detail-description" id="detailDescription">
                     Zabezpečujeme kompletné vedenie účtovníctva
                     pre podnikateľov a spoločnosti.
                 </p>
 
-                <ul>
-
-                    <li>
-                        Jednoduché účtovníctvo
-                    </li>
-
-                    <li>
-                        Podvojné účtovníctvo
-                    </li>
-
-                    <li>
-                        Spracovanie účtovných dokladov
-                    </li>
-
-                    <li>
-                        Bankové účty a pokladňa
-                    </li>
-
-                    <li>
-                        Evidencia účtovných dokladov
-                    </li>
-
-                    <li>
-                        DPH agenda a výkazy
-                    </li>
-
-                    <li>
-                        Účtovné závierky
-                    </li>
-
-                    <li>
-                        Daňové priznania
-                    </li>
-
-                    <li>
-                        Účtovné poradenstvo
-                    </li>
-
-                </ul>
-
             </div>
 
-        </div>
-
-
-
-        <!-- PAYROLL -->
-
-        <div class="service-item">
-
-            <button class="service-header" type="button">
-
-                <span>
-                    Mzdy
-                </span>
-
-                <span class="service-icon">
-                    +
-                </span>
-
-            </button>
-
-            <div class="service-content">
-
-                <p>
-                    Komplexné spracovanie mzdovej agendy
-                    pre vašich zamestnancov.
-                </p>
-
-                <ul>
-
-                    <li>
-                        Mesačné spracovanie miezd
-                    </li>
-
-                    <li>
-                        Výplatné pásky
-                    </li>
-
-                    <li>
-                        Výkazy pre Sociálnu poisťovňu
-                    </li>
-
-                    <li>
-                        Výkazy pre zdravotné poisťovne
-                    </li>
-
-                    <li>
-                        Platobné podklady
-                    </li>
-
-                    <li>
-                        Evidencia dovoleniek a PN
-                    </li>
-
-                    <li>
-                        Komunikácia s úradmi
-                    </li>
-
-                    <li>
-                        Mzdové poradenstvo
-                    </li>
-
-                </ul>
-
-            </div>
+            <ul class="service-detail-list" id="detailList">
+                <li>Jednoduché účtovníctvo</li>
+                <li>Podvojné účtovníctvo</li>
+                <li>Spracovanie účtovných dokladov</li>
+                <li>Bankové účty a pokladňa</li>
+                <li>Evidencia účtovných dokladov</li>
+                <li>DPH agenda a výkazy</li>
+                <li>Účtovné závierky</li>
+                <li>Daňové priznania</li>
+                <li>Účtovné poradenstvo</li>
+            </ul>
 
         </div>
-
-
-
-        <!-- HR -->
-
-        <div class="service-item">
-
-            <button class="service-header" type="button">
-
-                <span>
-                    Personalistika
-                </span>
-
-                <span class="service-icon">
-                    +
-                </span>
-
-            </button>
-
-            <div class="service-content">
-
-                <p>
-                    Zabezpečíme kompletnú personálnu administratívu
-                    a dokumentáciu súvisiacu so zamestnancami.
-                </p>
-
-                <ul>
-
-                    <li>
-                        Pracovné zmluvy
-                    </li>
-
-                    <li>
-                        Dohody mimo pracovného pomeru
-                    </li>
-
-                    <li>
-                        Prihlásenie a odhlásenie zamestnancov
-                    </li>
-
-                    <li>
-                        Personálna evidencia
-                    </li>
-
-                    <li>
-                        Evidencia dovoleniek a neprítomností
-                    </li>
-
-                    <li>
-                        Ukončenie pracovného pomeru
-                    </li>
-
-                    <li>
-                        Personálne poradenstvo
-                    </li>
-
-                </ul>
-
-            </div>
-
-        </div>
-
-
-
-        <!-- CONSULTING -->
-
-        <div class="service-item">
-
-            <button class="service-header" type="button">
-
-                <span>
-                    Účtovné a mzdové poradenstvo
-                </span>
-
-                <span class="service-icon">
-                    +
-                </span>
-
-            </button>
-
-            <div class="service-content">
-
-                <p>
-                    Pomôžeme vám pri riešení účtovných, mzdových
-                    a personálnych otázok.
-                </p>
-
-                <ul>
-
-                    <li>
-                        Konzultácie v oblasti účtovníctva
-                    </li>
-
-                    <li>
-                        Mzdové konzultácie
-                    </li>
-
-                    <li>
-                        Pracovnoprávne otázky
-                    </li>
-
-                    <li>
-                        Kontrola účtovnej dokumentácie
-                    </li>
-
-                    <li>
-                        Kontrola mzdovej dokumentácie
-                    </li>
-
-                    <li>
-                        Poradenstvo pri kontrolách
-                    </li>
-
-                </ul>
-
-            </div>
-
-        </div>
-
 
     </section>
 
@@ -897,133 +918,214 @@
 
 <footer>
 
-<div class="footer-container">
+    <div class="container">
 
-    <div class="footer-grid">
+        <div class="footer-grid">
 
 
-        <div class="footer-column">
+            <div class="footer-column">
 
-            <h3>
-                DataPay s.r.o.
-            </h3>
+                <h3>
+                    DataPay s.r.o.
+                </h3>
 
-            <p>
-                Účtovníctvo, mzdy, personalistika
-                a odborné poradenstvo.
-            </p>
+                <p>
+                    Účtovníctvo, mzdy, personalistika
+                    a odborné poradenstvo.
+                </p>
 
-            <p>
-                Služby poskytujeme firmám
-                na celom Slovensku.
-            </p>
+                <p>
+                    Služby poskytujeme firmám
+                    na celom Slovensku.
+                </p>
+
+            </div>
+
+
+
+            <div class="footer-column">
+
+                <h3>
+                    Kontakt
+                </h3>
+
+                <p>
+                    <a href="mailto:datapaysk@gmail.com">
+                        datapaysk@gmail.com
+                    </a>
+                </p>
+
+                <p>
+                    <a href="tel:+421903270664">
+                        +421 903 270 664
+                    </a>
+                </p>
+
+                <p>
+                    <a href="tel:+421907837030">
+                        +421 907 837 030
+                    </a>
+                </p>
+
+            </div>
+
+
+
+            <div class="footer-column">
+
+                <h3>
+                    Spoločnosť
+                </h3>
+
+                <p>
+                    IČO: 57456615
+                </p>
+
+                <p>
+                    DIČ: 2122742622
+                </p>
+
+                <p>
+                    IČ DPH: nie sme platiteľom DPH
+                </p>
+
+            </div>
+
 
         </div>
 
 
+        <div class="footer-bottom">
 
-        <div class="footer-column">
+            © 2026 DataPay s.r.o. |
 
-            <h3>
-                Kontakt
-            </h3>
-
-            <p>
-                <a href="mailto:datapaysk@gmail.com">
-                    datapaysk@gmail.com
-                </a>
-            </p>
-
-            <p>
-                <a href="tel:+421903270664">
-                    +421 903 270 664
-                </a>
-            </p>
-
-            <p>
-                <a href="tel:+421907837030">
-                    +421 907 837 030
-                </a>
-            </p>
+            <a href="GDPR.html">
+                Ochrana osobných údajov
+            </a>
 
         </div>
-
-
-
-        <div class="footer-column">
-
-            <h3>
-                Spoločnosť
-            </h3>
-
-            <p>
-                IČO: 57456615
-            </p>
-
-            <p>
-                DIČ: 2122742622
-            </p>
-
-            <p>
-                IČ DPH: nie sme platiteľom DPH
-            </p>
-
-        </div>
-
 
     </div>
-
-
-    <div class="footer-bottom">
-
-        © 2026 DataPay s.r.o. |
-
-        <a href="GDPR.html">
-            Ochrana osobných údajov
-        </a>
-
-    </div>
-
-</div>
 
 </footer>
 
 <!-- =========================================
-     ACCORDION JAVASCRIPT
+     DYNAMIC SERVICES JAVASCRIPT
 ========================================= -->
 
 <script>
 
-    document.querySelectorAll(".service-header").forEach(function(button) {
+    const services = {
 
-        button.addEventListener("click", function() {
+        accounting: {
+            kicker: "DATAPAY • ÚČTOVNÍCTVO",
+            title: "Účtovníctvo",
+            description:
+                "Zabezpečujeme kompletné vedenie účtovníctva pre podnikateľov a spoločnosti.",
+            items: [
+                "Jednoduché účtovníctvo",
+                "Podvojné účtovníctvo",
+                "Spracovanie účtovných dokladov",
+                "Bankové účty a pokladňa",
+                "Evidencia účtovných dokladov",
+                "DPH agenda a výkazy",
+                "Účtovné závierky",
+                "Daňové priznania",
+                "Účtovné poradenstvo"
+            ]
+        },
 
-            const content = this.nextElementSibling;
-            const icon = this.querySelector(".service-icon");
+        payroll: {
+            kicker: "DATAPAY • MZDY",
+            title: "Mzdy",
+            description:
+                "Komplexné spracovanie mzdovej agendy pre vašich zamestnancov.",
+            items: [
+                "Mesačné spracovanie miezd",
+                "Výplatné pásky",
+                "Výkazy pre Sociálnu poisťovňu",
+                "Výkazy pre zdravotné poisťovne",
+                "Platobné podklady",
+                "Evidencia dovoleniek a PN",
+                "Komunikácia s úradmi",
+                "Mzdové poradenstvo"
+            ]
+        },
 
-            const isOpen = content.classList.contains("active");
+        hr: {
+            kicker: "DATAPAY • PERSONALISTIKA",
+            title: "Personalistika",
+            description:
+                "Zabezpečíme kompletnú personálnu administratívu a dokumentáciu súvisiacu so zamestnancami.",
+            items: [
+                "Pracovné zmluvy",
+                "Dohody mimo pracovného pomeru",
+                "Prihlásenie a odhlásenie zamestnancov",
+                "Personálna evidencia",
+                "Evidencia dovoleniek a neprítomností",
+                "Ukončenie pracovného pomeru",
+                "Personálne poradenstvo"
+            ]
+        },
+
+        consulting: {
+            kicker: "DATAPAY • PORADENSTVO",
+            title: "Účtovné a mzdové poradenstvo",
+            description:
+                "Pomôžeme vám pri riešení účtovných, mzdových a personálnych otázok.",
+            items: [
+                "Konzultácie v oblasti účtovníctva",
+                "Mzdové konzultácie",
+                "Pracovnoprávne otázky",
+                "Kontrola účtovnej dokumentácie",
+                "Kontrola mzdovej dokumentácie",
+                "Poradenstvo pri kontrolách"
+            ]
+        }
+
+    };
 
 
-            /* Close all */
-
-            document.querySelectorAll(".service-content").forEach(function(item) {
-                item.classList.remove("active");
-            });
-
-            document.querySelectorAll(".service-icon").forEach(function(item) {
-                item.textContent = "+";
-            });
+    const serviceCards = document.querySelectorAll(".service-card");
+    const serviceDetail = document.getElementById("serviceDetail");
+    const detailKicker = document.getElementById("detailKicker");
+    const detailTitle = document.getElementById("detailTitle");
+    const detailDescription = document.getElementById("detailDescription");
+    const detailList = document.getElementById("detailList");
 
 
-            /* Open selected */
+    serviceCards.forEach(function(card) {
 
-            if (!isOpen) {
+        card.addEventListener("click", function() {
 
-                content.classList.add("active");
+            const key = this.dataset.service;
+            const service = services[key];
 
-                icon.textContent = "−";
-
+            if (!service) {
+                return;
             }
+
+            serviceCards.forEach(function(item) {
+                item.classList.remove("active");
+                item.setAttribute("aria-selected", "false");
+            });
+
+            this.classList.add("active");
+            this.setAttribute("aria-selected", "true");
+
+            detailKicker.textContent = service.kicker;
+            detailTitle.textContent = service.title;
+            detailDescription.textContent = service.description;
+
+            detailList.innerHTML = service.items
+                .map(function(item) {
+                    return "<li>" + item + "</li>";
+                })
+                .join("");
+
+            serviceDetail.classList.remove("is-changing");
+            void serviceDetail.offsetWidth;
+            serviceDetail.classList.add("is-changing");
 
         });
 
