@@ -236,10 +236,9 @@
     .money-symbol {
         position: absolute;
         display: block;
-        color: #0b63ce;
-        font-family: Arial, sans-serif;
-        font-weight: 700;
-        line-height: 1;
+        width: auto;
+        height: auto;
+        object-fit: contain;
         user-select: none;
         will-change: transform;
     }
@@ -247,16 +246,16 @@
     .money-one {
         top: 22%;
         right: 7%;
-        font-size: 118px;
-        opacity: 0.045;
+        width: 150px;
+        opacity: 0.055;
         animation: euroFloatOne 16s ease-in-out infinite;
     }
 
     .money-two {
         left: 6%;
         bottom: 8%;
-        font-size: 72px;
-        opacity: 0.035;
+        width: 92px;
+        opacity: 0.04;
         animation: euroFloatTwo 19s ease-in-out infinite;
     }
 
@@ -314,12 +313,12 @@
     @media (max-width: 520px) {
         .money-one {
             right: -4%;
-            font-size: 90px;
+            width: 118px;
         }
 
         .money-two {
             left: 1%;
-            font-size: 58px;
+            width: 74px;
         }
     }
 
@@ -870,8 +869,8 @@
 
     <section class="services-hero">
         <div class="hero-money-art" aria-hidden="true">
-            <span class="money-symbol money-one">€</span>
-            <span class="money-symbol money-two">€</span>
+            <img class="money-symbol money-one" src="logo.png" alt="">
+            <img class="money-symbol money-two" src="logo.png" alt="">
             <span class="money-dot money-dot-one"></span>
             <span class="money-dot money-dot-two"></span>
         </div>
