@@ -750,23 +750,21 @@
             letter-spacing: -1.5px;
         }
 
-        .payroll-price .currency {
-            color: #071b38;
+.payroll-price .currency {
+    display: inline;
+    margin-left: 3px;
+    color: #071b38;
+    font-size: 17px;
+    font-weight: 700;
+}
 
-            font-size: 17px;
-            font-weight: 700;
-        }
-
-        .payroll-price span {
-            display: block;
-
-            margin-top: 8px;
-
-            color: #65768d;
-
-            font-size: 12px;
-            line-height: 1.5;
-        }
+.payroll-price > span:not(.currency) {
+    display: block;
+    margin-top: 8px;
+    color: #65768d;
+    font-size: 12px;
+    line-height: 1.5;
+}
 
 
         /* PAYROLL INCLUDED */
