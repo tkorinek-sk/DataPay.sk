@@ -1,1 +1,1522 @@
+<!DOCTYPE html>
+<html lang="en">
 
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Frequently Asked Questions – Accounting, Payroll & HR | DataPay</title>
+    <meta name="description" content="Answers to frequently asked questions about accounting, payroll, HR administration, working with DataPay and our services in Slovakia.">
+    <meta name="robots" content="index, follow">
+    <meta name="author" content="DataPay s.r.o.">
+    <link rel="canonical" href="https://datapay.sk/en/FAQ.html">
+    <link rel="alternate" hreflang="sk" href="https://datapay.sk/FAQ.html">
+    <link rel="alternate" hreflang="en" href="https://datapay.sk/en/FAQ.html">
+    <link rel="alternate" hreflang="x-default" href="https://datapay.sk/FAQ.html">
+
+    <meta property="og:locale" content="en_US">
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="DataPay">
+    <meta property="og:title" content="Frequently Asked Questions | DataPay">
+    <meta property="og:description" content="Answers to frequently asked questions about accounting, payroll, HR administration, working with DataPay and our services in Slovakia.">
+    <meta property="og:url" content="https://datapay.sk/en/FAQ.html">
+    <meta property="og:image" content="https://datapay.sk/logo.png">
+    <meta property="og:image:alt" content="DataPay – Accounting, Payroll & HR Services">
+
+    <link rel="icon" type="image/png" href="../logo.png">
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            margin: 0;
+            font-family: Arial, Helvetica, sans-serif;
+            background: #f7f9fc;
+            color: #1f2937;
+            line-height: 1.6;
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+
+        /* =========================
+           HEADER
+        ========================= */
+
+        .site-header {
+            background: #ffffff;
+            border-bottom: 1px solid #e6ebf2;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .nav-container {
+            width: 90%;
+            max-width: 1200px;
+            min-height: 88px;
+            margin: 0 auto;
+
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+
+            gap: 35px;
+        }
+
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+        }
+
+        .brand img {
+            width: 54px;
+            height: 54px;
+            object-fit: contain;
+            display: block;
+        }
+
+        .brand-text {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .brand-name {
+            color: #052c64;
+            font-size: 20px;
+            font-weight: 700;
+            line-height: 1.2;
+        }
+
+        .brand-subtitle {
+            color: #718096;
+            font-size: 12px;
+            margin-top: 4px;
+        }
+
+        .main-nav {
+            display: flex;
+            align-items: center;
+            gap: 28px;
+        }
+
+        .main-nav > a {
+            color: #334155;
+            font-size: 14px;
+            font-weight: 500;
+            transition: color 0.2s ease;
+        }
+
+        .main-nav > a:hover {
+            color: #052c64;
+        }
+
+        .main-nav > a.active {
+            color: #052c64;
+            font-weight: 700;
+        }
+
+        .language {
+            display: flex;
+            align-items: center;
+            gap: 7px;
+            margin-left: 5px;
+            font-size: 13px;
+        }
+
+        .language a {
+            color: #94a3b8;
+            font-weight: 500;
+        }
+
+        .language a.active {
+            color: #052c64;
+            font-weight: 700;
+        }
+
+        .language span {
+            color: #cbd5e1;
+        }
+
+
+        /* =========================
+           MAIN
+        ========================= */
+
+        .faq-page {
+            padding: 70px 0 90px;
+        }
+
+        .container {
+            width: 90%;
+            max-width: 1100px;
+            margin: 0 auto;
+        }
+
+
+        /* =========================
+           INTRO
+        ========================= */
+
+        .intro {
+            text-align: center;
+            max-width: 760px;
+            margin: 0 auto 45px;
+        }
+
+        .eyebrow {
+            color: #5279aa;
+            font-size: 12px;
+            font-weight: 700;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            margin-bottom: 14px;
+        }
+
+        .intro h1 {
+            margin: 0 0 18px;
+            color: #052c64;
+            font-size: 42px;
+            line-height: 1.15;
+        }
+
+        .intro p {
+            margin: 0;
+            color: #64748b;
+            font-size: 16px;
+            line-height: 1.7;
+        }
+
+
+        /* =========================
+           FAQ NAVIGATION
+        ========================= */
+
+        .faq-navigation {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-bottom: 30px;
+        }
+
+        .faq-navigation a {
+            padding: 10px 18px;
+            background: #ffffff;
+            border: 1px solid #dfe7f0;
+            border-radius: 999px;
+
+            color: #52657e;
+            font-size: 12px;
+            font-weight: 700;
+
+            transition: all 0.2s ease;
+        }
+
+        .faq-navigation a:hover {
+            background: #052c64;
+            border-color: #052c64;
+            color: #ffffff;
+        }
+
+
+        /* =========================
+           FAQ CARD
+        ========================= */
+
+        .faq-card {
+            background: #ffffff;
+            border: 1px solid #e1e8f0;
+            border-radius: 16px;
+            padding: 35px;
+
+            box-shadow: 0 8px 25px rgba(5, 44, 100, 0.04);
+        }
+
+
+        /* =========================
+           FAQ SECTION
+        ========================= */
+
+        .faq-section {
+            scroll-margin-top: 120px;
+        }
+
+        .faq-section + .faq-section {
+            margin-top: 48px;
+            padding-top: 42px;
+            border-top: 1px solid #e6edf5;
+        }
+
+        .faq-section-heading {
+            margin-bottom: 22px;
+        }
+
+        .faq-section-label {
+            display: inline-block;
+            margin-bottom: 7px;
+
+            color: #5279aa;
+            font-size: 10px;
+            font-weight: 700;
+            letter-spacing: 1.6px;
+            text-transform: uppercase;
+        }
+
+        .faq-section-heading h2 {
+            margin: 0 0 7px;
+            color: #052c64;
+            font-size: 24px;
+            line-height: 1.2;
+        }
+
+        .faq-section-heading p {
+            max-width: 720px;
+            margin: 0;
+            color: #718096;
+            font-size: 13px;
+            line-height: 1.6;
+        }
+
+
+        /* =========================
+           ACCORDION
+        ========================= */
+
+        .accordion {
+            margin-bottom: 12px;
+            border: 1px solid #e1e8f0;
+            border-radius: 10px;
+            overflow: hidden;
+            background: #ffffff;
+        }
+
+        .accordion:last-of-type {
+            margin-bottom: 0;
+        }
+
+        .accordion-btn {
+            width: 100%;
+
+            border: none;
+            background: #ffffff;
+
+            padding: 19px 20px;
+
+            text-align: left;
+
+            color: #052c64;
+
+            font-family: inherit;
+            font-size: 15px;
+            font-weight: 600;
+
+            cursor: pointer;
+
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+
+            gap: 20px;
+
+            transition: background 0.2s ease;
+        }
+
+        .accordion-btn:hover {
+            background: #f7faff;
+        }
+
+        .icon {
+            flex-shrink: 0;
+
+            width: 28px;
+            height: 28px;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            border-radius: 50%;
+
+            background: #eef4fb;
+            color: #052c64;
+
+            font-size: 19px;
+            font-weight: 400;
+
+            transition:
+                transform 0.2s ease,
+                background 0.2s ease;
+        }
+
+        .accordion-content {
+            display: none;
+
+            padding: 0 20px 20px;
+
+            color: #64748b;
+            font-size: 14px;
+            line-height: 1.7;
+        }
+
+        .accordion-content p {
+            margin: 0;
+        }
+
+        .accordion-content p + p {
+            margin-top: 10px;
+        }
+
+        .accordion.active .accordion-content {
+            display: block;
+        }
+
+        .accordion.active .icon {
+            background: #052c64;
+            color: #ffffff;
+        }
+
+
+        /* =========================
+           CTA
+        ========================= */
+
+        .cta-box {
+            margin-top: 40px;
+
+            background: #eef4fb;
+            border-radius: 14px;
+
+            padding: 30px;
+
+            text-align: center;
+        }
+
+        .cta-box h3 {
+            margin: 0 0 8px;
+
+            color: #052c64;
+            font-size: 20px;
+        }
+
+        .cta-box p {
+            margin: 0;
+
+            color: #64748b;
+            font-size: 14px;
+        }
+
+        .btn {
+            display: inline-block;
+
+            margin-top: 18px;
+
+            background: #052c64;
+            color: #ffffff;
+
+            padding: 12px 24px;
+
+            border-radius: 7px;
+
+            font-size: 14px;
+            font-weight: 700;
+
+            transition:
+                background 0.2s ease,
+                transform 0.2s ease;
+        }
+
+        .btn:hover {
+            background: #0d4d94;
+            transform: translateY(-2px);
+        }
+
+        .back-link {
+            display: inline-block;
+
+            margin-top: 18px;
+
+            color: #5279aa;
+
+            font-size: 13px;
+            font-weight: 600;
+        }
+
+        .back-link:hover {
+            color: #052c64;
+        }
+
+
+        /* =========================
+           FOOTER
+        ========================= */
+
+        footer {
+            background: #ffffff;
+            border-top: 1px solid #e6ebf2;
+
+            padding: 50px 0 25px;
+        }
+
+        .footer-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 50px;
+        }
+
+        .footer-column:nth-child(1) {
+            text-align: left;
+        }
+
+        .footer-column:nth-child(2) {
+            text-align: center;
+        }
+
+        .footer-column:nth-child(3) {
+            text-align: right;
+        }
+
+        .footer-column h3 {
+            margin: 0 0 14px;
+
+            color: #052c64;
+            font-size: 15px;
+        }
+
+        .footer-column p {
+            margin: 6px 0;
+
+            color: #718096;
+            font-size: 13px;
+            line-height: 1.5;
+        }
+
+        .footer-column a {
+            color: #718096;
+        }
+
+        .footer-column a:hover {
+            color: #052c64;
+        }
+
+        .footer-bottom {
+            margin-top: 35px;
+
+            padding-top: 20px;
+
+            border-top: 1px solid #edf1f5;
+
+            text-align: center;
+
+            color: #94a3b8;
+            font-size: 11px;
+        }
+
+        .footer-bottom a {
+            color: #718096;
+        }
+
+
+        /* =========================
+           MOBILE
+        ========================= */
+
+        @media (max-width: 900px) {
+
+            .nav-container {
+                flex-direction: column;
+                justify-content: center;
+
+                padding: 18px 0;
+
+                gap: 18px;
+            }
+
+            .main-nav {
+                flex-wrap: wrap;
+                justify-content: center;
+                gap: 16px;
+            }
+
+            .footer-grid {
+                grid-template-columns: 1fr;
+                gap: 30px;
+            }
+
+            .footer-column:nth-child(1),
+            .footer-column:nth-child(2),
+            .footer-column:nth-child(3) {
+                text-align: center;
+            }
+        }
+
+
+        @media (max-width: 600px) {
+
+            .faq-page {
+                padding: 50px 0 60px;
+            }
+
+            .intro h1 {
+                font-size: 32px;
+            }
+
+            .faq-card {
+                padding: 20px;
+            }
+
+            .faq-section + .faq-section {
+                margin-top: 35px;
+                padding-top: 32px;
+            }
+
+            .faq-section-heading h2 {
+                font-size: 21px;
+            }
+
+            .accordion-btn {
+                font-size: 14px;
+                padding: 17px;
+            }
+
+            .accordion-content {
+                padding: 0 17px 17px;
+                font-size: 13px;
+            }
+
+            .cta-box {
+                padding: 25px 18px;
+            }
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+<!-- =========================
+     HEADER
+========================= -->
+
+<header class="site-header">
+
+    <div class="nav-container">
+
+        <a href="index.html" class="brand">
+
+            <img src="../logo.png" alt="DataPay logo">
+
+            <div class="brand-text">
+
+                <div class="brand-name">
+                    DataPay s.r.o.
+                </div>
+
+                <div class="brand-subtitle">
+                    Payroll • Accounting • HR
+                </div>
+
+            </div>
+
+        </a>
+
+
+        <nav class="main-nav">
+
+            <a href="index.html">
+                Home
+            </a>
+
+            <a href="About.html">
+                About Us
+            </a>
+
+            <a href="payroll.html">
+                Services
+            </a>
+
+            <a href="Cennik.html">
+                Pricing
+            </a>
+
+            <a href="FAQ.html" class="active">
+                FAQ
+            </a>
+
+
+            <div class="language">
+
+                <a href="../FAQ.html">
+                    SK
+                </a>
+
+                <span>/</span>
+
+                <a href="FAQ.html" class="active" aria-current="page">
+                    EN
+                </a>
+
+            </div>
+
+        </nav>
+
+    </div>
+
+</header>
+
+
+
+<!-- =========================
+     MAIN
+========================= -->
+
+<main>
+
+    <div class="faq-page">
+
+        <div class="container">
+
+
+            <!-- INTRO -->
+
+            <section class="intro">
+
+                <div class="eyebrow">
+                    DATAPAY • FAQ
+                </div>
+
+                <h1>
+                    Frequently Asked Questions
+                </h1>
+
+                <p>
+                    Answers to the questions our clients ask most often about accounting, payroll, HR administration and working with DataPay.
+                </p>
+
+            </section>
+
+
+            <!-- NAVIGATION -->
+
+            <div class="faq-navigation">
+
+                <a href="#uctovnictvo">
+                    Accounting
+                </a>
+
+                <a href="#mzdy">
+                    Payroll & HR
+                </a>
+
+                <a href="#spolupraca">
+                    Working with DataPay
+                </a>
+
+            </div>
+
+
+
+            <!-- FAQ CARD -->
+
+            <section class="faq-card">
+
+
+                <!-- =========================
+                     ACCOUNTING
+                ========================= -->
+
+                <div class="faq-section" id="uctovnictvo">
+
+                    <div class="faq-section-heading">
+
+                        <span class="faq-section-label">
+                            ACCOUNTING
+                        </span>
+
+                        <h2>
+                            Accounting Questions
+                        </h2>
+
+                        <p>
+                            Information about pricing, accounting entries, documents and the scope of our accounting services.
+                        </p>
+
+                    </div>
+
+
+                    <!-- QUESTION -->
+
+                    <div class="accordion">
+
+                        <button class="accordion-btn">
+
+                            What counts as one accounting entry?
+
+                            <span class="icon">
+                                +
+                            </span>
+
+                        </button>
+
+                        <div class="accordion-content">
+
+                            <p>
+                                An accounting entry is one record in the accounting journal or the relevant accounting records. The number of accounting entries may therefore differ from the number of invoices or documents.
+                            </p>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- QUESTION -->
+
+                    <div class="accordion">
+
+                        <button class="accordion-btn">
+
+                            How do I choose the right accounting package for my business?
+
+                            <span class="icon">
+                                +
+                            </span>
+
+                        </button>
+
+                        <div class="accordion-content">
+
+                            <p>
+                                The main factors are the number of accounting entries per month and the complexity of your accounting needs. If you do not know your entry count, simply tell us about your business and document volume, and we will help you select the right package.
+                            </p>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- QUESTION -->
+
+                    <div class="accordion">
+
+                        <button class="accordion-btn">
+
+                            What happens if I exceed the number of entries included in my package?
+
+                            <span class="icon">
+                                +
+                            </span>
+
+                        </button>
+
+                        <div class="accordion-content">
+
+                            <p>
+                                If you exceed the monthly limit, additional entries are charged at the applicable per-entry rate stated in the current price list.
+                            </p>
+
+                            <p>
+                                If your business regularly exceeds the limit, we can agree on a more suitable service package.
+                            </p>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- QUESTION -->
+
+                    <div class="accordion">
+
+                        <button class="accordion-btn">
+
+                            Is the monthly accounting fee always the same?
+
+                            <span class="icon">
+                                +
+                            </span>
+
+                        </button>
+
+                        <div class="accordion-content">
+
+                            <p>
+                                Pricing depends on the scope of accounting work and the number of entries processed. If the number of entries or the workload changes significantly, the final fee may be adjusted accordingly.
+                            </p>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- QUESTION -->
+
+                    <div class="accordion">
+
+                        <button class="accordion-btn">
+
+                            What is the difference between single-entry and double-entry bookkeeping?
+
+                            <span class="icon">
+                                +
+                            </span>
+
+                        </button>
+
+                        <div class="accordion-content">
+
+                            <p>
+                                Single-entry and double-entry bookkeeping are different methods of maintaining accounting records. Which method applies depends mainly on the legal form and nature of your business.
+                            </p>
+
+                            <p>
+                                If you are unsure which accounting method applies to your business, we will be happy to help.
+                            </p>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- QUESTION -->
+
+                    <div class="accordion">
+
+                        <button class="accordion-btn">
+
+                            Do you also handle VAT returns and VAT control statements?
+
+                            <span class="icon">
+                                +
+                            </span>
+
+                        </button>
+
+                        <div class="accordion-content">
+
+                            <p>
+                                Yes. Depending on the agreed scope of services, we also maintain VAT records and prepare VAT returns, VAT control statements and, where required, EC Sales Lists.
+                            </p>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- QUESTION -->
+
+                    <div class="accordion">
+
+                        <button class="accordion-btn">
+
+                            Do I need to deliver accounting documents in person?
+
+                            <span class="icon">
+                                +
+                            </span>
+
+                        </button>
+
+                        <div class="accordion-content">
+
+                            <p>
+                                No. We can work entirely electronically and provide services to businesses throughout Slovakia. We will agree on how documents are submitted when we start working together.
+                            </p>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- QUESTION -->
+
+                    <div class="accordion">
+
+                        <button class="accordion-btn">
+
+                            Can I switch to DataPay during the year?
+
+                            <span class="icon">
+                                +
+                            </span>
+
+                        </button>
+
+                        <div class="accordion-content">
+
+                            <p>
+                                Yes. We can take over your accounting during an accounting period. We first review your current records, agree on the documents needed and then arrange a smooth handover.
+                            </p>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- QUESTION -->
+
+                    <div class="accordion">
+
+                        <button class="accordion-btn">
+
+                            What do you need to take over accounting from my previous accountant?
+
+                            <span class="icon">
+                                +
+                            </span>
+
+                        </button>
+
+                        <div class="accordion-content">
+
+                            <p>
+                                The documents required depend on the accounting method and the current state of your records. Before the transition, we will provide a specific checklist of the documents and information needed.
+                            </p>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+
+                <!-- =========================
+                     PAYROLL & HR
+                ========================= -->
+
+                <div class="faq-section" id="mzdy">
+
+                    <div class="faq-section-heading">
+
+                        <span class="faq-section-label">
+                            PAYROLL & HR
+                        </span>
+
+                        <h2>
+                            Payroll & HR Questions
+                        </h2>
+
+                        <p>
+                            Common questions about payroll processing, employees and HR administration.
+                        </p>
+
+                    </div>
+
+
+                    <!-- QUESTION -->
+
+                    <div class="accordion">
+
+                        <button class="accordion-btn">
+
+                            How much does payroll processing cost?
+
+                            <span class="icon">
+                                +
+                            </span>
+
+                        </button>
+
+                        <div class="accordion-content">
+
+                            <p>
+                                The price mainly depends on the number of employees and the services required. You can find our current rates on the Pricing page. If you are unsure what you need, we can prepare a no-obligation quote.
+                            </p>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- QUESTION -->
+
+                    <div class="accordion">
+
+                        <button class="accordion-btn">
+
+                            What is included in payroll processing?
+
+                            <span class="icon">
+                                +
+                            </span>
+
+                        </button>
+
+                        <div class="accordion-content">
+
+                            <p>
+                                Our payroll service includes monthly salary calculations, payslips, payment instructions, reports for the Slovak Social Insurance Agency and health insurers, holiday and sick-leave records, and other agreed administration.
+                            </p>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- QUESTION -->
+
+                    <div class="accordion">
+
+                        <button class="accordion-btn">
+
+                            What information do I need to send you each month?
+
+                            <span class="icon">
+                                +
+                            </span>
+
+                        </button>
+
+                        <div class="accordion-content">
+
+                            <p>
+                                We mainly need updates that affect payroll, such as new hires, employment terminations, annual leave, sick leave, bonuses, absences or changes in working hours.
+                            </p>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- QUESTION -->
+
+                    <div class="accordion">
+
+                        <button class="accordion-btn">
+
+                            Do you register and deregister employees with the authorities?
+
+                            <span class="icon">
+                                +
+                            </span>
+
+                        </button>
+
+                        <div class="accordion-content">
+
+                            <p>
+                                Yes. As part of our HR and payroll services, we can handle employee registration and deregistration with the relevant institutions, along with the associated administration.
+                            </p>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- QUESTION -->
+
+                    <div class="accordion">
+
+                        <button class="accordion-btn">
+
+                            Can you help us with employment contracts?
+
+                            <span class="icon">
+                                +
+                            </span>
+
+                        </button>
+
+                        <div class="accordion-content">
+
+                            <p>
+                                As part of our HR administration services, we assist with preparing and reviewing employment documents and the administration involved in hiring or terminating employees.
+                            </p>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- QUESTION -->
+
+                    <div class="accordion">
+
+                        <button class="accordion-btn">
+
+                            What if I have a question about employment matters?
+
+                            <span class="icon">
+                                +
+                            </span>
+
+                        </button>
+
+                        <div class="accordion-content">
+
+                            <p>
+                                You can contact us with questions about payroll and HR administration, employment contracts, onboarding, employment termination, remuneration and related administrative matters.
+                            </p>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+
+                <!-- =========================
+                     WORKING TOGETHER
+                ========================= -->
+
+                <div class="faq-section" id="spolupraca">
+
+                    <div class="faq-section-heading">
+
+                        <span class="faq-section-label">
+                            WORKING TOGETHER
+                        </span>
+
+                        <h2>
+                            Working with DataPay
+                        </h2>
+
+                        <p>
+                            How to get started, submit documents and communicate with our team.
+                        </p>
+
+                    </div>
+
+
+                    <!-- QUESTION -->
+
+                    <div class="accordion">
+
+                        <button class="accordion-btn">
+
+                            What can DataPay take care of for my business?
+
+                            <span class="icon">
+                                +
+                            </span>
+
+                        </button>
+
+                        <div class="accordion-content">
+
+                            <p>
+                                We provide accounting, payroll processing and HR administration tailored to your company’s needs.
+                            </p>
+
+                            <p>
+                                We tailor the scope of our services to your business type, accounting volume, employee headcount and specific requirements.
+                            </p>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- QUESTION -->
+
+                    <div class="accordion">
+
+                        <button class="accordion-btn">
+
+                            How do we start working with DataPay?
+
+                            <span class="icon">
+                                +
+                            </span>
+
+                        </button>
+
+                        <div class="accordion-content">
+
+                            <p>
+                                First, we review your current accounting, payroll or HR processes and agree on the scope of services.
+                            </p>
+
+                            <p>
+                                We then request the necessary documents and agree on how information will be submitted regularly and how we will communicate.
+                            </p>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- QUESTION -->
+
+                    <div class="accordion">
+
+                        <button class="accordion-btn">
+
+                            What types of businesses do you work with?
+
+                            <span class="icon">
+                                +
+                            </span>
+
+                        </button>
+
+                        <div class="accordion-content">
+
+                            <p>
+                                Our services are suitable for small, medium-sized and larger companies looking to outsource accounting, payroll or HR administration to a specialist partner.
+                            </p>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- QUESTION -->
+
+                    <div class="accordion">
+
+                        <button class="accordion-btn">
+
+                            Do you serve businesses throughout Slovakia?
+
+                            <span class="icon">
+                                +
+                            </span>
+
+                        </button>
+
+                        <div class="accordion-content">
+
+                            <p>
+                                Yes. Electronic document submission and online communication allow us to serve companies across Slovakia.
+                            </p>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- QUESTION -->
+
+                    <div class="accordion">
+
+                        <button class="accordion-btn">
+
+                            How do you protect personal data?
+
+                            <span class="icon">
+                                +
+                            </span>
+
+                        </button>
+
+                        <div class="accordion-content">
+
+                            <p>
+                                When processing accounting, payroll and HR data, we place strong emphasis on personal data protection and information security. We process data in accordance with the GDPR and applicable legislation.
+                            </p>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- QUESTION -->
+
+                    <div class="accordion">
+
+                        <button class="accordion-btn">
+
+                            How can I contact you?
+
+                            <span class="icon">
+                                +
+                            </span>
+
+                        </button>
+
+                        <div class="accordion-content">
+
+                            <p>
+                                You can reach us through our contact form, by email at datapaysk@gmail.com or by phone. We will be happy to discuss your requirements and recommend an appropriate service package.
+                            </p>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+
+                <!-- CTA -->
+
+                <div class="cta-box">
+
+                    <h3>
+                        Didn’t find the answer to your question?
+                    </h3>
+
+                    <p>
+                        We will be happy to answer your question personally.
+                    </p>
+
+                    <a class="btn" href="Formular.html">
+                        Contact Us
+                    </a>
+
+                    <br>
+
+                    <a href="index.html" class="back-link">
+                        ← Back to Home
+                    </a>
+
+                </div>
+
+
+            </section>
+
+        </div>
+
+    </div>
+
+</main>
+
+
+
+<!-- =========================
+     FOOTER
+========================= -->
+
+<footer>
+
+    <div class="container">
+
+        <div class="footer-grid">
+
+
+            <div class="footer-column">
+
+                <h3>
+                    DataPay s.r.o.
+                </h3>
+
+                <p>
+                    Accounting, payroll, HR administration and professional consulting.
+                </p>
+
+                <p>
+                    We provide services to businesses throughout Slovakia.
+                </p>
+
+            </div>
+
+
+
+            <div class="footer-column">
+
+                <h3>
+                    Contact
+                </h3>
+
+                <p>
+                    <a href="mailto:datapaysk@gmail.com">
+                        datapaysk@gmail.com
+                    </a>
+                </p>
+
+                <p>
+                    <a href="tel:+421903270664">
+                        +421 903 270 664
+                    </a>
+                </p>
+
+                <p>
+                    <a href="tel:+421907837030">
+                        +421 907 837 030
+                    </a>
+                </p>
+
+            </div>
+
+
+
+            <div class="footer-column">
+
+                <h3>
+                    Company
+                </h3>
+
+                <p>
+                    Company ID: 57456615
+                </p>
+
+                <p>
+                    Tax ID: 2122742622
+                </p>
+
+                <p>
+                    VAT ID: Not VAT registered
+                </p>
+
+            </div>
+
+
+        </div>
+
+
+        <div class="footer-bottom">
+
+            © 2026 DataPay s.r.o. |
+
+            <a href="../GDPR.html">
+                Privacy Policy
+            </a>
+
+        </div>
+
+    </div>
+
+</footer>
+
+
+
+<!-- =========================
+     JAVASCRIPT
+========================= -->
+
+<script>
+
+    document.querySelectorAll(".accordion-btn").forEach(function(button) {
+
+        button.addEventListener("click", function() {
+
+            const accordion = button.parentElement;
+            const icon = button.querySelector(".icon");
+
+            accordion.classList.toggle("active");
+
+            if (accordion.classList.contains("active")) {
+
+                icon.textContent = "−";
+
+            } else {
+
+                icon.textContent = "+";
+
+            }
+
+        });
+
+    });
+
+</script>
+
+
+</body>
+</html>
