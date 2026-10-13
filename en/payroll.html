@@ -1,1 +1,1295 @@
+<!DOCTYPE html>
 
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Accounting, Payroll & HR Services in Slovakia | DataPay</title>
+
+<meta name="description"
+      content="DataPay provides accounting, payroll processing, HR administration and professional support for businesses operating in Slovakia.">
+
+<meta name="robots" content="index, follow">
+<link rel="canonical" href="https://datapay.sk/en/payroll.html">
+<link rel="alternate" hreflang="sk" href="https://datapay.sk/payroll.html">
+<link rel="alternate" hreflang="en" href="https://datapay.sk/en/payroll.html">
+<link rel="alternate" hreflang="x-default" href="https://datapay.sk/payroll.html">
+<meta property="og:locale" content="en_GB">
+<meta property="og:url" content="https://datapay.sk/en/payroll.html">
+<meta name="theme-color" content="#ffffff">
+
+<link rel="icon" type="image/png" href="../logo.png">
+
+<meta property="og:title" content="Accounting, Payroll & HR Services | DataPay">
+<meta property="og:description"
+      content="Accounting, payroll, HR administration and professional support for companies in Slovakia.">
+<meta property="og:type" content="website">
+
+<style>
+
+    * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+    }
+
+    html {
+        scroll-behavior: smooth;
+    }
+
+    body {
+        font-family: Arial, Helvetica, sans-serif;
+        background: #f7f9fc;
+        color: #1f2937;
+        line-height: 1.7;
+    }
+
+    a {
+        text-decoration: none;
+    }
+
+
+   /* =========================
+   HEADER
+========================= */
+
+.site-header {
+    background: #ffffff;
+    border-bottom: 1px solid #e6ebf2;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+}
+
+.nav-container {
+    width: 90%;
+    max-width: 1200px;
+    min-height: 88px;
+    margin: 0 auto;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    gap: 35px;
+}
+
+.brand {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+}
+
+.brand img {
+    width: 54px;
+    height: 54px;
+    object-fit: contain;
+    display: block;
+}
+
+.brand-text {
+    display: flex;
+    flex-direction: column;
+}
+
+.brand-name {
+    color: #052c64;
+    font-size: 20px;
+    font-weight: 700;
+    line-height: 1.2;
+}
+
+.brand-subtitle {
+    color: #718096;
+    font-size: 12px;
+    margin-top: 4px;
+}
+
+.main-nav {
+    display: flex;
+    align-items: center;
+    gap: 28px;
+}
+
+.main-nav > a {
+    color: #334155;
+    font-size: 14px;
+    font-weight: 500;
+    transition: color 0.2s ease;
+}
+
+.main-nav > a:hover {
+    color: #052c64;
+}
+
+.main-nav > a.active {
+    color: #052c64;
+    font-weight: 700;
+}
+
+.language {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    margin-left: 5px;
+    font-size: 13px;
+}
+
+.language a {
+    color: #94a3b8;
+    font-weight: 500;
+}
+
+.language a.active {
+    color: #052c64;
+    font-weight: 700;
+}
+
+.language span {
+    color: #cbd5e1;
+}
+
+    /* =========================================
+       MAIN
+    ========================================= */
+
+    main {
+        padding-bottom: 80px;
+    }
+
+    .container {
+        width: min(1180px, 92%);
+        margin: 0 auto;
+    }
+
+
+    /* =========================================
+       INTRO
+    ========================================= */
+
+    .services-hero {
+        margin-top: 55px;
+        padding: 65px 50px;
+
+        background:
+            linear-gradient(
+                135deg,
+                #eef4fb 0%,
+                #ffffff 55%,
+                #edf3fa 100%
+            );
+
+        border: 1px solid #e3eaf3;
+        border-radius: 18px;
+
+        text-align: center;
+    }
+
+    .eyebrow {
+        margin-bottom: 12px;
+
+        color: #315f91;
+        font-size: 12px;
+        font-weight: 700;
+        letter-spacing: 1.5px;
+        text-transform: uppercase;
+    }
+
+    .services-hero h1 {
+        margin-bottom: 18px;
+
+        color: #052c64;
+        font-size: clamp(32px, 4vw, 48px);
+        line-height: 1.15;
+    }
+
+    .services-hero p {
+        max-width: 760px;
+        margin: 0 auto;
+
+        color: #64748b;
+        font-size: 17px;
+    }
+
+
+
+    /* =========================================
+       SUBTLE HERO BACKGROUND ANIMATION
+    ========================================= */
+
+    .services-hero {
+        position: relative;
+        overflow: hidden;
+        isolation: isolate;
+    }
+
+    .services-hero > .eyebrow,
+    .services-hero > h1,
+    .services-hero > p {
+        position: relative;
+        z-index: 2;
+    }
+
+    .hero-money-art {
+        position: absolute;
+        inset: 0;
+        z-index: 0;
+        pointer-events: none;
+        overflow: hidden;
+        border-radius: inherit;
+    }
+
+    .money-symbol {
+        position: absolute;
+        display: block;
+        width: auto;
+        height: auto;
+        object-fit: contain;
+        user-select: none;
+        will-change: transform;
+    }
+
+    .money-one {
+        top: 22%;
+        right: 7%;
+        width: 150px;
+        opacity: 0.055;
+        animation: euroFloatOne 9s ease-in-out infinite;
+    }
+
+    .money-two {
+        left: 6%;
+        bottom: 8%;
+        width: 92px;
+        opacity: 0.04;
+        animation: euroFloatTwo 11s ease-in-out infinite;
+    }
+
+    .money-dot {
+        position: absolute;
+        width: 7px;
+        height: 7px;
+        background: #0b63ce;
+        border-radius: 50%;
+        opacity: 0.10;
+    }
+
+    .money-dot-one {
+        top: 23%;
+        left: 17%;
+        animation: moneyDotFloat 7s ease-in-out infinite;
+    }
+
+    .money-dot-two {
+        right: 20%;
+        bottom: 18%;
+        width: 5px;
+        height: 5px;
+        opacity: 0.08;
+        animation: moneyDotFloat 8s ease-in-out infinite reverse;
+    }
+
+    @keyframes euroFloatOne {
+        0%, 100% {
+            transform: translate3d(0, 0, 0) rotate(-8deg);
+        }
+        50% {
+            transform: translate3d(-28px, 18px, 0) rotate(6deg);
+        }
+    }
+
+    @keyframes euroFloatTwo {
+        0%, 100% {
+            transform: translate3d(0, 0, 0) rotate(7deg);
+        }
+        50% {
+            transform: translate3d(22px, -18px, 0) rotate(-6deg);
+        }
+    }
+
+    @keyframes moneyDotFloat {
+        0%, 100% {
+            transform: translateY(0);
+        }
+        50% {
+            transform: translateY(-13px);
+        }
+    }
+
+    @media (max-width: 520px) {
+        .money-one {
+            right: -4%;
+            width: 118px;
+        }
+
+        .money-two {
+            left: 1%;
+            width: 74px;
+        }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+        .money-symbol,
+        .money-dot {
+            animation: none;
+        }
+    }
+
+    /* =========================================
+       DYNAMIC SERVICES
+    ========================================= */
+
+    .services-section {
+        margin-top: 45px;
+    }
+
+    .services-grid {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 16px;
+    }
+
+    .service-card {
+        position: relative;
+        min-height: 220px;
+        padding: 26px 24px 24px;
+        background: #ffffff;
+        border: 1px solid #e2e8f0;
+        border-radius: 16px;
+        overflow: hidden;
+        cursor: pointer;
+        text-align: left;
+        font-family: inherit;
+        color: inherit;
+        box-shadow: 0 5px 18px rgba(15, 23, 42, 0.04);
+        transition:
+            transform 0.25s ease,
+            box-shadow 0.25s ease,
+            border-color 0.25s ease,
+            background 0.25s ease;
+    }
+
+    .service-card::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 3px;
+        background: #0b63ce;
+        transform: scaleX(0);
+        transform-origin: left;
+        transition: transform 0.3s ease;
+    }
+
+    .service-card:hover {
+        transform: translateY(-6px);
+        border-color: #c8d9ee;
+        box-shadow: 0 16px 35px rgba(15, 23, 42, 0.10);
+    }
+
+    .service-card:hover::before,
+    .service-card.active::before {
+        transform: scaleX(1);
+    }
+
+    .service-card.active {
+        background: linear-gradient(145deg, #f7fbff 0%, #ffffff 100%);
+        border-color: #9fc2e9;
+        box-shadow: 0 12px 30px rgba(5, 44, 100, 0.09);
+    }
+
+    .service-card-top {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 15px;
+        margin-bottom: 24px;
+    }
+
+    .service-number {
+        color: #9aabc0;
+        font-size: 12px;
+        font-weight: 700;
+        letter-spacing: 1.4px;
+    }
+
+    .service-symbol {
+        width: 44px;
+        height: 44px;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 12px;
+        background: #eef5fd;
+        color: #0b63ce;
+        font-size: 21px;
+        font-weight: 700;
+        transition: transform 0.25s ease, background 0.25s ease;
+    }
+
+    .service-card:hover .service-symbol,
+    .service-card.active .service-symbol {
+        transform: scale(1.06);
+        background: #e1eefc;
+    }
+
+    .service-card h2 {
+        margin-bottom: 10px;
+        color: #052c64;
+        font-size: 20px;
+        line-height: 1.25;
+    }
+
+    .service-card p {
+        color: #64748b;
+        font-size: 14px;
+        line-height: 1.65;
+    }
+
+    .service-more {
+        display: inline-flex;
+        align-items: center;
+        gap: 7px;
+        margin-top: 20px;
+        color: #0b63ce;
+        font-size: 13px;
+        font-weight: 700;
+    }
+
+    .service-more span {
+        transition: transform 0.2s ease;
+    }
+
+    .service-card:hover .service-more span {
+        transform: translateX(4px);
+    }
+
+    .service-detail {
+        margin-top: 18px;
+        padding: 36px 38px;
+        display: grid;
+        grid-template-columns: 0.85fr 1.15fr;
+        gap: 45px;
+        align-items: start;
+        background: #ffffff;
+        border: 1px solid #dce6f2;
+        border-radius: 18px;
+        box-shadow: 0 8px 28px rgba(15, 23, 42, 0.05);
+    }
+
+    .service-detail-copy {
+        position: sticky;
+        top: 115px;
+    }
+
+    .service-detail-kicker {
+        margin-bottom: 10px;
+        color: #315f91;
+        font-size: 11px;
+        font-weight: 700;
+        letter-spacing: 1.4px;
+        text-transform: uppercase;
+    }
+
+    .service-detail h3 {
+        margin-bottom: 14px;
+        color: #052c64;
+        font-size: 29px;
+        line-height: 1.2;
+    }
+
+    .service-detail-description {
+        color: #64748b;
+        font-size: 15px;
+    }
+
+    .service-detail-list {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 11px 22px;
+        list-style: none;
+        padding: 0;
+        margin: 0;
+    }
+
+    .service-detail-list li {
+        position: relative;
+        min-height: 48px;
+        padding: 13px 14px 13px 40px;
+        display: flex;
+        align-items: center;
+        background: #f8fafc;
+        border: 1px solid #edf1f6;
+        border-radius: 10px;
+        color: #334155;
+        font-size: 14px;
+        line-height: 1.45;
+    }
+
+    .service-detail-list li::before {
+        content: "✓";
+        position: absolute;
+        left: 15px;
+        top: 50%;
+        transform: translateY(-50%);
+        color: #17865f;
+        font-weight: 700;
+    }
+
+    .service-detail.is-changing {
+        animation: detailFade 0.24s ease;
+    }
+
+    @keyframes detailFade {
+        from {
+            opacity: 0.35;
+            transform: translateY(5px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    /* =========================================
+       CTA
+    ========================================= */
+
+    .cta {
+        margin-top: 55px;
+        padding: 45px 35px;
+
+        background: #052c64;
+        border-radius: 18px;
+
+        text-align: center;
+        color: #ffffff;
+    }
+
+    .cta h2 {
+        margin-bottom: 10px;
+
+        font-size: 30px;
+        line-height: 1.2;
+    }
+
+    .cta p {
+        margin-bottom: 24px;
+
+        color: #dbe7f5;
+    }
+
+    .cta-button {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+
+        padding: 12px 24px;
+
+        background: #ffffff;
+        color: #052c64;
+
+        border-radius: 8px;
+
+        font-size: 14px;
+        font-weight: 700;
+
+        transition: all 0.2s ease;
+    }
+
+    .cta-button:hover {
+        background: #eef4fb;
+        transform: translateY(-1px);
+    }
+
+
+    /* =========================================
+       FOOTER – SAME AS FAQ / CENNIK
+    ========================================= */
+
+    footer {
+        background: #071c35;
+        color: #ffffff;
+        padding: 55px 0 20px;
+    }
+
+    .footer-container {
+        width: min(1180px, 92%);
+        margin: 0 auto;
+    }
+
+    .footer-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 40px;
+
+        padding-bottom: 35px;
+    }
+
+    .footer-column {
+        font-size: 14px;
+    }
+
+    .footer-column:nth-child(1) {
+        text-align: left;
+    }
+
+    .footer-column:nth-child(2) {
+        text-align: center;
+    }
+
+    .footer-column:nth-child(3) {
+        text-align: right;
+    }
+
+    .footer-column h3 {
+        margin-bottom: 14px;
+
+        color: #ffffff;
+        font-size: 16px;
+    }
+
+    .footer-column p {
+        margin-bottom: 7px;
+
+        color: #b8c5d4;
+    }
+
+    .footer-column a {
+        color: #b8c5d4;
+        transition: color 0.2s ease;
+    }
+
+    .footer-column a:hover {
+        color: #ffffff;
+    }
+
+    .footer-bottom {
+        padding-top: 20px;
+
+        border-top: 1px solid rgba(255, 255, 255, 0.12);
+
+        color: #8fa0b4;
+        font-size: 13px;
+        text-align: center;
+    }
+
+    .footer-bottom a {
+        color: #b8c5d4;
+    }
+
+    .footer-bottom a:hover {
+        color: #ffffff;
+    }
+
+
+    /* =========================================
+       MOBILE
+    ========================================= */
+
+    @media (max-width: 850px) {
+
+        .nav-container {
+            min-height: auto;
+            padding: 12px 0;
+
+            flex-wrap: wrap;
+        }
+
+        .main-nav {
+            order: 3;
+            width: 100%;
+
+            justify-content: center;
+            flex-wrap: wrap;
+
+            gap: 15px;
+        }
+
+        .language {
+            margin-left: 0;
+        }
+
+        .services-grid {
+            grid-template-columns: repeat(2, 1fr);
+        }
+
+        .service-detail {
+            grid-template-columns: 1fr;
+            gap: 25px;
+        }
+
+        .service-detail-copy {
+            position: static;
+        }
+
+        .services-hero {
+            margin-top: 30px;
+            padding: 45px 25px;
+        }
+
+        .footer-grid {
+            grid-template-columns: 1fr;
+            gap: 30px;
+        }
+
+        .footer-column:nth-child(1),
+        .footer-column:nth-child(2),
+        .footer-column:nth-child(3) {
+            text-align: center;
+        }
+    }
+
+    @media (max-width: 520px) {
+
+        .brand-subtitle {
+            font-size: 10px;
+        }
+
+        .brand img {
+            width: 48px;
+            height: 48px;
+        }
+
+        .brand-name {
+            font-size: 17px;
+        }
+
+        .services-hero h1 {
+            font-size: 32px;
+        }
+
+        .services-grid {
+            grid-template-columns: 1fr;
+        }
+
+        .service-card {
+            min-height: 0;
+            padding: 22px 20px;
+        }
+
+        .service-detail {
+            padding: 28px 22px;
+        }
+
+        .service-detail h3 {
+            font-size: 25px;
+        }
+
+        .service-detail-list {
+            grid-template-columns: 1fr;
+        }
+
+        .cta {
+            padding: 38px 22px;
+        }
+    }
+
+</style>
+
+</head>
+
+<body>
+
+<!-- =========================================
+     HEADER
+========================================= -->
+
+<header class="site-header">
+
+<div class="nav-container">
+
+    <a href="index.html" class="brand">
+
+        <img src="../logo.png" alt="DataPay logo">
+
+        <div class="brand-text">
+
+            <div class="brand-name">
+                DataPay s.r.o.
+            </div>
+
+            <div class="brand-subtitle">
+                Payroll • Accounting • HR
+            </div>
+
+        </div>
+
+    </a>
+
+
+    <nav class="main-nav">
+
+        <a href="index.html">
+            Home
+        </a>
+
+        <a href="About.html">
+            About Us
+        </a>
+
+        <a href="payroll.html" class="active">
+            Services
+        </a>
+
+        <a href="Cennik.html">
+            Pricing
+        </a>
+
+         <a href="FAQ.html">
+                FAQ
+            </a>
+
+
+        <div class="language">
+
+            <a href="../payroll.html">
+                SK
+            </a>
+
+            <span>/</span>
+
+            <a href="payroll.html" class="active" aria-current="page">
+                EN
+            </a>
+
+        </div>
+
+    </nav>
+
+</div>
+
+</header>
+
+<!-- =========================================
+     MAIN
+========================================= -->
+
+<main>
+
+<div class="container">
+
+
+    <!-- SERVICES INTRO -->
+
+    <section class="services-hero">
+        <div class="hero-money-art" aria-hidden="true">
+            <img class="money-symbol money-one" src="../logo.png" alt="">
+            <img class="money-symbol money-two" src="../logo.png" alt="">
+            <span class="money-dot money-dot-one"></span>
+            <span class="money-dot money-dot-two"></span>
+        </div>
+
+
+        <div class="eyebrow">
+            DATAPAY • SERVICES
+        </div>
+
+        <h1>
+            Our Services
+        </h1>
+
+        <p>
+            Comprehensive accounting, payroll and HR administration services.
+            We take care of your company’s administrative tasks so you can
+            focus on running and growing your business.
+        </p>
+
+    </section>
+
+
+
+    <!-- SERVICES -->
+
+    <section class="services-section">
+
+        <div class="services-grid" role="tablist" aria-label="Our services">
+
+            <button class="service-card active" type="button" data-service="accounting"
+                    role="tab" aria-selected="true">
+                <div class="service-card-top">
+                    <span class="service-number">01</span>
+                    <span class="service-symbol" aria-hidden="true">∑</span>
+                </div>
+
+                <h2>Accounting</h2>
+
+                <p>
+                    Comprehensive single-entry and double-entry bookkeeping
+                    for sole traders and companies.
+                </p>
+
+                <span class="service-more">
+                    View details <span>→</span>
+                </span>
+            </button>
+
+
+            <button class="service-card" type="button" data-service="payroll"
+                    role="tab" aria-selected="false">
+                <div class="service-card-top">
+                    <span class="service-number">02</span>
+                    <span class="service-symbol" aria-hidden="true">€</span>
+                </div>
+
+                <h2>Payroll</h2>
+
+                <p>
+                    Comprehensive payroll processing and communication
+                    with the relevant authorities.
+                </p>
+
+                <span class="service-more">
+                    View details <span>→</span>
+                </span>
+            </button>
+
+
+            <button class="service-card" type="button" data-service="hr"
+                    role="tab" aria-selected="false">
+                <div class="service-card-top">
+                    <span class="service-number">03</span>
+                    <span class="service-symbol" aria-hidden="true">◎</span>
+                </div>
+
+                <h2>HR Administration</h2>
+
+                <p>
+                    Employee records and documentation throughout the
+                    entire employment lifecycle.
+                </p>
+
+                <span class="service-more">
+                    View details <span>→</span>
+                </span>
+            </button>
+
+
+            <button class="service-card" type="button" data-service="consulting"
+                    role="tab" aria-selected="false">
+                <div class="service-card-top">
+                    <span class="service-number">04</span>
+                    <span class="service-symbol" aria-hidden="true">?</span>
+                </div>
+
+                <h2>Consulting</h2>
+
+                <p>
+                    Expert support with accounting, payroll
+                    and HR-related matters.
+                </p>
+
+                <span class="service-more">
+                    View details <span>→</span>
+                </span>
+            </button>
+
+        </div>
+
+
+        <div class="service-detail" id="serviceDetail" aria-live="polite">
+
+            <div class="service-detail-copy">
+
+                <div class="service-detail-kicker" id="detailKicker">
+                    DATAPAY • ACCOUNTING
+                </div>
+
+                <h3 id="detailTitle">
+                    Accounting
+                </h3>
+
+                <p class="service-detail-description" id="detailDescription">
+                    We provide comprehensive bookkeeping and accounting
+                    for sole traders and companies.
+                </p>
+
+            </div>
+
+            <ul class="service-detail-list" id="detailList">
+                <li>Single-entry bookkeeping</li>
+                <li>Double-entry bookkeeping</li>
+                <li>Processing accounting documents</li>
+                <li>Bank and cash transactions</li>
+                <li>Accounting records management</li>
+                <li>VAT records and reporting</li>
+                <li>Financial statements</li>
+                <li>Tax returns</li>
+                <li>Accounting advisory services</li>
+            </ul>
+
+        </div>
+
+    </section>
+
+
+
+    <!-- CTA -->
+
+    <section class="cta">
+
+        <h2>
+            Looking for a reliable partner?
+        </h2>
+
+        <p>
+            We will be happy to prepare a no-obligation quote tailored to your business.
+        </p>
+
+        <a href="Formular.html" class="cta-button">
+            Contact Us
+        </a>
+
+    </section>
+
+
+</div>
+
+</main>
+
+<!-- =========================================
+     FOOTER
+========================================= -->
+
+<footer>
+
+    <div class="container">
+
+        <div class="footer-grid">
+
+
+            <div class="footer-column">
+
+                <h3>
+                    DataPay s.r.o.
+                </h3>
+
+                <p>
+                    Accounting, payroll, HR administration
+                    and professional advisory services.
+                </p>
+
+                <p>
+                    We provide services to businesses
+                    throughout Slovakia.
+                </p>
+
+            </div>
+
+
+
+            <div class="footer-column">
+
+                <h3>
+                    Contact
+                </h3>
+
+                <p>
+                    <a href="mailto:datapaysk@gmail.com">
+                        datapaysk@gmail.com
+                    </a>
+                </p>
+
+                <p>
+                    <a href="tel:+421903270664">
+                        +421 903 270 664
+                    </a>
+                </p>
+
+                <p>
+                    <a href="tel:+421907837030">
+                        +421 907 837 030
+                    </a>
+                </p>
+
+            </div>
+
+
+
+            <div class="footer-column">
+
+                <h3>
+                    Company
+                </h3>
+
+                <p>
+                    Company ID: 57456615
+                </p>
+
+                <p>
+                    Tax ID: 2122742622
+                </p>
+
+                <p>
+                    VAT: Not VAT registered
+                </p>
+
+            </div>
+
+
+        </div>
+
+
+        <div class="footer-bottom">
+
+            © 2026 DataPay s.r.o. |
+
+            <a href="GDPR.html">
+                Privacy Policy
+            </a>
+
+        </div>
+
+    </div>
+
+</footer>
+
+<!-- =========================================
+     DYNAMIC SERVICES JAVASCRIPT
+========================================= -->
+
+<script>
+
+    const services = {
+
+        accounting: {
+            kicker: "DATAPAY • ACCOUNTING",
+            title: "Accounting",
+            description:
+                "We provide comprehensive bookkeeping and accounting for sole traders and companies.",
+            items: [
+                "Single-entry bookkeeping",
+                "Double-entry bookkeeping",
+                "Processing accounting documents",
+                "Bank and cash transactions",
+                "Accounting records management",
+                "VAT records and reporting",
+                "Financial statements",
+                "Tax returns",
+                "Accounting advisory services"
+            ]
+        },
+
+        payroll: {
+            kicker: "DATAPAY • PAYROLL",
+            title: "Payroll",
+            description:
+                "Comprehensive payroll processing for your employees.",
+            items: [
+                "Monthly payroll processing",
+                "Payslips",
+                "Social Insurance Agency reporting",
+                "Health insurance reporting",
+                "Payment instructions",
+                "Leave and sick-leave records",
+                "Communication with authorities",
+                "Payroll advisory services"
+            ]
+        },
+
+        hr: {
+            kicker: "DATAPAY • HR ADMINISTRATION",
+            title: "HR Administration",
+            description:
+                "We manage employee records and HR documentation throughout the employment lifecycle.",
+            items: [
+                "Employment contracts",
+                "Non-standard employment agreements",
+                "Employee registration and deregistration",
+                "Employee personnel records",
+                "Leave and absence records",
+                "Employment termination documentation",
+                "HR advisory services"
+            ]
+        },
+
+        consulting: {
+            kicker: "DATAPAY • CONSULTING",
+            title: "Accounting and Payroll Consulting",
+            description:
+                "We help you address accounting, payroll and HR-related questions.",
+            items: [
+                "Accounting consultations",
+                "Payroll consultations",
+                "Employment law matters",
+                "Review of accounting documentation",
+                "Review of payroll documentation",
+                "Support during official inspections"
+            ]
+        }
+
+    };
+
+
+    const serviceCards = document.querySelectorAll(".service-card");
+    const serviceDetail = document.getElementById("serviceDetail");
+    const detailKicker = document.getElementById("detailKicker");
+    const detailTitle = document.getElementById("detailTitle");
+    const detailDescription = document.getElementById("detailDescription");
+    const detailList = document.getElementById("detailList");
+
+
+    serviceCards.forEach(function(card) {
+
+        card.addEventListener("click", function() {
+
+            const key = this.dataset.service;
+            const service = services[key];
+
+            if (!service) {
+                return;
+            }
+
+            serviceCards.forEach(function(item) {
+                item.classList.remove("active");
+                item.setAttribute("aria-selected", "false");
+            });
+
+            this.classList.add("active");
+            this.setAttribute("aria-selected", "true");
+
+            detailKicker.textContent = service.kicker;
+            detailTitle.textContent = service.title;
+            detailDescription.textContent = service.description;
+
+            detailList.innerHTML = service.items
+                .map(function(item) {
+                    return "<li>" + item + "</li>";
+                })
+                .join("");
+
+            serviceDetail.classList.remove("is-changing");
+            void serviceDetail.offsetWidth;
+            serviceDetail.classList.add("is-changing");
+// Automatically scroll to the selected service details on mobile
+if (window.innerWidth <= 850) {
+
+    const header = document.querySelector(".site-header");
+
+    const headerHeight = header
+        ? header.getBoundingClientRect().height
+        : 0;
+
+    const detailPosition =
+        serviceDetail.getBoundingClientRect().top
+        + window.scrollY
+        - headerHeight
+        - 15;
+
+    window.scrollTo({
+        top: Math.max(0, detailPosition),
+        behavior: window.matchMedia("(prefers-reduced-motion: reduce)").matches
+            ? "auto"
+            : "smooth"
+    });
+}
+        });
+
+    });
+
+</script>
+
+</body>
+</html>
