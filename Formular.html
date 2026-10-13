@@ -723,15 +723,19 @@
 
 
                 <form
-                    action="https://formsubmit.co/datapaysk@gmail.com"
+                    id="contactForm"
+                    action="https://api.web3forms.com/submit"
                     method="POST"
                 >
 
                     <input
                         type="hidden"
-                        name="_subject"
-                        value="Nový dopyt z webu DataPay"
+                        name="subject"
+                        value="DataPay – Nový dopyt z kontaktného formulára"
                     >
+
+                    <input type="hidden" name="access_key" value="527aef13-ad01-4967-8369-c4fdf7b19fc8">
+                    <input type="checkbox" name="botcheck" tabindex="-1" autocomplete="off" style="display:none" aria-hidden="true">
 
 
                     <!-- NAME -->
@@ -745,7 +749,7 @@
                         <input
                             type="text"
                             id="meno"
-                            name="Meno"
+                            name="name"
                             required
                         >
 
@@ -774,7 +778,7 @@
                     <div class="form-group">
 
                         <label for="email">
-                            e-mail
+                            E-mail
                         </label>
 
                         <input
@@ -814,7 +818,7 @@
 
                         <textarea
                             id="sprava"
-                            name="Sprava"
+                            name="message"
                             rows="5"
                             required
                         ></textarea>
@@ -857,9 +861,12 @@
                     <button
                         class="btn"
                         type="submit"
+                        id="submitButton"
                     >
                         Odoslať správu
                     </button>
+
+                    <p id="formStatus" role="status" aria-live="polite" style="display:none; margin-top:18px; font-size:14px;"></p>
 
                 </form>
 
@@ -1011,6 +1018,48 @@
 </footer>
 
 
+<script>
+    document.getElementById("contactForm").addEventListener("submit", async function (event) {
+        event.preventDefault();
+
+        const form = this;
+        const button = document.getElementById("submitButton");
+        const status = document.getElementById("formStatus");
+
+        if (!form.reportValidity()) return;
+
+        button.disabled = true;
+        button.textContent = "Odosielam správu…";
+        button.style.opacity = "0.7";
+        status.style.display = "none";
+
+        try {
+            const response = await fetch(form.action, {
+                method: "POST",
+                body: new FormData(form),
+                headers: { "Accept": "application/json" }
+            });
+            const result = await response.json();
+
+            if (!response.ok || !result.success) {
+                throw new Error(result.message || "Odoslanie zlyhalo.");
+            }
+
+            status.textContent = "Ďakujeme za správu. Úspešne sme ju prijali a čoskoro vás budeme kontaktovať.";
+            status.style.color = "#17865f";
+            status.style.display = "block";
+            form.reset();
+        } catch (error) {
+            status.textContent = "Správu sa nepodarilo odoslať. Skúste to, prosím, znova alebo nám napíšte na datapaysk@gmail.com.";
+            status.style.color = "#b42318";
+            status.style.display = "block";
+        } finally {
+            button.disabled = false;
+            button.textContent = "Odoslať správu";
+            button.style.opacity = "";
+        }
+    });
+</script>
 </body>
 
 </html>
