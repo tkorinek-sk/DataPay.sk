@@ -1256,7 +1256,28 @@
             serviceDetail.classList.remove("is-changing");
             void serviceDetail.offsetWidth;
             serviceDetail.classList.add("is-changing");
+// Automatický presun na detail služby na mobile
+if (window.innerWidth <= 850) {
 
+    const header = document.querySelector(".site-header");
+
+    const headerHeight = header
+        ? header.getBoundingClientRect().height
+        : 0;
+
+    const detailPosition =
+        serviceDetail.getBoundingClientRect().top
+        + window.scrollY
+        - headerHeight
+        - 15;
+
+    window.scrollTo({
+        top: Math.max(0, detailPosition),
+        behavior: window.matchMedia("(prefers-reduced-motion: reduce)").matches
+            ? "auto"
+            : "smooth"
+    });
+}
         });
 
     });
