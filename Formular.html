@@ -596,6 +596,60 @@
 
         }
 
+
+        /* POTVRDENIE ODOSLANIA – MODAL */
+        .success-modal {
+            position: fixed;
+            inset: 0;
+            z-index: 2000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            background: rgba(7, 28, 53, 0.62);
+        }
+        .success-modal[hidden] { display: none; }
+        .success-modal-dialog {
+            width: 100%;
+            max-width: 430px;
+            padding: 38px 30px;
+            background: #fff;
+            border-radius: 18px;
+            text-align: center;
+            box-shadow: 0 22px 65px rgba(7, 28, 53, 0.25);
+        }
+        .success-modal-icon {
+            width: 70px;
+            height: 70px;
+            margin: 0 auto 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            background: #e7f7ee;
+            color: #17865f;
+            font-size: 38px;
+            font-weight: 700;
+        }
+        .success-modal-dialog h2 {
+            margin: 0 0 12px;
+            color: #052c64;
+            font-size: 25px;
+            line-height: 1.3;
+        }
+        .success-modal-dialog p {
+            margin: 0 0 26px;
+            color: #64748b;
+            font-size: 15px;
+            line-height: 1.7;
+        }
+        .success-modal-dialog .btn { min-width: 160px; }
+        body.modal-open { overflow: hidden; }
+        @media (max-width: 600px) {
+            .success-modal-dialog { padding: 30px 22px; }
+            .success-modal-dialog h2 { font-size: 22px; }
+        }
+
     </style>
 
 </head>
@@ -1018,7 +1072,49 @@
 </footer>
 
 
+
+<!-- Potvrdenie úspešného odoslania -->
+<div class="success-modal" id="successModal" hidden>
+    <div class="success-modal-dialog" role="dialog" aria-modal="true" aria-labelledby="successModalTitle" aria-describedby="successModalDescription" tabindex="-1">
+        <div class="success-modal-icon" aria-hidden="true">✓</div>
+        <h2 id="successModalTitle">Správa bola odoslaná!</h2>
+        <p id="successModalDescription">Ďakujeme, že ste nás kontaktovali. Vašu správu sme úspešne prijali a čoskoro sa vám ozveme.</p>
+        <button type="button" class="btn" id="closeSuccessModal">Zavrieť</button>
+    </div>
+</div>
+
 <script>
+    const successModal = document.getElementById("successModal");
+    const closeSuccessModal = document.getElementById("closeSuccessModal");
+    const successDialog = successModal.querySelector(".success-modal-dialog");
+    let previousFocus = null;
+
+    function openSuccessModal() {
+        previousFocus = document.activeElement;
+        successModal.hidden = false;
+        document.body.classList.add("modal-open");
+        closeSuccessModal.focus();
+    }
+
+    function hideSuccessModal() {
+        successModal.hidden = true;
+        document.body.classList.remove("modal-open");
+        if (previousFocus && typeof previousFocus.focus === "function") previousFocus.focus();
+    }
+
+    closeSuccessModal.addEventListener("click", hideSuccessModal);
+    successModal.addEventListener("click", function (event) {
+        if (event.target === successModal) hideSuccessModal();
+    });
+    document.addEventListener("keydown", function (event) {
+        if (successModal.hidden) return;
+        if (event.key === "Escape") hideSuccessModal();
+        if (event.key === "Tab") {
+            event.preventDefault();
+            closeSuccessModal.focus();
+        }
+    });
+
     document.getElementById("contactForm").addEventListener("submit", async function (event) {
         event.preventDefault();
 
@@ -1045,10 +1141,8 @@
                 throw new Error(result.message || "Odoslanie zlyhalo.");
             }
 
-            status.textContent = "Ďakujeme za správu. Úspešne sme ju prijali a čoskoro vás budeme kontaktovať.";
-            status.style.color = "#17865f";
-            status.style.display = "block";
             form.reset();
+            openSuccessModal();
         } catch (error) {
             status.textContent = "Správu sa nepodarilo odoslať. Skúste to, prosím, znova alebo nám napíšte na datapaysk@gmail.com.";
             status.style.color = "#b42318";
