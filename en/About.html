@@ -1,1 +1,1190 @@
+<!DOCTYPE html>
+<html lang="en">
 
+<head>
+
+    <meta charset="UTF-8">
+    <link rel="icon" type="image/png" href="../logo.png">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About Us | DataPay – Accounting, Payroll & HR in Slovakia</title>
+    <meta name="description" content="Meet DataPay s.r.o., a family-run Slovak company providing accounting, payroll, HR and business administration services.">
+    <meta name="robots" content="index, follow">
+    <meta name="author" content="DataPay s.r.o.">
+    <link rel="canonical" href="https://datapay.sk/en/About.html">
+    <link rel="alternate" hreflang="sk" href="https://datapay.sk/About.html">
+    <link rel="alternate" hreflang="en" href="https://datapay.sk/en/About.html">
+    <link rel="alternate" hreflang="x-default" href="https://datapay.sk/About.html">
+
+    <meta property="og:locale" content="en_US">
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="DataPay">
+    <meta property="og:title" content="About Us | DataPay – Accounting, Payroll & HR in Slovakia">
+    <meta property="og:description" content="Meet DataPay s.r.o., a family-run Slovak company providing accounting, payroll, HR and business administration services.">
+    <meta property="og:url" content="https://datapay.sk/en/About.html">
+    <meta property="og:image" content="https://datapay.sk/logo.png">
+    <meta property="og:image:alt" content="DataPay – Accounting, Payroll & HR">
+
+
+    <style>
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+            background: #f7f9fc;
+            color: #1f2937;
+            line-height: 1.7;
+        }
+
+        a {
+            text-decoration: none;
+        }
+
+        .container {
+            width: 90%;
+            max-width: 1100px;
+            margin: 0 auto;
+        }
+
+
+/* =========================
+   HEADER
+========================= */
+
+.site-header {
+    background: #ffffff;
+    border-bottom: 1px solid #e6ebf2;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+}
+
+.nav-container {
+    width: 90%;
+    max-width: 1200px;
+    min-height: 88px;
+    margin: 0 auto;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    gap: 35px;
+}
+
+.brand {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+}
+
+.brand img {
+    width: 54px;
+    height: 54px;
+    object-fit: contain;
+    display: block;
+}
+
+.brand-text {
+    display: flex;
+    flex-direction: column;
+}
+
+.brand-name {
+    color: #052c64;
+    font-size: 20px;
+    font-weight: 700;
+    line-height: 1.2;
+}
+
+.brand-subtitle {
+    color: #718096;
+    font-size: 12px;
+    margin-top: 4px;
+}
+
+.main-nav {
+    display: flex;
+    align-items: center;
+    gap: 28px;
+}
+
+.main-nav > a {
+    color: #334155;
+    font-size: 14px;
+    font-weight: 500;
+    transition: color 0.2s ease;
+}
+
+.main-nav > a:hover {
+    color: #052c64;
+}
+
+.main-nav > a.active {
+    color: #052c64;
+    font-weight: 700;
+}
+
+.language {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    margin-left: 5px;
+    font-size: 13px;
+}
+
+.language a {
+    color: #94a3b8;
+    font-weight: 500;
+}
+
+.language a.active {
+    color: #052c64;
+    font-weight: 700;
+}
+
+.language span {
+    color: #cbd5e1;
+}
+
+
+        /* ========================================
+           INTRO
+        ======================================== */
+
+        .page-intro {
+            padding: 70px 0 55px;
+            text-align: center;
+        }
+
+        .page-intro span {
+            display: inline-block;
+            margin-bottom: 10px;
+            color: #5279aa;
+            font-size: 13px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1.8px;
+        }
+
+        .page-intro h1 {
+            color: #052c64;
+            font-size: 44px;
+            line-height: 1.2;
+            margin-bottom: 15px;
+        }
+
+        .page-intro p {
+            max-width: 760px;
+            margin: 0 auto;
+            color: #64748b;
+            font-size: 17px;
+        }
+
+
+        /* ========================================
+           HLAVNÁ SEKCIA
+        ======================================== */
+
+        .about-section {
+            padding: 0 0 75px;
+        }
+
+        .about-card {
+            background: #ffffff;
+            border: 1px solid #e4eaf1;
+            border-radius: 20px;
+            padding: 48px;
+            box-shadow: 0 10px 30px rgba(5, 44, 100, 0.06);
+        }
+
+        .section-heading {
+            text-align: center;
+            margin-bottom: 42px;
+        }
+
+        .section-heading span {
+            display: inline-block;
+            margin-bottom: 9px;
+            color: #5279aa;
+            font-size: 13px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+        }
+
+        .section-heading h2 {
+            color: #052c64;
+            font-size: 32px;
+            line-height: 1.3;
+            margin-bottom: 14px;
+        }
+
+        .section-heading p {
+            max-width: 760px;
+            margin: 0 auto;
+            color: #64748b;
+            font-size: 16px;
+        }
+
+        .about-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 50px;
+            align-items: center;
+        }
+
+        .about-text h3 {
+            color: #052c64;
+            font-size: 25px;
+            margin-bottom: 17px;
+        }
+
+        .about-text p {
+            margin-bottom: 17px;
+            color: #526174;
+            font-size: 15.5px;
+        }
+
+        .about-highlight {
+            padding: 32px;
+            background: #eef4fb;
+            border: 1px solid #dce6f2;
+            border-radius: 16px;
+        }
+
+        .about-highlight h3 {
+            color: #052c64;
+            font-size: 23px;
+            margin-bottom: 15px;
+        }
+
+        .about-highlight p {
+            color: #526174;
+            margin-bottom: 17px;
+            font-size: 15.5px;
+        }
+
+        .highlight-note {
+            display: inline-block;
+            margin-bottom: 20px;
+            padding: 6px 13px;
+            background: #ffffff;
+            border: 1px solid #d8e3ef;
+            border-radius: 20px;
+            color: #5279aa;
+            font-size: 12px;
+            font-weight: 700;
+        }
+
+
+        /* ========================================
+           BUTTON
+        ======================================== */
+
+        .cta-button {
+            display: inline-block;
+            background: #052c64;
+            color: #ffffff;
+            padding: 12px 23px;
+            border-radius: 7px;
+            font-size: 14px;
+            font-weight: 700;
+            transition: background 0.2s ease,
+                        transform 0.2s ease;
+        }
+
+        .cta-button:hover {
+            background: #0d4d94;
+            transform: translateY(-2px);
+        }
+
+
+        /* ========================================
+           ZAKLADATELIA
+        ======================================== */
+
+        .founders-section {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto 85px;
+
+            display: grid;
+            grid-template-columns: 250px 1fr 250px;
+            gap: 45px;
+            align-items: center;
+        }
+
+        .founder-card {
+            text-align: center;
+            background: #ffffff;
+            padding: 32px 24px;
+            border: 1px solid #e4eaf1;
+            border-radius: 18px;
+            box-shadow: 0 8px 25px rgba(5, 44, 100, 0.06);
+        }
+
+        .founder-card img {
+            width: 185px;
+            height: 185px;
+            object-fit: cover;
+            border-radius: 50%;
+            margin-bottom: 17px;
+            border: 5px solid #eef4fb;
+        }
+
+        .founder-card h3 {
+            color: #052c64;
+            margin-bottom: 4px;
+            font-size: 20px;
+        }
+
+        .founder-card p {
+            color: #718096;
+            font-size: 14px;
+        }
+
+        .founders-story {
+            text-align: center;
+        }
+
+        .section-tag {
+            display: inline-block;
+            color: #5279aa;
+            font-size: 12px;
+            font-weight: 700;
+            letter-spacing: 2px;
+        }
+
+        .founders-story h2 {
+            color: #052c64;
+            font-size: 38px;
+            line-height: 1.2;
+            margin: 10px 0 22px;
+        }
+
+        .founders-story p {
+            color: #526174;
+            margin-bottom: 17px;
+            line-height: 1.8;
+            font-size: 15.5px;
+        }
+
+
+        /* ========================================
+           HODNOTY
+        ======================================== */
+
+        .values-section {
+            padding: 0 0 80px;
+        }
+
+        .values-heading {
+            text-align: center;
+            margin-bottom: 35px;
+        }
+
+        .values-heading span {
+            color: #5279aa;
+            font-size: 13px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+        }
+
+        .values-heading h2 {
+            color: #052c64;
+            font-size: 31px;
+            margin-top: 7px;
+        }
+
+        .values-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 20px;
+        }
+
+        .value-card {
+            background: #ffffff;
+            padding: 28px 20px;
+            border: 1px solid #e3eaf2;
+            border-radius: 16px;
+            text-align: center;
+
+            transition: transform 0.25s ease,
+                        box-shadow 0.25s ease,
+                        border-color 0.25s ease;
+        }
+
+        .value-card:hover {
+            transform: translateY(-5px);
+            border-color: #cfdae7;
+            box-shadow: 0 12px 28px rgba(5, 44, 100, 0.09);
+        }
+
+        .value-icon {
+            width: 54px;
+            height: 54px;
+            margin: 0 auto 17px;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            background: #eef4fb;
+            border-radius: 50%;
+
+            font-size: 24px;
+        }
+
+        .value-card h3 {
+            color: #052c64;
+            font-size: 18px;
+            margin-bottom: 9px;
+        }
+
+        .value-card p {
+            color: #718096;
+            font-size: 14px;
+            line-height: 1.6;
+        }
+
+
+        /* ========================================
+           CTA
+        ======================================== */
+
+        .cta-section {
+            padding: 65px 20px;
+            background: #052c64;
+            color: #ffffff;
+            text-align: center;
+        }
+
+        .cta-section h2 {
+            font-size: 32px;
+            line-height: 1.25;
+            margin-bottom: 12px;
+        }
+
+        .cta-section p {
+            max-width: 650px;
+            margin: 0 auto 25px;
+            font-size: 16px;
+            color: #dce7f5;
+        }
+
+        .cta-section .cta-button {
+            background: #ffffff;
+            color: #052c64;
+        }
+
+        .cta-section .cta-button:hover {
+            background: #eef4fb;
+            color: #0d4d94;
+        }
+
+
+        /* ========================================
+           FOOTER
+        ======================================== */
+
+        footer {
+            background: #ffffff;
+            border-top: 1px solid #e1e8f0;
+        }
+
+        .footer-container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .footer-grid {
+            padding: 45px 0 35px;
+
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 40px;
+        }
+
+        .footer-column h3 {
+            color: #052c64;
+            font-size: 17px;
+            margin-bottom: 12px;
+        }
+
+        .footer-column p {
+            color: #718096;
+            font-size: 14px;
+            margin-bottom: 5px;
+        }
+
+        .footer-column a {
+            color: #718096;
+            transition: color 0.2s ease;
+        }
+
+        .footer-column a:hover {
+            color: #052c64;
+        }
+
+        .footer-grid .footer-column:nth-child(2) {
+            text-align: center;
+        }
+
+        .footer-grid .footer-column:nth-child(3) {
+            text-align: right;
+        }
+
+        .footer-bottom {
+            border-top: 1px solid #e6ebf2;
+            padding: 18px 0 22px;
+
+            text-align: center;
+            color: #8a96a6;
+            font-size: 13px;
+        }
+
+        .footer-bottom a {
+            color: #718096;
+        }
+
+        .footer-bottom a:hover {
+            color: #052c64;
+        }
+
+
+        /* ========================================
+           MOBIL
+        ======================================== */
+
+        @media (max-width: 950px) {
+
+            .main-nav {
+                gap: 18px;
+            }
+
+            .founders-section {
+                grid-template-columns: 1fr;
+                max-width: 700px;
+                gap: 30px;
+            }
+
+            .founders-story {
+                order: 1;
+            }
+
+            .founder-card:first-child {
+                order: 2;
+            }
+
+            .founder-card:last-child {
+                order: 3;
+            }
+
+            .values-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+        }
+
+
+        @media (max-width: 750px) {
+
+            .nav-container {
+                min-height: auto;
+                padding: 16px 0;
+                flex-direction: column;
+                gap: 15px;
+            }
+
+            .main-nav {
+                flex-wrap: wrap;
+                justify-content: center;
+                gap: 14px 20px;
+            }
+
+            .page-intro {
+                padding: 50px 0 40px;
+            }
+
+            .page-intro h1 {
+                font-size: 36px;
+            }
+
+            .about-card {
+                padding: 30px 22px;
+            }
+
+            .about-content {
+                grid-template-columns: 1fr;
+                gap: 30px;
+            }
+
+            .footer-grid {
+                grid-template-columns: 1fr;
+                text-align: center;
+                gap: 25px;
+            }
+
+            .footer-grid .footer-column:nth-child(2),
+            .footer-grid .footer-column:nth-child(3) {
+                text-align: center;
+            }
+
+        }
+
+
+        @media (max-width: 550px) {
+
+            .brand-subtitle {
+                font-size: 10px;
+            }
+
+            .main-nav {
+                gap: 12px 16px;
+            }
+
+            .main-nav > a {
+                font-size: 13px;
+            }
+
+            .language {
+                font-size: 12px;
+            }
+
+            .page-intro h1 {
+                font-size: 32px;
+            }
+
+            .page-intro p {
+                font-size: 15px;
+            }
+
+            .section-heading h2 {
+                font-size: 27px;
+            }
+
+            .values-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .founder-card img {
+                width: 165px;
+                height: 165px;
+            }
+
+            .founders-story h2 {
+                font-size: 31px;
+            }
+
+            .cta-section h2 {
+                font-size: 27px;
+            }
+
+        }
+
+
+        @media (prefers-reduced-motion: reduce) {
+
+            .value-card,
+            .cta-button,
+            .main-nav > a {
+                transition: none;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+<!-- ========================================
+     HEADER
+======================================== -->
+
+<header class="site-header">
+
+    <div class="nav-container">
+
+        <a href="index.html" class="brand">
+
+            <img src="../logo.png" alt="DataPay logo">
+
+            <div class="brand-text">
+
+                <div class="brand-name">
+                    DataPay s.r.o.
+                </div>
+
+                <div class="brand-subtitle">
+                    Payroll • Accounting • HR
+                </div>
+
+            </div>
+
+        </a>
+
+
+        <nav class="main-nav">
+
+            <a href="index.html">
+                Home
+            </a>
+
+            <a href="About.html" class="active">
+                About Us
+            </a>
+
+            <a href="payroll.html">
+                Services
+            </a>
+
+            <a href="Cennik.html">
+                Pricing
+            </a>
+
+            <a href="FAQ.html">
+                FAQ
+            </a>
+
+
+            <div class="language">
+
+                <a href="../About.html">
+                    SK
+                </a>
+
+                <span>/</span>
+
+                <a href="About.html" class="active">
+                    EN
+                </a>
+
+            </div>
+
+        </nav>
+
+    </div>
+
+</header>
+
+
+
+<!-- ========================================
+     INTRO
+======================================== -->
+
+<section class="page-intro">
+
+    <div class="container">
+
+        <span>DATAPAY • ABOUT US</span>
+
+        <h1>Who We Are</h1>
+
+        <p>
+            A family-run business and a reliable partner for accounting, payroll, HR and administrative support.
+        </p>
+
+    </div>
+
+</section>
+
+
+
+<main>
+
+
+<!-- ========================================
+     O SPOLOČNOSTI
+======================================== -->
+
+<section class="about-section">
+
+    <div class="container">
+
+        <div class="about-card">
+
+            <div class="section-heading">
+
+                <span>DataPay s.r.o.</span>
+
+                <h2>
+                    Your Accounting, Payroll and HR in Reliable Hands
+                </h2>
+
+                <p>
+                    We help entrepreneurs and businesses of all sizes simplify their accounting, payroll processing, HR administration and related tasks.
+                </p>
+
+            </div>
+
+
+            <div class="about-content">
+
+
+                <div class="about-text">
+
+                    <h3>Your Trusted Partner</h3>
+
+                    <p>
+                        We believe every business is unique. That is why we take a personal approach to every client and find solutions that best meet their needs.
+                    </p>
+
+                    <p>
+                        Our goal is to take the burden of accounting, payroll and HR administration off our clients’ shoulders, ensuring their records are handled accurately, reliably and on time.
+                    </p>
+
+                    <p>
+                        We tailor our services to the size of your business, the scope of its accounting needs, the number of employees and your specific requirements.
+                    </p>
+
+                </div>
+
+
+                <div class="about-highlight">
+
+                    <span class="highlight-note">
+                        COMPREHENSIVE BUSINESS SERVICES
+                    </span>
+
+                    <h3>
+                        Everything in One Place
+                    </h3>
+
+                    <p>
+                        DataPay brings accounting, payroll and HR together in one comprehensive solution, so you do not need to coordinate several different providers.
+                    </p>
+
+                    <p>
+                        From processing accounting documents and maintaining your books to payroll and HR administration, we are a dependable partner for your company’s day-to-day financial administration.
+                    </p>
+
+                    <a href="payroll.html" class="cta-button">
+                        Explore Our Services
+                    </a>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+
+<!-- ========================================
+     ZAKLADATELIA
+======================================== -->
+
+<section class="founders-section">
+
+
+    <div class="founder-card">
+
+        <img src="../lenka.jpg" alt="Lenka Kořínek">
+
+        <h3>
+            Lenka Kořínek
+        </h3>
+
+        <p>
+            Managing Director
+        </p>
+
+    </div>
+
+
+    <div class="founders-story">
+
+        <span class="section-tag">
+            FAMILY-RUN BUSINESS
+        </span>
+
+        <h2>
+            The People Behind DataPay
+        </h2>
+
+        <p>
+            Lenka Kořínek leads our payroll and HR services. She has extensive experience in the field and has managed payroll processing, personnel administration and HR operations for more than 40 companies across a wide range of sizes and industries.
+        </p>
+
+        <p>
+            Her expertise includes end-to-end payroll and employment administration, communication with public authorities and day-to-day HR support for employers.
+        </p>
+
+        <p>
+            Throughout his career, Tomáš Kořínek has worked in finance, SAP systems, business processes, automation and digital transformation. His experience covers project management, process digitalisation, financial management and the implementation of technology solutions that support business operations.
+        </p>
+
+        <p>
+            By combining expertise in accounting, payroll, HR, finance and modern technology, DataPay delivers practical, efficient and sustainable solutions for its clients.
+        </p>
+
+        <p>
+            Our team also includes experienced accountants with more than 20 years of professional practice, helping ensure the quality and reliability of our accounting services.
+        </p>
+
+    </div>
+
+
+    <div class="founder-card">
+
+        <img src="../tomas.jpg" alt="Ing. Tomáš Kořínek">
+
+        <h3>
+            Ing. Tomáš Kořínek
+        </h3>
+
+        <p>
+            Managing Director
+        </p>
+
+    </div>
+
+</section>
+
+
+
+<!-- ========================================
+     HODNOTY
+======================================== -->
+
+<section class="values-section">
+
+    <div class="container">
+
+        <div class="values-heading">
+
+            <span>
+                OUR VALUES
+            </span>
+
+            <h2>
+                What Matters to Us
+            </h2>
+
+        </div>
+
+
+        <div class="values-grid">
+
+
+            <div class="value-card">
+
+                <div class="value-icon">
+                    ✓
+                </div>
+
+                <h3>
+                    Reliability
+                </h3>
+
+                <p>
+                    We handle agreed tasks and deadlines responsibly and systematically.
+                </p>
+
+            </div>
+
+
+            <div class="value-card">
+
+                <div class="value-icon">
+                    🎯
+                </div>
+
+                <h3>
+                    Accuracy
+                </h3>
+
+                <p>
+                    We place great importance on careful checks and accurate results when processing accounting, payroll and HR data.
+                </p>
+
+            </div>
+
+
+            <div class="value-card">
+
+                <div class="value-icon">
+                    🤝
+                </div>
+
+                <h3>
+                    Personal Approach
+                </h3>
+
+                <p>
+                    We adapt our services to each client’s needs and way of working.
+                </p>
+
+            </div>
+
+
+            <div class="value-card">
+
+                <div class="value-icon">
+                    🔒
+                </div>
+
+                <h3>
+                    Confidentiality
+                </h3>
+
+                <p>
+                    We treat accounting, payroll and employee information responsibly and confidentially.
+                </p>
+
+            </div>
+
+
+        </div>
+
+    </div>
+
+</section>
+
+
+
+<!-- ========================================
+     CTA
+======================================== -->
+
+<section class="cta-section">
+
+    <div class="container">
+
+        <h2>
+            Looking for a Reliable Partner?
+        </h2>
+
+        <p>
+            Get in touch to discuss your company’s needs and how we can support you with accounting, payroll and HR services.
+        </p>
+
+        <a href="Formular.html" class="cta-button">
+            Contact Us
+        </a>
+
+    </div>
+
+</section>
+
+</main>
+
+
+
+<!-- ========================================
+     FOOTER
+======================================== -->
+
+<footer>
+
+    <div class="footer-container">
+
+        <div class="footer-grid">
+
+
+            <div class="footer-column">
+
+                <h3>
+                    DataPay s.r.o.
+                </h3>
+
+                <p>
+                    Accounting, payroll, HR and professional advisory services.
+                </p>
+
+                <p>
+                    We support businesses throughout Slovakia.
+                </p>
+
+            </div>
+
+
+            <div class="footer-column">
+
+                <h3>
+                    Contact
+                </h3>
+
+                <p>
+                    <a href="mailto:datapaysk@gmail.com">
+                        datapaysk@gmail.com
+                    </a>
+                </p>
+
+                <p>
+                    <a href="tel:+421903270664">
+                        +421 903 270 664
+                    </a>
+                </p>
+
+                <p>
+                    <a href="tel:+421907837030">
+                        +421 907 837 030
+                    </a>
+                </p>
+
+            </div>
+
+
+            <div class="footer-column">
+
+                <h3>
+                    Company
+                </h3>
+
+                <p>
+                    Company ID: 57456615
+                </p>
+
+                <p>
+                    Tax ID: 2122742622
+                </p>
+
+                <p>
+                    VAT: Not VAT registered
+                </p>
+
+            </div>
+
+
+        </div>
+
+
+        <div class="footer-bottom">
+
+            © 2026 DataPay s.r.o. |
+
+            <a href="GDPR.html">
+                Privacy Policy
+            </a>
+
+        </div>
+
+    </div>
+
+</footer>
+
+
+</body>
+
+</html>
