@@ -2,20 +2,27 @@
 <html lang="sk">
 
 <head>
+
     <meta charset="UTF-8">
-
+    <link rel="icon" type="image/png" href="logo.png">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>O nás | DataPay – účtovníctvo, mzdy a personalistika</title>
+    <meta name="description" content="Spoznajte DataPay s.r.o., rodinnú firmu a spoľahlivého partnera pre účtovníctvo, spracovanie miezd, personalistiku a administratívnu podporu firiem.">
+    <meta name="robots" content="index, follow">
+    <meta name="author" content="DataPay s.r.o.">
+    <link rel="canonical" href="https://datapay.sk/About.html">
 
-    <meta name="description"
-          content="Spoznajte spoločnosť DataPay s.r.o. Poskytujeme spracovanie miezd, personálnu administratívu a HR poradenstvo. Pripravujeme aj služby účtovníctva.">
+    <meta property="og:locale" content="sk_SK">
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="DataPay">
+    <meta property="og:title" content="O nás | DataPay – účtovníctvo, mzdy a personalistika">
+    <meta property="og:description" content="Spoznajte DataPay s.r.o., rodinnú firmu a spoľahlivého partnera pre účtovníctvo, spracovanie miezd, personalistiku a administratívnu podporu firiem.">
+    <meta property="og:url" content="https://datapay.sk/About.html">
+    <meta property="og:image" content="https://datapay.sk/logo.png">
+    <meta property="og:image:alt" content="DataPay – účtovníctvo, mzdy a personalistika">
 
-    <title>O nás | DataPay</title>
 
     <style>
-
-        /* ========================================
-           ZÁKLADNÉ NASTAVENIA
-        ======================================== */
 
         * {
             margin: 0;
@@ -28,10 +35,14 @@
         }
 
         body {
-            font-family: Arial, sans-serif;
-            background: #f4f8fc;
-            color: #333333;
+            font-family: Arial, Helvetica, sans-serif;
+            background: #f7f9fc;
+            color: #1f2937;
             line-height: 1.7;
+        }
+
+        a {
+            text-decoration: none;
         }
 
         .container {
@@ -41,107 +52,167 @@
         }
 
 
+/* =========================
+   HEADER
+========================= */
+
+.site-header {
+    background: #ffffff;
+    border-bottom: 1px solid #e6ebf2;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+}
+
+.nav-container {
+    width: 90%;
+    max-width: 1200px;
+    min-height: 88px;
+    margin: 0 auto;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    gap: 35px;
+}
+
+.brand {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+}
+
+.brand img {
+    width: 54px;
+    height: 54px;
+    object-fit: contain;
+    display: block;
+}
+
+.brand-text {
+    display: flex;
+    flex-direction: column;
+}
+
+.brand-name {
+    color: #052c64;
+    font-size: 20px;
+    font-weight: 700;
+    line-height: 1.2;
+}
+
+.brand-subtitle {
+    color: #718096;
+    font-size: 12px;
+    margin-top: 4px;
+}
+
+.main-nav {
+    display: flex;
+    align-items: center;
+    gap: 28px;
+}
+
+.main-nav > a {
+    color: #334155;
+    font-size: 14px;
+    font-weight: 500;
+    transition: color 0.2s ease;
+}
+
+.main-nav > a:hover {
+    color: #052c64;
+}
+
+.main-nav > a.active {
+    color: #052c64;
+    font-weight: 700;
+}
+
+.language {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    margin-left: 5px;
+    font-size: 13px;
+}
+
+.language a {
+    color: #94a3b8;
+    font-weight: 500;
+}
+
+.language a.active {
+    color: #052c64;
+    font-weight: 700;
+}
+
+.language span {
+    color: #cbd5e1;
+}
+
+
         /* ========================================
-           HLAVIČKA
+           INTRO
         ======================================== */
 
-        header {
-            background: linear-gradient(135deg, #052c64, #0d6efd);
-            color: white;
-            padding: 60px 0;
+        .page-intro {
+            padding: 70px 0 55px;
             text-align: center;
         }
 
-        header h1 {
-            font-size: 44px;
-            margin-bottom: 12px;
-        }
-
-        header p {
-            max-width: 720px;
-            margin: 0 auto;
-            font-size: 18px;
-            opacity: 0.92;
-        }
-
-
-        /* ========================================
-           POHYBLIVÝ BANNER
-        ======================================== */
-
-        .announcement-bar {
-            position: relative;
-            width: 100%;
-            overflow: hidden;
-            background: #eef5ff;
-            color: #052c64;
-            border-bottom: 1px solid #cfddf2;
-            box-shadow: 0 3px 12px rgba(5, 44, 100, 0.08);
-        }
-
-        .announcement-track {
-            display: flex;
-            width: max-content;
-            animation: announcement-scroll 25s linear infinite;
-        }
-
-        .announcement-message {
-            flex-shrink: 0;
-            padding: 13px 45px;
-            font-size: 16px;
+        .page-intro span {
+            display: inline-block;
+            margin-bottom: 10px;
+            color: #5279aa;
+            font-size: 13px;
             font-weight: 700;
-            white-space: nowrap;
+            text-transform: uppercase;
+            letter-spacing: 1.8px;
         }
 
-        .announcement-dot {
-            color: #0d6efd;
-            margin: 0 18px;
+        .page-intro h1 {
+            color: #052c64;
+            font-size: 44px;
+            line-height: 1.2;
+            margin-bottom: 15px;
         }
 
-        /* Banner sa zastaví, keď naň používateľ príde myšou */
-
-        .announcement-bar:hover .announcement-track {
-            animation-play-state: paused;
-        }
-
-        @keyframes announcement-scroll {
-
-            from {
-                transform: translateX(0);
-            }
-
-            to {
-                transform: translateX(-50%);
-            }
-
+        .page-intro p {
+            max-width: 760px;
+            margin: 0 auto;
+            color: #64748b;
+            font-size: 17px;
         }
 
 
         /* ========================================
-           HLAVNÁ SEKCIA O NÁS
+           HLAVNÁ SEKCIA
         ======================================== */
 
         .about-section {
-            padding: 70px 0;
+            padding: 0 0 75px;
         }
 
         .about-card {
-            background: white;
-            border-radius: 22px;
-            padding: 50px;
-            box-shadow: 0 12px 40px rgba(5, 44, 100, 0.10);
+            background: #ffffff;
+            border: 1px solid #e4eaf1;
+            border-radius: 20px;
+            padding: 48px;
+            box-shadow: 0 10px 30px rgba(5, 44, 100, 0.06);
         }
 
         .section-heading {
             text-align: center;
-            margin-bottom: 40px;
+            margin-bottom: 42px;
         }
 
         .section-heading span {
             display: inline-block;
-            margin-bottom: 10px;
-            color: #0d6efd;
-            font-size: 14px;
+            margin-bottom: 9px;
+            color: #5279aa;
+            font-size: 13px;
             font-weight: 700;
             text-transform: uppercase;
             letter-spacing: 1.5px;
@@ -149,261 +220,372 @@
 
         .section-heading h2 {
             color: #052c64;
-            font-size: 34px;
-            line-height: 1.25;
-            margin-bottom: 15px;
+            font-size: 32px;
+            line-height: 1.3;
+            margin-bottom: 14px;
         }
 
         .section-heading p {
             max-width: 760px;
             margin: 0 auto;
-            color: #666666;
-            font-size: 17px;
+            color: #64748b;
+            font-size: 16px;
         }
 
         .about-content {
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 45px;
+            gap: 50px;
             align-items: center;
         }
 
         .about-text h3 {
             color: #052c64;
-            font-size: 26px;
-            margin-bottom: 18px;
+            font-size: 25px;
+            margin-bottom: 17px;
         }
 
         .about-text p {
-            margin-bottom: 18px;
-            color: #555555;
+            margin-bottom: 17px;
+            color: #526174;
+            font-size: 15.5px;
         }
 
         .about-highlight {
-            padding: 30px;
-            background: linear-gradient(135deg, #eef5ff, #dceaff);
-            border-left: 5px solid #0d6efd;
+            padding: 32px;
+            background: #eef4fb;
+            border: 1px solid #dce6f2;
             border-radius: 16px;
         }
 
         .about-highlight h3 {
             color: #052c64;
-            font-size: 24px;
+            font-size: 23px;
             margin-bottom: 15px;
         }
 
         .about-highlight p {
-            color: #405269;
-            margin-bottom: 18px;
+            color: #526174;
+            margin-bottom: 17px;
+            font-size: 15.5px;
         }
 
-        .coming-soon {
+        .highlight-note {
             display: inline-block;
-            background: #0d6efd;
-            color: white;
-            padding: 8px 17px;
-            border-radius: 30px;
-            font-size: 14px;
+            margin-bottom: 20px;
+            padding: 6px 13px;
+            background: #ffffff;
+            border: 1px solid #d8e3ef;
+            border-radius: 20px;
+            color: #5279aa;
+            font-size: 12px;
             font-weight: 700;
         }
 
 
         /* ========================================
-           HODNOTY DATAPAY
+           BUTTON
+        ======================================== */
+
+        .cta-button {
+            display: inline-block;
+            background: #052c64;
+            color: #ffffff;
+            padding: 12px 23px;
+            border-radius: 7px;
+            font-size: 14px;
+            font-weight: 700;
+            transition: background 0.2s ease,
+                        transform 0.2s ease;
+        }
+
+        .cta-button:hover {
+            background: #0d4d94;
+            transform: translateY(-2px);
+        }
+
+
+        /* ========================================
+           ZAKLADATELIA
+        ======================================== */
+
+        .founders-section {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto 85px;
+
+            display: grid;
+            grid-template-columns: 250px 1fr 250px;
+            gap: 45px;
+            align-items: center;
+        }
+
+        .founder-card {
+            text-align: center;
+            background: #ffffff;
+            padding: 32px 24px;
+            border: 1px solid #e4eaf1;
+            border-radius: 18px;
+            box-shadow: 0 8px 25px rgba(5, 44, 100, 0.06);
+        }
+
+        .founder-card img {
+            width: 185px;
+            height: 185px;
+            object-fit: cover;
+            border-radius: 50%;
+            margin-bottom: 17px;
+            border: 5px solid #eef4fb;
+        }
+
+        .founder-card h3 {
+            color: #052c64;
+            margin-bottom: 4px;
+            font-size: 20px;
+        }
+
+        .founder-card p {
+            color: #718096;
+            font-size: 14px;
+        }
+
+        .founders-story {
+            text-align: center;
+        }
+
+        .section-tag {
+            display: inline-block;
+            color: #5279aa;
+            font-size: 12px;
+            font-weight: 700;
+            letter-spacing: 2px;
+        }
+
+        .founders-story h2 {
+            color: #052c64;
+            font-size: 38px;
+            line-height: 1.2;
+            margin: 10px 0 22px;
+        }
+
+        .founders-story p {
+            color: #526174;
+            margin-bottom: 17px;
+            line-height: 1.8;
+            font-size: 15.5px;
+        }
+
+
+        /* ========================================
+           HODNOTY
         ======================================== */
 
         .values-section {
-            padding: 0 0 75px;
+            padding: 0 0 80px;
+        }
+
+        .values-heading {
+            text-align: center;
+            margin-bottom: 35px;
+        }
+
+        .values-heading span {
+            color: #5279aa;
+            font-size: 13px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+        }
+
+        .values-heading h2 {
+            color: #052c64;
+            font-size: 31px;
+            margin-top: 7px;
         }
 
         .values-grid {
             display: grid;
             grid-template-columns: repeat(4, 1fr);
-            gap: 22px;
+            gap: 20px;
         }
 
         .value-card {
-            background: white;
-            padding: 30px 22px;
-            border-radius: 18px;
+            background: #ffffff;
+            padding: 28px 20px;
+            border: 1px solid #e3eaf2;
+            border-radius: 16px;
             text-align: center;
-            border: 1px solid #e3ebf5;
-            box-shadow: 0 8px 25px rgba(5, 44, 100, 0.07);
-            transition: background 0.3s ease,
-                        transform 0.3s ease,
-                        box-shadow 0.3s ease;
+
+            transition: transform 0.25s ease,
+                        box-shadow 0.25s ease,
+                        border-color 0.25s ease;
         }
 
         .value-card:hover {
-            background: linear-gradient(135deg, #eef5ff, #dceaff);
-            transform: translateY(-7px);
-            box-shadow: 0 14px 30px rgba(13, 110, 253, 0.16);
+            transform: translateY(-5px);
+            border-color: #cfdae7;
+            box-shadow: 0 12px 28px rgba(5, 44, 100, 0.09);
         }
 
         .value-icon {
-            width: 58px;
-            height: 58px;
-            margin: 0 auto 18px;
+            width: 54px;
+            height: 54px;
+            margin: 0 auto 17px;
+
             display: flex;
             align-items: center;
             justify-content: center;
-            background: #eef5ff;
+
+            background: #eef4fb;
             border-radius: 50%;
-            font-size: 27px;
+
+            font-size: 24px;
         }
 
         .value-card h3 {
             color: #052c64;
-            font-size: 19px;
-            margin-bottom: 10px;
+            font-size: 18px;
+            margin-bottom: 9px;
         }
 
         .value-card p {
-            color: #666666;
-            font-size: 15px;
+            color: #718096;
+            font-size: 14px;
+            line-height: 1.6;
         }
 
 
         /* ========================================
-           VÝZVA NA KONTAKT
+           CTA
         ======================================== */
 
         .cta-section {
-            padding: 65px 0;
-            background: linear-gradient(135deg, #052c64, #0d6efd);
-            color: white;
+            padding: 65px 20px;
+            background: #052c64;
+            color: #ffffff;
             text-align: center;
         }
 
         .cta-section h2 {
-            font-size: 34px;
+            font-size: 32px;
+            line-height: 1.25;
             margin-bottom: 12px;
         }
 
         .cta-section p {
             max-width: 650px;
             margin: 0 auto 25px;
+            font-size: 16px;
+            color: #dce7f5;
+        }
+
+        .cta-section .cta-button {
+            background: #ffffff;
+            color: #052c64;
+        }
+
+        .cta-section .cta-button:hover {
+            background: #eef4fb;
+            color: #0d4d94;
+        }
+
+
+        /* ========================================
+           FOOTER
+        ======================================== */
+
+        footer {
+            background: #ffffff;
+            border-top: 1px solid #e1e8f0;
+        }
+
+        .footer-container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .footer-grid {
+            padding: 45px 0 35px;
+
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 40px;
+        }
+
+        .footer-column h3 {
+            color: #052c64;
             font-size: 17px;
-            opacity: 0.92;
+            margin-bottom: 12px;
         }
 
-        .cta-button {
-            display: inline-block;
-            background: white;
+        .footer-column p {
+            color: #718096;
+            font-size: 14px;
+            margin-bottom: 5px;
+        }
+
+        .footer-column a {
+            color: #718096;
+            transition: color 0.2s ease;
+        }
+
+        .footer-column a:hover {
             color: #052c64;
-            padding: 14px 28px;
-            border-radius: 30px;
-            text-decoration: none;
-            font-weight: 700;
-            transition: background 0.3s ease,
-                        color 0.3s ease,
-                        transform 0.3s ease;
         }
 
-        .cta-button:hover {
-            background: #eef5ff;
-            color: #0d6efd;
-            transform: translateY(-3px);
-        }
-
-
-        /* ========================================
-           NÁVRAT NA HLAVNÚ STRÁNKU
-        ======================================== */
-
-        .back-navigation {
-            padding: 30px 0;
+        .footer-grid .footer-column:nth-child(2) {
             text-align: center;
-            background: white;
         }
 
-        .back-link {
-            display: inline-block;
-            color: #0d6efd;
-            text-decoration: none;
-            font-weight: 700;
-            transition: color 0.3s ease;
+        .footer-grid .footer-column:nth-child(3) {
+            text-align: right;
         }
 
-        .back-link:hover {
+        .footer-bottom {
+            border-top: 1px solid #e6ebf2;
+            padding: 18px 0 22px;
+
+            text-align: center;
+            color: #8a96a6;
+            font-size: 13px;
+        }
+
+        .footer-bottom a {
+            color: #718096;
+        }
+
+        .footer-bottom a:hover {
             color: #052c64;
-            text-decoration: underline;
         }
-      /* ========================================
-           Zakladatelia
-        ======================================== */    
-        
-.founders-section{
-    max-width:1200px;
-    margin:100px auto;
-    display:grid;
-    grid-template-columns:280px 1fr 280px;
-    gap:50px;
-    align-items:center;
-}
-
-.founder-card{
-    text-align:center;
-    background:white;
-    padding:40px 30px;
-    border-radius:24px;
-    min-height:400px;
-    box-shadow:0 10px 35px rgba(0,0,0,0.06);
-}
-
-.founder-card img{
-    width:220px;
-    height:220px;
-    object-fit:cover;
-    border-radius:50%;
-    margin-bottom:20px;
-    border:5px solid #eef5ff;
-}
-
-.founder-card h3{
-    color:#052c64;
-    margin-bottom:5px;
-    font-size:22px;
-}
-
-.founder-card p{
-    color:#6c757d;
-    font-size:15px;
-}
-
-.founders-story{
-    text-align:center;
-}
-
-.section-tag{
-    color:#0d6efd;
-    font-size:13px;
-    font-weight:700;
-    letter-spacing:2px;
-}
-
-.founders-story h2{
-    color:#052c64;
-    font-size:42px;
-    margin:15px 0 25px;
-}
-
-.founders-story p{
-    color:#555;
-    margin-bottom:18px;
-    line-height:1.8;
-    font-size:17px;
-}
 
 
         /* ========================================
-           MOBILNÉ ZOBRAZENIE
+           MOBIL
         ======================================== */
 
-        @media (max-width: 900px) {
+        @media (max-width: 950px) {
 
-            .about-content {
+            .main-nav {
+                gap: 18px;
+            }
+
+            .founders-section {
                 grid-template-columns: 1fr;
+                max-width: 700px;
+                gap: 30px;
+            }
+
+            .founders-story {
+                order: 1;
+            }
+
+            .founder-card:first-child {
+                order: 2;
+            }
+
+            .founder-card:last-child {
+                order: 3;
             }
 
             .values-grid {
@@ -412,31 +594,77 @@
 
         }
 
-        @media (max-width: 600px) {
 
-            header {
-                padding: 45px 0;
+        @media (max-width: 750px) {
+
+            .nav-container {
+                min-height: auto;
+                padding: 16px 0;
+                flex-direction: column;
+                gap: 15px;
             }
 
-            header h1 {
-                font-size: 34px;
+            .main-nav {
+                flex-wrap: wrap;
+                justify-content: center;
+                gap: 14px 20px;
             }
 
-            header p {
-                font-size: 16px;
+            .page-intro {
+                padding: 50px 0 40px;
             }
 
-            .announcement-message {
-                padding: 12px 24px;
-                font-size: 14px;
-            }
-
-            .about-section {
-                padding: 45px 0;
+            .page-intro h1 {
+                font-size: 36px;
             }
 
             .about-card {
-                padding: 28px 22px;
+                padding: 30px 22px;
+            }
+
+            .about-content {
+                grid-template-columns: 1fr;
+                gap: 30px;
+            }
+
+            .footer-grid {
+                grid-template-columns: 1fr;
+                text-align: center;
+                gap: 25px;
+            }
+
+            .footer-grid .footer-column:nth-child(2),
+            .footer-grid .footer-column:nth-child(3) {
+                text-align: center;
+            }
+
+        }
+
+
+        @media (max-width: 550px) {
+
+            .brand-subtitle {
+                font-size: 10px;
+            }
+
+            .main-nav {
+                gap: 12px 16px;
+            }
+
+            .main-nav > a {
+                font-size: 13px;
+            }
+
+            .language {
+                font-size: 12px;
+            }
+
+            .page-intro h1 {
+                font-size: 32px;
+            }
+
+            .page-intro p {
+                font-size: 15px;
             }
 
             .section-heading h2 {
@@ -447,344 +675,558 @@
                 grid-template-columns: 1fr;
             }
 
+            .founder-card img {
+                width: 165px;
+                height: 165px;
+            }
+
+            .founders-story h2 {
+                font-size: 31px;
+            }
+
             .cta-section h2 {
-                font-size: 28px;
+                font-size: 27px;
             }
 
         }
 
-        /* Rešpektovanie nastavenia obmedzených animácií */
 
         @media (prefers-reduced-motion: reduce) {
 
-            .announcement-track {
-                animation: none;
-            }
-
-            .announcement-bar {
-                overflow-x: auto;
-            }
-
             .value-card,
-            .cta-button {
+            .cta-button,
+            .main-nav > a {
                 transition: none;
             }
-           
+
         }
-         @media(max-width:900px)
-        {
-
-    .founders-section{
-        grid-template-columns:1fr;
-        gap:30px;
-    }
-
-    .founders-story{
-        order:1;
-    }
-
-    .founder-card:first-child{
-        order:2;
-    }
-
-    .founder-card:last-child{
-        order:3;
-    }
-
-    .founders-story h2{
-        font-size:32px;
-    }
-            }
 
     </style>
+
 </head>
+
 
 <body>
 
 
-    <!-- HLAVIČKA -->
+<!-- ========================================
+     HEADER
+======================================== -->
 
-    <header>
+<header class="site-header">
 
-        <div class="container">
+    <div class="nav-container">
 
-            <h1>Kto sme? </h1>
+        <a href="index.html" class="brand">
 
-            <p>
-                Rodinná firma s dlhoročnými skúsenosťami a Váš spoľahlivý partner pre spracovanie miezd a 
-                personálnu administratívu.
-            </p>
-                            <a href="index.html"
-                           class="back-link">
+            <img src="logo.png" alt="DataPay logo">
 
-                            ← Späť na hlavnú stránku
+            <div class="brand-text">
 
-                            </a>
-        </div>
+                <div class="brand-name">
+                    DataPay s.r.o.
+                </div>
 
-    </header>
-
-
-    <!-- O SPOLOČNOSTI -->
-
-    <main>
-
-        <section class="about-section">
-
-            <div class="container">
-
-                <div class="about-card">
-
-                    <div class="section-heading">
-
-                        <span>DataPay s.r.o.</span>
-
-                        <h2>
-                            Vaša mzdová a personálna agenda
-                            v spoľahlivých rukách
-                        </h2>
-
-                        <p>
-                            Pomáhame malým, stredným ale i veľkým spoločnostiam
-                            zjednodušiť spracovanie miezd, personalistiku
-                            a súvisiacu administratívu.
-                        </p>
-
-                    </div>
-
-
-                    <div class="about-content">
-
-                        <div class="about-text">
-
-                            <h3>Váš partner</h3>
-
-                            <p>
-                               Veríme, že každá spoločnosť je jedinečná. 
-                                Preto ku každému klientovi 
-                                pristupujeme individuálne a hľadáme riešenia, 
-                                ktoré najlepšie zodpovedajú jeho potrebám.
-                            </p>
-
-                            <p>
-                                Naším cieľom je odbremeniť klientov
-                                od administratívnej záťaže a zabezpečiť,
-                                aby bola ich mzdová a personálna agenda
-                                spracovaná presne, spoľahlivo a podľa
-                                dohodnutých potrieb.
-                            </p>
-
-                            <p>
-                                Ku každému klientovi pristupujeme individuálne.
-                                Rozsah spolupráce prispôsobujeme veľkosti
-                                spoločnosti, počtu zamestnancov a konkrétnym
-                                požiadavkám.
-                            </p>
-
-                        </div>
-
-
-                        <div class="about-highlight">
-
-                            <h3>Účtovníctvo na dosah</h3>
-
-                            <p>
-                                V rámci ďalšieho rozvoja pripravujeme
-                                rozšírenie portfólia DataPay aj o služby
-                                účtovníctva a ekonomickej administratívy.
-                            </p>
-
-                            <p>
-                                Naším zámerom je postupne vytvoriť jedno miesto,
-                                na ktorom klienti získajú podporu pre mzdové,
-                                personálne a účtovné procesy.
-                            </p>
-
-                            <a href="Formular.html"
-                   class="cta-button">
-
-                    Opýtajte sa Nás
-
-                </a>
-
-                        </div>
-
-                    </div>
-
+                <div class="brand-subtitle">
+                    Mzdy • Účtovníctvo • Personalistika
                 </div>
 
             </div>
 
-        </section>
-        
-  <!-- ZAKLADATELIA -->
+        </a>
 
-    <section class="founders-section">
 
-    <div class="founder-card">
+        <nav class="main-nav">
 
-        <img src="lenka.jpg" alt="Lenka Korinek">
-            <h3>Lenka Kořínek</h3> 
+            <a href="index.html">
+                Domov
+            </a>
 
-        <p>Konateľ</p>
+            <a href="About.html" class="active">
+                O nás
+            </a>
+
+            <a href="payroll.html">
+                Služby
+            </a>
+
+            <a href="Cennik.html">
+                Cenník
+            </a>
+
+            <a href="FAQ.html">
+                FAQ
+            </a>
+
+
+            <div class="language">
+
+                <a href="#" class="active">
+                    SK
+                </a>
+
+                <span>/</span>
+
+                <a href="#">
+                    EN
+                </a>
+
+            </div>
+
+        </nav>
 
     </div>
 
-    <div class="founders-story">
+</header>
 
-              <h2>Kto sme?</h2>
- <span class="section-tag">RODINNÁ FIRMA</span>
-        <p>
-            Oblasť miezd a personalistiky vedie Lenka Kořínek. 
-            Tejto problematike sa venuje dlhodobo a počas svojej kariéry zabezpečovala spracovanie miezd, 
-            personalistiky a HR administratívy pre viac ako 40 spoločností rôznych veľkostí a zamerania. 
-           Má bohaté skúsenosti s komplexným spracovaním mzdovej a pracovnoprávnej agendy,
-            komunikáciou so štátnymi inštitúciami a každodennou podporou zamestnávateľov v oblasti personalistiky.
-        </p>
 
-        <p>
-            Tomáš Kořínek sa počas svojej kariéry venoval oblasti financií, 
-            SAP systémom, podnikovým procesom, automatizácii a digitálnej transformácii.
-            Jeho skúsenosti zahŕňajú riadenie projektov, digitalizáciu procesov,
-            finančné riadenie a implementáciu technologických riešení pre podporu podnikania.
-        </p>
+
+<!-- ========================================
+     INTRO
+======================================== -->
+
+<section class="page-intro">
+
+    <div class="container">
+
+        <span>DATAPAY • O NÁS</span>
+
+        <h1>Kto sme?</h1>
 
         <p>
-           Práve kombinácia odborných znalostí z oblasti miezd, personalistiky, 
-            financií a moderných technológií umožňuje DataPay prinášať klientom praktické, 
-            efektívne a dlhodobo udržateľné riešenia.Našou ambíciou je poskytovať klientom
-            komplexné služby v oblasti miezd, personalistiky a administratívnej podpory. Popri 
-            súčasných službách pripravujeme aj rozšírenie portfólia o účtovníctvo, aby naši klienti
-            mohli vybaviť všetky dôležité personálne a finančné procesy na jednom mieste.
+            Rodinná firma a spoľahlivý partner pre účtovníctvo,
+            mzdy, personalistiku a administratívnu podporu.
         </p>
-
-    </div>
-
-    <div class="founder-card">
-
-           <img src="tomas.jpg" alt="Tomas Korinek">
-            <h3>Ing. Tomáš Kořínek</h3> 
-
-        <p>Konateľ</p>
 
     </div>
 
 </section>
 
-        <!-- NAŠE HODNOTY -->
-
-        <section class="values-section">
-
-            <div class="container">
-
-            
-                <div class="values-grid">
-
-                    <div class="value-card">
-
-                        <div class="value-icon">✓</div>
-
-                        <h3>Spoľahlivosť</h3>
-
-                        <p>
-                            Dohodnuté úlohy a termíny riešime
-                            zodpovedne a systematicky.
-                        </p>
-
-                    </div>
 
 
-                    <div class="value-card">
-
-                        <div class="value-icon">🎯</div>
-
-                        <h3>Presnosť</h3>
-
-                        <p>
-                            Pri spracovaní údajov kladieme dôraz
-                            na kontrolu a správnosť výstupov.
-                        </p>
-
-                    </div>
+<main>
 
 
-                    <div class="value-card">
+<!-- ========================================
+     O SPOLOČNOSTI
+======================================== -->
 
-                        <div class="value-icon">🤝</div>
+<section class="about-section">
 
-                        <h3>Individuálny prístup</h3>
+    <div class="container">
 
-                        <p>
-                            Služby nastavujeme podľa potrieb
-                            a spôsobu fungovania klienta.
-                        </p>
+        <div class="about-card">
 
-                    </div>
+            <div class="section-heading">
+
+                <span>DataPay s.r.o.</span>
+
+                <h2>
+                    Účtovníctvo, mzdy a personalistika
+                    v spoľahlivých rukách
+                </h2>
+
+                <p>
+                    Pomáhame podnikateľom, malým, stredným aj väčším
+                    spoločnostiam zjednodušiť účtovníctvo, spracovanie
+                    miezd, personalistiku a súvisiacu administratívu.
+                </p>
+
+            </div>
 
 
-                    <div class="value-card">
+            <div class="about-content">
 
-                        <div class="value-icon">🔒</div>
 
-                        <h3>Diskrétnosť</h3>
+                <div class="about-text">
 
-                        <p>
-                            K mzdovým a personálnym údajom
-                            pristupujeme zodpovedne a dôverne.
-                        </p>
+                    <h3>Váš partner</h3>
 
-                    </div>
+                    <p>
+                        Veríme, že každá spoločnosť je jedinečná.
+                        Preto ku každému klientovi pristupujeme
+                        individuálne a hľadáme riešenia, ktoré
+                        najlepšie zodpovedajú jeho potrebám.
+                    </p>
+
+                    <p>
+                        Naším cieľom je odbremeniť klientov od
+                        účtovnej, mzdovej a personálnej administratívy
+                        a zabezpečiť, aby bola ich agenda spracovaná
+                        presne, spoľahlivo a včas.
+                    </p>
+
+                    <p>
+                        Rozsah spolupráce prispôsobujeme veľkosti
+                        spoločnosti, rozsahu účtovnej agendy,
+                        počtu zamestnancov a konkrétnym požiadavkám
+                        klienta.
+                    </p>
+
+                </div>
+
+
+                <div class="about-highlight">
+
+                    <span class="highlight-note">
+                        KOMPLEXNÉ SLUŽBY PRE FIRMY
+                    </span>
+
+                    <h3>
+                        Všetko na jednom mieste
+                    </h3>
+
+                    <p>
+                        DataPay spája účtovníctvo, mzdy a personalistiku
+                        do jedného komplexného riešenia, vďaka ktorému
+                        nemusíte jednotlivé oblasti riešiť s viacerými
+                        dodávateľmi.
+                    </p>
+
+                    <p>
+                        Od spracovania účtovných dokladov a vedenia
+                        účtovníctva až po mzdy a personálnu administratívu
+                        získate spoľahlivého partnera pre každodennú
+                        ekonomickú agendu vašej spoločnosti.
+                    </p>
+
+                    <a href="payroll.html" class="cta-button">
+                        Pozrieť naše služby
+                    </a>
 
                 </div>
 
             </div>
 
-        </section>
+        </div>
+
+    </div>
+
+</section>
 
 
-        <!-- KONTAKTNÁ VÝZVA -->
 
-        <section class="cta-section">
+<!-- ========================================
+     ZAKLADATELIA
+======================================== -->
 
-            <div class="container">
+<section class="founders-section">
 
-                <h2>Hľadáte spoľahlivého partnera?</h2>
+
+    <div class="founder-card">
+
+        <img src="lenka.jpg" alt="Lenka Kořínek">
+
+        <h3>
+            Lenka Kořínek
+        </h3>
+
+        <p>
+            Konateľ
+        </p>
+
+    </div>
+
+
+    <div class="founders-story">
+
+        <span class="section-tag">
+            RODINNÁ FIRMA
+        </span>
+
+        <h2>
+            Ľudia za DataPay
+        </h2>
+
+        <p>
+            Oblasť miezd a personalistiky vedie Lenka Kořínek.
+            Tejto problematike sa venuje dlhodobo a počas svojej
+            kariéry zabezpečovala spracovanie miezd, personalistiky
+            a HR administratívy pre viac ako 40 spoločností
+            rôznych veľkostí a zamerania.
+        </p>
+
+        <p>
+            Má bohaté skúsenosti s komplexným spracovaním
+            mzdovej a pracovnoprávnej agendy, komunikáciou
+            so štátnymi inštitúciami a každodennou podporou
+            zamestnávateľov v oblasti personalistiky.
+        </p>
+
+        <p>
+            Tomáš Kořínek sa počas svojej kariéry venoval oblasti
+            financií, SAP systémom, podnikovým procesom,
+            automatizácii a digitálnej transformácii.
+            Jeho skúsenosti zahŕňajú riadenie projektov,
+            digitalizáciu procesov, finančné riadenie
+            a implementáciu technologických riešení
+            pre podporu podnikania.
+        </p>
+
+        <p>
+            Práve kombinácia odborných znalostí z oblasti účtovníctva,
+            miezd, personalistiky, financií a moderných technológií
+            umožňuje DataPay prinášať klientom praktické,
+            efektívne a dlhodobo udržateľné riešenia.
+        </p>
+
+        <p>
+            Súčasťou nášho tímu sú aj skúsené účtovníčky
+            s viac ako 20-ročnou praxou, ktoré zabezpečujú
+            odborné spracovanie účtovníctva a sú garantom
+            jeho kvality a spoľahlivosti.
+        </p>
+
+    </div>
+
+
+    <div class="founder-card">
+
+        <img src="tomas.jpg" alt="Ing. Tomáš Kořínek">
+
+        <h3>
+            Ing. Tomáš Kořínek
+        </h3>
+
+        <p>
+            Konateľ
+        </p>
+
+    </div>
+
+</section>
+
+
+
+<!-- ========================================
+     HODNOTY
+======================================== -->
+
+<section class="values-section">
+
+    <div class="container">
+
+        <div class="values-heading">
+
+            <span>
+                NAŠE HODNOTY
+            </span>
+
+            <h2>
+                Na čom si zakladáme
+            </h2>
+
+        </div>
+
+
+        <div class="values-grid">
+
+
+            <div class="value-card">
+
+                <div class="value-icon">
+                    ✓
+                </div>
+
+                <h3>
+                    Spoľahlivosť
+                </h3>
 
                 <p>
-                    Kontaktujte nás a spoločne si prejdeme potreby
-                    vašej spoločnosti a možnosti spolupráce.
+                    Dohodnuté úlohy a termíny riešime
+                    zodpovedne a systematicky.
                 </p>
-
-                <a href="Formular.html"
-                   class="cta-button">
-
-                    Opýtajte sa Nás
-
-                </a>
 
             </div>
 
-        </section>
 
-    </main>
+            <div class="value-card">
+
+                <div class="value-icon">
+                    🎯
+                </div>
+
+                <h3>
+                    Presnosť
+                </h3>
+
+                <p>
+                    Pri spracovaní účtovných, mzdových
+                    a personálnych údajov kladieme dôraz
+                    na kontrolu a správnosť výstupov.
+                </p>
+
+            </div>
 
 
-    <!-- NÁVRAT NA HLAVNÚ STRÁNKU -->
+            <div class="value-card">
 
-    <div class="back-navigation">
+                <div class="value-icon">
+                    🤝
+                </div>
 
-        <div class="container">
+                <h3>
+                    Individuálny prístup
+                </h3>
 
-            <a href="index.html"
-               class="back-link">
+                <p>
+                    Služby nastavujeme podľa potrieb
+                    a spôsobu fungovania klienta.
+                </p>
 
-                ← Späť na hlavnú stránku
+            </div>
 
+
+            <div class="value-card">
+
+                <div class="value-icon">
+                    🔒
+                </div>
+
+                <h3>
+                    Diskrétnosť
+                </h3>
+
+                <p>
+                    K účtovným, mzdovým a personálnym údajom
+                    pristupujeme zodpovedne a dôverne.
+                </p>
+
+            </div>
+
+
+        </div>
+
+    </div>
+
+</section>
+
+
+
+<!-- ========================================
+     CTA
+======================================== -->
+
+<section class="cta-section">
+
+    <div class="container">
+
+        <h2>
+            Hľadáte spoľahlivého partnera?
+        </h2>
+
+        <p>
+            Kontaktujte nás a spoločne si prejdeme potreby
+            vašej spoločnosti a možnosti spolupráce v oblasti
+            účtovníctva, miezd a personalistiky.
+        </p>
+
+        <a href="Formular.html" class="cta-button">
+            Opýtajte sa nás
+        </a>
+
+    </div>
+
+</section>
+
+</main>
+
+
+
+<!-- ========================================
+     FOOTER
+======================================== -->
+
+<footer>
+
+    <div class="footer-container">
+
+        <div class="footer-grid">
+
+
+            <div class="footer-column">
+
+                <h3>
+                    DataPay s.r.o.
+                </h3>
+
+                <p>
+                    Účtovníctvo, mzdy, personalistika
+                    a odborné poradenstvo.
+                </p>
+
+                <p>
+                    Služby poskytujeme firmám
+                    na celom Slovensku.
+                </p>
+
+            </div>
+
+
+            <div class="footer-column">
+
+                <h3>
+                    Kontakt
+                </h3>
+
+                <p>
+                    <a href="mailto:datapaysk@gmail.com">
+                        datapaysk@gmail.com
+                    </a>
+                </p>
+
+                <p>
+                    <a href="tel:+421903270664">
+                        +421 903 270 664
+                    </a>
+                </p>
+
+                <p>
+                    <a href="tel:+421907837030">
+                        +421 907 837 030
+                    </a>
+                </p>
+
+            </div>
+
+
+            <div class="footer-column">
+
+                <h3>
+                    Spoločnosť
+                </h3>
+
+                <p>
+                    IČO: 57456615
+                </p>
+
+                <p>
+                    DIČ: 2122742622
+                </p>
+
+                <p>
+                    IČ DPH: nie sme platiteľom DPH
+                </p>
+
+            </div>
+
+
+        </div>
+
+
+        <div class="footer-bottom">
+
+            © 2026 DataPay s.r.o. |
+
+            <a href="GDPR.html">
+                Ochrana osobných údajov
             </a>
 
         </div>
 
     </div>
+
+</footer>
 
 
 </body>
