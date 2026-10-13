@@ -1,265 +1,2883 @@
 <!DOCTYPE html>
 <html lang="sk">
+
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Kontaktujte nás | DataPay</title>
 
-<style>
-*{
-    margin:0;
-    padding:0;
-    box-sizing:border-box;
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cenník účtovníctva, miezd a personalistiky | DataPay</title>
+    <meta name="description" content="Pozrite si cenník služieb DataPay pre jednoduché a podvojné účtovníctvo, spracovanie miezd a personalistiku. Cena sa prispôsobuje rozsahu agendy firmy.">
+    <meta name="robots" content="index, follow">
+    <meta name="author" content="DataPay s.r.o.">
+    <link rel="canonical" href="https://datapay.sk/Cennik.html">
+
+    <meta property="og:locale" content="sk_SK">
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="DataPay">
+    <meta property="og:title" content="Cenník účtovníctva, miezd a personalistiky | DataPay">
+    <meta property="og:description" content="Pozrite si cenník služieb DataPay pre jednoduché a podvojné účtovníctvo, spracovanie miezd a personalistiku. Cena sa prispôsobuje rozsahu agendy firmy.">
+    <meta property="og:url" content="https://datapay.sk/Cennik.html">
+    <meta property="og:image" content="https://datapay.sk/logo.png">
+    <meta property="og:image:alt" content="DataPay – účtovníctvo, mzdy a personalistika">
+
+    <link rel="icon" type="image/png" href="logo.png">
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            margin: 0;
+            font-family: Arial, Helvetica, sans-serif;
+            background: #f7f9fc;
+            color: #1f2937;
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+
+       /* =========================
+   HEADER
+========================= */
+
+.site-header {
+    background: #ffffff;
+    border-bottom: 1px solid #e6ebf2;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
 }
 
-body{
-    font-family: Arial, sans-serif;
-    background:#f4f8fc;
-    color:#333;
-    line-height:1.6;
+.nav-container {
+    width: 90%;
+    max-width: 1200px;
+    min-height: 88px;
+    margin: 0 auto;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    gap: 35px;
 }
 
-.container{
-    width:90%;
-    max-width:900px;
-    margin:auto;
+.brand {
+    display: flex;
+    align-items: center;
+    gap: 14px;
 }
 
-header{
-    background:linear-gradient(135deg,#052c64,#0d6efd);
-    color:white;
-    padding:40px 0;
-    text-align:center;
+.brand img {
+    width: 54px;
+    height: 54px;
+    object-fit: contain;
+    display: block;
 }
 
-header h1{
-    font-size:42px;
-    margin-bottom:15px;
+.brand-text {
+    display: flex;
+    flex-direction: column;
 }
 
-header p{
-    font-size:18px;
-    opacity:0.9;
-}
-
-.form-section{
-    margin-top:-40px;
-    padding-bottom:80px;
-}
-
-.form-card{
-    background:white;
-    padding:40px;
-    border-radius:20px;
-    box-shadow:0 10px 40px rgba(0,0,0,0.1);
-}
-
-.form-card h2{
-    color:#052c64;
-    margin-bottom:10px;
-}
-
-.form-card p{
-    margin-bottom:30px;
-    color:#666;
-}
-
-.form-group{
-    margin-bottom:20px;
-}
-
-label{
-    display:block;
-    margin-bottom:8px;
-    font-weight:600;
-}
-
-input,
-textarea{
-    width:100%;
-    padding:14px;
-    border:1px solid #d9d9d9;
-    border-radius:10px;
-    font-size:16px;
-    transition:0.3s;
-}
-
-input:focus,
-textarea:focus{
-    outline:none;
-    border-color:#0d6efd;
-    box-shadow:0 0 0 3px rgba(13,110,253,0.15);
-}
-
-textarea{
-    min-height:160px;
-    resize:vertical;
-}
-
-.btn{
-    background:#0d6efd;
-    color:white;
-    border:none;
-    padding:15px 30px;
-    font-size:16px;
-    font-weight:bold;
-    border-radius:30px;
-    cursor:pointer;
-    transition:0.3s;
-}
-
-.btn:hover{
-    background:#094db1;
-    transform:translateY(-2px);
-}
-
-.info-box{
-    margin-top:30px;
-    background:#eef5ff;
-    padding:20px;
-    border-radius:12px;
-    color:#052c64;
-}
-
-.back-link{
-    display:inline-block;
-    margin-top:25px;
-    color:#0d6efd;
-    text-decoration:none;
-    font-weight:bold;
-}
-
-.back-link:hover{
-    text-decoration:underline;
-}
-    
-.back-link {
-    display: inline-block;
-    color: #0d6efd;
-    text-decoration: none;
-    font-weight: 600;
-    font-size: 16px;
-    transition: 0.3s;
-}
-
-.back-link:hover {
+.brand-name {
     color: #052c64;
-    text-decoration: underline;
+    font-size: 20px;
+    font-weight: 700;
+    line-height: 1.2;
 }
 
-    .gdpr-consent{
-    margin:25px 0;
+.brand-subtitle {
+    color: #718096;
+    font-size: 12px;
+    margin-top: 4px;
 }
 
-.gdpr-consent{
-    display:flex;
-    align-items:flex-start;
-    gap:10px;
-    margin:20px 0;
+.main-nav {
+    display: flex;
+    align-items: center;
+    gap: 28px;
 }
 
-.gdpr-consent input[type="checkbox"]{
-    width:18px !important;
-    height:18px;
-    padding:0 !important;
-    margin-top:3px;
-    flex-shrink:0;
+.main-nav > a {
+    color: #334155;
+    font-size: 14px;
+    font-weight: 500;
+    transition: color 0.2s ease;
 }
 
-.gdpr-consent label{
-    margin:0;
-    font-size:14px;
-    font-weight:normal;
-    line-height:1.5;
+.main-nav > a:hover {
+    color: #052c64;
 }
-@media(max-width:768px){
 
-    header h1{
-        font-size:32px;
-    }
-
-    .form-card{
-        padding:25px;
-    }
+.main-nav > a.active {
+    color: #052c64;
+    font-weight: 700;
 }
-</style>
+
+.language {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    margin-left: 5px;
+    font-size: 13px;
+}
+
+.language a {
+    color: #94a3b8;
+    font-weight: 500;
+}
+
+.language a.active {
+    color: #052c64;
+    font-weight: 700;
+}
+
+.language span {
+    color: #cbd5e1;
+}
+
+        /* =====================================================
+           GLOBAL
+        ===================================================== */
+
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .pricing-page {
+            padding: 70px 0 90px;
+        }
+
+        .intro {
+            text-align: center;
+            max-width: 760px;
+            margin: 0 auto 60px;
+        }
+
+        .eyebrow {
+            color: #5279aa;
+            font-size: 12px;
+            font-weight: 700;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            margin-bottom: 14px;
+        }
+
+        .intro h1 {
+            margin: 0 0 18px;
+            color: #052c64;
+            font-size: 42px;
+        }
+
+        .intro p {
+            margin: 0;
+            color: #64748b;
+            font-size: 16px;
+            line-height: 1.7;
+        }
+
+        .pricing-section {
+            margin-bottom: 75px;
+        }
+
+
+        /* =====================================================
+           SHARED SHOWCASE
+        ===================================================== */
+
+        .pricing-showcase {
+            position: relative;
+            overflow: hidden;
+
+            padding: 48px 34px 34px;
+
+            border: 1px solid #e2eaf3;
+            border-radius: 18px;
+
+            background:
+                radial-gradient(
+                    circle at 82% 0%,
+                    rgba(66,137,214,.13),
+                    transparent 30%
+                ),
+                linear-gradient(
+                    135deg,
+                    #ffffff 0%,
+                    #f8fbff 55%,
+                    #eef5fc 100%
+                );
+
+            box-shadow:
+                0 18px 45px rgba(5,44,100,.06);
+        }
+
+        .showcase-hero {
+            display: grid;
+            grid-template-columns: 1fr .9fr;
+            gap: 50px;
+            align-items: end;
+            margin-bottom: 30px;
+        }
+
+        .showcase-eyebrow {
+            margin-bottom: 10px;
+
+            color: #0b63c7;
+
+            font-size: 11px;
+            font-weight: 800;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+        }
+
+        .showcase-hero h2 {
+            margin: 0 0 10px;
+
+            color: #052c64;
+
+            font-size: clamp(36px,4.2vw,58px);
+            line-height: 1.02;
+            letter-spacing: -2px;
+        }
+
+        .showcase-hero h2 span {
+            color: #0b63c7;
+        }
+
+        .showcase-hero p {
+            max-width: 650px;
+            margin: 0;
+
+            color: #61738b;
+
+            font-size: 14px;
+            line-height: 1.65;
+        }
+
+
+        /* =====================================================
+           ACCOUNTING
+        ===================================================== */
+
+        .accounting-showcase {
+            position: relative;
+            overflow: hidden;
+
+            padding: 48px 34px 34px;
+
+            border: 1px solid #e2eaf3;
+            border-radius: 18px;
+
+            background:
+                radial-gradient(
+                    circle at 82% 0%,
+                    rgba(66,137,214,.13),
+                    transparent 30%
+                ),
+                linear-gradient(
+                    135deg,
+                    #ffffff 0%,
+                    #f8fbff 55%,
+                    #eef5fc 100%
+                );
+
+            box-shadow:
+                0 18px 45px rgba(5,44,100,.06);
+        }
+
+        .accounting-hero {
+            display: grid;
+            grid-template-columns: 1fr .9fr;
+            gap: 50px;
+            align-items: end;
+            margin-bottom: 30px;
+        }
+
+        .accounting-eyebrow {
+            margin-bottom: 10px;
+
+            color: #0b63c7;
+
+            font-size: 11px;
+            font-weight: 800;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+        }
+
+        .accounting-hero h2 {
+            margin: 0 0 10px;
+
+            color: #052c64;
+
+            font-size: clamp(36px,4.2vw,58px);
+            line-height: 1.02;
+            letter-spacing: -2px;
+        }
+
+        .accounting-hero h2 span {
+            color: #0b63c7;
+        }
+
+        .accounting-hero p {
+            max-width: 650px;
+            margin: 0;
+
+            color: #61738b;
+
+            font-size: 14px;
+            line-height: 1.65;
+        }
+
+
+        /* ACCOUNTING SWITCH */
+
+        .accounting-switch {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4px;
+            padding: 4px;
+
+            border: 1px solid #dbe6f1;
+            border-radius: 999px;
+
+            background: rgba(255,255,255,.88);
+
+            box-shadow:
+                0 10px 30px rgba(5,44,100,.06);
+        }
+
+        .accounting-switch button {
+            border: 0;
+            border-radius: 999px;
+
+            padding: 15px 18px;
+
+            background: transparent;
+            color: #52657e;
+
+            font: inherit;
+            font-size: 13px;
+            font-weight: 700;
+
+            cursor: pointer;
+
+            transition: .25s ease;
+        }
+
+        .accounting-switch button.active {
+            color: #ffffff;
+
+            background:
+                linear-gradient(135deg,#0756aa,#0b70d7);
+
+            box-shadow:
+                0 8px 20px rgba(11,99,199,.22);
+        }
+
+
+        /* ACCOUNTING PACKAGES */
+
+        .accounting-packages {
+            display: grid;
+            grid-template-columns: repeat(4,1fr);
+            gap: 14px;
+        }
+
+        .accounting-package {
+            display: flex;
+            flex-direction: column;
+
+            padding: 22px 20px 18px;
+
+            border: 1px solid #e1e9f2;
+            border-radius: 12px;
+
+            background: rgba(255,255,255,.95);
+
+            box-shadow:
+                0 10px 26px rgba(5,44,100,.055);
+
+            transition: .25s ease;
+        }
+
+        .accounting-package:hover {
+            transform: translateY(-4px);
+
+            box-shadow:
+                0 16px 34px rgba(5,44,100,.09);
+        }
+
+        .package-heading {
+            display: flex;
+            gap: 14px;
+            align-items: flex-start;
+
+            min-height: 76px;
+
+            padding-bottom: 18px;
+
+            border-bottom: 1px solid #e8eef5;
+        }
+
+        .package-icon {
+            flex: 0 0 auto;
+
+            display: grid;
+            place-items: center;
+
+            width: 48px;
+            height: 48px;
+
+            border-radius: 50%;
+
+            background: #edf5fd;
+            color: #0b63c7;
+        }
+
+        .package-icon svg {
+            width: 24px;
+            height: 24px;
+
+            stroke: currentColor;
+            fill: none;
+
+            stroke-width: 1.8;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+        }
+
+        .package-heading h3 {
+            margin: 1px 0 3px;
+
+            color: #071b38;
+
+            font-size: 18px;
+        }
+
+        .package-heading p {
+            margin: 0;
+
+            color: #65768d;
+
+            font-size: 11px;
+            line-height: 1.4;
+        }
+
+        .package-price {
+            padding: 16px 2px 13px;
+        }
+
+        .package-price strong {
+            color: #071b38;
+
+            font-size: 31px;
+            letter-spacing: -1px;
+        }
+
+        .package-price em {
+            color: #071b38;
+
+            font-size: 14px;
+            font-style: normal;
+        }
+
+        .package-price span {
+            display: block;
+
+            margin-top: 6px;
+
+            color: #65768d;
+
+            font-size: 12px;
+        }
+
+        .package-features {
+            flex: 1;
+
+            list-style: none;
+
+            padding: 3px 0 12px;
+            margin: 0;
+        }
+
+        .package-features li {
+            position: relative;
+
+            padding: 5px 0 5px 27px;
+
+            color: #34455b;
+
+            font-size: 11.5px;
+            line-height: 1.45;
+        }
+
+        .package-features li::before {
+            content: "✓";
+
+            position: absolute;
+            left: 3px;
+            top: 4px;
+
+            color: #169879;
+
+            font-size: 15px;
+            font-weight: 800;
+        }
+
+        .package-extra {
+            display: flex;
+            justify-content: space-between;
+
+            gap: 10px;
+
+            margin-top: 5px;
+            padding: 11px 12px;
+
+            border-radius: 8px;
+
+            background: #f4f7fa;
+
+            color: #3c4d63;
+
+            font-size: 10.5px;
+        }
+
+        .package-extra strong {
+            color: #071b38;
+        }
+
+
+        /* ACCOUNTING INFO */
+
+        .accounting-bottom-info {
+            display: grid;
+            grid-template-columns: repeat(3,1fr);
+
+            margin-top: 20px;
+
+            border: 1px solid #e3ebf4;
+            border-radius: 12px;
+
+            background: rgba(255,255,255,.9);
+        }
+
+        .accounting-info-item {
+            display: flex;
+
+            gap: 14px;
+
+            padding: 19px 20px;
+        }
+
+        .accounting-info-item + .accounting-info-item {
+            border-left: 1px solid #e3ebf4;
+        }
+
+        .accounting-info-icon {
+            flex: 0 0 auto;
+
+            display: grid;
+            place-items: center;
+
+            width: 42px;
+            height: 42px;
+
+            border-radius: 50%;
+
+            background: #edf5fd;
+            color: #0b63c7;
+        }
+
+        .accounting-info-icon svg {
+            width: 21px;
+            height: 21px;
+
+            stroke: currentColor;
+            fill: none;
+
+            stroke-width: 1.8;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+        }
+
+        .accounting-info-item h4 {
+            margin: 1px 0 5px;
+
+            color: #071b38;
+
+            font-size: 12px;
+        }
+
+        .accounting-info-item p {
+            margin: 0;
+
+            color: #65768d;
+
+            font-size: 10.5px;
+            line-height: 1.45;
+        }
+
+        .accounting-disclaimer {
+            margin-top: 13px;
+
+            color: #75869b;
+
+            font-size: 10.5px;
+            line-height: 1.55;
+        }
+
+        .accounting-panel[hidden] {
+            display: none;
+        }
+
+
+        /* =====================================================
+           PAYROLL
+        ===================================================== */
+
+        .payroll-showcase {
+            background:
+                radial-gradient(
+                    circle at 82% 0%,
+                    rgba(74,126,185,.12),
+                    transparent 30%
+                ),
+                linear-gradient(
+                    135deg,
+                    #ffffff 0%,
+                    #f9fbfd 55%,
+                    #f0f5fa 100%
+                );
+        }
+
+        .payroll-hero {
+            grid-template-columns: 1fr;
+            margin-bottom: 27px;
+        }
+
+        .payroll-packages {
+            display: grid;
+            grid-template-columns: repeat(3,1fr);
+            gap: 16px;
+        }
+
+        .payroll-package {
+            position: relative;
+
+            padding: 25px 23px;
+
+            border: 1px solid #e0e8f1;
+            border-radius: 13px;
+
+            background: rgba(255,255,255,.96);
+
+            box-shadow:
+                0 10px 28px rgba(5,44,100,.055);
+
+            transition:
+                transform .25s ease,
+                box-shadow .25s ease,
+                border-color .25s ease;
+        }
+
+        .payroll-package:hover {
+            transform: translateY(-4px);
+
+            border-color: #ccdbea;
+
+            box-shadow:
+                0 17px 36px rgba(5,44,100,.09);
+        }
+
+        .payroll-package-top {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+
+            padding-bottom: 19px;
+
+            border-bottom: 1px solid #e8eef5;
+        }
+
+        .payroll-icon {
+            flex: 0 0 auto;
+
+            display: grid;
+            place-items: center;
+
+            width: 50px;
+            height: 50px;
+
+            border-radius: 50%;
+
+            background: #edf5fd;
+            color: #0b63c7;
+        }
+
+        .payroll-icon svg {
+            width: 25px;
+            height: 25px;
+
+            stroke: currentColor;
+            fill: none;
+
+            stroke-width: 1.8;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+        }
+
+        .payroll-range-label {
+            margin-bottom: 3px;
+
+            color: #718096;
+
+            font-size: 10px;
+            font-weight: 800;
+            letter-spacing: 1.3px;
+            text-transform: uppercase;
+        }
+
+        .payroll-package h3 {
+            margin: 0;
+
+            color: #071b38;
+
+            font-size: 20px;
+        }
+
+        .payroll-price {
+            padding-top: 21px;
+        }
+
+        .payroll-price strong {
+            color: #071b38;
+
+            font-size: 38px;
+            line-height: 1;
+            letter-spacing: -1.5px;
+        }
+
+.payroll-price .currency {
+    display: inline;
+    margin-left: 3px;
+    color: #071b38;
+    font-size: 17px;
+    font-weight: 700;
+}
+
+.payroll-price > span:not(.currency) {
+    display: block;
+    margin-top: 8px;
+    color: #65768d;
+    font-size: 12px;
+    line-height: 1.5;
+}
+
+
+        /* PAYROLL INCLUDED */
+
+        .payroll-included {
+            margin-top: 20px;
+
+            padding: 25px 27px;
+
+            border: 1px solid #e1e9f2;
+            border-radius: 12px;
+
+            background: rgba(255,255,255,.9);
+        }
+
+        .payroll-included-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+
+            margin-bottom: 20px;
+        }
+
+        .payroll-included-icon {
+            display: grid;
+            place-items: center;
+
+            width: 38px;
+            height: 38px;
+
+            border-radius: 50%;
+
+            background: #edf5fd;
+            color: #0b63c7;
+        }
+
+        .payroll-included-icon svg {
+            width: 20px;
+            height: 20px;
+
+            stroke: currentColor;
+            fill: none;
+
+            stroke-width: 2;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+        }
+
+        .payroll-included h3 {
+            margin: 0;
+
+            color: #052c64;
+
+            font-size: 17px;
+        }
+
+        .included-grid {
+            display: grid;
+            grid-template-columns: repeat(4,1fr);
+
+            gap: 12px 22px;
+        }
+
+        .included-item {
+            position: relative;
+
+            padding-left: 23px;
+
+            color: #475569;
+
+            font-size: 12px;
+            line-height: 1.5;
+        }
+
+        .included-item::before {
+            content: "✓";
+
+            position: absolute;
+            left: 0;
+            top: 0;
+
+            color: #169879;
+
+            font-size: 14px;
+            font-weight: 800;
+        }
+
+
+        /* =====================================================
+           ADDITIONAL SERVICES
+        ===================================================== */
+
+        .additional-showcase {
+            background:
+                radial-gradient(
+                    circle at 82% 0%,
+                    rgba(76,123,173,.10),
+                    transparent 30%
+                ),
+                linear-gradient(
+                    135deg,
+                    #ffffff 0%,
+                    #fafcfe 55%,
+                    #f2f6fa 100%
+                );
+        }
+
+        .additional-hero {
+            grid-template-columns: 1fr;
+            margin-bottom: 27px;
+        }
+
+        .additional-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+        }
+
+        .additional-group {
+            padding: 25px 24px;
+
+            border: 1px solid #e1e9f2;
+            border-radius: 13px;
+
+            background: rgba(255,255,255,.96);
+
+            box-shadow:
+                0 10px 28px rgba(5,44,100,.05);
+        }
+
+        .additional-group.full-width {
+            grid-column: 1 / -1;
+        }
+
+        .additional-group-header {
+            display: flex;
+            align-items: center;
+            gap: 13px;
+
+            padding-bottom: 18px;
+            margin-bottom: 3px;
+
+            border-bottom: 1px solid #e8eef5;
+        }
+
+        .additional-icon {
+            display: grid;
+            place-items: center;
+
+            width: 45px;
+            height: 45px;
+
+            flex: 0 0 auto;
+
+            border-radius: 50%;
+
+            background: #edf5fd;
+            color: #0b63c7;
+        }
+
+        .additional-icon svg {
+            width: 23px;
+            height: 23px;
+
+            stroke: currentColor;
+            fill: none;
+
+            stroke-width: 1.8;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+        }
+
+        .additional-group-header span {
+            display: block;
+
+            margin-bottom: 2px;
+
+            color: #718096;
+
+            font-size: 9px;
+            font-weight: 800;
+            letter-spacing: 1.4px;
+            text-transform: uppercase;
+        }
+
+        .additional-group-header h3 {
+            margin: 0;
+
+            color: #071b38;
+
+            font-size: 18px;
+        }
+
+        .service-row {
+            display: grid;
+            grid-template-columns: 1fr auto;
+            gap: 25px;
+            align-items: center;
+
+            padding: 16px 2px;
+
+            border-bottom: 1px solid #edf1f5;
+        }
+
+        .service-row:last-child {
+            border-bottom: 0;
+            padding-bottom: 2px;
+        }
+
+        .service-name {
+            color: #475569;
+
+            font-size: 12.5px;
+            line-height: 1.5;
+        }
+
+        .service-price {
+            white-space: nowrap;
+
+            color: #052c64;
+
+            font-size: 15px;
+            font-weight: 800;
+        }
+
+        .additional-info {
+            display: flex;
+            align-items: flex-start;
+            gap: 11px;
+
+            margin-top: 18px;
+
+            padding: 15px 17px;
+
+            border: 1px solid #e1e9f2;
+            border-radius: 10px;
+
+            background: rgba(255,255,255,.8);
+
+            color: #64748b;
+
+            font-size: 11px;
+            line-height: 1.55;
+        }
+
+        .additional-info-icon {
+            flex: 0 0 auto;
+
+            display: grid;
+            place-items: center;
+
+            width: 24px;
+            height: 24px;
+
+            border-radius: 50%;
+
+            background: #edf5fd;
+            color: #0b63c7;
+
+            font-size: 12px;
+            font-weight: 800;
+        }
+
+
+        /* =====================================================
+           CTA
+        ===================================================== */
+
+        .cta {
+            background: #052c64;
+
+            border-radius: 16px;
+
+            padding: 45px;
+
+            text-align: center;
+
+            color: #ffffff;
+        }
+
+        .cta h2 {
+            margin: 0 0 12px;
+
+            font-size: 28px;
+        }
+
+        .cta p {
+            max-width: 650px;
+
+            margin: 0 auto 25px;
+
+            color: #dbe7f5;
+
+            font-size: 14px;
+            line-height: 1.6;
+        }
+
+        .cta-button {
+            display: inline-block;
+
+            background: #ffffff;
+            color: #052c64;
+
+            padding: 13px 26px;
+
+            border-radius: 7px;
+
+            font-size: 14px;
+            font-weight: 700;
+        }
+
+
+        /* =====================================================
+           FOOTER
+        ===================================================== */
+
+        footer {
+            background: #ffffff;
+
+            border-top: 1px solid #e6ebf2;
+
+            padding: 50px 0 25px;
+        }
+
+        .footer-grid {
+            display: grid;
+            grid-template-columns: repeat(3,1fr);
+
+            gap: 50px;
+        }
+
+        .footer-column:nth-child(2) {
+            text-align: center;
+        }
+
+        .footer-column:nth-child(3) {
+            text-align: right;
+        }
+
+        .footer-column h3 {
+            color: #052c64;
+
+            font-size: 15px;
+        }
+
+        .footer-column p {
+            color: #718096;
+
+            font-size: 13px;
+            line-height: 1.5;
+        }
+
+        .footer-bottom {
+            margin-top: 35px;
+            padding-top: 20px;
+
+            border-top: 1px solid #edf1f5;
+
+            text-align: center;
+
+            color: #94a3b8;
+
+            font-size: 11px;
+        }
+
+
+        /* =====================================================
+           RESPONSIVE
+        ===================================================== */
+
+        @media(max-width:900px) {
+
+            .nav-container {
+                flex-direction: column;
+                padding: 18px 0;
+            }
+
+            .main-nav {
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+
+            .accounting-hero,
+            .showcase-hero {
+                grid-template-columns: 1fr;
+            }
+
+            .accounting-packages {
+                grid-template-columns: repeat(2,1fr);
+            }
+
+            .payroll-packages {
+                grid-template-columns: 1fr;
+            }
+
+            .included-grid {
+                grid-template-columns: repeat(2,1fr);
+            }
+
+            .accounting-bottom-info {
+                grid-template-columns: 1fr;
+            }
+
+            .accounting-info-item + .accounting-info-item {
+                border-left: 0;
+                border-top: 1px solid #e3ebf4;
+            }
+
+            .footer-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .footer-column {
+                text-align: center !important;
+            }
+        }
+
+
+        @media(max-width:650px) {
+
+            .accounting-showcase,
+            .pricing-showcase {
+                padding: 30px 18px 22px;
+            }
+
+            .accounting-packages {
+                grid-template-columns: 1fr;
+            }
+
+            .accounting-switch {
+                grid-template-columns: 1fr;
+                border-radius: 14px;
+            }
+
+            .included-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .additional-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .additional-group.full-width {
+                grid-column: auto;
+            }
+
+            .intro h1 {
+                font-size: 32px;
+            }
+
+            .showcase-hero h2,
+            .accounting-hero h2 {
+                font-size: 36px;
+                letter-spacing: -1px;
+            }
+
+            .service-row {
+                gap: 15px;
+            }
+
+            .cta {
+                padding: 35px 20px;
+            }
+        }
+
+    </style>
 
 </head>
+
+
 <body>
 
-<header>
-    <div class="container">
-        <h1>Kontaktujte nás</h1>
-        <p>Máte záujem o naše služby alebo iné otázky? Napíšte nám.</p>
+
+<!-- =====================================================
+     HEADER
+===================================================== -->
+
+<header class="site-header">
+
+    <div class="nav-container">
+
+        <a href="index.html" class="brand">
+
+            <img src="logo.png" alt="DataPay logo">
+
+            <div class="brand-text">
+
+                <div class="brand-name">
+                    DataPay s.r.o.
+                </div>
+
+                <div class="brand-subtitle">
+                    Mzdy • Účtovníctvo • Personalistika
+                </div>
+
+            </div>
+
+        </a>
+
+
+        <nav class="main-nav">
+
+            <a href="index.html">
+                Domov
+            </a>
+
+            <a href="About.html">
+                O nás
+            </a>
+
+            <a href="payroll.html">
+                Služby
+            </a>
+
+            <a href="Cennik.html" class="active">
+                Cenník
+            </a>
+
+            <a href="FAQ.html">
+                FAQ
+            </a>
+
+
+            <div class="language">
+
+                <a href="#" class="active">
+                    SK
+                </a>
+
+                <span>/</span>
+
+                <a href="#">
+                    EN
+                </a>
+
+            </div>
+
+        </nav>
+
     </div>
+
 </header>
 
-<section class="form-section">
-    <div class="container">
 
-        <div class="form-card">
 
-            <h2>Odpovieme Vám čo najskôr.</h2>
+<!-- =====================================================
+     MAIN
+===================================================== -->
 
-           <form action="https://formsubmit.co/datapaysk@gmail.com" method="POST">
+<main>
 
-    <input type="hidden" name="_subject" value="Nový dopyt z webu DataPay">
-    <input type="hidden" name="_captcha" value="false">
+<div class="pricing-page">
 
-    <div class="form-group">
-        <label>Meno a priezvisko</label>
-        <input type="text" name="Meno" required>
+<div class="container">
+
+
+<!-- =====================================================
+     INTRO
+===================================================== -->
+
+<section class="intro">
+
+    <div class="eyebrow">
+        DATAPAY • CENNÍK
     </div>
 
-    <div class="form-group">
-        <label>Spoločnosť</label>
-        <input type="text" name="Spolocnost">
+    <h1>
+        Cenník služieb
+    </h1>
+
+    <p>
+        Transparentné ceny účtovníctva, miezd
+        a doplnkových služieb.
+        Cenník je platný od 1. 1. 2026.
+    </p>
+
+</section>
+
+
+
+<!-- =====================================================
+     ACCOUNTING
+===================================================== -->
+
+<section class="pricing-section accounting-showcase">
+
+
+<div class="accounting-hero">
+
+    <div>
+
+        <div class="accounting-eyebrow">
+            Transparentné ceny
+        </div>
+
+        <h2>
+            Cenník <span>účtovníctva</span>
+        </h2>
+
+        <p>
+            Jasné a férové ceny podľa počtu účtovných položiek.
+            Vyberte si rozsah, ktorý najlepšie zodpovedá vašej firme.
+            V prípade špecifických potrieb vám pripravíme
+            individuálnu ponuku.
+        </p>
+
     </div>
 
-    <div class="form-group">
-        <label>E-mail</label>
-        <input type="email" name="Email" required>
-    </div>
 
-    <div class="form-group">
-        <label>Telefón</label>
-        <input type="tel" name="Telefon">
-    </div>
+    <div>
 
-    <div class="form-group">
-        <label>Vaša správa</label>
-        <textarea name="Sprava" rows="5" required></textarea>
-    </div>
+        <div class="accounting-switch">
 
-<div class="gdpr-consent">
+            <button
+                class="active"
+                data-accounting-tab="simple">
 
-    <input
-        type="checkbox"
-        id="gdpr"
-        name="GDPR_Suhlas"
-        required>
+                Jednoduché účtovníctvo
 
-    <label for="gdpr">
-       <b>Súhlasím so spracovaním osobných údajov za účelom vybavenia mojej požiadavky.</b>   <a href="GDPR.html" target="_blank">
-             </a>
-    </label>
+            </button>
 
-</div>
+            <button
+                data-accounting-tab="double">
 
-<button class="btn" type="submit">
-    Odoslať správu
-</button>
+                Podvojné účtovníctvo
 
-
-</form>
-            <div style="text-align:center;">
-    <a href="index.html" class="back-link">
-        ← Späť na hlavnú stránku
-    </a>
-</div>
+            </button>
 
         </div>
 
     </div>
- 
+
+</div>
+
+
+
+<!-- =====================================================
+     SIMPLE ACCOUNTING
+===================================================== -->
+
+<div
+    class="accounting-panel"
+    data-accounting-panel="simple">
+
+
+<div class="accounting-packages">
+
+
+<!-- START -->
+
+<article class="accounting-package">
+
+    <div class="package-heading">
+
+        <div class="package-icon">
+
+            <svg viewBox="0 0 24 24">
+                <path d="M3 11.5 21 4l-7.5 17-2.7-7.8L3 11.5Z"/>
+                <path d="m10.8 13.2 4.7-4.7"/>
+            </svg>
+
+        </div>
+
+        <div>
+
+            <h3>
+                START
+            </h3>
+
+            <p>
+                Pre menšie firmy a začínajúcich podnikateľov
+            </p>
+
+        </div>
+
+    </div>
+
+
+    <div class="package-price">
+        <em>
+            od
+        </em>
+        <strong>
+            99 €
+        </strong>
+
+        <em>
+            / mes.
+        </em>
+
+        <span>
+            do 50 účtovných položiek
+        </span>
+
+    </div>
+
+
+    <ul class="package-features">
+
+        <li>Peňažný denník</li>
+        <li>Evidencia majetku – základná</li>
+        <li>Pokladničná kniha</li>
+        <li>Evidencia pohľadávok a záväzkov</li>
+        <li>Komunikácia s úradmi</li>
+        <li>Základné konzultácie e-mailom</li>
+
+    </ul>
+
+
+  <!--  <div class="package-extra">
+
+        <span>
+            Každá ďalšia položka
+        </span>
+
+        <strong>
+            0,90 €
+        </strong>
+
+    </div> -->
+
+</article>
+
+
+
+<!-- SMART -->
+
+<article class="accounting-package">
+
+    <div class="package-heading">
+
+        <div class="package-icon">
+
+            <svg viewBox="0 0 24 24">
+                <path d="M4 20V11h4v9H4Z"/>
+                <path d="M10 20V6h4v14h-4Z"/>
+                <path d="M16 20V3h4v17h-4Z"/>
+            </svg>
+
+        </div>
+
+        <div>
+
+            <h3>
+                SMART
+            </h3>
+
+            <p>
+                Pre stabilne rastúce firmy
+            </p>
+
+        </div>
+
+    </div>
+
+
+    <div class="package-price">
+<em>
+            od
+        </em>
+        <strong>
+            149 €
+        </strong>
+
+        <em>
+            / mes.
+        </em>
+
+        <span>
+            do 100 účtovných položiek
+        </span>
+
+    </div>
+
+
+    <ul class="package-features">
+
+        <li>Všetko zo START</li>
+        <li>DPH evidencia a priznania</li>
+        <li>Kontrolný výkaz DPH</li>
+        <li>Súhrnný výkaz podľa potreby</li>
+        <li>Evidencia majetku</li>
+        <li>Mesačné výstupy z programu</li>
+        <li>Konzultácie 30 min. / mesiac</li>
+
+    </ul>
+
+
+<!--    <div class="package-extra">
+
+        <span>
+            Každá ďalšia položka
+        </span>
+
+        <strong>
+            0,80 €
+        </strong>
+
+    </div> -->
+
+</article>
+
+
+
+<!-- BUSINESS -->
+
+<article class="accounting-package">
+
+    <div class="package-heading">
+
+        <div class="package-icon">
+
+            <svg viewBox="0 0 24 24">
+                <rect x="3" y="7" width="18" height="13" rx="2"/>
+                <path d="M8 7V4h8v3"/>
+                <path d="M3 12h18"/>
+            </svg>
+
+        </div>
+
+        <div>
+
+            <h3>
+                BUSINESS
+            </h3>
+
+            <p>
+                Pre väčšie firmy so širším rozsahom agendy
+            </p>
+
+        </div>
+
+    </div>
+
+
+    <div class="package-price">
+<em>
+            od
+        </em>
+        <strong>
+            299 €
+        </strong>
+
+        <em>
+            / mes.
+        </em>
+
+        <span>
+            do 200 účtovných položiek
+        </span>
+
+    </div>
+
+
+    <ul class="package-features">
+
+        <li>Všetko zo SMART</li>
+        <li>Súhrnný výkaz DPH</li>
+        <li>Viac bankových účtov – 2</li>
+        <li>Rozšírená evidencia majetku</li>
+        <li>Prehľadné mesačné reporty</li>
+        <li>Konzultácie 60 min. / mesiac</li>
+        <li>Prioritná podpora</li>
+
+    </ul>
+
+
+<!--    <div class="package-extra">
+
+        <span>
+            Každá ďalšia položka
+        </span>
+
+        <strong>
+            0,70 €
+        </strong>
+
+    </div> -->
+
+</article>
+
+
+
+<!-- PRO -->
+
+<article class="accounting-package">
+
+    <div class="package-heading">
+
+        <div class="package-icon">
+
+            <svg viewBox="0 0 24 24">
+                <path d="m12 21-9-11 4-6h10l4 6-9 11Z"/>
+                <path d="m3 10 18 0"/>
+                <path d="m7 4 5 17 5-17"/>
+            </svg>
+
+        </div>
+
+        <div>
+
+            <h3>
+                PRO
+            </h3>
+
+            <p>
+                Pre veľké firmy a náročnejšie prevádzky
+            </p>
+
+        </div>
+
+    </div>
+
+
+    <div class="package-price">
+<em>
+            od
+        </em>
+        <strong>
+            499 €
+        </strong>
+
+        <em>
+            / mes.
+        </em>
+
+        <span>
+            do 350 účtovných položiek
+        </span>
+
+    </div>
+
+
+    <ul class="package-features">
+
+        <li>Všetko z BUSINESS</li>
+        <li>Viac bankových účtov – 3 a viac</li>
+        <li>Pokročilá evidencia majetku</li>
+        <li>Analytické členenie</li>
+        <li>Pravidelné konzultácie 90 min. / mesiac</li>
+        <li>Individuálne nastavenia a reporting</li>
+        <li>Prioritná podpora a dedikovaný kontakt</li>
+
+    </ul>
+
+
+<!--    <div class="package-extra">
+
+        <span>
+            Každá ďalšia položka
+        </span>
+
+        <strong>
+            0,60 €
+        </strong>
+
+    </div> -->
+
+</article>
+
+
+</div>
+
+</div>
+
+
+
+<!-- =====================================================
+     DOUBLE ACCOUNTING
+===================================================== -->
+
+<div
+    class="accounting-panel"
+    data-accounting-panel="double"
+    hidden>
+
+
+<div class="accounting-packages">
+
+
+<!-- START -->
+
+<article class="accounting-package">
+
+    <div class="package-heading">
+
+        <div class="package-icon">
+
+            <svg viewBox="0 0 24 24">
+                <path d="M3 11.5 21 4l-7.5 17-2.7-7.8L3 11.5Z"/>
+            </svg>
+
+        </div>
+
+        <div>
+
+            <h3>
+                START
+            </h3>
+
+            <p>
+                Pre menšie s.r.o. a firmy s nižším objemom dokladov
+            </p>
+
+        </div>
+
+    </div>
+
+
+    <div class="package-price">
+<em>
+            od
+        </em>
+        <strong>
+            89 €
+        </strong>
+
+        <em>
+            / mes.
+        </em>
+
+        <span>
+            do 50 účtovných položiek
+        </span>
+
+    </div>
+
+
+    <ul class="package-features">
+
+        <li>Účtovný denník</li>
+        <li>Pokladničná a banková agenda</li>
+        <li>Evidencia pohľadávok a záväzkov</li>
+        <li>Základná evidencia majetku</li>
+        <li>Komunikácia s úradmi</li>
+        <li>Základné konzultácie e-mailom</li>
+
+    </ul>
+
+
+  <!--  <div class="package-extra">
+
+        <span>
+            Každá ďalšia položka
+        </span>
+
+        <strong>
+            1,00 €
+        </strong>
+
+    </div> -->
+
+</article>
+
+
+
+<!-- SMART -->
+
+<article class="accounting-package">
+
+    <div class="package-heading">
+
+        <div class="package-icon">
+
+            <svg viewBox="0 0 24 24">
+                <path d="M4 20V11h4v9H4Z"/>
+                <path d="M10 20V6h4v14h-4Z"/>
+                <path d="M16 20V3h4v17h-4Z"/>
+            </svg>
+
+        </div>
+
+        <div>
+
+            <h3>
+                SMART
+            </h3>
+
+            <p>
+                Pre firmy s pravidelnou mesačnou agendou
+            </p>
+
+        </div>
+
+    </div>
+
+
+    <div class="package-price">
+<em>
+            od
+        </em>
+        <strong>
+            179 €
+        </strong>
+
+        <em>
+            / mes.
+        </em>
+
+        <span>
+            do 100 účtovných položiek
+        </span>
+
+    </div>
+
+
+    <ul class="package-features">
+
+        <li>Všetko zo START</li>
+        <li>DPH evidencia a priznania</li>
+        <li>Kontrolný výkaz DPH</li>
+        <li>Súhrnný výkaz podľa potreby</li>
+        <li>Evidencia majetku</li>
+        <li>Mesačné účtovné výstupy</li>
+        <li>Konzultácie 30 min. / mesiac</li>
+
+    </ul>
+
+
+ <!--   <div class="package-extra">
+
+        <span>
+            Každá ďalšia položka
+        </span>
+
+        <strong>
+            0,90 €
+        </strong>
+
+    </div> -->
+
+</article>
+
+
+
+<!-- BUSINESS -->
+
+<article class="accounting-package">
+
+    <div class="package-heading">
+
+        <div class="package-icon">
+
+            <svg viewBox="0 0 24 24">
+                <rect x="3" y="7" width="18" height="13" rx="2"/>
+                <path d="M8 7V4h8v3"/>
+            </svg>
+
+        </div>
+
+        <div>
+
+            <h3>
+                BUSINESS
+            </h3>
+
+            <p>
+                Pre väčšie spoločnosti so širšou účtovnou agendou
+            </p>
+
+        </div>
+
+    </div>
+
+
+    <div class="package-price">
+<em>
+            od
+        </em>
+        <strong>
+            289 €
+        </strong>
+
+        <em>
+            / mes.
+        </em>
+
+        <span>
+            do 200 účtovných položiek
+        </span>
+
+    </div>
+
+
+    <ul class="package-features">
+
+        <li>Všetko zo SMART</li>
+        <li>Súhrnný výkaz DPH</li>
+        <li>Viac bankových účtov – 2</li>
+        <li>Rozšírená evidencia majetku</li>
+        <li>Prehľadné mesačné reporty</li>
+        <li>Konzultácie 60 min. / mesiac</li>
+        <li>Prioritná podpora</li>
+
+    </ul>
+
+
+<!--    <div class="package-extra">
+
+        <span>
+            Každá ďalšia položka
+        </span>
+
+        <strong>
+            0,80 €
+        </strong>
+
+    </div> -->
+
+</article>
+
+
+
+<!-- PRO -->
+
+<article class="accounting-package">
+
+    <div class="package-heading">
+
+        <div class="package-icon">
+
+            <svg viewBox="0 0 24 24">
+                <path d="m12 21-9-11 4-6h10l4 6-9 11Z"/>
+                <path d="m3 10 18 0"/>
+            </svg>
+
+        </div>
+
+        <div>
+
+            <h3>
+                PRO
+            </h3>
+
+            <p>
+                Pre firmy s rozsiahlejšou a náročnejšou agendou
+            </p>
+
+        </div>
+
+    </div>
+
+
+    <div class="package-price">
+<em>
+            od
+        </em>
+        <strong>
+            499 €
+        </strong>
+
+        <em>
+            / mes.
+        </em>
+
+        <span>
+            do 350 účtovných položiek
+        </span>
+
+    </div>
+
+
+    <ul class="package-features">
+
+        <li>Všetko z BUSINESS</li>
+        <li>Viac bankových účtov – 3 a viac</li>
+        <li>Pokročilá evidencia majetku</li>
+        <li>Analytické členenie</li>
+        <li>Pravidelné konzultácie 90 min. / mesiac</li>
+        <li>Individuálne nastavenia a reporting</li>
+        <li>Prioritná podpora a dedikovaný kontakt</li>
+
+    </ul>
+
+
+
+<!--    <div class="package-extra">
+
+        <span>
+            Každá ďalšia položka
+        </span>
+
+        <strong>
+            0,70 €
+        </strong>
+
+</div >-->
+
+</article>
+
+
+</div>
+
+</div>
+
+
+
+<!-- =====================================================
+     ACCOUNTING INFO
+===================================================== -->
+
+<div class="accounting-bottom-info">
+
+
+<div class="accounting-info-item">
+
+    <div class="accounting-info-icon">
+
+        <svg viewBox="0 0 24 24">
+            <path d="M6 3h9l4 4v14H6V3Z"/>
+            <path d="M15 3v5h4"/>
+            <path d="M9 12h7M9 16h7"/>
+        </svg>
+
+    </div>
+
+    <div>
+
+        <h4>
+            Ako počítame účtovné položky
+        </h4>
+
+        <p>
+            Účtovná položka predstavuje jeden zápis
+            v účtovnom denníku alebo príslušnej účtovnej evidencii.
+        </p>
+
+    </div>
+
+</div>
+
+
+
+<div class="accounting-info-item">
+
+    <div class="accounting-info-icon">
+
+        <svg viewBox="0 0 24 24">
+            <rect x="3" y="4" width="18" height="13" rx="1"/>
+            <path d="M8 21h8M12 17v4"/>
+        </svg>
+
+    </div>
+
+    <div>
+
+        <h4>
+            Elektronické doklady výhodnejšie
+        </h4>
+
+        <p>
+            Pri elektronicky spracovateľných dokladoch môžeme
+            cenu nastaviť individuálne podľa miery automatizácie.
+        </p>
+
+    </div>
+
+</div>
+
+
+
+<div class="accounting-info-item">
+
+    <div class="accounting-info-icon">
+
+        <svg viewBox="0 0 24 24">
+            <path d="M8 12 3 8l3-4 6 5"/>
+            <path d="m16 12 5-4-3-4-6 5"/>
+            <path d="m8 12 4 4 4-4"/>
+        </svg>
+
+    </div>
+
+    <div>
+
+        <h4>
+            Individuálna ponuka
+        </h4>
+
+        <p>
+            Máte viac ako 350 položiek alebo špecifické požiadavky?
+            Pripravíme vám cenovú ponuku na mieru.
+        </p>
+
+    </div>
+
+</div>
+
+
+</div>
+
+
+<div class="accounting-disclaimer">
+
+    Uvedené ceny sú orientačné a vychádzajú zo štandardného
+    rozsahu agendy. Konečná cena závisí od množstva a spôsobu
+    odovzdávania dokladov, platiteľstva DPH, rozsahu evidencie
+    a individuálnych požiadaviek klienta.
+
+</div>
+
+
 </section>
+
+
+
+<!-- =====================================================
+     PAYROLL
+===================================================== -->
+
+<section class="pricing-section pricing-showcase payroll-showcase">
+
+
+<div class="showcase-hero payroll-hero">
+
+    <div>
+
+        <div class="showcase-eyebrow">
+            Mzdy & personalistika
+        </div>
+
+        <h2>
+            Cenník <span>miezd</span>
+        </h2>
+
+        <p>
+            Jednoduché a transparentné ceny podľa počtu zamestnancov.
+            Cena zahŕňa pravidelné mesačné spracovanie mzdovej agendy
+            a súvisiace výstupy.
+        </p>
+
+    </div>
+
+</div>
+
+
+
+<div class="payroll-packages">
+
+
+<!-- 1 - 20 -->
+
+<article class="payroll-package">
+
+    <div class="payroll-package-top">
+
+        <div class="payroll-icon">
+
+            <svg viewBox="0 0 24 24">
+                <circle cx="12" cy="8" r="4"/>
+                <path d="M5 21v-2a7 7 0 0 1 14 0v2"/>
+            </svg>
+
+        </div>
+
+        <div>
+
+            <div class="payroll-range-label">
+                Menšie tímy
+            </div>
+
+            <h3>
+                1 – 20 zamestnancov
+            </h3>
+
+        </div>
+
+    </div>
+
+
+    <div class="payroll-price">
+
+        <strong>
+            19
+        </strong>
+
+        <span class="currency">
+            €
+        </span>
+
+        <span>
+            za zamestnanca / mesiac
+        </span>
+
+    </div>
+
+</article>
+
+
+
+<!-- 21 - 70 -->
+
+<article class="payroll-package">
+
+    <div class="payroll-package-top">
+
+        <div class="payroll-icon">
+
+            <svg viewBox="0 0 24 24">
+                <circle cx="9" cy="8" r="3"/>
+                <circle cx="17" cy="9" r="2.5"/>
+                <path d="M3 20v-2a6 6 0 0 1 12 0v2"/>
+                <path d="M15 15a5 5 0 0 1 6 5"/>
+            </svg>
+
+        </div>
+
+        <div>
+
+            <div class="payroll-range-label">
+                Stredné tímy
+            </div>
+
+            <h3>
+                21 – 70 zamestnancov
+            </h3>
+
+        </div>
+
+    </div>
+
+
+    <div class="payroll-price">
+
+        <strong>
+            17
+        </strong>
+
+        <span class="currency">
+            €
+        </span>
+
+        <span>
+            za zamestnanca / mesiac
+        </span>
+
+    </div>
+
+</article>
+
+
+
+<!-- 70+ -->
+
+<article class="payroll-package">
+
+    <div class="payroll-package-top">
+
+        <div class="payroll-icon">
+
+            <svg viewBox="0 0 24 24">
+                <path d="M3 21V8l9-5 9 5v13"/>
+                <path d="M8 21v-6h8v6"/>
+                <path d="M8 10h1M12 10h1M16 10h1"/>
+            </svg>
+
+        </div>
+
+        <div>
+
+            <div class="payroll-range-label">
+                Väčšie tímy
+            </div>
+
+            <h3>
+                70+ zamestnancov
+            </h3>
+
+        </div>
+
+    </div>
+
+
+    <div class="payroll-price">
+
+        <strong>
+            15
+        </strong>
+
+        <span class="currency">
+            €
+        </span>
+
+        <span>
+            za zamestnanca / mesiac
+        </span>
+
+    </div>
+
+</article>
+
+
+</div>
+
+
+
+<!-- INCLUDED -->
+
+<div class="payroll-included">
+
+    <div class="payroll-included-header">
+
+        <div class="payroll-included-icon">
+
+            <svg viewBox="0 0 24 24">
+                <path d="m5 12 4 4L19 6"/>
+            </svg>
+
+        </div>
+
+        <h3>
+            V cene mzdového spracovania
+        </h3>
+
+    </div>
+
+
+    <div class="included-grid">
+
+        <div class="included-item">
+            Mesačné spracovanie miezd
+        </div>
+
+        <div class="included-item">
+            Výplatné pásky
+        </div>
+
+        <div class="included-item">
+            Výkazy pre Sociálnu poisťovňu
+        </div>
+
+        <div class="included-item">
+            Výkazy pre zdravotné poisťovne
+        </div>
+
+        <div class="included-item">
+            Platobné podklady
+        </div>
+
+        <div class="included-item">
+            Evidencia dovoleniek a PN
+        </div>
+
+        <div class="included-item">
+            Emailová podpora a konzultácie
+        </div>
+
+        <div class="included-item">
+            Nastavenie e-komunikácie
+        </div>
+
+    </div>
+
+</div>
+
+
+</section>
+
+
+
+<!-- =====================================================
+     ADDITIONAL SERVICES
+===================================================== -->
+
+<section class="pricing-section pricing-showcase additional-showcase">
+
+
+<div class="showcase-hero additional-hero">
+
+    <div>
+
+        <div class="showcase-eyebrow">
+            Doplnkové služby
+        </div>
+
+        <h2>
+            Administratíva <span>podľa potreby</span>
+        </h2>
+
+        <p>
+            Jednorazové mzdové a personálne služby
+            nad rámec pravidelného mesačného spracovania.
+        </p>
+
+    </div>
+
+</div>
+
+
+
+<div class="additional-grid">
+
+
+<!-- REGISTRATIONS -->
+
+<div class="additional-group">
+
+    <div class="additional-group-header">
+
+        <div class="additional-icon">
+
+            <svg viewBox="0 0 24 24">
+                <path d="M6 3h9l4 4v14H6V3Z"/>
+                <path d="M15 3v5h4"/>
+                <path d="M9 12h6"/>
+                <path d="M9 16h6"/>
+            </svg>
+
+        </div>
+
+        <div>
+
+            <span>
+                Začiatok spolupráce
+            </span>
+
+            <h3>
+                Registrácie
+            </h3>
+
+        </div>
+
+    </div>
+
+
+    <div class="service-row">
+
+        <div class="service-name">
+            Registrácia zamestnávateľa na daňovom úrade
+        </div>
+
+        <div class="service-price">
+            25 €
+        </div>
+
+    </div>
+
+
+    <div class="service-row">
+
+        <div class="service-name">
+            Registrácia do Sociálnej a zdravotnej poisťovne
+        </div>
+
+        <div class="service-price">
+            25 €
+        </div>
+
+    </div>
+
+</div>
+
+
+
+<!-- EMPLOYEES -->
+
+<div class="additional-group">
+
+    <div class="additional-group-header">
+
+        <div class="additional-icon">
+
+            <svg viewBox="0 0 24 24">
+                <circle cx="9" cy="7" r="3"/>
+                <path d="M3 20v-2a6 6 0 0 1 12 0v2"/>
+                <path d="M18 8v6"/>
+                <path d="M15 11h6"/>
+            </svg>
+
+        </div>
+
+        <div>
+
+            <span>
+                Personálna agenda
+            </span>
+
+            <h3>
+                Zamestnanci
+            </h3>
+
+        </div>
+
+    </div>
+
+
+    <div class="service-row">
+
+        <div class="service-name">
+            Registrácia nového zamestnanca
+        </div>
+
+        <div class="service-price">
+            20 €
+        </div>
+
+    </div>
+
+
+    <div class="service-row">
+
+        <div class="service-name">
+            Pracovná zmluva / kontrola pracovnej zmluvy
+        </div>
+
+        <div class="service-price">
+            25 €
+        </div>
+
+    </div>
+
+
+    <div class="service-row">
+
+        <div class="service-name">
+            Ukončenie pracovného pomeru
+        </div>
+
+        <div class="service-price">
+            20 €
+        </div>
+
+    </div>
+
+</div>
+
+
+
+<!-- INDIVIDUAL -->
+
+<div class="additional-group full-width">
+
+    <div class="additional-group-header">
+
+        <div class="additional-icon">
+
+            <svg viewBox="0 0 24 24">
+                <circle cx="12" cy="12" r="9"/>
+                <path d="M12 7v5l3 2"/>
+            </svg>
+
+        </div>
+
+        <div>
+
+            <span>
+                Podľa rozsahu
+            </span>
+
+            <h3>
+                Individuálne služby
+            </h3>
+
+        </div>
+
+    </div>
+
+
+    <div class="service-row">
+
+        <div class="service-name">
+            Opravy miezd a výkazov spôsobené zamestnávateľom
+        </div>
+
+        <div class="service-price">
+            40 € / hod.
+        </div>
+
+    </div>
+
+
+    <div class="service-row">
+
+        <div class="service-name">
+            Komplexná mzdová a personálna dokumentácia pre kontrolu
+        </div>
+
+        <div class="service-price">
+            30 € / hod.
+        </div>
+
+    </div>
+
+</div>
+
+
+</div>
+
+
+
+<div class="additional-info">
+
+    <div class="additional-info-icon">
+        i
+    </div>
+
+    <div>
+        Uvedené ceny sú konečné.
+        Spoločnosť DataPay s.r.o. nie je platiteľom DPH
+        podľa § 4 zákona o DPH.
+    </div>
+
+</div>
+
+
+</section>
+
+
+
+<!-- =====================================================
+     CTA
+===================================================== -->
+
+<section class="cta">
+
+    <h2>
+        Potrebujete individuálnu ponuku?
+    </h2>
+
+    <p>
+        Každá firma má iný rozsah účtovnej,
+        mzdovej a personálnej agendy.
+        Radi pripravíme cenovú ponuku podľa vašich
+        konkrétnych potrieb.
+    </p>
+
+    <a
+        href="mailto:datapaysk@gmail.com"
+        class="cta-button">
+
+        Kontaktujte nás
+
+    </a>
+
+</section>
+
+
+</div>
+
+</div>
+
+</main>
+
+
+
+<!-- =====================================================
+     FOOTER
+===================================================== -->
+
+<footer>
+
+<div class="container">
+
+<div class="footer-grid">
+
+
+<div class="footer-column">
+
+    <h3>
+        DataPay s.r.o.
+    </h3>
+
+    <p>
+        Účtovníctvo, mzdy, personalistika
+        a odborné poradenstvo.
+    </p>
+
+    <p>
+        Služby poskytujeme firmám
+        na celom Slovensku.
+    </p>
+
+</div>
+
+
+
+<div class="footer-column">
+
+    <h3>
+        Kontakt
+    </h3>
+
+    <p>
+        <a href="mailto:datapaysk@gmail.com">
+            datapaysk@gmail.com
+        </a>
+    </p>
+
+    <p>
+        <a href="tel:+421903270664">
+            +421 903 270 664
+        </a>
+    </p>
+
+    <p>
+        <a href="tel:+421907837030">
+            +421 907 837 030
+        </a>
+    </p>
+
+</div>
+
+
+
+<div class="footer-column">
+
+    <h3>
+        Spoločnosť
+    </h3>
+
+    <p>
+        IČO: 57456615
+    </p>
+
+    <p>
+        DIČ: 2122742622
+    </p>
+
+    <p>
+        IČ DPH: nie sme platiteľom DPH
+    </p>
+
+</div>
+
+
+</div>
+
+
+
+<div class="footer-bottom">
+
+    © 2026 DataPay s.r.o. |
+
+    <a href="GDPR.html">
+        Ochrana osobných údajov
+    </a>
+
+</div>
+
+
+</div>
+
+</footer>
+
+
+
+<!-- =====================================================
+     JAVASCRIPT
+===================================================== -->
+
+<script>
+
+document.addEventListener("DOMContentLoaded", function () {
+
+    const buttons =
+        document.querySelectorAll("[data-accounting-tab]");
+
+    const panels =
+        document.querySelectorAll("[data-accounting-panel]");
+
+
+    buttons.forEach(function (button) {
+
+        button.addEventListener("click", function () {
+
+            const target =
+                button.dataset.accountingTab;
+
+
+            buttons.forEach(function (item) {
+
+                item.classList.toggle(
+                    "active",
+                    item === button
+                );
+
+            });
+
+
+            panels.forEach(function (panel) {
+
+                panel.hidden =
+                    panel.dataset.accountingPanel !== target;
+
+            });
+
+        });
+
+    });
+
+});
+
+</script>
+
+
+</body>
+
+</html>
