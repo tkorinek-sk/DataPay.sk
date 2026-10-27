@@ -1086,10 +1086,21 @@
 .footer .container{width:min(1180px,92%);margin:0 auto}
 .invoice-paper .inv-meta-item span{overflow-wrap:anywhere}
 @media print{.footer{display:none!important}}
+
+/* Režimy: jednoduchá faktúra / rozšírená faktúra */
+.mode-picker{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;margin:0 0 22px}
+.mode-choice{display:block;text-align:left;border:2px solid #dbe5f1;border-radius:12px;padding:17px;background:#fff;color:#052c64;cursor:pointer;font:inherit;transition:border-color .2s,background .2s}
+.mode-choice strong{display:block;font-size:16px;margin-bottom:5px}.mode-choice small{display:block;color:#64748b;line-height:1.5}
+.mode-choice[aria-pressed="true"]{border-color:#052c64;background:#eef5fd;box-shadow:0 0 0 2px rgba(5,44,100,.07)}
+.mode-hint{font-size:12px;color:#526780;margin:-8px 0 18px}
+body.simple-mode .advanced-only{display:none!important}
+body.simple-mode .items-form-table th:nth-child(4),body.simple-mode .items-form-table td:nth-child(4){display:none!important}
+@media(max-width:600px){.mode-picker{grid-template-columns:1fr}}
+@media print{.mode-picker,.mode-hint{display:none!important}}
 </style>
 </head>
 
-<body>
+<body class="simple-mode">
 
     <!-- ANNOUNCEMENT BAR -->
     <div class="announcement-bar">
@@ -1163,13 +1174,13 @@
                     <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path></svg>
                     Stiahnuť PDF
                 </button>
-                <button class="btn btn-accent" onclick="window.print()">
+                <button class="btn btn-accent" onclick="printInvoice()">
                     <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z"></path></svg>
                     Vytlačiť
                 </button>
             </div>
             <div class="toolbar-group">
-                <button class="btn btn-outline" onclick="loadSampleData()">
+                <button class="btn btn-outline" onclick="saveDraft()">Uložiť koncept</button><button class="btn btn-outline" onclick="loadDraft()">Načítať koncept</button><button class="btn btn-outline" onclick="loadSampleData()">
                     Vzorové údaje
                 </button>
                 <button class="btn btn-danger-outline" onclick="clearForm()">
@@ -1184,14 +1195,30 @@
             <!-- LEFT COLUMN: INPUT FORM -->
             <div class="form-card">
                 
+                <div class="mode-picker" role="group" aria-label="Zložitosť faktúry">
+                    <button type="button" class="mode-choice" id="modeSimple" aria-pressed="true" onclick="setInvoiceMode('simple')"><strong>Jednoduchá faktúra</strong><small>Bežná faktúra v EUR. Vyplníte len základné údaje, odberateľa a položky.</small></button>
+                    <button type="button" class="mode-choice" id="modeAdvanced" aria-pressed="false" onclick="setInvoiceMode('advanced')"><strong>Komplexná faktúra</strong><small>Zahraničie, osobitné režimy DPH, zľavy, zálohy, viac mien a ďalšie možnosti.</small></button>
+                </div>
+                <p class="mode-hint" id="modeHint" aria-live="polite">Pokročilé polia sú skryté, nie odstránené. Kedykoľvek môžete prepnúť na komplexnú faktúru.</p>
                 <!-- DPH Switcher -->
                 <div class="toggle-container">
                     <input type="checkbox" id="isDphPayer" onchange="updateInvoice()">
                     <label for="isDphPayer">Dodávateľ je platiteľ DPH</label>
-                    <select id="vatRate" class="form-control" style="width:auto;margin-left:auto" aria-label="Sadzba DPH" onchange="updateInvoice()" disabled><option value="23">23 %</option><option value="19">19 %</option><option value="5">5 %</option></select>
+                    
                 </div>
 
-                <!-- Invoice Meta Settings -->
+<div class="advanced-only" id="advancedTaxFields">
+                <div class="form-section-title">Daňový režim</div>
+<div class="form-group"><label for="taxMode">Typ dodania</label><select id="taxMode" class="form-control" onchange="updateInvoice()"><option value="domestic">Bežné tuzemské dodanie</option><option value="reverse">Prenesenie daňovej povinnosti</option><option value="exempt">Oslobodené od DPH</option><option value="intra">Dodanie tovaru do iného členského štátu EÚ – § 43 (len pri splnení podmienok)</option><option value="export">Vývoz tovaru – § 47 (len pri splnení podmienok)</option></select></div>
+<div class="form-group" id="legalRefGroup" style="display:none"><label>Právny dôvod / ustanovenie a doplňujúci text (overte s účtovníkom)</label><input id="legalRef" class="form-control" oninput="updateInvoice()" placeholder="Napr. konkrétne ustanovenie zákona"></div>
+<div class="form-group"><label>Číslo objednávky / referencia</label><input id="orderRef" class="form-control" oninput="updateInvoice()"></div>
+<div class="form-group"><label>Zápis dodávateľa v registri (ak sa vyžaduje)</label><input id="registry" class="form-control" oninput="updateInvoice()" placeholder="OR ..., oddiel ..., vložka ..."></div>
+<div class="form-grid-2"><div class="form-group"><label>Mena dokladu</label><select id="currency" class="form-control" onchange="updateInvoice()"><option>EUR</option><option>CZK</option><option>USD</option></select></div><div class="form-group"><label>Kurz: 1 jednotka meny = EUR (pri cudzej mene a DPH)</label><input id="eurRate" type="number" min="0" step="0.000001" value="1" class="form-control" oninput="updateInvoice()"></div></div>
+<div class="form-grid-2"><div class="form-group"><label>Spôsob úhrady</label><select id="paymentMethod" class="form-control" onchange="updateInvoice()"><option>Bankový prevod</option><option>Hotovosť</option><option>Platobná karta</option></select></div><div class="form-group"><label>Prijatá záloha (v mene dokladu)</label><input id="advance" type="number" min="0" step="0.01" value="0" class="form-control" oninput="updateInvoice()"></div></div>
+<div class="form-group"><label>Uhradené navyše (okrem zálohy; v mene dokladu)</label><input id="paid" type="number" min="0" step="0.01" value="0" class="form-control" oninput="updateInvoice()"></div>
+<p style="font-size:11px;color:#64748b;margin-bottom:16px">Záloha sa tu odpočítava od výslednej sumy. Ak vznikla daňová povinnosť už prijatím platby, vyúčtovanie a daňový doklad k prijatej platbe posúďte osobitne.</p>
+</div>
+<!-- Invoice Meta Settings -->
                 <div class="form-section-title">Základné Údaje Faktúry</div>
                 <div class="form-grid-3">
                     <div class="form-group">
@@ -1202,7 +1229,7 @@
                         <label>Variabilný symbol</label>
                         <input type="text" id="invVS" class="form-control" value="20260001" oninput="updateInvoice()">
                     </div>
-                    <div class="form-group">
+                    <div class="form-group advanced-only">
                         <label>Konštantný symbol</label>
                         <input type="text" id="invKS" class="form-control" value="0308" oninput="updateInvoice()">
                     </div>
@@ -1248,7 +1275,7 @@
                         <label>DIČ</label>
                         <input type="text" id="supDic" class="form-control" placeholder="2021234567" oninput="updateInvoice()">
                     </div>
-                    <div class="form-group">
+                    <div class="form-group advanced-only">
                         <label>IČ DPH</label>
                         <input type="text" id="supIcdph" class="form-control" placeholder="SK2021234567" oninput="updateInvoice()">
                     </div>
@@ -1261,7 +1288,7 @@
                         <label>IBAN</label>
                         <input type="text" id="supIban" class="form-control" placeholder="SK31 1200 0000 0012 3456 7890" oninput="updateInvoice()">
                     </div>
-                    <div class="form-group">
+                    <div class="form-group advanced-only">
                         <label>SWIFT / BIC</label>
                         <input type="text" id="supSwift" class="form-control" placeholder="SUBASKBX" oninput="updateInvoice()">
                     </div>
@@ -1288,11 +1315,11 @@
                         <label>IČO</label>
                         <input type="text" id="custIco" class="form-control" placeholder="87654321" oninput="updateInvoice()">
                     </div>
-                    <div class="form-group">
+                    <div class="form-group advanced-only">
                         <label>DIČ</label>
                         <input type="text" id="custDic" class="form-control" placeholder="2098765432" oninput="updateInvoice()">
                     </div>
-                    <div class="form-group">
+                    <div class="form-group advanced-only">
                         <label>IČ DPH</label>
                         <input type="text" id="custIcdph" class="form-control" placeholder="SK2098765432" oninput="updateInvoice()">
                     </div>
@@ -1309,7 +1336,7 @@
                         <tr>
                             <th style="width: 45%;">Popis položky</th>
                             <th style="width: 15%;">Množstvo</th>
-                            <th style="width: 25%;">Cena/ks (€)</th>
+                            <th style="width: 20%;">Cena/ks</th><th class="advanced-only">Zľava %</th><th>DPH %</th>
                             <th style="width: 15%;"></th>
                         </tr>
                     </thead>
@@ -1318,7 +1345,7 @@
                     </tbody>
                 </table>
 
-                <div class="form-group" style="margin-top: 20px;">
+                <div id="validationErrors" role="alert" aria-live="polite" style="display:none;border:1px solid #fca5a5;background:#fef2f2;color:#991b1b;padding:12px;border-radius:8px;margin:15px 0;white-space:pre-line"></div><div class="form-group advanced-only" style="margin-top: 20px;">
                     <label>Poznámka na faktúre</label>
                     <textarea id="invNote" class="form-control" rows="2" placeholder="Ďakujeme za využitie našich služieb." oninput="updateInvoice()"></textarea>
                 </div>
@@ -1401,7 +1428,7 @@
                                     <th class="text-right">Množstvo</th>
                                     <th class="text-right">Cena / ks</th>
                                     <th class="text-right" id="thDphHeader" style="display:none;">DPH</th>
-                                    <th class="text-right">Spolu (€)</th>
+                                    <th class="text-right">Spolu</th>
                                 </tr>
                             </thead>
                             <tbody id="prevItemsBody">
@@ -1420,22 +1447,15 @@
                             </div>
 
                             <div class="inv-totals-box">
-                                <div class="inv-total-row" id="rowSubtotal" style="display:none;">
-                                    <span>Základ DPH:</span>
-                                    <span id="prevSubtotal">0.00 €</span>
-                                </div>
-                                <div class="inv-total-row" id="rowDph" style="display:none;">
-                                    <span>DPH (<span id="prevVatRate">23</span> %):</span>
-                                    <span id="prevDphVal">0.00 €</span>
-                                </div>
-                                <div class="inv-total-row grand-total">
-                                    <span>K úhrade:</span>
-                                    <span id="prevGrandTotal">0.00 €</span>
-                                </div>
+                                <div id="taxBreakdown"></div>
+                                <div class="inv-total-row"><span>Celkom:</span><span id="prevGross">0.00 €</span></div>
+                                <div class="inv-total-row"><span>Záloha:</span><span id="prevAdvance">0.00 €</span></div>
+                                <div class="inv-total-row"><span>Uhradené:</span><span id="prevPaid">0.00 €</span></div>
+                                <div class="inv-total-row grand-total"><span>K úhrade:</span><span id="prevGrandTotal">0.00 €</span></div>
                             </div>
                         </div>
 
-                        <div style="margin-top: 15px; font-size: 11px; color: #475569;" id="prevNoteBlock">
+                        <div id="prevExtra" style="margin-top:15px;font-size:11px;color:#475569;white-space:pre-line"></div><div style="margin-top: 15px; font-size: 11px; color: #475569;" id="prevNoteBlock">
                             <strong>Poznámka:</strong> <span id="prevNote">--</span>
                         </div>
                     </div>
@@ -1523,6 +1543,14 @@
 
     <!-- INTERACTIVE JAVASCRIPT LOGIC -->
     <script>
+        /* Peňažné sumy zaokrúhľujeme na centy; základ sadzby agregujeme z nezaokrúhlených
+           riadkov a DPH zaokrúhľujeme za jednotlivé sadzby. Metodiku treba odborne schváliť. */
+        const round2 = x => Math.round((Number(x) + Number.EPSILON) * 100) / 100;
+        const $ = id => document.getElementById(id);
+        const val = id => $(id).value.trim();
+        const num = id => Number($(id).value) || 0;
+        const money = x => round2(x).toFixed(2) + ' ' + val('currency');
+        const draftFields = ['isDphPayer','taxMode','legalRef','orderRef','registry','currency','eurRate','paymentMethod','advance','paid','invNumber','invVS','invKS','dateIssue','dateSupply','dateDue','supName','supStreet','supCity','supIco','supDic','supIcdph','supIban','supSwift','custName','custStreet','custCity','custIco','custDic','custIcdph','invNote'];
         // Sample State
         let itemsState = [];
 
@@ -1553,51 +1581,29 @@
 
         
 
-        function addItemRow(name = '', qty = 1, price = 0) {
-            itemsState.push({ name, qty: Math.max(0, parseFloat(qty) || 0), price: Math.max(0, parseFloat(price) || 0) });
-            renderItemsForm();
-            updateInvoice();
+        function addItemRow(name = '', qty = 1, price = 0, discount = 0, vat = 23) {
+            itemsState.push({name,qty:Number(qty),price:Number(price),discount:Number(discount),vat:Number(vat)});
+            renderItemsForm(); updateInvoice();
         }
-
-        function removeItemRow(index) {
-            itemsState.splice(index, 1);
-            renderItemsForm();
-            updateInvoice();
-        }
-
+        function removeItemRow(index) { itemsState.splice(index,1);renderItemsForm();updateInvoice(); }
         function renderItemsForm() {
-            const tbody = document.getElementById('itemsContainer');
-            tbody.innerHTML = '';
-
-            itemsState.forEach((item, idx) => {
+            const tbody = $('itemsContainer'); tbody.replaceChildren();
+            itemsState.forEach((item,idx) => {
                 const tr = document.createElement('tr');
-                tr.innerHTML = `
-                    <td>
-                        <input type="text" class="form-control" value="${escapeHTML(item.name)}" placeholder="Názov položky / práce" oninput="updateItemField(${idx}, 'name', this.value)">
-                    </td>
-                    <td>
-                        <input type="number" class="form-control" value="${item.qty}" min="1" step="0.5" oninput="updateItemField(${idx}, 'qty', this.value)">
-                    </td>
-                    <td>
-                        <input type="number" class="form-control" value="${item.price}" min="0" step="0.01" oninput="updateItemField(${idx}, 'price', this.value)">
-                    </td>
-                    <td>
-                        <button class="btn-remove-row" title="Odstrániť" onclick="removeItemRow(${idx})">&times;</button>
-                    </td>
-                `;
-                tbody.appendChild(tr);
+                tr.innerHTML = `<td><input class="form-control" value="${escapeHTML(item.name)}" aria-label="Popis položky" oninput="updateItemField(${idx},'name',this.value)"></td>
+                <td><input type="number" class="form-control" value="${item.qty}" min="0.001" step="any" aria-label="Množstvo" oninput="updateItemField(${idx},'qty',this.value)"></td>
+                <td><input type="number" class="form-control" value="${item.price}" min="0" step="0.01" aria-label="Cena" oninput="updateItemField(${idx},'price',this.value)"></td>
+                <td><input type="number" class="form-control" value="${item.discount || 0}" min="0" max="100" step="0.01" aria-label="Zľava percent" oninput="updateItemField(${idx},'discount',this.value)"></td>
+                <td><select class="form-control" aria-label="DPH položky" onchange="updateItemField(${idx},'vat',this.value)">${[23,19,5,0].map(r=>`<option value="${r}" ${Number(item.vat)===r?'selected':''}>${r} %</option>`).join('')}</select></td>
+                <td><button class="btn-remove-row" aria-label="Odstrániť položku" onclick="removeItemRow(${idx})">×</button></td>`;
+                tbody.append(tr);
             });
         }
-
-        function updateItemField(index, field, value) {
-            if (field === 'qty' || field === 'price') {
-                itemsState[index][field] = Math.max(0, parseFloat(value) || 0);
-            } else {
-                itemsState[index][field] = value;
-            }
+        function updateItemField(index,field,value) {
+            if (!itemsState[index]) return;
+            itemsState[index][field] = field==='name' ? value : Number(value);
             updateInvoice();
         }
-
         function formatDate(dateStr) {
             if (!/^\d{4}-\d{2}-\d{2}$/.test(dateStr || '')) return '';
             const [year, month, day] = dateStr.split('-');
@@ -1611,152 +1617,100 @@
             return (Math.round(amount * 100) / 100).toFixed(2) + ' €';
         }
 
-        function updateInvoice() {
-            // Read form fields
-            const isDph = document.getElementById('isDphPayer').checked;
-            const vatRate = Number(document.getElementById('vatRate').value);
-            document.getElementById('vatRate').disabled = !isDph;
-            document.getElementById('prevVatRate').textContent = vatRate;
-
-            const invNum = document.getElementById('invNumber').value || '---';
-            const invVS = document.getElementById('invVS').value || '---';
-            const invKS = document.getElementById('invKS').value || '0308';
-
-            const dateIssue = formatDate(document.getElementById('dateIssue').value);
-            const dateSupply = formatDate(document.getElementById('dateSupply').value);
-            const dateDue = formatDate(document.getElementById('dateDue').value);
-
-            // Supplier
-            const supName = document.getElementById('supName').value || 'Dodávateľ Meno / Firma';
-            const supStreet = document.getElementById('supStreet').value || '';
-            const supCity = document.getElementById('supCity').value || '';
-            const supIco = document.getElementById('supIco').value || '';
-            const supDic = document.getElementById('supDic').value || '';
-            const supIcdph = document.getElementById('supIcdph').value || '';
-            const supIban = document.getElementById('supIban').value.replace(/\s+/g, '') || '';
-
-            // Customer
-            const custName = document.getElementById('custName').value || 'Odberateľ Meno / Firma';
-            const custStreet = document.getElementById('custStreet').value || '';
-            const custCity = document.getElementById('custCity').value || '';
-            const custIco = document.getElementById('custIco').value || '';
-            const custDic = document.getElementById('custDic').value || '';
-            const custIcdph = document.getElementById('custIcdph').value || '';
-
-            const note = document.getElementById('invNote').value || '';
-
-            // Update Preview Text Elements
-            document.getElementById('prevSupNameTitle').innerText = supName;
-            document.getElementById('prevInvNumber').innerText = invNum;
-
-            document.getElementById('prevSupName').innerText = supName;
-            document.getElementById('prevSupAddress').innerHTML = `${escapeHTML(supStreet)}<br>${escapeHTML(supCity)}`;
-            document.getElementById('prevSupTaxInfo').innerHTML = `
-                IČO: ${supIco || '---'}<br>
-                DIČ: ${supDic || '---'}
-                ${isDph ? `<br>IČ DPH: ${supIcdph || '---'}` : '<br><em>Nie je platiteľ DPH</em>'}
-            `;
-
-            document.getElementById('prevCustName').innerText = custName;
-            document.getElementById('prevCustAddress').innerHTML = `${escapeHTML(custStreet)}<br>${escapeHTML(custCity)}`;
-            document.getElementById('prevCustTaxInfo').innerHTML = `
-                IČO: ${custIco || '---'}<br>
-                DIČ: ${custDic || '---'}
-                ${custIcdph ? `<br>IČ DPH: ${escapeHTML(custIcdph)}` : ''}
-            `;
-
-            document.getElementById('prevDateIssue').innerText = dateIssue;
-            document.getElementById('prevDateSupply').innerText = dateSupply;
-            document.getElementById('prevDateDue').innerText = dateDue;
-            document.getElementById('prevVS').innerText = invVS;
-            document.getElementById('prevKS').innerText = invKS;
-            document.getElementById('prevIban').innerText = supIban ? document.getElementById('supIban').value : '---';
-
-            // DPH & Calculations
-            const thDphHeader = document.getElementById('thDphHeader');
-            thDphHeader.style.display = isDph ? 'table-cell' : 'none';
-
-            let subtotal = 0;
-            const prevBody = document.getElementById('prevItemsBody');
-            prevBody.innerHTML = '';
-
-            itemsState.forEach(item => {
-                const itemTotal = item.qty * item.price;
-                subtotal += itemTotal;
-
-                const tr = document.createElement('tr');
-                tr.innerHTML = `
-                    <td><strong>${escapeHTML(item.name || 'Položka dokladu')}</strong></td>
-                    <td class="text-right">${item.qty}</td>
-                    <td class="text-right">${formatMoney(item.price)}</td>
-                    ${isDph ? `<td class="text-right">${vatRate}%</td>` : ''}
-                    <td class="text-right"><strong>${formatMoney(itemTotal)}</strong></td>
-                `;
-                prevBody.appendChild(tr);
+        function calculate() {
+            const payer=$('isDphPayer').checked, mode=val('taxMode');
+            const taxable=payer && mode==='domestic';
+            const groups=new Map(), rows=[];
+            for(const item of itemsState){
+                const base=Number(item.qty)*Number(item.price)*(1-Number(item.discount||0)/100);
+                const rate=taxable?Number(item.vat):0;
+                groups.set(rate,(groups.get(rate)||0)+base);
+                rows.push({item,base,rate});
+            }
+            let base=0,tax=0;
+            const summary=[...groups.entries()].sort((a,b)=>b[0]-a[0]).map(([rate,raw])=>{
+                const net=round2(raw),vat=round2(raw*rate/100);base+=net;tax+=vat;
+                return {rate,net,vat};
             });
-
-            let dphVal = 0;
-            let grandTotal = subtotal;
-
-            if (isDph) {
-                dphVal = subtotal * (vatRate / 100);
-                grandTotal = subtotal + dphVal;
-                document.getElementById('rowSubtotal').style.display = 'flex';
-                document.getElementById('rowDph').style.display = 'flex';
-            } else {
-                document.getElementById('rowSubtotal').style.display = 'none';
-                document.getElementById('rowDph').style.display = 'none';
-            }
-
-            document.getElementById('prevSubtotal').innerText = formatMoney(subtotal);
-            document.getElementById('prevDphVal').innerText = formatMoney(dphVal);
-            document.getElementById('prevGrandTotal').innerText = formatMoney(grandTotal);
-
-            const noteBlock = document.getElementById('prevNoteBlock');
-            if (note.trim()) {
-                noteBlock.style.display = 'block';
-                document.getElementById('prevNote').innerText = note;
-            } else {
-                noteBlock.style.display = 'none';
-            }
-
-            // Generate SEPA QR Code
-            generateQRCode(supIban, grandTotal, invVS);
+            const gross=round2(base+tax), due=round2(Math.max(0,gross-round2(num('advance'))-round2(num('paid'))));
+            return {payer,mode,taxable,rows,summary,base:round2(base),tax:round2(tax),gross,due};
+        }
+        function validateInvoice(forExport=false){
+            const errors=[];const c=calculate();
+            for(const [id,label] of [['invNumber','Číslo faktúry'],['dateIssue','Dátum vystavenia'],['dateSupply','Dátum dodania'],['dateDue','Dátum splatnosti'],['supName','Názov dodávateľa'],['supStreet','Ulica dodávateľa'],['supCity','Mesto a PSČ dodávateľa'],['custName','Názov odberateľa'],['custStreet','Ulica odberateľa'],['custCity','Mesto a PSČ odberateľa']]) if(!val(id)) errors.push('Chýba: '+label);
+            if(val('dateDue') && val('dateIssue') && val('dateDue')<val('dateIssue')) errors.push('Splatnosť predchádza vystaveniu.');
+            if(c.payer && !val('supIcdph')) errors.push('Platiteľ DPH musí vyplniť IČ DPH.');
+            if(c.mode!=='domestic' && !c.payer) errors.push('Osobitný režim v tejto verzii vyžaduje platiteľa DPH.');
+            if(c.mode!=='domestic' && !val('legalRef')) errors.push('Doplňte a overte právny dôvod osobitného režimu.');
+            if(c.mode==='intra' && !val('custIcdph')) errors.push('Pri dodaní do EÚ overte a uveďte IČ DPH odberateľa.');
+            if(!itemsState.length || itemsState.some(x=>!String(x.name).trim() || !Number.isFinite(x.qty) || x.qty<=0 || !Number.isFinite(x.price) || x.price<0 || !Number.isFinite(x.discount) || x.discount<0 || x.discount>100 || ![0,5,19,23].includes(Number(x.vat)))) errors.push('Skontrolujte popis, množstvo, cenu, zľavu a sadzbu každej položky.');
+            if(c.taxable && itemsState.some(x=>Number(x.vat)===0)) errors.push('Nulová sadzba pri tuzemskom dodaní vyžaduje samostatné právne posúdenie; použite správny osobitný režim.');
+            if(num('advance')<0 || num('paid')<0 || round2(num('advance')+num('paid'))>c.gross) errors.push('Záloha a úhrada nesmú byť záporné ani prevýšiť sumu faktúry.');
+            if(c.taxable && val('currency')!=='EUR' && !(num('eurRate')>0)) errors.push('Pre DPH v cudzej mene vyplňte overený kurz do EUR.');
+            if(val('paymentMethod')==='Bankový prevod' && !validIBAN(val('supIban'))) errors.push('Pri bankovom prevode zadajte platný IBAN.');
+            const el=$('validationErrors');el.textContent=errors.join('\n');el.style.display=errors.length?'block':'none';
+            if(forExport && errors.length){el.scrollIntoView({behavior:'smooth',block:'center'});return false;}
+            return !errors.length;
+        }
+        function validIBAN(value){
+            const x=value.replace(/\s/g,'').toUpperCase();if(!/^[A-Z]{2}[0-9]{2}[A-Z0-9]{11,30}$/.test(x))return false;
+            const rearranged=x.slice(4)+x.slice(0,4);let remainder=0;
+            for(const ch of rearranged){const str=/[A-Z]/.test(ch)?String(ch.charCodeAt(0)-55):ch;for(const digit of str)remainder=(remainder*10+Number(digit))%97;}
+            return remainder===1;
+        }
+        function updateInvoice(){
+            const c=calculate();$('legalRefGroup').style.display=c.mode==='domestic'?'none':'block';
+            const txt=(id,value)=>$(id).textContent=value;
+            txt('prevSupNameTitle',val('supName')||'Dodávateľ');txt('prevInvNumber',val('invNumber')||'---');
+            txt('prevSupName',val('supName')||'Dodávateľ');$('prevSupAddress').innerHTML=escapeHTML(val('supStreet'))+'<br>'+escapeHTML(val('supCity'));
+            $('prevSupTaxInfo').innerHTML='IČO: '+escapeHTML(val('supIco')||'---')+'<br>DIČ: '+escapeHTML(val('supDic')||'---')+(c.payer?'<br>IČ DPH: '+escapeHTML(val('supIcdph')||'---'):'<br>Nie je platiteľ DPH')+(val('registry')?'<br>'+escapeHTML(val('registry')):'');
+            txt('prevCustName',val('custName')||'Odberateľ');$('prevCustAddress').innerHTML=escapeHTML(val('custStreet'))+'<br>'+escapeHTML(val('custCity'));
+            $('prevCustTaxInfo').innerHTML='IČO: '+escapeHTML(val('custIco')||'---')+'<br>DIČ: '+escapeHTML(val('custDic')||'---')+(val('custIcdph')?'<br>IČ DPH: '+escapeHTML(val('custIcdph')):'');
+            for(const [dest,src] of [['prevDateIssue','dateIssue'],['prevDateSupply','dateSupply'],['prevDateDue','dateDue']])txt(dest,formatDate(val(src)));
+            txt('prevVS',val('invVS')||'---');txt('prevKS',val('invKS')||'---');txt('prevIban',val('supIban')||'---');
+            $('thDphHeader').style.display=c.taxable?'table-cell':'none';$('prevItemsBody').replaceChildren();
+            for(const {item,base,rate} of c.rows){const tr=document.createElement('tr');tr.innerHTML=`<td><strong>${escapeHTML(item.name||'Položka')}</strong>${Number(item.discount)>0?`<br><small>Zľava ${escapeHTML(item.discount)} %</small>`:''}</td><td class="text-right">${escapeHTML(item.qty)}</td><td class="text-right">${money(item.price)}</td>${c.taxable?`<td class="text-right">${rate} %</td>`:''}<td class="text-right"><strong>${money(base)}</strong></td>`;$('prevItemsBody').append(tr);}
+            $('taxBreakdown').replaceChildren();
+            for(const {rate,net,vat} of c.summary){const row=document.createElement('div');row.innerHTML=`<div class="inv-total-row"><span>${c.taxable?'Základ '+rate+' %':'Základ'}:</span><span>${money(net)}</span></div>${c.taxable?`<div class="inv-total-row"><span>DPH ${rate} %:</span><span>${money(vat)}</span></div>`:''}`;$('taxBreakdown').append(row);}
+            txt('prevGross',money(c.gross));txt('prevAdvance',money(num('advance')));txt('prevPaid',money(num('paid')));txt('prevGrandTotal',money(c.due));
+            const notes={reverse:'Prenesenie daňovej povinnosti',exempt:'Oslobodené od dane',intra:'Dodanie tovaru do iného členského štátu EÚ – § 43',export:'Vývoz tovaru – § 47'};
+            $('prevExtra').textContent=[val('orderRef')?'Objednávka: '+val('orderRef'):'','Spôsob úhrady: '+val('paymentMethod'),notes[c.mode]||'',val('legalRef'),c.taxable&&val('currency')!=='EUR'?'DPH v EUR (orientačný prepočet zadaným kurzom): '+round2(c.tax*num('eurRate')).toFixed(2)+' €':''].filter(Boolean).join('\n');
+            $('prevNoteBlock').style.display=val('invNote')?'block':'none';txt('prevNote',val('invNote'));
+            generateQRCode(val('supIban'),c.due,val('invVS'));
+            validateInvoice();
         }
 
-        function generateQRCode(iban, amount, vs) {
-            const qrContainer = document.getElementById('qrcode');
-            qrContainer.innerHTML = '';
-
-            if (!iban || amount <= 0) {
-                qrContainer.innerHTML = '<span style="font-size: 10px; color: #94a3b8;">Zadajte platný IBAN a sumu pre QR kód</span>';
-                return;
+        let invoiceMode='simple';
+        function setInvoiceMode(mode){
+            if(mode!=='simple'&&mode!=='advanced')return;
+            if(mode==='simple'&&invoiceMode==='advanced'){
+                const unusual=$('taxMode').value!=='domestic'||$('currency').value!=='EUR'||Number($('advance').value)>0||Number($('paid').value)>0||itemsState.some(x=>Number(x.discount)>0||Number(x.vat)!==23);
+                if(unusual&&!confirm('Jednoduchý režim nepodporuje všetky aktuálne nastavenia. Prepnúť a nastaviť bežné tuzemské dodanie v EUR, bez zliav a záloh?'))return;
+                $('taxMode').value='domestic';$('legalRef').value='';$('currency').value='EUR';$('eurRate').value='1';$('advance').value='0';$('paid').value='0';
+                itemsState.forEach(x=>{x.discount=0;x.vat=23;});renderItemsForm();
             }
-
-            // EPC069-12 SEPA Credit Transfer QR; not Slovak PAY by square.
-            const formattedIban = iban.replace(/\s+/g, '').toUpperCase();
-            const cleanVS = vs.replace(/\D/g, '');
-            const bic = document.getElementById('supSwift').value.trim().toUpperCase();
-            const beneficiary = document.getElementById('supName').value.trim().slice(0, 70);
-            if (!/^[A-Z]{2}[0-9]{2}[A-Z0-9]{11,30}$/.test(formattedIban) || !beneficiary || (bic && !/^[A-Z0-9]{8}([A-Z0-9]{3})?$/.test(bic))) {
-                qrContainer.textContent = 'Pre QR vyplňte názov dodávateľa, IBAN a platný BIC (ak ho uvádzate).';
-                return;
-            }
-            const payload = ['BCD','002','1','SCT',bic,beneficiary,formattedIban,`EUR${amount.toFixed(2)}`,'',`VS ${cleanVS}`.slice(0,140),''].join('\n');
-
-            new QRCode(qrContainer, {
-                text: payload,
-                width: 90,
-                height: 90,
-                colorDark: "#052c64",
-                colorLight: "#ffffff",
-                correctLevel: QRCode.CorrectLevel.M
-            });
+            invoiceMode=mode;
+            document.body.classList.toggle('simple-mode',mode==='simple');
+            $('modeSimple').setAttribute('aria-pressed',String(mode==='simple'));
+            $('modeAdvanced').setAttribute('aria-pressed',String(mode==='advanced'));
+            $('modeHint').textContent=mode==='simple'?'Zobrazené sú len základné polia. Pre ďalšie možnosti zvoľte Komplexná faktúra.':'Všetky rozšírené nastavenia sú dostupné. Náhľad sa aktualizuje priebežne.';
+            updateInvoice();
         }
-
+        function generateQRCode(iban,amount,vs){
+            const target=$('qrcode');target.replaceChildren();
+            if(val('paymentMethod')!=='Bankový prevod'){target.textContent='Platba bez bankového prevodu';return;}
+            if(val('currency')!=='EUR'){target.textContent='SEPA QR len pre platby v EUR';return;}
+            if(!validIBAN(iban)||!val('supName')||amount<=0){target.textContent='Pre QR zadajte platný IBAN, dodávateľa a kladnú sumu';return;}
+            if(typeof QRCode==='undefined'){target.textContent='QR knižnica sa nenačítala. Skontrolujte pripojenie.';return;}
+            const bic=val('supSwift').toUpperCase();if(bic&&!/^[A-Z0-9]{8}([A-Z0-9]{3})?$/.test(bic)){target.textContent='Neplatný BIC';return;}
+            const payload=['BCD','002','1','SCT',bic,val('supName').slice(0,70),iban.replace(/\s/g,'').toUpperCase(),'EUR'+amount.toFixed(2),'','VS '+vs.replace(/\D/g,'').slice(0,35),''].join('\n');
+            try{new QRCode(target,{text:payload,width:110,height:110,colorDark:'#052c64',colorLight:'#ffffff',correctLevel:QRCode.CorrectLevel.L});}catch(e){target.textContent='QR sa nepodarilo vykresliť. Skontrolujte údaje.';console.error(e);}
+        }
+        function saveDraft(){const fields={};for(const id of draftFields)fields[id]=$(id).type==='checkbox'?$(id).checked:$(id).value;try{localStorage.setItem('datapay-invoice-draft-v2',JSON.stringify({version:2,mode:invoiceMode,fields,items:itemsState}));alert('Koncept uložený iba v tomto prehliadači na tomto zariadení.');}catch(e){alert('Koncept sa nepodarilo uložiť.');}}
+        function loadDraft(){try{const data=JSON.parse(localStorage.getItem('datapay-invoice-draft-v2')||'null');if(!data||data.version!==2)throw Error('missing');for(const id of draftFields)if(Object.hasOwn(data.fields,id))$(id).type==='checkbox'?$(id).checked=Boolean(data.fields[id]):$(id).value=data.fields[id];itemsState=Array.isArray(data.items)?data.items:[];renderItemsForm();setInvoiceMode(data.mode==='advanced'?'advanced':'simple');updateInvoice();}catch(e){alert('Uložený koncept sa nenašiel alebo je neplatný.');}}
         function loadSampleData() {
             document.getElementById('isDphPayer').checked = false;
-            document.getElementById('vatRate').value = '23';
+            $('taxMode').value='domestic';$('legalRef').value='';$('orderRef').value='';$('registry').value='';$('currency').value='EUR';$('eurRate').value='1';$('paymentMethod').value='Bankový prevod';$('advance').value='0';$('paid').value='0';
 
             document.getElementById('supName').value = 'Vzorová firma s.r.o.';
             document.getElementById('supStreet').value = 'Mlynské Nivy 10';
@@ -1780,8 +1734,8 @@
             document.getElementById('invNote').value = 'Fakturujeme Vám služby mzdového účtovníctva za mesiac Október 2026.';
 
             itemsState = [
-                { name: 'Spracovanie mzdovej agendy (15 zamestnancov)', qty: 1, price: 150.00 },
-                { name: 'Ročné zúčtovanie dane a poradenstvo', qty: 1, price: 50.00 }
+                { name: 'Spracovanie mzdovej agendy (15 zamestnancov)', qty: 1, price: 150.00, discount: 0, vat: 23 },
+                { name: 'Ročné zúčtovanie dane a poradenstvo', qty: 1, price: 50.00, discount: 0, vat: 23 }
             ];
 
             renderItemsForm();
@@ -1790,7 +1744,7 @@
 
         function clearForm() {
             document.getElementById('isDphPayer').checked = false;
-            document.getElementById('vatRate').value = '23';
+            $('taxMode').value='domestic';$('legalRef').value='';$('orderRef').value='';$('registry').value='';$('currency').value='EUR';$('eurRate').value='1';$('paymentMethod').value='Bankový prevod';$('advance').value='0';$('paid').value='0';
 
             document.getElementById('supName').value = '';
             document.getElementById('supStreet').value = '';
@@ -1813,13 +1767,16 @@
             document.getElementById('invKS').value = '0308';
             document.getElementById('invNote').value = '';
 
-            itemsState = [{ name: '', qty: 1, price: 0 }];
+            itemsState = [{ name: '', qty: 1, price: 0, discount: 0, vat: 23 }];
 
             renderItemsForm();
             updateInvoice();
         }
 
+        function printInvoice(){if(validateInvoice(true))window.print();}
         function downloadPDF() {
+            if (!validateInvoice(true)) return;
+            if (typeof html2pdf === 'undefined') { alert('PDF knižnica sa nenačítala.'); return; }
             const element = document.getElementById('invoicePaper');
             const invNum = (document.getElementById('invNumber').value || 'faktura').replace(/[^a-zA-Z0-9_-]/g, '_');
             
