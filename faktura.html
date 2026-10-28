@@ -1566,12 +1566,18 @@ function downloadPDF() {
     const element = document.getElementById('invoicePaper');
     const invNum = (val('invNumber') || 'faktura').replace(/[^a-zA-Z0-9_-]/g, '_');
 
-    // Dočasne nastavíme pevnú šírku A4 v pixeloch pre čistý export bez orezania
-    const originalWidth = element.style.width;
+    // Uložíme si pôvodné štýly
+    const originalStyle = element.getAttribute('style') || '';
+
+    // Dočasne odstránime rámik, tieň, zaoblenie a nastavíme presnú šírku pre čisto biele A4 PDF
     element.style.width = '794px';
+    element.style.border = 'none';
+    element.style.boxShadow = 'none';
+    element.style.borderRadius = '0';
+    element.style.background = '#ffffff';
 
     const opt = {
-        margin:       0,
+        margin:       [8, 8, 8, 8], // Jemný čistý okraj (8mm) na papieri
         filename:     `Faktura_${invNum}.pdf`,
         image:        { type: 'jpeg', quality: 0.98 },
         html2canvas:  { 
@@ -1584,8 +1590,8 @@ function downloadPDF() {
     };
 
     html2pdf().set(opt).from(element).save().then(() => {
-        // Vrátime pôvodnú šírku späť po dokončení PDF
-        element.style.width = originalWidth;
+        // Obnovíme webový náhľad do pôvodného stavu
+        element.setAttribute('style', originalStyle);
     });
 }
     </script>
