@@ -441,6 +441,7 @@
             justify-content: space-between;
             font-size: 12px;
             color: #1e293b;
+            box-sizing: border-box; /* Zabezpečí, že padding nevytláča obsah von */
         }
 
         .inv-header {
@@ -1559,22 +1560,29 @@
             if (validateInvoice(true)) window.print();
         }
 
-        function downloadPDF() {
-            if (!validateInvoice(true)) return;
-            if (typeof html2pdf === 'undefined') { alert('PDF knižnica sa nenačítala.'); return; }
-            const element = document.getElementById('invoicePaper');
-            const invNum = (val('invNumber') || 'faktura').replace(/[^a-zA-Z0-9_-]/g, '_');
+       function downloadPDF() {
+    if (!validateInvoice(true)) return;
+    if (typeof html2pdf === 'undefined') { alert('PDF knižnica sa nenačítala.'); return; }
+    
+    const element = document.getElementById('invoicePaper');
+    const invNum = (val('invNumber') || 'faktura').replace(/[^a-zA-Z0-9_-]/g, '_');
 
-            const opt = {
-                margin: 10,
-                filename: `Faktura_${invNum}.pdf`,
-                image: { type: 'jpeg', quality: 0.98 },
-                html2canvas: { scale: 2, useCORS: true },
-                jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
-            };
+    const opt = {
+        margin:       0, // Zrušíme dodatočný okraj, keďže invoicePaper má vlastný padding 40px
+        filename:     `Faktura_${invNum}.pdf`,
+        image:        { type: 'jpeg', quality: 0.98 },
+        html2canvas:  { 
+            scale: 2, 
+            useCORS: true,
+            scrollX: 0,
+            scrollY: 0,
+            windowWidth: 800 // Zabezpečí presné vykreslenie bez orezenia pravého okraja
+        },
+        jsPDF:        { unit: 'mm', format: 'a4', orientation: 'portrait' }
+    };
 
-            html2pdf().set(opt).from(element).save();
-        }
+    html2pdf().set(opt).from(element).save();
+}
     </script>
 </body>
 
