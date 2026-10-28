@@ -1197,7 +1197,7 @@ body.simple-mode .items-form-table th:nth-child(4),body.simple-mode .items-form-
                 </button>
             </div>
             <div class="toolbar-group">
-                <button class="btn btn-outline" onclick="loadSampleData()">
+                <button class="btn btn-outline" onclick="saveDraft()">Uložiť koncept</button><button class="btn btn-outline" onclick="loadDraft()">Načítať koncept</button><button class="btn btn-outline" onclick="loadSampleData()">
                     Vzorové údaje
                 </button>
                 <button class="btn btn-danger-outline" onclick="clearForm()">
@@ -1303,7 +1303,7 @@ body.simple-mode .items-form-table th:nth-child(4),body.simple-mode .items-form-
                 <div class="form-grid-2">
                     <div class="form-group">
                         <label>IBAN</label>
-                        <input type="text" id="supIban" class="form-control" placeholder="SK31 1200 0000 0012 3456 7890" oninput="updateInvoice()">
+                        <input type="text" id="supIban" class="form-control" placeholder="SK31 1200 0000 0012 3456 7890" autocomplete="off" spellcheck="false" oninput="formatIbanInput(this)">
                     </div>
                     <div class="form-group advanced-only">
                         <label>SWIFT / BIC</label>
@@ -1479,7 +1479,7 @@ body.simple-mode .items-form-table th:nth-child(4),body.simple-mode .items-form-
 
                     <!-- Footer Note -->
                     <div class="inv-footer-note">
-                        Faktúra bola vygenerovaná prostredníctvom bezplatného nástroja na <strong>DataPay.sk</strong> <br>Mzdy, Účtovníctvo a Personalistika.
+                        Faktúra bola vygenerovaná prostredníctvom bezplatného nástroja na <strong>DataPay.sk</strong> | Mzdy, Účtovníctvo a Personalistika.
                     </div>
                 </div>
             </div>
@@ -1669,6 +1669,27 @@ body.simple-mode .items-form-table th:nth-child(4),body.simple-mode .items-form-
             if(forExport && errors.length){el.scrollIntoView({behavior:'smooth',block:'center'});return false;}
             return !errors.length;
         }
+        // Automatické zoskupovanie IBAN po štyroch znakoch, vrátane zachovania kurzora.
+        function formatIbanInput(input){
+            const before=input.value.slice(0,input.selectionStart ?? input.value.length);
+            const countBefore=before.replace(/[^a-zA-Z0-9]/g,'').length;
+            const clean=input.value.replace(/[^a-zA-Z0-9]/g,'').toUpperCase().slice(0,34);
+            const formatted=clean.replace(/(.{4})(?=.)/g,'$1 ');
+            input.value=formatted;
+            let cursor=0, seen=0;
+            while(cursor<formatted.length && seen<countBefore){
+                if(/[A-Z0-9]/.test(formatted[cursor])) seen++;
+                cursor++;
+            }
+            if(formatted[cursor]===' ' && cursor<formatted.length)cursor++;
+            input.setSelectionRange(cursor,cursor);
+            updateInvoice();
+        }
+        function formatStoredIban(){
+            const input=$('supIban');
+            const clean=input.value.replace(/[^a-zA-Z0-9]/g,'').toUpperCase().slice(0,34);
+            input.value=clean.replace(/(.{4})(?=.)/g,'$1 ');
+        }
         function validIBAN(value){
             const x=value.replace(/\s/g,'').toUpperCase();if(!/^[A-Z]{2}[0-9]{2}[A-Z0-9]{11,30}$/.test(x))return false;
             const rearranged=x.slice(4)+x.slice(0,4);let remainder=0;
@@ -1724,7 +1745,7 @@ body.simple-mode .items-form-table th:nth-child(4),body.simple-mode .items-form-
             try{new QRCode(target,{text:payload,width:110,height:110,colorDark:'#052c64',colorLight:'#ffffff',correctLevel:QRCode.CorrectLevel.L});}catch(e){target.textContent='QR sa nepodarilo vykresliť. Skontrolujte údaje.';console.error(e);}
         }
         function saveDraft(){const fields={};for(const id of draftFields)fields[id]=$(id).type==='checkbox'?$(id).checked:$(id).value;try{localStorage.setItem('datapay-invoice-draft-v2',JSON.stringify({version:2,mode:invoiceMode,fields,items:itemsState}));alert('Koncept uložený iba v tomto prehliadači na tomto zariadení.');}catch(e){alert('Koncept sa nepodarilo uložiť.');}}
-        function loadDraft(){try{const data=JSON.parse(localStorage.getItem('datapay-invoice-draft-v2')||'null');if(!data||data.version!==2)throw Error('missing');for(const id of draftFields)if(Object.hasOwn(data.fields,id))$(id).type==='checkbox'?$(id).checked=Boolean(data.fields[id]):$(id).value=data.fields[id];itemsState=Array.isArray(data.items)?data.items:[];renderItemsForm();setInvoiceMode(data.mode==='advanced'?'advanced':'simple');updateInvoice();}catch(e){alert('Uložený koncept sa nenašiel alebo je neplatný.');}}
+        function loadDraft(){try{const data=JSON.parse(localStorage.getItem('datapay-invoice-draft-v2')||'null');if(!data||data.version!==2)throw Error('missing');for(const id of draftFields)if(Object.hasOwn(data.fields,id))$(id).type==='checkbox'?$(id).checked=Boolean(data.fields[id]):$(id).value=data.fields[id];itemsState=Array.isArray(data.items)?data.items:[];formatStoredIban();renderItemsForm();setInvoiceMode(data.mode==='advanced'?'advanced':'simple');updateInvoice();}catch(e){alert('Uložený koncept sa nenašiel alebo je neplatný.');}}
         function loadSampleData() {
             document.getElementById('isDphPayer').checked = false;
             $('taxMode').value='domestic';$('legalRef').value='';$('orderRef').value='';$('registry').value='';$('currency').value='EUR';$('eurRate').value='1';$('paymentMethod').value='Bankový prevod';$('advance').value='0';$('paid').value='0';
