@@ -1562,11 +1562,88 @@
 
 
 
-function downloadPDF() {
+
+async function downloadPDF() {
     if (!validateInvoice(true)) return;
 
-    window.print();
+    if (typeof html2pdf === 'undefined') {
+        alert('PDF knižnica sa nenačítala. Skontroluj internetové pripojenie.');
+        return;
+    }
+
+    const original = document.getElementById('invoicePaper');
+    if (!original) {
+        alert('Nenašiel sa náhľad faktúry.');
+        return;
+    }
+
+    const invNum = (val('invNumber') || 'faktura')
+        .replace(/[^a-zA-Z0-9_-]/g, '_');
+
+    // Vytvoríme kópiu náhľadu. Pôvodná faktúra na stránke sa nezmení.
+    const wrapper = document.createElement('div');
+    wrapper.style.cssText = `
+        position: fixed;
+        left: -10000px;
+        top: 0;
+        width: 794px;
+        background: #ffffff;
+        z-index: -1;
+        overflow: visible;
+    `;
+
+    const clone = original.cloneNode(true);
+    clone.style.width = '794px';
+    clone.style.minWidth = '794px';
+    clone.style.maxWidth = '794px';
+    clone.style.height = 'auto';
+    clone.style.minHeight = '1123px';
+    clone.style.margin = '0';
+    clone.style.boxSizing = 'border-box';
+    clone.style.transform = 'none';
+    clone.style.position = 'static';
+
+    wrapper.appendChild(clone);
+    document.body.appendChild(wrapper);
+
+    const options = {
+        margin: 0,
+        filename: `Faktura_${invNum}.pdf`,
+        image: {
+            type: 'jpeg',
+            quality: 0.98
+        },
+        html2canvas: {
+            scale: 2,
+            useCORS: true,
+            backgroundColor: '#ffffff',
+            scrollX: 0,
+            scrollY: 0,
+            windowWidth: 1200
+        },
+        jsPDF: {
+            unit: 'mm',
+            format: 'a4',
+            orientation: 'portrait'
+        },
+        pagebreak: {
+            mode: ['css', 'legacy']
+        }
+    };
+
+    try {
+        await html2pdf()
+            .set(options)
+            .from(clone)
+            .save();
+    } catch (error) {
+        console.error('Chyba pri exporte PDF:', error);
+        alert('PDF sa nepodarilo vytvoriť. Skontroluj konzolu prehliadača.');
+    } finally {
+        wrapper.remove();
+    }
 }
+
 
 
     </script>
