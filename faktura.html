@@ -1097,6 +1097,23 @@ body.simple-mode .advanced-only{display:none!important}
 body.simple-mode .items-form-table th:nth-child(4),body.simple-mode .items-form-table td:nth-child(4){display:none!important}
 @media(max-width:600px){.mode-picker{grid-template-columns:1fr}}
 @media print{.mode-picker,.mode-hint{display:none!important}}
+
+/* FINAL: DataPay index.html header/footer typography and alignment */
+.site-header .brand-subtitle { text-transform: none; letter-spacing: normal; font-weight: 400; font-size: 12px; margin-top: 4px; }
+.site-header .brand-name { letter-spacing: normal; font-weight: 700; line-height: 1.2; }
+.site-header .main-nav > a { padding: 0; font-weight: 500; }
+.site-header .main-nav > a.active { font-weight: 700; }
+.site-header .language a { padding: 0; font-weight: 500; }
+.site-header .language a.active { font-weight: 700; }
+.footer .footer-bottom { display: block; width: auto; max-width: none; margin: 0; padding-top: 22px; text-align: center; font-size: 11px; color: #8fa1b4; border-top: 1px solid rgba(255,255,255,.10); }
+.footer .footer-bottom a, .footer .footer-bottom a:visited { color: #c2d1df; font-weight: 400; }
+.footer .footer-bottom a:hover { color: #ffffff; }
+.footer .footer-content { width: auto; max-width: none; margin: 0; }
+.footer .footer-column h3 { font-size: 16px; font-weight: 700; margin-bottom: 16px; }
+.footer .footer-column p { font-size: 13px; line-height: 1.8; margin-bottom: 0; }
+.footer .footer-column a { color: #c8d6e5; }
+@media (max-width: 800px) { .footer .footer-content { grid-template-columns: 1fr; } }
+
 </style>
 </head>
 
@@ -1180,7 +1197,7 @@ body.simple-mode .items-form-table th:nth-child(4),body.simple-mode .items-form-
                 </button>
             </div>
             <div class="toolbar-group">
-                <button class="btn btn-outline" onclick="saveDraft()">Uložiť koncept</button><button class="btn btn-outline" onclick="loadDraft()">Načítať koncept</button><button class="btn btn-outline" onclick="loadSampleData()">
+                <<button class="btn btn-outline" onclick="loadSampleData()">
                     Vzorové údaje
                 </button>
                 <button class="btn btn-danger-outline" onclick="clearForm()">
