@@ -1518,3 +1518,33 @@ header {
         box-sizing: border-box !important;
     }
 }
+/* DATAPAY – oprava šírky tlačidiel v úvodnej sekcii */
+.hero-buttons {
+    display: grid !important;
+    grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+    gap: 15px !important;
+    width: 100% !important;
+    max-width: 557.5px !important;
+    box-sizing: border-box !important;
+}
+
+.hero-buttons > a.btn-invoice {
+    grid-column: 1 / -1 !important;
+    display: block !important;
+    width: 100% !important;
+    max-width: none !important;
+    min-width: 0 !important;
+    justify-self: stretch !important;
+    box-sizing: border-box !important;
+    text-align: center !important;
+}
+
+@media (max-width: 600px) {
+    .hero-buttons {
+        grid-template-columns: 1fr !important;
+    }
+
+    .hero-buttons > a.btn-invoice {
+        grid-column: 1 / -1 !important;
+    }
+}
