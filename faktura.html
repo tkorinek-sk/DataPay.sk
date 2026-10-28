@@ -1560,6 +1560,7 @@
         }
 
 
+
 async function downloadPDF() {
     if (!validateInvoice(true)) return;
 
@@ -1568,9 +1569,9 @@ async function downloadPDF() {
         return;
     }
 
-    const element = document.getElementById('invoicePaper');
+    const original = document.getElementById('invoicePaper');
 
-    if (!element) {
+    if (!original) {
         alert('Nepodarilo sa nájsť faktúru na export.');
         return;
     }
@@ -1578,27 +1579,67 @@ async function downloadPDF() {
     const invNum = (val('invNumber') || 'faktura')
         .replace(/[^a-zA-Z0-9_-]/g, '_');
 
-    // Uložíme pôvodný vzhľad faktúry
-    const originalStyle = element.getAttribute('style');
-    const originalClass = element.className;
+    // Vytvoríme samostatnú kópiu faktúry mimo pôvodného gridu.
+    // Tým odstránime vplyv pozície náhľadu na PDF export.
+    const wrapper = document.createElement('div');
+
+    wrapper.style.cssText = `
+        position: fixed;
+        left: 0;
+        top: 0;
+        width: 794px;
+        margin: 0;
+        padding: 0;
+        background: #ffffff;
+        z-index: -1;
+        pointer-events: none;
+    `;
+
+    const invoice = original.cloneNode(true);
+    invoice.removeAttribute('id');
+
+    // Presná šírka A4 pri 96 DPI vrátane vnútorných okrajov.
+    invoice.style.setProperty('display', 'flex', 'important');
+    invoice.style.setProperty('position', 'relative', 'important');
+    invoice.style.setProperty('left', '0', 'important');
+    invoice.style.setProperty('top', '0', 'important');
+    invoice.style.setProperty('width', '794px', 'important');
+    invoice.style.setProperty('min-width', '794px', 'important');
+    invoice.style.setProperty('max-width', '794px', 'important');
+    invoice.style.setProperty('height', 'auto', 'important');
+    invoice.style.setProperty('min-height', '1123px', 'important');
+    invoice.style.setProperty('margin', '0', 'important');
+    invoice.style.setProperty('padding', '57px', 'important');
+    invoice.style.setProperty('box-sizing', 'border-box', 'important');
+    invoice.style.setProperty('border', 'none', 'important');
+    invoice.style.setProperty('border-radius', '0', 'important');
+    invoice.style.setProperty('box-shadow', 'none', 'important');
+    invoice.style.setProperty('overflow', 'visible', 'important');
+    invoice.style.setProperty('transform', 'none', 'important');
+    invoice.style.setProperty('background', '#ffffff', 'important');
+
+    wrapper.appendChild(invoice);
+    document.body.appendChild(wrapper);
 
     try {
-        // Pripravíme faktúru na export do PDF vo formáte A4
-        element.style.width = '210mm';
-        element.style.minHeight = '0';
-        element.style.height = 'auto';
-        element.style.margin = '0';
-        element.style.padding = '15mm';
-        element.style.border = 'none';
-        element.style.boxShadow = 'none';
-        element.style.borderRadius = '0';
-        element.style.background = '#ffffff';
-        element.style.boxSizing = 'border-box';
-        element.style.overflow = 'visible';
+        // Počkáme na vykreslenie a načítanie obrázkov v kópii.
+        if (document.fonts && document.fonts.ready) {
+            await document.fonts.ready;
+        }
 
-        // Nastavenia exportu PDF
-        const opt = {
-            margin: 0,
+        const images = Array.from(invoice.querySelectorAll('img'));
+
+        await Promise.all(images.map(img => {
+            if (img.complete) return Promise.resolve();
+
+            return new Promise(resolve => {
+                img.onload = resolve;
+                img.onerror = resolve;
+            });
+        }));
+
+        const options = {
+            margin: [0, 0, 0, 0],
             filename: `Faktura_${invNum}.pdf`,
 
             image: {
@@ -1612,13 +1653,16 @@ async function downloadPDF() {
                 backgroundColor: '#ffffff',
                 scrollX: 0,
                 scrollY: 0,
-                windowWidth: 794
+                width: 794,
+                windowWidth: 794,
+                logging: false
             },
 
             jsPDF: {
                 unit: 'mm',
                 format: 'a4',
-                orientation: 'portrait'
+                orientation: 'portrait',
+                compress: true
             },
 
             pagebreak: {
@@ -1628,8 +1672,8 @@ async function downloadPDF() {
         };
 
         await html2pdf()
-            .set(opt)
-            .from(element)
+            .set(options)
+            .from(invoice)
             .save();
 
     } catch (error) {
@@ -1637,16 +1681,12 @@ async function downloadPDF() {
         alert('PDF sa nepodarilo vytvoriť. Skús to znova.');
 
     } finally {
-        // Obnovíme pôvodný vzhľad faktúry na webovej stránke
-        if (originalStyle === null) {
-            element.removeAttribute('style');
-        } else {
-            element.setAttribute('style', originalStyle);
-        }
-
-        element.className = originalClass;
+        // Odstránime len dočasnú kópiu.
+        // Pôvodná faktúra zostáva nezmenená.
+        wrapper.remove();
     }
 }
+
 
     </script>
 </body>
