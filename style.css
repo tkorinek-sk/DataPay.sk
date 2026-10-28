@@ -1497,3 +1497,24 @@ header {
         transition: none;
     }
 }
+
+/* OPRAVA ŠÍRKY BOXU GENERÁTORA FAKTÚR */
+@media (min-width: 601px) {
+    .hero .hero-content .hero-buttons {
+        display: grid !important;
+        grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+        width: 100% !important;
+        max-width: 500px !important;
+        gap: 15px !important;
+    }
+
+    .hero .hero-content .hero-buttons > a.btn-invoice {
+        grid-column: 1 / 4 !important;
+        display: flex !important;
+        width: 100% !important;
+        max-width: none !important;
+        min-width: 0 !important;
+        justify-self: stretch !important;
+        box-sizing: border-box !important;
+    }
+}
