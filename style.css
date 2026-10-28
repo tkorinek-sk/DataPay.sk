@@ -258,16 +258,54 @@ header {
     transform: translateY(-2px);
 }
 
+
 .hero-buttons {
-    display: flex;
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
     gap: 15px;
     max-width: 500px;
 }
 
 .hero-buttons .btn {
-    flex: 1;
     text-align: center;
+    box-sizing: border-box;
 }
+
+.hero-buttons .btn-invoice {
+    grid-column: 1 / -1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    background: #052c64;
+    color: #ffffff;
+    border: 1px solid #052c64;
+    border-radius: 30px;
+}
+
+.hero-buttons .btn-invoice:hover {
+    background: #0a3c80;
+}
+
+.hero-buttons .invoice-icon {
+    font-size: 21px;
+}
+
+.hero-buttons .invoice-arrow {
+    color: #b9d86c;
+    font-size: 18px;
+}
+
+@media (max-width: 600px) {
+    .hero-buttons {
+        grid-template-columns: 1fr;
+    }
+
+    .hero-buttons .btn-invoice {
+        grid-column: auto;
+    }
+}
+
 
 
 /* =========================================================
