@@ -1,0 +1,609 @@
+<!DOCTYPE html>
+<html lang="sk">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mzdová kalkulačka 2026 | Výpočet čistej mzdy | DataPay s.r.o.</title>
+    <meta name="description" content="Bezplatná mzdová kalkulačka 2026. Vypočítajte si čistú mzdu, odvody a celkové náklady zamestnávateľa podľa aktuálnej slovenskej legislatívy.">
+    <meta name="author" content="DataPay s.r.o.">
+    <meta name="theme-color" content="#052c64">
+    <link rel="icon" href="/favicon.png" type="image/png">
+    <link rel="canonical" href="https://datapay.sk/kalkulacka.html">
+
+    <style>
+        /* =====================================================
+           1. RESET & CORE VARIABLES (Zodpovedá DataPay.sk)
+        ===================================================== */
+        :root {
+            --primary: #052c64;
+            --primary-hover: #0b3e80;
+            --accent: #397bb8;
+            --accent-light: #eef5fc;
+            --text-dark: #172b4d;
+            --text-muted: #64748b;
+            --border-color: #e2e8f0;
+            --bg-light: #f7f9fc;
+            --white: #ffffff;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+            background-color: var(--bg-light);
+            color: var(--text-dark);
+            line-height: 1.6;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        /* =====================================================
+           2. HEADER & NAVIGATION (DataPay Style)
+        ===================================================== */
+        .site-header {
+            background: #ffffff;
+            border-bottom: 1px solid #e6ebf2;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .nav-container {
+            width: 90%;
+            max-width: 1200px;
+            min-height: 88px;
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 35px;
+        }
+
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+        }
+
+        .brand img {
+            width: 54px;
+            height: 54px;
+            object-fit: contain;
+            display: block;
+        }
+
+        .brand-text {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .brand-name {
+            color: #052c64;
+            font-size: 20px;
+            font-weight: 700;
+            line-height: 1.2;
+        }
+
+        .brand-subtitle {
+            color: #718096;
+            font-size: 12px;
+            margin-top: 4px;
+        }
+
+        .main-nav {
+            display: flex;
+            align-items: center;
+            gap: 28px;
+        }
+
+        .main-nav > a {
+            color: #334155;
+            font-size: 14px;
+            font-weight: 500;
+            transition: color 0.2s ease;
+        }
+
+        .main-nav > a:hover {
+            color: #052c64;
+        }
+
+        .main-nav > a.active {
+            color: #052c64;
+            font-weight: 700;
+        }
+
+        .language {
+            display: flex;
+            align-items: center;
+            gap: 7px;
+            margin-left: 5px;
+            font-size: 13px;
+        }
+
+        .language a {
+            color: #94a3b8;
+            font-weight: 500;
+        }
+
+        .language a.active {
+            color: #052c64;
+            font-weight: 700;
+        }
+
+        .language span {
+            color: #cbd5e1;
+        }
+
+        /* =====================================================
+           3. PAGE HERO STRIP
+        ===================================================== */
+        .page-banner {
+            background: linear-gradient(135deg, #ffffff 0%, #edf4fa 100%);
+            border-bottom: 1px solid var(--border-color);
+            padding: 35px 0;
+            text-align: center;
+        }
+
+        .page-banner h1 {
+            color: var(--primary);
+            font-size: clamp(28px, 4vw, 38px);
+            font-weight: 800;
+            margin-bottom: 8px;
+        }
+
+        .page-banner p {
+            color: var(--text-muted);
+            font-size: 15px;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        /* =====================================================
+           4. CALCULATOR WORKSPACE
+        ===================================================== */
+        .calc-wrapper {
+            width: 92%;
+            max-width: 1100px;
+            margin: 40px auto 60px;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            align-items: start;
+        }
+
+        .calc-card {
+            background: var(--white);
+            border: 1px solid var(--border-color);
+            border-radius: 14px;
+            padding: 30px;
+            box-shadow: 0 10px 30px rgba(5, 44, 100, 0.05);
+        }
+
+        .calc-card h2 {
+            font-size: 18px;
+            color: var(--primary);
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid var(--accent-light);
+        }
+
+        .form-group {
+            margin-bottom: 18px;
+        }
+
+        .form-group label {
+            display: block;
+            font-size: 13px;
+            font-weight: 700;
+            color: #334155;
+            margin-bottom: 6px;
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 11px 14px;
+            font-size: 15px;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            background-color: #ffffff;
+            color: var(--text-dark);
+            transition: border-color 0.2s, box-shadow 0.2s;
+        }
+
+        .form-control:focus {
+            outline: none;
+            border-color: var(--accent);
+            box-shadow: 0 0 0 3px rgba(57, 123, 184, 0.15);
+        }
+
+        /* Results Panel */
+        .result-card {
+            background: linear-gradient(145deg, #052c64, #0a427b);
+            color: var(--white);
+            border-radius: 14px;
+            padding: 30px;
+            box-shadow: 0 15px 35px rgba(5, 44, 100, 0.2);
+        }
+
+        .result-card h2 {
+            font-size: 18px;
+            color: #ffffff;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid rgba(255, 255, 255, 0.15);
+        }
+
+        .net-salary-box {
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 10px;
+            padding: 20px;
+            text-align: center;
+            margin-bottom: 25px;
+        }
+
+        .net-salary-box span {
+            display: block;
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: #94a3b8;
+            margin-bottom: 5px;
+        }
+
+        .net-salary-box strong {
+            font-size: 36px;
+            color: #6bc5ff;
+            font-weight: 800;
+        }
+
+        .breakdown-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 9px 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+            font-size: 14px;
+            color: #cbd5e1;
+        }
+
+        .breakdown-row span:last-child {
+            font-weight: 700;
+            color: #ffffff;
+        }
+
+        .breakdown-row.total-cost {
+            border-top: 2px solid rgba(255, 255, 255, 0.2);
+            margin-top: 10px;
+            padding-top: 12px;
+            font-size: 16px;
+            font-weight: 700;
+            color: #ffffff;
+        }
+
+        /* =====================================================
+           5. FOOTER (DataPay Style)
+        ===================================================== */
+        .footer {
+            background: #071c35;
+            color: #ffffff;
+            padding: 60px 0 25px;
+            margin-top: auto;
+        }
+
+        .footer .container {
+            width: min(1180px, 92%);
+            margin: 0 auto;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 50px;
+            padding-bottom: 40px;
+        }
+
+        .footer-column:nth-child(1) { text-align: left; }
+        .footer-column:nth-child(2) { text-align: center; }
+        .footer-column:nth-child(3) { text-align: right; }
+
+        .footer-column h3 {
+            font-size: 16px;
+            margin-bottom: 16px;
+        }
+
+        .footer-column p {
+            color: #aebdcd;
+            font-size: 13px;
+            line-height: 1.8;
+        }
+
+        .footer-column a {
+            color: #c8d6e5;
+            transition: color .2s ease;
+        }
+
+        .footer-column a:hover {
+            color: #ffffff;
+        }
+
+        .footer-bottom {
+            border-top: 1px solid rgba(255,255,255,.10);
+            padding-top: 22px;
+            color: #8fa1b4;
+            font-size: 11px;
+            text-align: center;
+        }
+
+        .footer-bottom a {
+            color: #c2d1df;
+        }
+
+        /* =====================================================
+           6. RESPONSIVE BREAKPOINTS
+        ===================================================== */
+        @media (max-width: 900px) {
+            .calc-wrapper {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 800px) {
+            .nav-container {
+                flex-direction: column;
+                justify-content: center;
+                padding: 18px 0;
+                gap: 15px;
+            }
+            .main-nav {
+                flex-wrap: wrap;
+                justify-content: center;
+                gap: 14px 20px;
+            }
+            .footer-content {
+                grid-template-columns: 1fr;
+                gap: 30px;
+            }
+            .footer-column:nth-child(n) {
+                text-align: center;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- SITE HEADER & NAVIGATION -->
+    <header class="site-header">
+        <div class="nav-container">
+            <a class="brand" href="index.html">
+                <img alt="DataPay logo" src="logo.png"/>
+                <div class="brand-text">
+                    <div class="brand-name">DataPay s.r.o.</div>
+                    <div class="brand-subtitle">Mzdy • Účtovníctvo • Personalistika</div>
+                </div>
+            </a>
+            <nav class="main-nav">
+                <a href="index.html">Domov</a>
+                <a href="About.html">O nás</a>
+                <a href="payroll.html">Služby</a>
+                <a href="Cennik.html">Cenník</a>
+                <a href="FAQ.html">Časté Otázky</a>
+                <a href="kalkulacka.html" class="active">Mzdová kalkulačka</a>
+                <div class="language">
+                    <a class="active" href="index.html">SK</a>
+                    <span>/</span>
+                    <a href="en/">EN</a>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <!-- PAGE HERO -->
+    <section class="page-banner">
+        <div class="container">
+            <h1>Mzdová kalkulačka 2026</h1>
+            <p>Vypočítajte si čistú mzdu, povinné odvody a celkové náklady práce pre rok 2026 podľa aktuálnej legislatívy.</p>
+        </div>
+    </section>
+
+    <!-- MAIN CALCULATOR WORKSPACE -->
+    <div class="calc-wrapper">
+        
+        <!-- INPUT FORM -->
+        <div class="calc-card">
+            <h2>Vstupné údaje</h2>
+            
+            <div class="form-group">
+                <label for="grossSalary">Hrubá mesačná mzda (€)</label>
+                <input type="number" id="grossSalary" class="form-control" value="1200" min="0" step="10" oninput="calculateSalary()">
+            </div>
+
+            <div class="form-group">
+                <label for="hasTaxBonus">Uplatňovať daňový bonus na deti?</label>
+                <select id="hasTaxBonus" class="form-control" onchange="toggleChildrenInput(); calculateSalary();">
+                    <option value="no">Nie</option>
+                    <option value="yes">Áno</option>
+                </select>
+            </div>
+
+            <div class="form-group" id="childrenGroup" style="display: none;">
+                <label for="childrenCount">Počet detí do 15 rokov</label>
+                <input type="number" id="childrenCount" class="form-control" value="0" min="0" max="10" oninput="calculateSalary()">
+            </div>
+        </div>
+
+        <!-- RESULTS -->
+        <div class="result-card">
+            <h2>Výsledok výpočtu</h2>
+            
+            <div class="net-salary-box">
+                <span>Čistá mzda (k výplate)</span>
+                <strong id="resNetSalary">0.00 €</strong>
+            </div>
+
+            <div class="breakdown-row">
+                <span>Hrubá mzda:</span>
+                <span id="resGross">0.00 €</span>
+            </div>
+            <div class="breakdown-row">
+                <span>Zdravotné odvody zamestnanca (5 %):</span>
+                <span id="resHealthEmp">0.00 €</span>
+            </div>
+            <div class="breakdown-row">
+                <span>Sociálne odvody zamestnanca (9,4 %):</span>
+                <span id="resSocialEmp">0.00 €</span>
+            </div>
+            <div class="breakdown-row">
+                <span>Základ dane:</span>
+                <span id="resTaxBase">0.00 €</span>
+            </div>
+            <div class="breakdown-row">
+                <span>Nezdaniteľná časť na daňovníka:</span>
+                <span id="resNczd">497.23 €</span>
+            </div>
+            <div class="breakdown-row">
+                <span>Daň z príjmu:</span>
+                <span id="resTax">0.00 €</span>
+            </div>
+            <div class="breakdown-row" id="rowTaxBonus" style="display: none;">
+                <span>Daňový bonus na deti:</span>
+                <span id="resTaxBonusVal">0.00 €</span>
+            </div>
+            <div class="breakdown-row">
+                <span>Odvody zamestnávateľa (35,2 %):</span>
+                <span id="resEmployerCost">0.00 €</span>
+            </div>
+            <div class="breakdown-row total-cost">
+                <span>Celková cena práce (náklad firmy):</span>
+                <span id="resTotalCost">0.00 €</span>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- FOOTER -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-column">
+                    <h3>DataPay s.r.o.</h3>
+                    <p>Účtovníctvo, mzdy, personalistika a odborné poradenstvo.</p>
+                    <p>Služby poskytujeme firmám na celom Slovensku.</p>
+                </div>
+                <div class="footer-column">
+                    <h3>Kontakt</h3>
+                    <p><a href="mailto:datapaysk@gmail.com">datapaysk@gmail.com</a></p>
+                    <p><a href="tel:+421903270664">+421 903 270 664</a></p>
+                    <p><a href="tel:+421907837030">+421 907 837 030</a></p>
+                </div>
+                <div class="footer-column">
+                    <h3>Firemné údaje</h3>
+                    <p>IČO: 57456615</p>
+                    <p>DIČ: 2122742622</p>
+                    <p>IČ DPH: Nie sme platca DPH</p>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <a href="GDPR.html">GDPR</a><br><br>
+                © 2026 DataPay s.r.o. Všetky práva vyhradené.
+            </div>
+        </div>
+    </footer>
+
+    <!-- CALCULATOR LOGIC (Legislatíva 2026) -->
+    <script>
+        const formatEur = (val) => val.toFixed(2).replace('.', ',') + ' €';
+
+        function toggleChildrenInput() {
+            const val = document.getElementById('hasTaxBonus').value;
+            document.getElementById('childrenGroup').style.display = (val === 'yes') ? 'block' : 'none';
+        }
+
+        function calculateSalary() {
+            const gross = parseFloat(document.getElementById('grossSalary').value) || 0;
+            const hasBonus = document.getElementById('hasTaxBonus').value === 'yes';
+            const childrenCount = parseInt(document.getElementById('childrenCount').value) || 0;
+
+            // 1. Odvody zamestnanca (2026)
+            // Zdravotné poistenie: 5% (zvýšené od roku 2026)
+            const healthEmp = gross * 0.05;
+            // Sociálne poistenie zamestnanca: 9,4% spolu (starobné 4%, invalidné 3%, nemocenské 1,4%, nezamestnanosť 1%)
+            const socialEmp = gross * 0.094;
+            const totalEmpOdvody = healthEmp + socialEmp;
+
+            // 2. Základ dane
+            const taxBase = Math.max(0, gross - totalEmpOdvody);
+
+            // 3. Nezdaniteľná časť základu dane na daňovníka (2026: cca 497,23 € mesačne)
+            const nczd = 497.23;
+            const taxableIncome = Math.max(0, taxBase - nczd);
+
+            // 4. Daň z príjmu (19% zatiaľ pre základné pásmo)
+            let tax = taxableIncome * 0.19;
+
+            // 5. Daňový bonus na deti (v roku 2026 do 15 rokov = 100 € / mesiac na dieťa)
+            let taxBonus = 0;
+            if (hasBonus && childrenCount > 0) {
+                taxBonus = childrenCount * 100.00;
+                // Pozn.: V praxi platia legislatívne obmedzenia na maximálnu výšku podľa čiastkového základu dane, tu pre názornosť aplikujeme plnú sumu bonusu.
+            }
+
+            // Výsledná daň po uplatnení bonusu
+            let finalTax = tax - taxBonus;
+            let bonusPayout = 0;
+            if (finalTax < 0) {
+                bonusPayout = Math.abs(finalTax);
+                finalTax = 0;
+            }
+
+            // 6. Čistá mzda
+            // Vzorec: Hrubá mzda - odvody - daň + prípadný preplatek/bonus
+            const netSalary = gross - totalEmpOdvody - finalTax + (taxBonus > tax ? (taxBonus - tax) : 0);
+
+            // 7. Odvody zamestnávateľa (35,2% z hrubej mzdy)
+            const employerCost = gross * 0.352;
+            const totalSuperGross = gross + employerCost;
+
+            // Zápis do UI
+            document.getElementById('resNetSalary').textContent = formatEur(netSalary);
+            document.getElementById('resGross').textContent = formatEur(gross);
+            document.getElementById('resHealthEmp').textContent = formatEur(healthEmp);
+            document.getElementById('resSocialEmp').textContent = formatEur(socialEmp);
+            document.getElementById('resTaxBase').textContent = formatEur(taxBase);
+            document.getElementById('resNczd').textContent = formatEur(nczd);
+            document.getElementById('resTax').textContent = formatEur(finalTax);
+
+            const rowBonus = document.getElementById('rowTaxBonus');
+            if (hasBonus && taxBonus > 0) {
+                rowBonus.style.display = 'flex';
+                document.getElementById('resTaxBonusVal').textContent = formatEur(taxBonus);
+            } else {
+                rowBonus.style.display = 'none';
+            }
+
+            document.getElementById('resEmployerCost').textContent = formatEur(employerCost);
+            document.getElementById('resTotalCost').textContent = formatEur(totalSuperGross);
+        }
+
+        // Inicializácia pri štarte
+        window.onload = function() {
+            calculateSalary();
+        }
+    </script>
+</body>
+</html>
