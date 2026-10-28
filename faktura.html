@@ -13,7 +13,8 @@
 
     <!-- External Libraries for QR Code and PDF Export -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+ <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
 
     <style>
         /* =====================================================
@@ -1565,11 +1566,12 @@
 
 
 
+
 async function downloadPDF() {
     if (!validateInvoice(true)) return;
 
-    if (typeof html2pdf === 'undefined') {
-        alert('PDF knižnica sa nenačítala. Skontroluj internetové pripojenie.');
+    if (typeof html2canvas === 'undefined' || !window.jspdf) {
+        alert('PDF knižnice sa nenačítali. Skontroluj internetové pripojenie.');
         return;
     }
 
@@ -1586,7 +1588,7 @@ async function downloadPDF() {
     const wrapper = document.createElement('div');
 
     Object.assign(wrapper.style, {
-        position: 'fixed',
+        position: 'absolute',
         left: '0',
         top: '0',
         width: '794px',
@@ -1594,7 +1596,7 @@ async function downloadPDF() {
         margin: '0',
         padding: '0',
         background: '#ffffff',
-        zIndex: '2147483647',
+        zIndex: '-1',
         pointerEvents: 'none'
     });
 
@@ -1609,10 +1611,9 @@ async function downloadPDF() {
         width: '794px',
         minWidth: '794px',
         maxWidth: '794px',
-        minHeight: '1123px',
         height: 'auto',
+        minHeight: '1123px',
         margin: '0',
-        padding: '57px',
         border: 'none',
         borderRadius: '0',
         boxShadow: 'none',
@@ -1625,50 +1626,90 @@ async function downloadPDF() {
     document.body.appendChild(wrapper);
 
     try {
+        // Zachová obsah canvasov, napríklad QR kód.
+        const originalCanvases = original.querySelectorAll('canvas');
+        const clonedCanvases = clone.querySelectorAll('canvas');
+
+        originalCanvases.forEach((source, index) => {
+            const target = clonedCanvases[index];
+
+            if (target) {
+                target.width = source.width;
+                target.height = source.height;
+
+                const context = target.getContext('2d');
+                if (context) {
+                    context.drawImage(source, 0, 0);
+                }
+            }
+        });
+
         await new Promise(resolve => {
             requestAnimationFrame(() => {
                 requestAnimationFrame(resolve);
             });
         });
 
-        await html2pdf()
-            .set({
-                filename: `Faktura_${invNum}.pdf`,
-                margin: 0,
-                image: {
-                    type: 'jpeg',
-                    quality: 0.98
-                },
-                html2canvas: {
-                    scale: 2,
-                    width: 794,
-                    windowWidth: 794,
-                    scrollX: 0,
-                    scrollY: 0,
-                    backgroundColor: '#ffffff',
-                    useCORS: true,
-                    logging: false
-                },
-                jsPDF: {
-                    unit: 'mm',
-                    format: 'a4',
-                    orientation: 'portrait',
-                    compress: true
-                },
-                pagebreak: {
-                    mode: ['avoid-all', 'css', 'legacy']
-                }
-            })
-            .from(clone)
-            .save();
+        const canvas = await html2canvas(clone, {
+            scale: 2,
+            backgroundColor: '#ffffff',
+            useCORS: true,
+            logging: false,
+            scrollX: 0,
+            scrollY: 0,
+            width: 794,
+            windowWidth: 1200
+        });
+
+        const { jsPDF } = window.jspdf;
+
+        const pdf = new jsPDF({
+            orientation: 'portrait',
+            unit: 'mm',
+            format: 'a4',
+            compress: true
+        });
+
+        // Vloží celú faktúru na jednu stranu A4.
+        const pageWidth = 210;
+        const pageHeight = 297;
+        const margin = 8;
+
+        const availableWidth = pageWidth - margin * 2;
+        const availableHeight = pageHeight - margin * 2;
+
+        const ratio = Math.min(
+            availableWidth / canvas.width,
+            availableHeight / canvas.height
+        );
+
+        const imageWidth = canvas.width * ratio;
+        const imageHeight = canvas.height * ratio;
+
+        const x = (pageWidth - imageWidth) / 2;
+        const y = (pageHeight - imageHeight) / 2;
+
+        const imageData = canvas.toDataURL('image/jpeg', 0.98);
+
+        pdf.addImage(
+            imageData,
+            'JPEG',
+            x,
+            y,
+            imageWidth,
+            imageHeight
+        );
+
+        pdf.save(`Faktura_${invNum}.pdf`);
 
     } catch (error) {
         console.error('Chyba pri vytváraní PDF:', error);
-        alert('PDF sa nepodarilo vytvoriť. Skontroluj konzolu prehliadača.');
+        alert('PDF sa nepodarilo vytvoriť. Otvor konzolu prehliadača pomocou F12.');
     } finally {
         wrapper.remove();
     }
 }
+
 
 
     </script>
