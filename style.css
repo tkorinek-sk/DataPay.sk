@@ -259,31 +259,31 @@ header {
     transform: translateY(-2px);
 }
 
+
 .hero-buttons {
     display: grid;
     grid-template-columns: repeat(3, minmax(0, 1fr));
     gap: 15px;
     width: 100%;
     max-width: 500px;
-}
-
-.hero-buttons .btn {
-    text-align: center;
     box-sizing: border-box;
 }
 
-.hero-buttons .btn-invoice {
+.hero-buttons > .btn {
+    width: 100%;
+    min-width: 0;
+    box-sizing: border-box;
+    text-align: center;
+}
+
+.hero-buttons > .btn-invoice {
     grid-column: 1 / -1;
     width: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 10px;
-    background: #052c64;
-    color: #ffffff;
-    border: 1px solid #052c64;
-    border-radius: 30px;
+    min-width: 0;
+    justify-self: stretch;
+    box-sizing: border-box;
 }
+
 
 .hero-buttons .btn-invoice:hover {
     background: #0a3c80;
