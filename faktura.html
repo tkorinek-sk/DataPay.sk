@@ -1559,48 +1559,95 @@
             if (validateInvoice(true)) window.print();
         }
 
-function downloadPDF() {
-    if (!validateInvoice(true)) return;
-    if (typeof html2pdf === 'undefined') { alert('PDF knižnica sa nenačítala.'); return; }
-    
-    const element = document.getElementById('invoicePaper');
-    const invNum = (val('invNumber') || 'faktura').replace(/[^a-zA-Z0-9_-]/g, '_');
 
-    // Uložíme si pôvodné štýly elementu
-    const originalStyle = element.getAttribute('style') || '';
+async function downloadPDF() {
+    if (!validateInvoice(true)) return;
+
+    if (typeof html2pdf === 'undefined') {
+        alert('PDF knižnica sa nenačítala.');
+        return;
+    }
+
+    const element = document.getElementById('invoicePaper');
+
+    if (!element) {
+        alert('Nepodarilo sa nájsť faktúru na export.');
+        return;
+    }
+
+    const invNum = (val('invNumber') || 'faktura')
+        .replace(/[^a-zA-Z0-9_-]/g, '_');
+
+    // Uložíme pôvodný vzhľad faktúry
+    const originalStyle = element.getAttribute('style');
     const originalClass = element.className;
 
-    // Prispôsobíme element na čistý formát bez okrajov a tieňov pre export
-    element.style.width = '210mm';
-    element.style.minHeight = '297mm';
-    element.style.margin = '0';
-    element.style.padding = '15mm'; // Vnútorný okraj faktúry v PDF
-    element.style.border = 'none';
-    element.style.boxShadow = 'none';
-    element.style.borderRadius = '0';
-    element.style.background = '#ffffff';
-    element.style.boxSizing = 'border-box';
+    try {
+        // Pripravíme faktúru na export do PDF vo formáte A4
+        element.style.width = '210mm';
+        element.style.minHeight = '0';
+        element.style.height = 'auto';
+        element.style.margin = '0';
+        element.style.padding = '15mm';
+        element.style.border = 'none';
+        element.style.boxShadow = 'none';
+        element.style.borderRadius = '0';
+        element.style.background = '#ffffff';
+        element.style.boxSizing = 'border-box';
+        element.style.overflow = 'visible';
 
-    const opt = {
-        margin:       0, // Žiadne dodatočné vonkajšie okraje, využijeme padding elementu
-        filename:     `Faktura_${invNum}.pdf`,
-        image:        { type: 'jpeg', quality: 0.98 },
-        html2canvas:  { 
-            scale: 2, 
-            useCORS: true,
-            scrollX: 0,
-            scrollY: 0,
-            windowWidth: 794 // Šírka A4 v pixeloch pri 96 DPI
-        },
-        jsPDF:        { unit: 'mm', format: 'a4', orientation: 'portrait' }
-    };
+        // Nastavenia exportu PDF
+        const opt = {
+            margin: 0,
+            filename: `Faktura_${invNum}.pdf`,
 
-    html2pdf().set(opt).from(element).save().then(() => {
-        // Vrátime pôvodné štýly a triedy späť pre webový náhľad
-        element.setAttribute('style', originalStyle);
+            image: {
+                type: 'jpeg',
+                quality: 0.98
+            },
+
+            html2canvas: {
+                scale: 2,
+                useCORS: true,
+                backgroundColor: '#ffffff',
+                scrollX: 0,
+                scrollY: 0,
+                windowWidth: 794
+            },
+
+            jsPDF: {
+                unit: 'mm',
+                format: 'a4',
+                orientation: 'portrait'
+            },
+
+            pagebreak: {
+                mode: ['css', 'legacy'],
+                avoid: ['tr', '.no-break']
+            }
+        };
+
+        await html2pdf()
+            .set(opt)
+            .from(element)
+            .save();
+
+    } catch (error) {
+        console.error('Chyba pri exporte PDF:', error);
+        alert('PDF sa nepodarilo vytvoriť. Skús to znova.');
+
+    } finally {
+        // Obnovíme pôvodný vzhľad faktúry na webovej stránke
+        if (originalStyle === null) {
+            element.removeAttribute('style');
+        } else {
+            element.setAttribute('style', originalStyle);
+        }
+
         element.className = originalClass;
-    });
+    }
 }
+
     </script>
 </body>
 
