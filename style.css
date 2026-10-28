@@ -1548,3 +1548,6 @@ header {
         grid-column: 1 / -1 !important;
     }
 }
+.hero-buttons .btn-invoice {
+    gap: 10px;
+}
