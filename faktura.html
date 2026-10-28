@@ -1180,7 +1180,7 @@ body.simple-mode .items-form-table th:nth-child(4),body.simple-mode .items-form-
                 </button>
             </div>
             <div class="toolbar-group">
-                <button class="btn btn-outline" onclick="loadSampleData()">
+                <button class="btn btn-outline" onclick="saveDraft()">Uložiť koncept</button><button class="btn btn-outline" onclick="loadDraft()">Načítať koncept</button><button class="btn btn-outline" onclick="loadSampleData()">
                     Vzorové údaje
                 </button>
                 <button class="btn btn-danger-outline" onclick="clearForm()">
@@ -1345,8 +1345,8 @@ body.simple-mode .items-form-table th:nth-child(4),body.simple-mode .items-form-
                     </tbody>
                 </table>
 
-                <div id="validationErrors" role="alert" aria-live="polite" style="display:none;border:1px solid #fca5a5;background:#fef2f2;color:#991b1b;padding:12px;border-radius:8px;margin:15px 0;white-space:pre-line"></div><div class="form-group advanced-only" style="margin-top: 20px;">
-                    <label>Poznámka na faktúre</label>
+                <div id="validationErrors" role="alert" aria-live="polite" style="display:none;border:1px solid #fca5a5;background:#fef2f2;color:#991b1b;padding:12px;border-radius:8px;margin:15px 0;white-space:pre-line"></div><div class="form-group" style="margin-top: 20px;">
+                    <label for="invNote">Poznámka na faktúre</label>
                     <textarea id="invNote" class="form-control" rows="2" placeholder="Ďakujeme za využitie našich služieb." oninput="updateInvoice()"></textarea>
                 </div>
 
