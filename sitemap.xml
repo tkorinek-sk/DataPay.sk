@@ -1,53 +1,76 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 
+  <!-- Slovenská verzia -->
   <url>
     <loc>https://datapay.sk/</loc>
-    <lastmod>2026-10-13</lastmod>
+    <lastmod>2026-10-29</lastmod>
   </url>
-
-  <url>
-    <loc>https://datapay.sk/en/</loc>
-  </url>
-
   <url>
     <loc>https://datapay.sk/payroll.html</loc>
     <lastmod>2026-10-13</lastmod>
   </url>
-
   <url>
     <loc>https://datapay.sk/About.html</loc>
     <lastmod>2026-10-13</lastmod>
   </url>
-
   <url>
     <loc>https://datapay.sk/Cennik.html</loc>
     <lastmod>2026-10-13</lastmod>
   </url>
-
   <url>
     <loc>https://datapay.sk/FAQ.html</loc>
     <lastmod>2026-10-13</lastmod>
   </url>
-
   <url>
     <loc>https://datapay.sk/Formular.html</loc>
     <lastmod>2026-10-13</lastmod>
   </url>
-
   <url>
     <loc>https://datapay.sk/GDPR.html</loc>
     <lastmod>2026-10-13</lastmod>
   </url>
-
   <url>
     <loc>https://datapay.sk/faktura.html</loc>
     <lastmod>2026-10-29</lastmod>
   </url>
-
   <url>
     <loc>https://datapay.sk/kalkulacka.html</loc>
     <lastmod>2026-10-29</lastmod>
+  </url>
+
+  <!-- Anglická verzia -->
+  <url>
+    <loc>https://datapay.sk/en/</loc>
+    <lastmod>2026-10-29</lastmod>
+  </url>
+  <url>
+    <loc>https://datapay.sk/en/About.html</loc>
+  </url>
+  <url>
+    <loc>https://datapay.sk/en/Cennik.html</loc>
+  </url>
+  <url>
+    <loc>https://datapay.sk/en/FAW.html</loc>
+  </url>
+  <url>
+    <loc>https://datapay.sk/en/Formular.html</loc>
+  </url>
+   <url>
+    <loc>https://datapay.sk/en/GDPR.html</loc>
+  </url>
+     <url>
+    <loc>https://datapay.sk/en/payroll.html</loc>
+  </url>
+    </url>
+     <url>
+    <loc>https://datapay.sk/en/privacy.html</loc>
+  </url>
+   <url>
+    <loc>https://datapay.sk/en/invoice.html</loc>
+  </url>
+  <url>
+    <loc>https://datapay.sk/en/calculator.html</loc>
   </url>
 
 </urlset>
