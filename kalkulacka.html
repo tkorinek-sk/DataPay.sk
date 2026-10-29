@@ -423,79 +423,28 @@
 
     <!-- MAIN CALCULATOR WORKSPACE -->
     <div class="calc-wrapper">
-        
-        <!-- INPUT FORM -->
-        <div class="calc-card">
-            <h2>Vstupné údaje</h2>
-            
-            <div class="form-group">
-                <label for="grossSalary">Hrubá mesačná mzda (€)</label>
-                <input type="number" id="grossSalary" class="form-control" value="1200" min="0" step="10" oninput="calculateSalary()">
-            </div>
-
-            <div class="form-group">
-                <label for="hasTaxBonus">Uplatňovať daňový bonus na deti?</label>
-                <select id="hasTaxBonus" class="form-control" onchange="toggleChildrenInput(); calculateSalary();">
-                    <option value="no">Nie</option>
-                    <option value="yes">Áno</option>
-                </select>
-            </div>
-
-            <div class="form-group" id="childrenGroup" style="display: none;">
-                <label for="childrenCount">Počet detí do 15 rokov</label>
-                <input type="number" id="childrenCount" class="form-control" value="0" min="0" max="10" oninput="calculateSalary()">
-            </div>
+      <div class="calc-card">
+        <h2>Vstupné údaje</h2>
+        <div class="form-group"><label for="grossSalary">Hrubá mesačná mzda (€)</label><input type="number" id="grossSalary" class="form-control" value="1200" min="0" step="0.01"></div>
+        <div class="form-group"><label for="bonusSalary">Zdaniteľné odmeny a príplatky (€)</label><input type="number" id="bonusSalary" class="form-control" value="0" min="0" step="0.01"></div>
+        <div class="form-group"><label for="nczd">Uplatniť mesačnú NČZD (podpísané vyhlásenie)?</label><select id="nczd" class="form-control"><option value="yes">Áno</option><option value="no">Nie</option></select></div>
+        <div class="form-group"><label for="healthType">Zdravotné poistenie</label><select id="healthType" class="form-control"><option value="standard">Bežný zamestnanec (5 % / 11 %)</option><option value="disabled">Osoba so zdravotným postihnutím (2,5 % / 5,5 %)</option></select></div>
+        <div class="form-group"><label for="hasTaxBonus">Uplatniť daňový bonus na deti?</label><select id="hasTaxBonus" class="form-control"><option value="no">Nie</option><option value="yes">Áno</option></select></div>
+        <div id="childrenGroup" style="display:none">
+          <div class="form-group"><label for="childrenUnder15">Počet oprávnených detí do 15 rokov (vrátane mesiaca 15. narodenín)</label><input type="number" id="childrenUnder15" class="form-control" min="0" max="20" value="0" step="1"></div>
+          <div class="form-group"><label for="children15to18">Počet oprávnených detí 15–18 rokov (vrátane mesiaca 18. narodenín)</label><input type="number" id="children15to18" class="form-control" min="0" max="20" value="0" step="1"></div>
+          <div class="form-group"><label for="bonusEligibility">Podmienka aspoň 90 % zdaniteľných príjmov zo SR je splnená</label><select id="bonusEligibility" class="form-control"><option value="yes">Áno – potvrdené používateľom</option><option value="no">Nie / neviem (bonus sa nezapočíta)</option></select></div>
         </div>
-
-        <!-- RESULTS -->
-        <div class="result-card">
-            <h2>Výsledok výpočtu</h2>
-            
-            <div class="net-salary-box">
-                <span>Čistá mzda (k výplate)</span>
-                <strong id="resNetSalary">0.00 €</strong>
-            </div>
-
-            <div class="breakdown-row">
-                <span>Hrubá mzda:</span>
-                <span id="resGross">0.00 €</span>
-            </div>
-            <div class="breakdown-row">
-                <span>Zdravotné odvody zamestnanca (5 %):</span>
-                <span id="resHealthEmp">0.00 €</span>
-            </div>
-            <div class="breakdown-row">
-                <span>Sociálne odvody zamestnanca (9,4 %):</span>
-                <span id="resSocialEmp">0.00 €</span>
-            </div>
-            <div class="breakdown-row">
-                <span>Základ dane:</span>
-                <span id="resTaxBase">0.00 €</span>
-            </div>
-            <div class="breakdown-row">
-                <span>Nezdaniteľná časť na daňovníka:</span>
-                <span id="resNczd">497.23 €</span>
-            </div>
-            <div class="breakdown-row">
-                <span>Daň z príjmu:</span>
-                <span id="resTax">0.00 €</span>
-            </div>
-            <div class="breakdown-row" id="rowTaxBonus" style="display: none;">
-                <span>Daňový bonus na deti:</span>
-                <span id="resTaxBonusVal">0.00 €</span>
-            </div>
-            <div class="breakdown-row">
-                <span>Odvody zamestnávateľa (35,2 %):</span>
-                <span id="resEmployerCost">0.00 €</span>
-            </div>
-            <div class="breakdown-row total-cost">
-                <span>Celková cena práce (náklad firmy):</span>
-                <span id="resTotalCost">0.00 €</span>
-            </div>
-        </div>
-
+        <p style="font-size:12px;color:var(--text-muted)">Rozsah: bežný mesačný pracovný pomer v SR, celý mesiac, bez súbehu zamestnaní, PN, dôchodkového statusu, dohôd a osobitných odvodových režimov. Zadané odmeny sa považujú za plne zdaniteľné a odvodové. Pri súbehu alebo osobitnom režime použite mzdový softvér.</p>
+      </div>
+      <div class="result-card">
+        <h2>Výsledok výpočtu</h2>
+        <div class="net-salary-box"><span>Čistá mzda (k výplate)</span><strong id="resNetSalary">—</strong></div>
+        <div id="results"></div>
+        <div id="warnings" role="status" style="font-size:12px;color:#e0ecff;margin-top:18px;line-height:1.6"></div>
+        <button type="button" id="printCalc" style="margin-top:18px;background:#fff;color:#052c64;border:0;border-radius:8px;padding:11px 16px;font-weight:700;cursor:pointer">Vytlačiť výpočet / uložiť ako PDF</button>
+      </div>
     </div>
-
     <!-- FOOTER -->
     <footer class="footer">
         <div class="container">
@@ -525,85 +474,75 @@
         </div>
     </footer>
 
-    <!-- CALCULATOR LOGIC (Legislatíva 2026) -->
+    <!-- CALCULATOR LOGIC: regular monthly employment, 2026 -->
     <script>
-        const formatEur = (val) => val.toFixed(2).replace('.', ',') + ' €';
-
-        function toggleChildrenInput() {
-            const val = document.getElementById('hasTaxBonus').value;
-            document.getElementById('childrenGroup').style.display = (val === 'yes') ? 'block' : 'none';
-        }
-
-        function calculateSalary() {
-            const gross = parseFloat(document.getElementById('grossSalary').value) || 0;
-            const hasBonus = document.getElementById('hasTaxBonus').value === 'yes';
-            const childrenCount = parseInt(document.getElementById('childrenCount').value) || 0;
-
-            // 1. Odvody zamestnanca (2026)
-            // Zdravotné poistenie: 5% (zvýšené od roku 2026)
-            const healthEmp = gross * 0.05;
-            // Sociálne poistenie zamestnanca: 9,4% spolu (starobné 4%, invalidné 3%, nemocenské 1,4%, nezamestnanosť 1%)
-            const socialEmp = gross * 0.094;
-            const totalEmpOdvody = healthEmp + socialEmp;
-
-            // 2. Základ dane
-            const taxBase = Math.max(0, gross - totalEmpOdvody);
-
-            // 3. Nezdaniteľná časť základu dane na daňovníka (2026: cca 497,23 € mesačne)
-            const nczd = 497.23;
-            const taxableIncome = Math.max(0, taxBase - nczd);
-
-            // 4. Daň z príjmu (19% zatiaľ pre základné pásmo)
-            let tax = taxableIncome * 0.19;
-
-            // 5. Daňový bonus na deti (v roku 2026 do 15 rokov = 100 € / mesiac na dieťa)
-            let taxBonus = 0;
-            if (hasBonus && childrenCount > 0) {
-                taxBonus = childrenCount * 100.00;
-                // Pozn.: V praxi platia legislatívne obmedzenia na maximálnu výšku podľa čiastkového základu dane, tu pre názornosť aplikujeme plnú sumu bonusu.
-            }
-
-            // Výsledná daň po uplatnení bonusu
-            let finalTax = tax - taxBonus;
-            let bonusPayout = 0;
-            if (finalTax < 0) {
-                bonusPayout = Math.abs(finalTax);
-                finalTax = 0;
-            }
-
-            // 6. Čistá mzda
-            // Vzorec: Hrubá mzda - odvody - daň + prípadný preplatek/bonus
-            const netSalary = gross - totalEmpOdvody - finalTax + (taxBonus > tax ? (taxBonus - tax) : 0);
-
-            // 7. Odvody zamestnávateľa (35,2% z hrubej mzdy)
-            const employerCost = gross * 0.352;
-            const totalSuperGross = gross + employerCost;
-
-            // Zápis do UI
-            document.getElementById('resNetSalary').textContent = formatEur(netSalary);
-            document.getElementById('resGross').textContent = formatEur(gross);
-            document.getElementById('resHealthEmp').textContent = formatEur(healthEmp);
-            document.getElementById('resSocialEmp').textContent = formatEur(socialEmp);
-            document.getElementById('resTaxBase').textContent = formatEur(taxBase);
-            document.getElementById('resNczd').textContent = formatEur(nczd);
-            document.getElementById('resTax').textContent = formatEur(finalTax);
-
-            const rowBonus = document.getElementById('rowTaxBonus');
-            if (hasBonus && taxBonus > 0) {
-                rowBonus.style.display = 'flex';
-                document.getElementById('resTaxBonusVal').textContent = formatEur(taxBonus);
-            } else {
-                rowBonus.style.display = 'none';
-            }
-
-            document.getElementById('resEmployerCost').textContent = formatEur(employerCost);
-            document.getElementById('resTotalCost').textContent = formatEur(totalSuperGross);
-        }
-
-        // Inicializácia pri štarte
-        window.onload = function() {
-            calculateSalary();
-        }
+    "use strict";
+    const RULES = Object.freeze({ nczd:497.23, maxSocialBase:16764, bonusThreshold:2286,
+      brackets:[[3665.28,.19],[5029.10,.25],[6250.86,.30],[Infinity,.35]],
+      employeeSocial:[['Nemocenské',.014],['Starobné',.04],['Invalidné',.03],['Nezamestnanosť',.01]],
+      employerSocial:[['Nemocenské',.014],['Starobné',.14],['Invalidné',.03],['Nezamestnanosť',.01],['Garančné',.0025],['Rezervný fond solidarity',.0475]],
+      employerAccident:.008, limits:[0,.29,.36,.43,.50,.57,.64] });
+    const $=id=>document.getElementById(id);
+    const cents=x=>Math.round((x+Number.EPSILON)*100)/100;
+    const down=x=>Math.floor((x+1e-8)*100)/100;
+    const euro=x=>new Intl.NumberFormat('sk-SK',{style:'currency',currency:'EUR'}).format(x);
+    const value=id=>Number($(id).value);
+    const row=(label,v,cls='')=>`<div class="breakdown-row ${cls}"><span>${label}</span><span>${euro(v)}</span></div>`;
+    function progressiveTax(base){let previous=0,sum=0;for(const [limit,rate] of RULES.brackets){let part=Math.max(0,Math.min(base,limit)-previous);sum+=part*rate;previous=limit;if(base<=limit)break;}return down(sum);}
+    function calculateSalary(){
+      const ids=['grossSalary','bonusSalary','childrenUnder15','children15to18'];
+      if(ids.some(id=>!Number.isFinite(value(id))||value(id)<0)||['childrenUnder15','children15to18'].some(id=>!Number.isInteger(value(id))||value(id)>20)){
+        $('resNetSalary').textContent='—';$('results').innerHTML='';$('warnings').textContent='Zadajte platné nezáporné hodnoty a celé počty detí (najviac 20).';return;
+      }
+      const gross=cents(value('grossSalary')+value('bonusSalary'));
+      const base=Math.min(gross,RULES.maxSocialBase);
+      // Social insurance: individual components rounded down to eurocents.
+      const empParts=RULES.employeeSocial.map(([name,rate])=>[name,down(base*rate)]);
+      const employerParts=RULES.employerSocial.map(([name,rate])=>[name,down(base*rate)]);
+      employerParts.push(['Úrazové (bez stropu)',down(gross*RULES.employerAccident)]);
+      const sum=parts=>cents(parts.reduce((a,[,v])=>a+v,0));
+      const socialEmp=sum(empParts), socialEmployer=sum(employerParts);
+      const healthDisabled=$('healthType').value==='disabled';
+      const healthEmp=down(gross*(healthDisabled?.025:.05));
+      const healthEmployer=down(gross*(healthDisabled?.055:.11));
+      const taxBase=cents(Math.max(0,gross-socialEmp-healthEmp));
+      const nczd=$('nczd').value==='yes'?Math.min(taxBase,RULES.nczd):0;
+      const taxable=cents(Math.max(0,taxBase-nczd));
+      const tax=progressiveTax(taxable);
+      const countUnder=value('childrenUnder15'), countOlder=value('children15to18');
+      const count=$('hasTaxBonus').value==='yes'?countUnder+countOlder:0;
+      const eligible=$('bonusEligibility').value==='yes';
+      const limit=RULES.limits[Math.min(count,6)];
+      // Monthly high-income taper: annual threshold 27,432 / 12 = 2,286; reduction per child 1/10 of excess.
+      const taper=down(Math.max(0,taxBase-RULES.bonusThreshold)*.1);
+      const theoretical=cents(countUnder*Math.max(0,100-taper)+countOlder*Math.max(0,50-taper));
+      const bonus=(count&&eligible)?Math.min(theoretical,down(taxBase*limit)):0;
+      const taxAfterBonus=Math.max(0,cents(tax-bonus));
+      const bonusPaid=Math.max(0,cents(bonus-tax));
+      const net=cents(gross-socialEmp-healthEmp-taxAfterBonus+bonusPaid);
+      const employerTotal=cents(socialEmployer+healthEmployer);
+      $('resNetSalary').textContent=euro(net);
+      $('results').innerHTML=row('Hrubá mzda vrátane odmien',gross)+
+        row('Sociálne poistenie zamestnanca',socialEmp)+empParts.map(([n,v])=>row('↳ '+n,v)).join('')+
+        row('Zdravotné poistenie zamestnanca',healthEmp)+row('Čiastkový základ dane',taxBase)+
+        row('Uplatnená mesačná NČZD',nczd)+row('Zdaniteľná mzda po NČZD',taxable)+
+        row('Preddavok na daň pred bonusom',tax)+row('Daňový bonus na deti',bonus)+
+        row('Preddavok na daň po bonuse',taxAfterBonus)+row('Vyplatená časť bonusu nad daň',bonusPaid)+
+        row('Sociálne poistenie zamestnávateľa',socialEmployer)+employerParts.map(([n,v])=>row('↳ '+n,v)).join('')+
+        row('Zdravotné poistenie zamestnávateľa',healthEmployer)+row('Odvody zamestnávateľa spolu',employerTotal)+
+        row('Celková cena práce',cents(gross+employerTotal),'total-cost');
+      const warnings=[];
+      if(gross>RULES.maxSocialBase)warnings.push('Sociálne poistenie je zastropované na 16 764 €, úrazové poistenie nie.');
+      if(count&&!eligible)warnings.push('Daňový bonus nie je započítaný: podmienka príjmov zo SR nebola potvrdená.');
+      if(count)warnings.push('Pri deťoch sa predpokladá splnenie zákonných podmienok a nárok za celý zvolený mesiac. Ročné zúčtovanie môže priniesť iný výsledok.');
+      warnings.push('Informatívny mesačný výpočet za rok 2026. Nezahŕňa zdravotné minimálne preddavky, súbehy, špeciálne režimy, exekúcie, PN, zrážky ani ročné zúčtovanie. Pred použitím v ostrej mzdovej agende overte výsledok v mzdovom softvéri.');
+      $('warnings').textContent=warnings.join(' ');
+    }
+    $('hasTaxBonus').addEventListener('change',()=>{$('childrenGroup').style.display=$('hasTaxBonus').value==='yes'?'block':'none';calculateSalary();});
+    document.querySelectorAll('.calc-card input,.calc-card select').forEach(el=>{el.addEventListener('input',calculateSalary);el.addEventListener('change',calculateSalary)});
+    $('printCalc').addEventListener('click',()=>window.print());
+    calculateSalary();
     </script>
-</body>
-</html>
+    <style media="print">.site-header,.footer,.page-banner,#printCalc{display:none!important}.calc-wrapper{display:block;margin:0;width:100%}.calc-card,.result-card{box-shadow:none;break-inside:avoid;margin-bottom:12px}.result-card{-webkit-print-color-adjust:exact;print-color-adjust:exact}</style>
+    </body>
+    </html>
