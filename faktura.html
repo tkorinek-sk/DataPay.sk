@@ -799,6 +799,27 @@
                 print-color-adjust: exact !important;
             }
         }
+
+
+        /* Zvýraznené prvé vyplnenie firmy podľa IČO */
+        .ico-first-card { background:#f0fdf4; border:1.5px solid #86c9a3; border-radius:10px; padding:15px; margin:0 0 19px; }
+        .ico-first-title { color:#166534; font-size:13px; font-weight:800; margin-bottom:5px; }
+        .ico-first-card p { color:#466b54; font-size:12px; margin-bottom:11px; }
+        .ico-first-card .form-group { margin-bottom:0; }
+        .ico-first-card .form-group label { color:#166534; }
+        .ico-first-card .ico-lookup .form-control { border-color:#86c9a3; background:#fff; }
+        .ico-first-card .ico-lookup .form-control:focus { border-color:#16a34a; box-shadow:0 0 0 3px rgba(22,163,74,.13); }
+        .ico-first-card .ico-lookup .btn { background:#16834a; color:#fff; border-color:#16834a; }
+        .ico-first-card .ico-lookup .btn:hover { background:#166534; }
+
+        /* Vyhľadávanie firmy podľa IČO */
+        .ico-lookup { display:flex; gap:7px; align-items:center; }
+        .ico-lookup .form-control { min-width:0; flex:1; }
+        .ico-lookup .btn { padding:9px 11px; font-size:12px; }
+        .ico-status { display:block; font-size:11px; margin-top:5px; color:var(--text-muted); min-height:15px; }
+        .ico-status.error { color:#b91c1c; }
+        .ico-status.ok { color:#047857; }
+        @media(max-width:480px) { .ico-lookup { flex-wrap:wrap; } }
     </style>
 </head>
 
@@ -985,6 +1006,14 @@
 
                 <!-- Supplier Form -->
                 <div class="form-section-title">Dodávateľ (Vaša firma)</div>
+                <div class="ico-first-card">
+                    <div class="ico-first-title">✦ Rýchle vyplnenie firemných údajov</div>
+                    <p>Začnite zadaním IČO. Ostatné dostupné údaje doplníme automaticky.</p>
+                    <div class="form-group">
+                        <label>IČO</label>
+                        <div class="ico-lookup"><input type="text" id="supIco" class="form-control" placeholder="8-miestne IČO" inputmode="numeric" maxlength="8" oninput="updateInvoice(); resetIcoStatus('sup')" onkeydown="if(event.key==='Enter'){event.preventDefault();lookupCompany('sup')}"><button type="button" class="btn btn-outline" id="supLookupBtn" onclick="lookupCompany('sup')">Načítať</button></div><small id="supIcoStatus" class="ico-status" role="status" aria-live="polite"></small>
+                    </div>
+                </div>
                 <div class="form-group">
                     <label>Názov firmy / Meno</label>
                     <input type="text" id="supName" class="form-control" placeholder="napr. DataPay s.r.o." oninput="updateInvoice()">
@@ -1000,10 +1029,6 @@
                     </div>
                 </div>
                 <div class="form-grid-3">
-                    <div class="form-group">
-                        <label>IČO</label>
-                        <input type="text" id="supIco" class="form-control" placeholder="12345678" oninput="updateInvoice()">
-                    </div>
                     <div class="form-group">
                         <label>DIČ</label>
                         <input type="text" id="supDic" class="form-control" placeholder="2021234567" oninput="updateInvoice()">
@@ -1029,6 +1054,14 @@
 
                 <!-- Customer Form -->
                 <div class="form-section-title">Odberateľ (Klient)</div>
+                <div class="ico-first-card">
+                    <div class="ico-first-title">✦ Rýchle vyplnenie firemných údajov</div>
+                    <p>Začnite zadaním IČO. Ostatné dostupné údaje doplníme automaticky.</p>
+                    <div class="form-group">
+                        <label>IČO</label>
+                        <div class="ico-lookup"><input type="text" id="custIco" class="form-control" placeholder="8-miestne IČO" inputmode="numeric" maxlength="8" oninput="updateInvoice(); resetIcoStatus('cust')" onkeydown="if(event.key==='Enter'){event.preventDefault();lookupCompany('cust')}"><button type="button" class="btn btn-outline" id="custLookupBtn" onclick="lookupCompany('cust')">Načítať</button></div><small id="custIcoStatus" class="ico-status" role="status" aria-live="polite"></small>
+                    </div>
+                </div>
                 <div class="form-group">
                     <label>Názov odberateľa / Meno</label>
                     <input type="text" id="custName" class="form-control" placeholder="Klient Firma s.r.o." oninput="updateInvoice()">
@@ -1044,10 +1077,6 @@
                     </div>
                 </div>
                 <div class="form-grid-3">
-                    <div class="form-group">
-                        <label>IČO</label>
-                        <input type="text" id="custIco" class="form-control" placeholder="87654321" oninput="updateInvoice()">
-                    </div>
                     <div class="form-group advanced-only">
                         <label>DIČ</label>
                         <input type="text" id="custDic" class="form-control" placeholder="2098765432" oninput="updateInvoice()">
@@ -1240,6 +1269,68 @@
 
     <!-- INTERACTIVE JAVASCRIPT LOGIC -->
     <script>
+
+        // Firemné údaje: Subjekt API. Len na vyžiadanie používateľa, bez automatického prepisovania.
+        function resetIcoStatus(prefix) {
+            const status = $(prefix + 'IcoStatus');
+            if (status) { status.textContent = ''; status.className = 'ico-status'; }
+        }
+        function setIcoStatus(prefix, message, kind = '') {
+            const status = $(prefix + 'IcoStatus');
+            if (status) { status.textContent = message; status.className = 'ico-status ' + kind; }
+        }
+        async function lookupCompany(prefix) {
+            if (!['sup', 'cust'].includes(prefix)) return;
+            const ico = val(prefix + 'Ico').replace(/\s/g, '');
+            if (!/^\d{8}$/.test(ico)) {
+                setIcoStatus(prefix, 'Zadajte platné 8-miestne IČO.', 'error'); return;
+            }
+            const btn = $(prefix + 'LookupBtn');
+            btn.disabled = true;
+            btn.textContent = 'Načítavam…';
+            setIcoStatus(prefix, 'Vyhľadávam firmu…');
+            try {
+                const controller = new AbortController();
+                const timeout = setTimeout(() => controller.abort(), 10000);
+                let response;
+                try {
+                    response = await fetch('https://api.subjekt.sk/v1/entity/' + encodeURIComponent(ico) + '?country=sk',
+                        { headers: { Accept: 'application/json' }, signal: controller.signal });
+                } finally { clearTimeout(timeout); }
+                if (response.status === 404) throw new Error('Firma nebola nájdená. Údaje môžete vyplniť ručne.');
+                if (!response.ok) throw new Error('Register momentálne neodpovedá (HTTP ' + response.status + ').');
+                const payload = await response.json();
+                const entity = payload.data && typeof payload.data === 'object' ? payload.data : payload;
+                if (!entity || !entity.name || String(entity.ico || ico).replace(/\D/g, '') !== ico)
+                    throw new Error('Register nevrátil zodpovedajúce údaje.');
+                // Ak používateľ počas načítania zmenil IČO, výsledok sa nesmie aplikovať.
+                if (val(prefix + 'Ico').replace(/\s/g, '') !== ico) return;
+                const a = entity.address || {};
+                const street = typeof a === 'string' ? a : [a.street, a.building_no || a.buildingNo].filter(Boolean).join(' ');
+                const city = typeof a === 'object' ? [a.zip || a.postal_code || a.postalCode, a.city || a.municipality].filter(Boolean).join(' ') : '';
+                const fields = {
+                    Name: entity.name,
+                    Street: street,
+                    City: city,
+                    Dic: entity.dic || entity.tax_id || entity.taxId,
+                    Icdph: entity.ic_dph || entity.icdph || entity.vat_id || entity.vatId
+                };
+                // Neznáme položky sa nevymýšľajú ani neprepisujú prázdnou hodnotou.
+                for (const [suffix, value] of Object.entries(fields)) {
+                    const field = $(prefix + suffix);
+                    if (field && value != null && String(value).trim()) field.value = String(value).trim();
+                }
+                updateInvoice();
+                setIcoStatus(prefix, 'Údaje načítané. Pred vystavením faktúry ich skontrolujte.', 'ok');
+            } catch (err) {
+                setIcoStatus(prefix, err.name === 'AbortError' ? 'Vyhľadávanie trvalo príliš dlho. Skúste to znova.' :
+                    (err instanceof TypeError ? 'Nepodarilo sa spojiť s registrom. Skontrolujte pripojenie alebo vyplňte údaje ručne.' : err.message), 'error');
+            } finally {
+                btn.disabled = false;
+                btn.textContent = 'Načítať';
+            }
+        }
+
         const round2 = x => Math.round((Number(x) + Number.EPSILON) * 100) / 100;
         const $ = id => document.getElementById(id);
         const val = id => ($(id) ? $(id).value.trim() : '');
