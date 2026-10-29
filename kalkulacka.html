@@ -382,6 +382,19 @@
                 text-align: center;
             }
         }
+
+        /* Compact expandable insurance breakdowns */
+        .insurance-detail {border-bottom:1px solid rgba(255,255,255,.08);font-size:14px;color:#cbd5e1}
+        .insurance-detail summary {display:flex;align-items:center;justify-content:space-between;gap:12px;padding:9px 0;cursor:pointer;list-style:none}
+        .insurance-detail summary::-webkit-details-marker {display:none}
+        .insurance-detail summary span {min-width:0}
+        .insurance-detail summary span::before {content:"▸";display:inline-block;margin-right:7px;transition:transform .2s}
+        .insurance-detail[open] summary span::before {transform:rotate(90deg)}
+        .insurance-detail summary small {display:block;margin-left:18px;font-size:11px;color:#a9c7e4;font-weight:400}
+        .insurance-detail summary strong {color:#fff;white-space:nowrap}
+        .insurance-parts {padding:0 0 7px 18px;border-left:2px solid rgba(255,255,255,.2);margin:0 0 8px 5px}
+        .insurance-parts .breakdown-row {font-size:12px;padding:5px 0}
+        .total-price-box {margin-top:24px;margin-bottom:0}
     </style>
 </head>
 
@@ -441,8 +454,8 @@
         <h2>Výsledok výpočtu</h2>
         <div class="net-salary-box"><span>Čistá mzda (k výplate)</span><strong id="resNetSalary">—</strong></div>
         <div id="results"></div>
+        <div class="net-salary-box total-price-box"><span>Celková cena práce (náklad firmy)</span><strong id="resTotalPrice">—</strong></div>
         <div id="warnings" role="status" style="font-size:12px;color:#e0ecff;margin-top:18px;line-height:1.6"></div>
-        <button type="button" id="printCalc" style="margin-top:18px;background:#fff;color:#052c64;border:0;border-radius:8px;padding:11px 16px;font-weight:700;cursor:pointer">Vytlačiť výpočet / uložiť ako PDF</button>
       </div>
     </div>
     <!-- FOOTER -->
@@ -489,10 +502,11 @@
     const value=id=>Number($(id).value);
     const row=(label,v,cls='')=>`<div class="breakdown-row ${cls}"><span>${label}</span><span>${euro(v)}</span></div>`;
     function progressiveTax(base){let previous=0,sum=0;for(const [limit,rate] of RULES.brackets){let part=Math.max(0,Math.min(base,limit)-previous);sum+=part*rate;previous=limit;if(base<=limit)break;}return down(sum);}
+    const detail=(label,total,parts)=>`<details class="insurance-detail"><summary><span>${label}<small>Rozkliknúť podrobný rozpis</small></span><strong>${euro(total)}</strong></summary><div class="insurance-parts">${parts.map(([n,v])=>row(n,v)).join('')}</div></details>`;
     function calculateSalary(){
       const ids=['grossSalary','bonusSalary','childrenUnder15','children15to18'];
       if(ids.some(id=>!Number.isFinite(value(id))||value(id)<0)||['childrenUnder15','children15to18'].some(id=>!Number.isInteger(value(id))||value(id)>20)){
-        $('resNetSalary').textContent='—';$('results').innerHTML='';$('warnings').textContent='Zadajte platné nezáporné hodnoty a celé počty detí (najviac 20).';return;
+        $('resNetSalary').textContent='—';$('resTotalPrice').textContent='—';$('results').innerHTML='';$('warnings').textContent='Zadajte platné nezáporné hodnoty a celé počty detí (najviac 20).';return;
       }
       const gross=cents(value('grossSalary')+value('bonusSalary'));
       const base=Math.min(gross,RULES.maxSocialBase);
@@ -522,15 +536,15 @@
       const net=cents(gross-socialEmp-healthEmp-taxAfterBonus+bonusPaid);
       const employerTotal=cents(socialEmployer+healthEmployer);
       $('resNetSalary').textContent=euro(net);
+      $('resTotalPrice').textContent=euro(cents(gross+employerTotal));
       $('results').innerHTML=row('Hrubá mzda vrátane odmien',gross)+
-        row('Sociálne poistenie zamestnanca',socialEmp)+empParts.map(([n,v])=>row('↳ '+n,v)).join('')+
+        detail('Sociálne poistenie zamestnanca',socialEmp,empParts)+
         row('Zdravotné poistenie zamestnanca',healthEmp)+row('Čiastkový základ dane',taxBase)+
         row('Uplatnená mesačná NČZD',nczd)+row('Zdaniteľná mzda po NČZD',taxable)+
         row('Preddavok na daň pred bonusom',tax)+row('Daňový bonus na deti',bonus)+
         row('Preddavok na daň po bonuse',taxAfterBonus)+row('Vyplatená časť bonusu nad daň',bonusPaid)+
-        row('Sociálne poistenie zamestnávateľa',socialEmployer)+employerParts.map(([n,v])=>row('↳ '+n,v)).join('')+
-        row('Zdravotné poistenie zamestnávateľa',healthEmployer)+row('Odvody zamestnávateľa spolu',employerTotal)+
-        row('Celková cena práce',cents(gross+employerTotal),'total-cost');
+        detail('Sociálne poistenie zamestnávateľa',socialEmployer,employerParts)+
+        row('Zdravotné poistenie zamestnávateľa',healthEmployer)+row('Odvody zamestnávateľa spolu',employerTotal);
       const warnings=[];
       if(gross>RULES.maxSocialBase)warnings.push('Sociálne poistenie je zastropované na 16 764 €, úrazové poistenie nie.');
       if(count&&!eligible)warnings.push('Daňový bonus nie je započítaný: podmienka príjmov zo SR nebola potvrdená.');
@@ -540,9 +554,8 @@
     }
     $('hasTaxBonus').addEventListener('change',()=>{$('childrenGroup').style.display=$('hasTaxBonus').value==='yes'?'block':'none';calculateSalary();});
     document.querySelectorAll('.calc-card input,.calc-card select').forEach(el=>{el.addEventListener('input',calculateSalary);el.addEventListener('change',calculateSalary)});
-    $('printCalc').addEventListener('click',()=>window.print());
     calculateSalary();
     </script>
-    <style media="print">.site-header,.footer,.page-banner,#printCalc{display:none!important}.calc-wrapper{display:block;margin:0;width:100%}.calc-card,.result-card{box-shadow:none;break-inside:avoid;margin-bottom:12px}.result-card{-webkit-print-color-adjust:exact;print-color-adjust:exact}</style>
+
     </body>
     </html>
