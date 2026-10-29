@@ -1,3 +1,4 @@
+
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 
@@ -51,19 +52,18 @@
     <loc>https://datapay.sk/en/Cennik.html</loc>
   </url>
   <url>
-    <loc>https://datapay.sk/en/FAW.html</loc>
+    <loc>https://datapay.sk/en/FAQ.html</loc>
   </url>
   <url>
     <loc>https://datapay.sk/en/Formular.html</loc>
   </url>
-   <url>
+  <url>
     <loc>https://datapay.sk/en/GDPR.html</loc>
   </url>
-     <url>
+  <url>
     <loc>https://datapay.sk/en/payroll.html</loc>
   </url>
-    </url>
-   <url>
+  <url>
     <loc>https://datapay.sk/en/invoice.html</loc>
   </url>
   <url>
