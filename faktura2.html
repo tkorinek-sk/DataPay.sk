@@ -1,829 +1,1791 @@
 <!DOCTYPE html>
 <html lang="sk">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Generátor faktúr zadarmo | DataPay.sk</title>
-    <!-- Tailwind CSS CDN -->
-    <script src="https://cdn.tailwindcss.com"></script>
-    <!-- Google Fonts: Inter -->
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
-    <!-- FontAwesome Icons -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <!-- html2pdf.js for client-side PDF export -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
-    <!-- QRCode.js for payment QR generation -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
-    
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    fontFamily: {
-                        sans: ['Inter', 'sans-serif'],
-                    },
-                    colors: {
-                        brand: {
-                            50: '#eff6ff',
-                            100: '#dbeafe',
-                            500: '#3b82f6',
-                            600: '#2563eb',
-                            700: '#1d4ed8',
-                            800: '#1e40af',
-                            900: '#1e3a8a',
-                            950: '#172554',
-                        }
-                    }
-                }
-            }
-        }
-    </script>
+    <title>Bezplatný Generátor Faktúr Online | DataPay s.r.o.</title>
+    <meta name="description" content="Vytvorte si profesionálnu faktúru online zdarma a bez registrácie. Výpočet DPH, SEPA QR kód a stiahnutie do PDF od DataPay s.r.o.">
+    <meta name="author" content="DataPay s.r.o.">
+    <meta name="theme-color" content="#052c64">
+    <link rel="icon" href="/favicon.png" type="image/png">
+    <link rel="canonical" href="https://datapay.sk/faktura.html">
+
+    <!-- External Libraries for QR Code and PDF Export -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/jspdf@2.5.1/dist/jspdf.umd.min.js"></script>
+
     <style>
-        /* Modern Scrollbars */
-        ::-webkit-scrollbar {
-            width: 6px;
-            height: 6px;
-        }
-        ::-webkit-scrollbar-track {
-            background: #f1f5f9;
-        }
-        ::-webkit-scrollbar-thumb {
-            background: #cbd5e1;
-            border-radius: 4px;
-        }
-        ::-webkit-scrollbar-thumb:hover {
-            background: #94a3b8;
+        /* =====================================================
+           1. RESET & CORE VARIABLES
+        ===================================================== */
+        :root {
+            --primary: #052c64;
+            --primary-hover: #0b3e80;
+            --accent: #397bb8;
+            --accent-light: #eef5fc;
+            --text-dark: #172b4d;
+            --text-muted: #64748b;
+            --border-color: #e2e8f0;
+            --bg-light: #f7f9fc;
+            --white: #ffffff;
+            --danger: #ef4444;
+            --success: #10b981;
         }
 
-        /* A4 Page Specs for HTML Preview & PDF rendering */
-        .a4-preview {
-            width: 210mm;
-            min-height: 297mm;
-            padding: 15mm 15mm 15mm 15mm;
-            background: #ffffff;
-            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.1);
-            margin: 0 auto;
-            position: relative;
+        * {
             box-sizing: border-box;
-            font-size: 13px;
-            color: #1e293b;
+            margin: 0;
+            padding: 0;
         }
 
-        /* Print Override */
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+            background-color: var(--bg-light);
+            color: var(--text-dark);
+            line-height: 1.5;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        /* =====================================================
+           2. HEADER & NAVIGATION
+        ===================================================== */
+        .site-header {
+            background: #ffffff;
+            border-bottom: 1px solid #e6ebf2;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .nav-container {
+            width: 90%;
+            max-width: 1200px;
+            min-height: 88px;
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 35px;
+        }
+
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+        }
+
+        .brand img {
+            width: 54px;
+            height: 54px;
+            object-fit: contain;
+            display: block;
+        }
+
+        .brand-text {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .brand-name {
+            color: #052c64;
+            font-size: 20px;
+            font-weight: 700;
+            line-height: 1.2;
+        }
+
+        .brand-subtitle {
+            color: #718096;
+            font-size: 12px;
+            margin-top: 4px;
+        }
+
+        .main-nav {
+            display: flex;
+            align-items: center;
+            gap: 28px;
+        }
+
+        .main-nav > a {
+            color: #334155;
+            font-size: 14px;
+            font-weight: 500;
+            transition: color 0.2s ease;
+        }
+
+        .main-nav > a:hover {
+            color: #052c64;
+        }
+
+        .main-nav > a.active {
+            color: #052c64;
+            font-weight: 700;
+        }
+
+        .language {
+            display: flex;
+            align-items: center;
+            gap: 7px;
+            margin-left: 5px;
+            font-size: 13px;
+        }
+
+        .language a {
+            color: #94a3b8;
+            font-weight: 500;
+        }
+
+        .language a.active {
+            color: #052c64;
+            font-weight: 700;
+        }
+
+        .language span {
+            color: #cbd5e1;
+        }
+
+        /* =====================================================
+           3. PAGE BANNER
+        ===================================================== */
+        .page-banner {
+            background: linear-gradient(135deg, #ffffff 0%, #edf4fa 100%);
+            border-bottom: 1px solid var(--border-color);
+            padding: 28px 0;
+        }
+
+        .banner-content {
+            width: 92%;
+            max-width: 1240px;
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        .banner-title h1 {
+            color: var(--primary);
+            font-size: 26px;
+            font-weight: 800;
+        }
+
+        .banner-title p {
+            color: var(--text-muted);
+            font-size: 14px;
+            margin-top: 4px;
+        }
+
+        .badge-free {
+            background: #dbeafe;
+            color: var(--primary);
+            padding: 6px 14px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 700;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            border: 1px solid #bfdbfe;
+        }
+
+        /* =====================================================
+           4. MAIN APP WORKSPACE
+        ===================================================== */
+        .app-workspace {
+            width: 92%;
+            max-width: 1240px;
+            margin: 30px auto 60px;
+            flex: 1;
+        }
+
+        .toolbar {
+            background: var(--white);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 16px 20px;
+            margin-bottom: 25px;
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            justify-content: space-between;
+            gap: 15px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.03);
+        }
+
+        .toolbar-group {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            padding: 10px 18px;
+            font-size: 13px;
+            font-weight: 700;
+            border-radius: 7px;
+            border: 1px solid transparent;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            white-space: nowrap;
+        }
+
+        .btn-primary {
+            background-color: var(--primary);
+            color: var(--white);
+        }
+
+        .btn-primary:hover {
+            background-color: var(--primary-hover);
+            box-shadow: 0 4px 12px rgba(5, 44, 100, 0.25);
+        }
+
+        .btn-accent {
+            background-color: var(--accent);
+            color: var(--white);
+        }
+
+        .btn-accent:hover {
+            background-color: #2b6194;
+        }
+
+        .btn-outline {
+            background-color: var(--white);
+            color: var(--text-dark);
+            border-color: var(--border-color);
+        }
+
+        .btn-outline:hover {
+            background-color: #f1f5f9;
+            border-color: #cbd5e1;
+        }
+
+        .btn-danger-outline {
+            background-color: var(--white);
+            color: var(--danger);
+            border-color: #fca5a5;
+        }
+
+        .btn-danger-outline:hover {
+            background-color: #fef2f2;
+        }
+
+        .workspace-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            align-items: start;
+        }
+
+        .form-card {
+            background: var(--white);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 24px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.03);
+        }
+
+        .form-section-title {
+            font-size: 15px;
+            font-weight: 700;
+            color: var(--primary);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            padding-bottom: 8px;
+            margin-bottom: 16px;
+            border-bottom: 2px solid var(--accent-light);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .form-grid-2 {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 14px;
+        }
+
+        .form-grid-3 {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 12px;
+        }
+
+        .form-group {
+            margin-bottom: 14px;
+        }
+
+        .form-group label {
+            display: block;
+            font-size: 12px;
+            font-weight: 700;
+            color: #334155;
+            margin-bottom: 5px;
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 9px 12px;
+            font-size: 13px;
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            background-color: #ffffff;
+            color: var(--text-dark);
+            transition: border-color 0.2s, box-shadow 0.2s;
+        }
+
+        .form-control:focus {
+            outline: none;
+            border-color: var(--accent);
+            box-shadow: 0 0 0 3px rgba(57, 123, 184, 0.15);
+        }
+
+        .toggle-container {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            background: var(--bg-light);
+            padding: 10px 14px;
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+            margin-bottom: 16px;
+            cursor: pointer;
+        }
+
+        .toggle-container input[type="checkbox"] {
+            width: 18px;
+            height: 18px;
+            accent-color: var(--primary);
+            cursor: pointer;
+        }
+
+        .toggle-container label {
+            font-size: 13px;
+            font-weight: 700;
+            color: var(--primary);
+            cursor: pointer;
+            margin: 0;
+        }
+
+        .items-form-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 12px;
+        }
+
+        .items-form-table th {
+            text-align: left;
+            font-size: 11px;
+            font-weight: 700;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            padding: 6px;
+        }
+
+        .items-form-table td {
+            padding: 4px;
+            vertical-align: top;
+        }
+
+        .btn-remove-row {
+            background: #fee2e2;
+            color: var(--danger);
+            border: none;
+            width: 32px;
+            height: 32px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .btn-remove-row:hover {
+            background: #fca5a5;
+            color: #7f1d1d;
+        }
+
+        /* =====================================================
+           5. LIVE INVOICE PREVIEW (A4 CANVAS)
+        ===================================================== */
+        .preview-wrapper {
+            position: sticky;
+            top: 100px;
+        }
+
+        .invoice-paper {
+            background: var(--white);
+            border: 1px solid #cbd5e1;
+            border-radius: 4px;
+            padding: 40px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+            min-height: 842px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            font-size: 12px;
+            color: #1e293b;
+            box-sizing: border-box; /* Zabezpečí, že padding nevytláča obsah von */
+        }
+
+        .inv-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            border-bottom: 2px solid var(--primary);
+            padding-bottom: 18px;
+            margin-bottom: 24px;
+        }
+
+        .inv-brand-title {
+            color: var(--primary);
+            font-size: 24px;
+            font-weight: 800;
+            letter-spacing: -0.5px;
+        }
+
+        .inv-type-title {
+            text-align: right;
+        }
+
+        .inv-type-title h2 {
+            font-size: 20px;
+            color: var(--primary);
+            font-weight: 800;
+        }
+
+        .inv-type-title .inv-number {
+            font-size: 14px;
+            font-weight: 700;
+            color: var(--accent);
+        }
+
+        .inv-parties {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 25px;
+            margin-bottom: 25px;
+        }
+
+        .inv-party-box {
+            background: #f8fafc;
+            border-radius: 8px;
+            padding: 14px 16px;
+            border: 1px solid #e2e8f0;
+        }
+
+        .inv-party-box h3 {
+            font-size: 11px;
+            text-transform: uppercase;
+            color: var(--primary);
+            letter-spacing: 0.5px;
+            margin-bottom: 8px;
+            border-bottom: 1px solid #cbd5e1;
+            padding-bottom: 4px;
+        }
+
+        .inv-party-name {
+            font-size: 14px;
+            font-weight: 700;
+            color: #0f172a;
+            margin-bottom: 4px;
+        }
+
+        .inv-party-details {
+            line-height: 1.5;
+            color: #475569;
+        }
+
+        .inv-meta-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 12px;
+            background: var(--accent-light);
+            border-radius: 8px;
+            padding: 12px 16px;
+            margin-bottom: 25px;
+            border: 1px solid #dbeafe;
+        }
+
+        .inv-meta-item label {
+            display: block;
+            font-size: 10px;
+            text-transform: uppercase;
+            color: var(--text-muted);
+            font-weight: 700;
+        }
+
+        .inv-meta-item span {
+            font-size: 12px;
+            font-weight: 700;
+            color: var(--primary);
+            overflow-wrap: anywhere;
+        }
+
+        .inv-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 25px;
+        }
+
+        .inv-table th {
+            background: var(--primary);
+            color: var(--white);
+            text-align: left;
+            padding: 8px 10px;
+            font-size: 11px;
+            text-transform: uppercase;
+            font-weight: 700;
+        }
+
+        .inv-table th:first-child { border-top-left-radius: 6px; border-bottom-left-radius: 6px; }
+        .inv-table th:last-child { border-top-right-radius: 6px; border-bottom-right-radius: 6px; text-align: right; }
+
+        .inv-table td {
+            padding: 10px;
+            border-bottom: 1px solid #e2e8f0;
+            color: #334155;
+        }
+
+        .inv-table td.text-right {
+            text-align: right;
+        }
+
+        .inv-table tr:nth-child(even) td {
+            background-color: #f8fafc;
+        }
+
+        .inv-bottom-section {
+            display: grid;
+            grid-template-columns: 1.2fr 1fr;
+            gap: 20px;
+            align-items: flex-start;
+            margin-top: 15px;
+        }
+
+        .inv-qr-block {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            background: #ffffff;
+            border: 1px dashed #cbd5e1;
+            padding: 12px;
+            border-radius: 8px;
+        }
+
+        #qrcode img, #qrcode canvas {
+            width: 90px !important;
+            height: 90px !important;
+            display: block;
+        }
+
+        .qr-info h4 {
+            font-size: 11px;
+            font-weight: 800;
+            color: var(--primary);
+            margin-bottom: 3px;
+        }
+
+        .qr-info p {
+            font-size: 10px;
+            color: var(--text-muted);
+            line-height: 1.3;
+        }
+
+        .inv-totals-box {
+            background: #f8fafc;
+            border-radius: 8px;
+            padding: 14px 16px;
+            border: 1px solid #e2e8f0;
+        }
+
+        .inv-total-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 4px 0;
+            color: #475569;
+        }
+
+        .inv-total-row.grand-total {
+            border-top: 2px solid var(--primary);
+            margin-top: 8px;
+            padding-top: 8px;
+            font-size: 16px;
+            font-weight: 800;
+            color: var(--primary);
+        }
+
+        .inv-footer-note {
+            margin-top: auto;
+            padding-top: 25px;
+            border-top: 1px solid #e2e8f0;
+            font-size: 10px;
+            color: var(--text-muted);
+            text-align: center;
+        }
+
+        /* Mode Switcher */
+        .mode-picker {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 12px;
+            margin: 0 0 22px;
+        }
+
+        .mode-choice {
+            display: block;
+            text-align: left;
+            border: 2px solid #dbe5f1;
+            border-radius: 12px;
+            padding: 17px;
+            background: #fff;
+            color: #052c64;
+            cursor: pointer;
+            font: inherit;
+            transition: border-color .2s, background .2s;
+        }
+
+        .mode-choice strong { display: block; font-size: 16px; margin-bottom: 5px; }
+        .mode-choice small { display: block; color: #64748b; line-height: 1.5; }
+        .mode-choice[aria-pressed="true"] {
+            border-color: #052c64;
+            background: #eef5fd;
+            box-shadow: 0 0 0 2px rgba(5,44,100,.07);
+        }
+
+        .mode-hint { font-size: 12px; color: #526780; margin: -8px 0 18px; }
+        body.simple-mode .advanced-only { display: none !important; }
+        body.simple-mode .items-form-table th:nth-child(4),
+        body.simple-mode .items-form-table td:nth-child(4) { display: none !important; }
+
+        /* =====================================================
+           6. SITE FOOTER
+        ===================================================== */
+        .footer {
+            background: #071c35;
+            color: #ffffff;
+            padding: 60px 0 25px;
+            margin-top: auto;
+        }
+
+        .footer .container {
+            width: min(1180px, 92%);
+            margin: 0 auto;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 50px;
+            padding-bottom: 40px;
+        }
+
+        .footer-column:nth-child(1) { text-align: left; }
+        .footer-column:nth-child(2) { text-align: center; }
+        .footer-column:nth-child(3) { text-align: right; }
+
+        .footer-column h3 { font-size: 16px; margin-bottom: 16px; }
+        .footer-column p { color: #aebdcd; font-size: 13px; line-height: 1.8; }
+        .footer-column a { color: #c8d6e5; transition: color .2s ease; }
+        .footer-column a:hover { color: #ffffff; }
+
+        .footer-bottom {
+            border-top: 1px solid rgba(255,255,255,.10);
+            padding-top: 22px;
+            color: #8fa1b4;
+            font-size: 11px;
+            text-align: center;
+        }
+
+        .footer-bottom a { color: #c2d1df; }
+
+        /* =====================================================
+           7. RESPONSIVE & PRINT BREAKPOINTS
+        ===================================================== */
+        @media (max-width: 992px) {
+            .workspace-grid { grid-template-columns: 1fr; }
+            .preview-wrapper { position: static; }
+        }
+
+        @media (max-width: 800px) {
+            .site-header .nav-container { flex-direction: column; justify-content: center; padding: 18px 0; gap: 15px; }
+            .site-header .main-nav { display: flex; flex-direction: row; flex-wrap: wrap; justify-content: center; gap: 14px 20px; }
+            .footer-content { grid-template-columns: 1fr; gap: 30px; }
+            .footer-column:nth-child(n) { text-align: center; }
+        }
+
+        @media (max-width: 600px) {
+            .mode-picker { grid-template-columns: 1fr; }
+        }
+
         @media print {
-            body * {
-                visibility: hidden;
-            }
-            #invoice-preview-container, #invoice-preview-container * {
-                visibility: visible;
-            }
-            #invoice-preview-container {
-                position: absolute;
-                left: 0;
-                top: 0;
-                width: 100%;
+            @page {
+                size: A4 portrait;
                 margin: 0;
-                padding: 0;
-                box-shadow: none;
             }
-            .no-print {
+
+            html, body {
+                background: #ffffff !important;
+                color: #1e293b !important;
+                margin: 0 !important;
+                padding: 0 !important;
+                width: 210mm !important;
+                height: 297mm !important;
+                -webkit-print-color-adjust: exact !important;
+                print-color-adjust: exact !important;
+            }
+
+            .site-header,
+            .page-banner,
+            .toolbar,
+            .form-card,
+            .footer,
+            .mode-picker,
+            .mode-hint {
                 display: none !important;
             }
+
+            .app-workspace {
+                width: 100% !important;
+                max-width: 100% !important;
+                margin: 0 !important;
+                padding: 0 !important;
+            }
+
+            .workspace-grid { display: block !important; }
+
+            .preview-wrapper {
+                position: static !important;
+                width: 100% !important;
+                margin: 0 !important;
+                padding: 0 !important;
+            }
+
+            .invoice-paper {
+                border: none !important;
+                box-shadow: none !important;
+                padding: 15mm 15mm !important;
+                width: 210mm !important;
+                min-height: 297mm !important;
+                box-sizing: border-box !important;
+                margin: 0 auto !important;
+            }
+
+            .inv-parties { grid-template-columns: 1fr 1fr !important; }
+            .inv-meta-grid { grid-template-columns: 1fr 1fr 1fr !important; }
+            .inv-bottom-section { grid-template-columns: 1.2fr 1fr !important; }
+
+            .inv-table th {
+                background-color: var(--primary) !important;
+                color: var(--white) !important;
+                -webkit-print-color-adjust: exact !important;
+                print-color-adjust: exact !important;
+            }
         }
 
-        .pdf-element {
-            font-family: 'Inter', sans-serif !important;
-        }
+        /* Vyhľadávanie firmy podľa IČO */
+        .ico-lookup { display:flex; gap:7px; align-items:center; }
+        .ico-lookup .form-control { min-width:0; flex:1; }
+        .ico-lookup .btn { padding:9px 11px; font-size:12px; }
+        .ico-status { display:block; font-size:11px; margin-top:5px; color:var(--text-muted); min-height:15px; }
+        .ico-status.error { color:#b91c1c; }
+        .ico-status.ok { color:#047857; }
+        @media(max-width:480px) { .ico-lookup { flex-wrap:wrap; } }
     </style>
 </head>
-<body class="bg-slate-50 font-sans text-slate-800 antialiased min-h-screen flex flex-col">
 
-    <!-- Top Navigation Header -->
-    <header class="bg-white border-b border-slate-200 sticky top-0 z-40 no-print">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
-            <div class="flex items-center space-x-3">
-                <div class="bg-gradient-to-r from-brand-600 to-brand-800 text-white font-black text-xl px-3 py-1.5 rounded-lg shadow-sm tracking-tight flex items-center gap-2">
-                    <i class="fa-solid fa-file-invoice"></i>
-                    DataPay<span class="text-brand-300 font-normal text-sm">.sk</span>
+<body class="simple-mode">
+
+    <!-- SITE HEADER & NAVIGATION -->
+    <header class="site-header">
+        <div class="nav-container">
+            <a class="brand" href="index.html">
+                <img alt="DataPay logo" src="logo.png"/>
+                <div class="brand-text">
+                    <div class="brand-name">DataPay s.r.o.</div>
+                    <div class="brand-subtitle">Mzdy • Účtovníctvo • Personalistika</div>
                 </div>
-                <div class="hidden sm:block h-5 w-px bg-slate-200"></div>
-                <span class="hidden sm:inline-block text-xs text-slate-500 font-medium">Bezplatný generátor faktúr</span>
-            </div>
-            
-            <div class="flex items-center space-x-2">
-                <button onclick="loadSampleData()" class="px-3 py-1.5 text-xs font-semibold text-brand-700 bg-brand-50 hover:bg-brand-100 rounded-lg transition-colors flex items-center gap-1.5 border border-brand-200">
-                    <i class="fa-solid fa-wand-magic-sparkles"></i>
-                    <span class="hidden sm:inline">Načítať príklad</span>
-                </button>
-                <button onclick="clearForm()" class="px-3 py-1.5 text-xs font-semibold text-slate-600 bg-slate-100 hover:bg-slate-200 rounded-lg transition-colors flex items-center gap-1.5">
-                    <i class="fa-solid fa-rotate"></i>
-                    <span class="hidden sm:inline">Vyčistiť</span>
-                </button>
-                <a href="https://datapay.sk" target="_blank" class="px-3.5 py-1.5 text-xs font-bold text-white bg-slate-900 hover:bg-slate-800 rounded-lg shadow-sm transition-all flex items-center gap-1.5">
-                    <span>Viac o DataPay</span>
-                    <i class="fa-solid fa-arrow-up-right-from-square text-[10px]"></i>
-                </a>
-            </div>
+            </a>
+            <nav class="main-nav">
+                <a href="index.html">Domov</a>
+                <a href="About.html">O nás</a>
+                <a href="payroll.html">Služby</a>
+                <a href="Cennik.html">Cenník</a>
+                <a href="FAQ.html">Časté Otázky</a>
+                 <a href="faktura.html"  class="active">Generátor faktúr</a>
+                <a href="kalkulacka.html">Mzdová kalkulačka</a>
+                <div class="language">
+                    <a class="active" href="index.html">SK</a>
+                    <span>/</span>
+                    <a href="en/">EN</a>
+                </div>
+            </nav>
         </div>
     </header>
 
-    <!-- Main Workspace Container -->
-    <main class="flex-1 max-w-[1700px] w-full mx-auto p-4 sm:p-6 lg:p-8 grid grid-cols-1 lg:grid-cols-12 gap-8">
-        
-        <!-- LEFT COLUMN: Form Inputs -->
-        <section class="lg:col-span-6 space-y-6 no-print">
-            
-            <div class="bg-white rounded-2xl p-5 sm:p-6 border border-slate-200/80 shadow-sm space-y-6">
-                <!-- Section Header -->
-                <div class="flex items-center justify-between border-b border-slate-100 pb-4">
-                    <div>
-                        <h2 class="text-lg font-bold text-slate-900 flex items-center gap-2">
-                            <i class="fa-solid fa-[#2563eb] fa-building-user text-brand-600"></i> Dodávateľ (Vaša firma)
-                        </h2>
-                        <p class="text-xs text-slate-500 mt-0.5">Údaje o vašej spoločnosti alebo živnosti</p>
-                    </div>
-                    
-                    <!-- DPH Toggle Switch -->
-                    <label class="relative inline-flex items-center cursor-pointer">
-                        <input type="checkbox" id="isTaxPayer" class="sr-only peer" onchange="renderInvoice()" checked>
-                        <div class="w-11 h-6 bg-slate-200 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-slate-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-brand-600"></div>
-                        <span class="ml-2.5 text-xs font-semibold text-slate-700">Platiteľ DPH</span>
-                    </label>
-                </div>
-
-                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                    <div class="sm:col-span-2">
-                        <label class="block text-xs font-semibold text-slate-700 mb-1">Názov firmy / Meno *</label>
-                        <input type="text" id="supplierName" oninput="renderInvoice()" class="w-full text-sm px-3 py-2 rounded-lg border border-slate-200 focus:ring-2 focus:ring-brand-500 focus:border-brand-500 outline-none transition" placeholder="Napr. DataPay s.r.o.">
-                    </div>
-                    <div>
-                        <label class="block text-xs font-semibold text-slate-700 mb-1">Ulica a číslo</label>
-                        <input type="text" id="supplierStreet" oninput="renderInvoice()" class="w-full text-sm px-3 py-2 rounded-lg border border-slate-200 focus:ring-2 focus:ring-brand-500 outline-none" placeholder="Hlavná 123">
-                    </div>
-                    <div>
-                        <label class="block text-xs font-semibold text-slate-700 mb-1">PSČ a Mesto</label>
-                        <input type="text" id="supplierCity" oninput="renderInvoice()" class="w-full text-sm px-3 py-2 rounded-lg border border-slate-200 focus:ring-2 focus:ring-brand-500 outline-none" placeholder="811 01 Bratislava">
-                    </div>
-                    <div>
-                        <label class="block text-xs font-semibold text-slate-700 mb-1">IČO</label>
-                        <input type="text" id="supplierIco" oninput="renderInvoice()" class="w-full text-sm px-3 py-2 rounded-lg border border-slate-200 focus:ring-2 focus:ring-brand-500 outline-none" placeholder="12345678">
-                    </div>
-                    <div>
-                        <label class="block text-xs font-semibold text-slate-700 mb-1">DIČ</label>
-                        <input type="text" id="supplierDic" oninput="renderInvoice()" class="w-full text-sm px-3 py-2 rounded-lg border border-slate-200 focus:ring-2 focus:ring-brand-500 outline-none" placeholder="2021234567">
-                    </div>
-                    <div id="supplierIcDphWrapper">
-                        <label class="block text-xs font-semibold text-slate-700 mb-1">IČ DPH</label>
-                        <input type="text" id="supplierIcDph" oninput="renderInvoice()" class="w-full text-sm px-3 py-2 rounded-lg border border-slate-200 focus:ring-2 focus:ring-brand-500 outline-none" placeholder="SK2021234567">
-                    </div>
-                    <div>
-                        <label class="block text-xs font-semibold text-slate-700 mb-1">Email</label>
-                        <input type="email" id="supplierEmail" oninput="renderInvoice()" class="w-full text-sm px-3 py-2 rounded-lg border border-slate-200 focus:ring-2 focus:ring-brand-500 outline-none" placeholder="faktury@datapay.sk">
-                    </div>
-                </div>
-
-                <!-- Bank Info -->
-                <div class="pt-2 border-t border-slate-100">
-                    <h3 class="text-xs font-bold uppercase tracking-wider text-slate-400 mb-3">Bankové spojenie</h3>
-                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                        <div class="sm:col-span-2">
-                            <label class="block text-xs font-semibold text-slate-700 mb-1">IBAN *</label>
-                            <input type="text" id="supplierIban" oninput="renderInvoice()" class="w-full text-sm px-3 py-2 rounded-lg border border-slate-200 focus:ring-2 focus:ring-brand-500 outline-none uppercase font-mono" placeholder="SK88 1100 0000 0012 3456 7890">
-                        </div>
-                        <div>
-                            <label class="block text-xs font-semibold text-slate-700 mb-1">SWIFT / BIC</label>
-                            <input type="text" id="supplierSwift" oninput="renderInvoice()" class="w-full text-sm px-3 py-2 rounded-lg border border-slate-200 focus:ring-2 focus:ring-brand-500 outline-none uppercase font-mono" placeholder="TATRSKBX">
-                        </div>
-                        <div>
-                            <label class="block text-xs font-semibold text-slate-700 mb-1">Banka</label>
-                            <input type="text" id="supplierBank" oninput="renderInvoice()" class="w-full text-sm px-3 py-2 rounded-lg border border-slate-200 focus:ring-2 focus:ring-brand-500 outline-none" placeholder="Tatra banka">
-                        </div>
-                    </div>
-                </div>
+    <!-- PAGE HERO STRIP -->
+    <section class="page-banner">
+        <div class="banner-content">
+            <div class="banner-title">
+                <h1>Online Generátor Faktúr</h1>
+                <p>Vytvorte si faktúru a SEPA QR kód na úhradu (EPC).</p>
             </div>
-
-            <!-- Customer / Odberatel -->
-            <div class="bg-white rounded-2xl p-5 sm:p-6 border border-slate-200/80 shadow-sm space-y-4">
-                <div class="border-b border-slate-100 pb-3">
-                    <h2 class="text-lg font-bold text-slate-900 flex items-center gap-2">
-                        <i class="fa-solid fa-user-tag text-brand-600"></i> Odberateľ (Klient)
-                    </h2>
-                    <p class="text-xs text-slate-500 mt-0.5">Komu je faktúra vystavená</p>
-                </div>
-
-                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                    <div class="sm:col-span-2">
-                        <label class="block text-xs font-semibold text-slate-700 mb-1">Názov firmy / Meno klienta *</label>
-                        <input type="text" id="customerName" oninput="renderInvoice()" class="w-full text-sm px-3 py-2 rounded-lg border border-slate-200 focus:ring-2 focus:ring-brand-500 outline-none" placeholder="Klient s.r.o.">
-                    </div>
-                    <div>
-                        <label class="block text-xs font-semibold text-slate-700 mb-1">Ulica a číslo</label>
-                        <input type="text" id="customerStreet" oninput="renderInvoice()" class="w-full text-sm px-3 py-2 rounded-lg border border-slate-200 focus:ring-2 focus:ring-brand-500 outline-none" placeholder="Obchodná 45">
-                    </div>
-                    <div>
-                        <label class="block text-xs font-semibold text-slate-700 mb-1">PSČ a Mesto</label>
-                        <input type="text" id="customerCity" oninput="renderInvoice()" class="w-full text-sm px-3 py-2 rounded-lg border border-slate-200 focus:ring-2 focus:ring-brand-500 outline-none" placeholder="010 01 Žilina">
-                    </div>
-                    <div>
-                        <label class="block text-xs font-semibold text-slate-700 mb-1">IČO</label>
-                        <input type="text" id="customerIco" oninput="renderInvoice()" class="w-full text-sm px-3 py-2 rounded-lg border border-slate-200 focus:ring-2 focus:ring-brand-500 outline-none" placeholder="87654321">
-                    </div>
-                    <div>
-                        <label class="block text-xs font-semibold text-slate-700 mb-1">DIČ</label>
-                        <input type="text" id="customerDic" oninput="renderInvoice()" class="w-full text-sm px-3 py-2 rounded-lg border border-slate-200 focus:ring-2 focus:ring-brand-500 outline-none" placeholder="2029876543">
-                    </div>
-                    <div class="sm:col-span-2">
-                        <label class="block text-xs font-semibold text-slate-700 mb-1">IČ DPH (Voliteľné)</label>
-                        <input type="text" id="customerIcDph" oninput="renderInvoice()" class="w-full text-sm px-3 py-2 rounded-lg border border-slate-200 focus:ring-2 focus:ring-brand-500 outline-none" placeholder="SK2029876543">
-                    </div>
-                </div>
+            <div>
+                <span class="badge-free">✓ 100% Bezplatne & Bez Registrácie</span>
             </div>
+        </div>
+    </section>
 
-            <!-- Invoice Parameters -->
-            <div class="bg-white rounded-2xl p-5 sm:p-6 border border-slate-200/80 shadow-sm space-y-4">
-                <div class="border-b border-slate-100 pb-3">
-                    <h2 class="text-lg font-bold text-slate-900 flex items-center gap-2">
-                        <i class="fa-solid fa-sliders text-brand-600"></i> Detaily faktúry
-                    </h2>
+    <!-- MAIN WORKSPACE -->
+    <main class="app-workspace">
+
+        <!-- ACTION TOOLBAR -->
+        <div class="toolbar">
+            <div class="toolbar-group">
+                <button class="btn btn-primary" onclick="downloadPDF()">
+                    <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path></svg>
+                    Stiahnuť PDF
+                </button>
+                <button class="btn btn-accent" onclick="printInvoice()">
+                    <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z"></path></svg>
+                    Vytlačiť
+                </button>
+            </div>
+            <div class="toolbar-group">
+                <button class="btn btn-outline" onclick="loadSampleData()">
+                    Vzorové údaje
+                </button>
+                <button class="btn btn-danger-outline" onclick="clearForm()">
+                    Vymazať formulár
+                </button>
+            </div>
+        </div>
+
+        <!-- DUAL COLUMN WORKSPACE GRID -->
+        <div class="workspace-grid">
+
+            <!-- LEFT COLUMN: INPUT FORM -->
+            <div class="form-card">
+                
+                <div class="mode-picker" role="group" aria-label="Zložitosť faktúry">
+                    <button type="button" class="mode-choice" id="modeSimple" aria-pressed="true" onclick="setInvoiceMode('simple')">
+                        <strong>Jednoduchá faktúra</strong>
+                        <small>Bežná faktúra v EUR. Vyplníte len základné údaje, odberateľa a položky.</small>
+                    </button>
+                    <button type="button" class="mode-choice" id="modeAdvanced" aria-pressed="false" onclick="setInvoiceMode('advanced')">
+                        <strong>Komplexná faktúra</strong>
+                        <small>Zahraničie, osobitné režimy DPH, zľavy, zálohy, viac mien a ďalšie možnosti.</small>
+                    </button>
+                </div>
+                <p class="mode-hint" id="modeHint" aria-live="polite">Pokročilé polia sú skryté, nie odstránené. Kedykoľvek môžete prepnúť na komplexnú faktúru.</p>
+                
+                <!-- DPH Switcher -->
+                <div class="toggle-container">
+                    <input type="checkbox" id="isDphPayer" onchange="updateInvoice()">
+                    <label for="isDphPayer">Dodávateľ je platiteľ DPH</label>
                 </div>
 
-                <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
-                    <div>
-                        <label class="block text-xs font-semibold text-slate-700 mb-1">Číslo faktúry *</label>
-                        <input type="text" id="invoiceNumber" oninput="renderInvoice()" class="w-full text-sm px-3 py-2 rounded-lg border border-slate-200 focus:ring-2 focus:ring-brand-500 outline-none font-medium">
-                    </div>
-                    <div>
-                        <label class="block text-xs font-semibold text-slate-700 mb-1">Variabilný symbol</label>
-                        <input type="text" id="variableSymbol" oninput="renderInvoice()" class="w-full text-sm px-3 py-2 rounded-lg border border-slate-200 focus:ring-2 focus:ring-brand-500 outline-none font-mono">
-                    </div>
-                    <div>
-                        <label class="block text-xs font-semibold text-slate-700 mb-1">Mena</label>
-                        <select id="currency" onchange="renderInvoice()" class="w-full text-sm px-3 py-2 rounded-lg border border-slate-200 focus:ring-2 focus:ring-brand-500 outline-none bg-white">
-                            <option value="EUR">EUR (€)</option>
-                            <option value="CZK">CZK (Kč)</option>
-                            <option value="USD">USD ($)</option>
+                <div class="advanced-only" id="advancedTaxFields">
+                    <div class="form-section-title">Daňový režim</div>
+                    <div class="form-group">
+                        <label for="taxMode">Typ dodania</label>
+                        <select id="taxMode" class="form-control" onchange="updateInvoice()">
+                            <option value="domestic">Bežné tuzemské dodanie</option>
+                            <option value="reverse">Prenesenie daňovej povinnosti</option>
+                            <option value="exempt">Oslobodené od DPH</option>
+                            <option value="intra">Dodanie tovaru do iného členského štátu EÚ – § 43</option>
+                            <option value="export">Vývoz tovaru – § 47</option>
                         </select>
                     </div>
-                    <div>
-                        <label class="block text-xs font-semibold text-slate-700 mb-1">Dátum vystavenia</label>
-                        <input type="date" id="issueDate" onchange="renderInvoice()" class="w-full text-sm px-3 py-2 rounded-lg border border-slate-200 focus:ring-2 focus:ring-brand-500 outline-none">
+                    <div class="form-group" id="legalRefGroup" style="display:none">
+                        <label>Právny dôvod / ustanovenie</label>
+                        <input id="legalRef" class="form-control" oninput="updateInvoice()" placeholder="Napr. konkrétne ustanovenie zákona">
                     </div>
-                    <div>
-                        <label class="block text-xs font-semibold text-slate-700 mb-1">Dátum dodania</label>
-                        <input type="date" id="deliveryDate" onchange="renderInvoice()" class="w-full text-sm px-3 py-2 rounded-lg border border-slate-200 focus:ring-2 focus:ring-brand-500 outline-none">
+                    <div class="form-group">
+                        <label>Číslo objednávky / referencia</label>
+                        <input id="orderRef" class="form-control" oninput="updateInvoice()">
                     </div>
-                    <div>
-                        <label class="block text-xs font-semibold text-slate-700 mb-1">Dátum splatnosti</label>
-                        <input type="date" id="dueDate" onchange="renderInvoice()" class="w-full text-sm px-3 py-2 rounded-lg border border-slate-200 focus:ring-2 focus:ring-brand-500 outline-none font-semibold text-brand-700">
+                    <div class="form-group">
+                        <label>Zápis dodávateľa v registri</label>
+                        <input id="registry" class="form-control" oninput="updateInvoice()" placeholder="OR ..., oddiel ..., vložka ...">
                     </div>
-                    <div class="sm:col-span-3 grid grid-cols-1 sm:grid-cols-2 gap-4">
-                        <div>
-                            <label class="block text-xs font-semibold text-slate-700 mb-1">Spôsob úhrady</label>
-                            <select id="paymentMethod" onchange="renderInvoice()" class="w-full text-sm px-3 py-2 rounded-lg border border-slate-200 focus:ring-2 focus:ring-brand-500 outline-none bg-white">
-                                <option value="Bankový prevod">Bankový prevod</option>
-                                <option value="Hotovosť">Hotovosť</option>
-                                <option value="Platebná karta">Platobná karta</option>
+                    <div class="form-grid-2">
+                        <div class="form-group">
+                            <label>Mena dokladu</label>
+                            <select id="currency" class="form-control" onchange="updateInvoice()">
+                                <option>EUR</option>
+                                <option>CZK</option>
+                                <option>USD</option>
                             </select>
                         </div>
-                        <div>
-                            <label class="block text-xs font-semibold text-slate-700 mb-1">Generovať QR kód (PAY by square)</label>
-                            <select id="generateQr" onchange="renderInvoice()" class="w-full text-sm px-3 py-2 rounded-lg border border-slate-200 focus:ring-2 focus:ring-brand-500 outline-none bg-white">
-                                <option value="yes">Áno (Odporúčané)</option>
-                                <option value="no">Nie</option>
-                            </select>
+                        <div class="form-group">
+                            <label>Kurz ku EUR</label>
+                            <input id="eurRate" type="number" min="0" step="0.000001" value="1" class="form-control" oninput="updateInvoice()">
                         </div>
                     </div>
+                    <div class="form-grid-2">
+                        <div class="form-group">
+                            <label>Spôsob úhrady</label>
+                            <select id="paymentMethod" class="form-control" onchange="updateInvoice()">
+                                <option>Bankový prevod</option>
+                                <option>Hotovosť</option>
+                                <option>Platobná karta</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Prijatá záloha</label>
+                            <input id="advance" type="number" min="0" step="0.01" value="0" class="form-control" oninput="updateInvoice()">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>Uhradené navyše</label>
+                        <input id="paid" type="number" min="0" step="0.01" value="0" class="form-control" oninput="updateInvoice()">
+                    </div>
                 </div>
+
+                <!-- Invoice Meta Settings -->
+                <div class="form-section-title">Základné Údaje Faktúry</div>
+                <div class="form-grid-3">
+                    <div class="form-group">
+                        <label>Číslo faktúry</label>
+                        <input type="text" id="invNumber" class="form-control" value="20260001" oninput="updateInvoice()">
+                    </div>
+                    <div class="form-group">
+                        <label>Variabilný symbol</label>
+                        <input type="text" id="invVS" class="form-control" value="20260001" oninput="updateInvoice()">
+                    </div>
+                    <div class="form-group advanced-only">
+                        <label>Konštantný symbol</label>
+                        <input type="text" id="invKS" class="form-control" value="0308" oninput="updateInvoice()">
+                    </div>
+                </div>
+
+                <div class="form-grid-3">
+                    <div class="form-group">
+                        <label>Dátum vystavenia</label>
+                        <input type="date" id="dateIssue" class="form-control" oninput="updateInvoice()">
+                    </div>
+                    <div class="form-group">
+                        <label>Dátum dodania</label>
+                        <input type="date" id="dateSupply" class="form-control" oninput="updateInvoice()">
+                    </div>
+                    <div class="form-group">
+                        <label>Dátum splatnosti</label>
+                        <input type="date" id="dateDue" class="form-control" oninput="updateInvoice()">
+                    </div>
+                </div>
+
+                <!-- Supplier Form -->
+                <div class="form-section-title">Dodávateľ (Vaša firma)</div>
+                <div class="form-group">
+                    <label>Názov firmy / Meno</label>
+                    <input type="text" id="supName" class="form-control" placeholder="napr. DataPay s.r.o." oninput="updateInvoice()">
+                </div>
+                <div class="form-grid-2">
+                    <div class="form-group">
+                        <label>Ulica a číslo</label>
+                        <input type="text" id="supStreet" class="form-control" placeholder="Hlavná 123/4" oninput="updateInvoice()">
+                    </div>
+                    <div class="form-group">
+                        <label>Mesto a PSČ</label>
+                        <input type="text" id="supCity" class="form-control" placeholder="811 01 Bratislava" oninput="updateInvoice()">
+                    </div>
+                </div>
+                <div class="form-grid-3">
+                    <div class="form-group">
+                        <label>IČO</label>
+                        <div class="ico-lookup"><input type="text" id="supIco" class="form-control" placeholder="8-miestne IČO" inputmode="numeric" maxlength="8" oninput="updateInvoice(); resetIcoStatus('sup')" onkeydown="if(event.key==='Enter'){event.preventDefault();lookupCompany('sup')}"><button type="button" class="btn btn-outline" id="supLookupBtn" onclick="lookupCompany('sup')">Načítať</button></div><small id="supIcoStatus" class="ico-status" role="status" aria-live="polite"></small>
+                    </div>
+                    <div class="form-group">
+                        <label>DIČ</label>
+                        <input type="text" id="supDic" class="form-control" placeholder="2021234567" oninput="updateInvoice()">
+                    </div>
+                    <div class="form-group advanced-only">
+                        <label>IČ DPH</label>
+                        <input type="text" id="supIcdph" class="form-control" placeholder="SK2021234567" oninput="updateInvoice()">
+                    </div>
+                </div>
+
+                <!-- Banking Info -->
+                <div class="form-section-title">Bankové Údaje (Pre QR Kód)</div>
+                <div class="form-grid-2">
+                    <div class="form-group">
+                        <label>IBAN</label>
+                        <input type="text" id="supIban" class="form-control" placeholder="SK31 1200 0000 0012 3456 7890" autocomplete="off" spellcheck="false" oninput="formatIbanInput(this)">
+                    </div>
+                    <div class="form-group advanced-only">
+                        <label>SWIFT / BIC</label>
+                        <input type="text" id="supSwift" class="form-control" placeholder="SUBASKBX" oninput="updateInvoice()">
+                    </div>
+                </div>
+
+                <!-- Customer Form -->
+                <div class="form-section-title">Odberateľ (Klient)</div>
+                <div class="form-group">
+                    <label>Názov odberateľa / Meno</label>
+                    <input type="text" id="custName" class="form-control" placeholder="Klient Firma s.r.o." oninput="updateInvoice()">
+                </div>
+                <div class="form-grid-2">
+                    <div class="form-group">
+                        <label>Ulica a číslo</label>
+                        <input type="text" id="custStreet" class="form-control" placeholder="Obchodná 45" oninput="updateInvoice()">
+                    </div>
+                    <div class="form-group">
+                        <label>Mesto a PSČ</label>
+                        <input type="text" id="custCity" class="form-control" placeholder="040 01 Košice" oninput="updateInvoice()">
+                    </div>
+                </div>
+                <div class="form-grid-3">
+                    <div class="form-group">
+                        <label>IČO</label>
+                        <div class="ico-lookup"><input type="text" id="custIco" class="form-control" placeholder="8-miestne IČO" inputmode="numeric" maxlength="8" oninput="updateInvoice(); resetIcoStatus('cust')" onkeydown="if(event.key==='Enter'){event.preventDefault();lookupCompany('cust')}"><button type="button" class="btn btn-outline" id="custLookupBtn" onclick="lookupCompany('cust')">Načítať</button></div><small id="custIcoStatus" class="ico-status" role="status" aria-live="polite"></small>
+                    </div>
+                    <div class="form-group advanced-only">
+                        <label>DIČ</label>
+                        <input type="text" id="custDic" class="form-control" placeholder="2098765432" oninput="updateInvoice()">
+                    </div>
+                    <div class="form-group advanced-only">
+                        <label>IČ DPH</label>
+                        <input type="text" id="custIcdph" class="form-control" placeholder="SK2098765432" oninput="updateInvoice()">
+                    </div>
+                </div>
+
+                <!-- Invoice Line Items -->
+                <div class="form-section-title">
+                    <span>Položky Faktúry</span>
+                    <button class="btn btn-outline" style="padding: 4px 10px; font-size: 11px;" onclick="addItemRow()">+ Pridať položku</button>
+                </div>
+                
+                <table class="items-form-table">
+                    <thead>
+                        <tr>
+                            <th style="width: 45%;">Popis položky</th>
+                            <th style="width: 15%;">Množstvo</th>
+                            <th style="width: 20%;">Cena/ks</th>
+                            <th class="advanced-only">Zľava %</th>
+                            <th>DPH %</th>
+                            <th style="width: 15%;"></th>
+                        </tr>
+                    </thead>
+                    <tbody id="itemsContainer">
+                        <!-- Items rendered via JS -->
+                    </tbody>
+                </table>
+
+                <div id="validationErrors" role="alert" aria-live="polite" style="display:none;border:1px solid #fca5a5;background:#fef2f2;color:#991b1b;padding:12px;border-radius:8px;margin:15px 0;white-space:pre-line"></div>
+                
+                <div class="form-group" style="margin-top: 20px;">
+                    <label for="invNote">Poznámka na faktúre</label>
+                    <textarea id="invNote" class="form-control" rows="2" placeholder="Ďakujeme za využitie našich služieb." oninput="updateInvoice()"></textarea>
+                </div>
+
             </div>
 
-            <!-- Items Section -->
-            <div class="bg-white rounded-2xl p-5 sm:p-6 border border-slate-200/80 shadow-sm space-y-4">
-                <div class="flex items-center justify-between border-b border-slate-100 pb-3">
+            <!-- RIGHT COLUMN: LIVE A4 INVOICE PREVIEW -->
+            <div class="preview-wrapper">
+                <div class="invoice-paper" id="invoicePaper">
                     <div>
-                        <h2 class="text-lg font-bold text-slate-900 flex items-center gap-2">
-                            <i class="fa-solid fa-list-check text-brand-600"></i> Položky faktúry
-                        </h2>
-                        <p class="text-xs text-slate-500 mt-0.5">Fakturované služby alebo tovar</p>
+                        <!-- Invoice Header -->
+                        <div class="inv-header">
+                            <div>
+                                <div class="inv-brand-title" id="prevSupNameTitle">Váš Názov Firma</div>
+                                <div style="font-size: 11px; color: var(--text-muted); margin-top: 2px;">Dodávateľský doklad</div>
+                            </div>
+                            <div class="inv-type-title">
+                                <h2>FAKTÚRA</h2>
+                                <div class="inv-number">č. <span id="prevInvNumber">20260001</span></div>
+                            </div>
+                        </div>
+
+                        <!-- Parties Info -->
+                        <div class="inv-parties">
+                            <div class="inv-party-box">
+                                <h3>Dodávateľ</h3>
+                                <div class="inv-party-name" id="prevSupName">Názov Vašej Firmy</div>
+                                <div class="inv-party-details" id="prevSupAddress">
+                                    Ulica 123<br>000 00 Mesto
+                                </div>
+                                <div class="inv-party-details" style="margin-top: 6px;" id="prevSupTaxInfo">
+                                    IČO: 12345678<br>DIČ: 2021234567
+                                </div>
+                            </div>
+                            <div class="inv-party-box">
+                                <h3>Odberateľ</h3>
+                                <div class="inv-party-name" id="prevCustName">Názov Klienta</div>
+                                <div class="inv-party-details" id="prevCustAddress">
+                                    Ulica Klienta 45<br>000 00 Mesto Klienta
+                                </div>
+                                <div class="inv-party-details" style="margin-top: 6px;" id="prevCustTaxInfo">
+                                    IČO: 87654321<br>DIČ: 2098765432
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Dates & Banking Strip -->
+                        <div class="inv-meta-grid">
+                            <div class="inv-meta-item">
+                                <label>Dátum vystavenia</label>
+                                <span id="prevDateIssue">01.01.2026</span>
+                            </div>
+                            <div class="inv-meta-item">
+                                <label>Dátum dodania</label>
+                                <span id="prevDateSupply">01.01.2026</span>
+                            </div>
+                            <div class="inv-meta-item">
+                                <label>Dátum splatnosti</label>
+                                <span id="prevDateDue">15.01.2026</span>
+                            </div>
+                            <div class="inv-meta-item">
+                                <label>Variabilný symbol</label>
+                                <span id="prevVS">20260001</span>
+                            </div>
+                            <div class="inv-meta-item">
+                                <label>Konštantný symbol</label>
+                                <span id="prevKS">0308</span>
+                            </div>
+                            <div class="inv-meta-item">
+                                <label>IBAN</label>
+                                <span id="prevIban">SK00 0000 0000 0000</span>
+                            </div>
+                        </div>
+
+                        <!-- Items Table -->
+                        <table class="inv-table">
+                            <thead>
+                                <tr>
+                                    <th>Názov položky / Služba</th>
+                                    <th class="text-right">Množstvo</th>
+                                    <th class="text-right">Cena / ks</th>
+                                    <th class="text-right" id="thDphHeader" style="display:none;">DPH</th>
+                                    <th class="text-right">Spolu</th>
+                                </tr>
+                            </thead>
+                            <tbody id="prevItemsBody">
+                                <!-- Dynamic Render -->
+                            </tbody>
+                        </table>
+
+                        <!-- Totals & QR Section -->
+                        <div class="inv-bottom-section">
+                            <div class="inv-qr-block">
+                                <div id="qrcode"></div>
+                                <div class="qr-info">
+                                    <h4>SEPA QR (EPC)</h4>
+                                    <p>Naskenujte kód v mobilnom bankovníctve pre rýchlu úhradu.</p>
+                                </div>
+                            </div>
+
+                            <div class="inv-totals-box">
+                                <div id="taxBreakdown"></div>
+                                <div class="inv-total-row"><span>Celkom:</span><span id="prevGross">0.00 €</span></div>
+                                <div class="inv-total-row"><span>Záloha:</span><span id="prevAdvance">0.00 €</span></div>
+                                <div class="inv-total-row"><span>Uhradené:</span><span id="prevPaid">0.00 €</span></div>
+                                <div class="inv-total-row grand-total"><span>K úhrade:</span><span id="prevGrandTotal">0.00 €</span></div>
+                            </div>
+                        </div>
+
+                        <div id="prevExtra" style="margin-top:15px;font-size:11px;color:#475569;white-space:pre-line"></div>
+                        <div style="margin-top: 15px; font-size: 11px; color: #475569;" id="prevNoteBlock">
+                            <strong>Poznámka:</strong> <span id="prevNote">--</span>
+                        </div>
                     </div>
-                    <button onclick="addItem()" class="px-3 py-1.5 text-xs font-bold text-white bg-brand-600 hover:bg-brand-700 rounded-lg shadow-sm transition-all flex items-center gap-1.5">
-                        <i class="fa-solid fa-plus"></i> Pridať položku
-                    </button>
-                </div>
 
-                <div id="itemsContainer" class="space-y-3">
-                    <!-- Dynamic Items render here -->
-                </div>
-            </div>
-
-            <!-- Notes Section -->
-            <div class="bg-white rounded-2xl p-5 sm:p-6 border border-slate-200/80 shadow-sm space-y-3">
-                <label class="block text-sm font-bold text-slate-900">Poznámka alebo patka faktúry</label>
-                <textarea id="invoiceNotes" rows="2" oninput="renderInvoice()" class="w-full text-sm px-3 py-2 rounded-lg border border-slate-200 focus:ring-2 focus:ring-brand-500 outline-none" placeholder="Napr. Ďakujeme za využitie našich služieb. Zápis v OR OS Bratislava I..."></textarea>
-            </div>
-            
-            <!-- DataPay CTA Promo Card -->
-            <div class="bg-gradient-to-r from-slate-900 to-brand-950 rounded-2xl p-5 text-white shadow-lg space-y-3 relative overflow-hidden">
-                <div class="absolute -right-10 -bottom-10 w-40 h-40 bg-brand-500/10 rounded-full blur-2xl"></div>
-                <div class="flex items-start gap-4">
-                    <div class="w-10 h-10 rounded-xl bg-brand-600 flex items-center justify-center shrink-0 shadow-md">
-                        <i class="fa-solid fa-calculator text-lg"></i>
-                    </div>
-                    <div class="space-y-1">
-                        <h4 class="font-bold text-base">Potrebujete profesionálne účtovníctvo?</h4>
-                        <p class="text-xs text-slate-300 leading-relaxed">
-                            Prenechajte starosti s daniami a mzdami odborníkom z <strong class="text-white">DataPay.sk</strong>. Získajte kompletné vedenie účtovníctva bez chýb.
-                        </p>
-                    </div>
-                </div>
-                <div class="pt-2 flex items-center justify-between border-t border-slate-800 text-xs">
-                    <span class="text-slate-400">Kontakt: info@datapay.sk</span>
-                    <a href="https://datapay.sk" target="_blank" class="text-brand-300 hover:text-white font-semibold flex items-center gap-1">
-                        Navštíviť datapay.sk <i class="fa-solid fa-arrow-right text-[10px]"></i>
-                    </a>
-                </div>
-            </div>
-
-        </section>
-
-
-        <!-- RIGHT COLUMN: Live Interactive Invoice Preview & Actions -->
-        <section class="lg:col-span-6 flex flex-col items-center">
-            
-            <!-- Floating Action Bar -->
-            <div class="sticky top-20 z-30 w-full mb-6 bg-white/95 backdrop-blur border border-slate-200 p-4 rounded-2xl shadow-md flex flex-wrap items-center justify-between gap-3 no-print">
-                <div class="flex items-center gap-2">
-                    <span class="flex h-3 w-3 relative">
-                      <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
-                      <span class="relative inline-flex rounded-full h-3 w-3 bg-emerald-500"></span>
-                    </span>
-                    <span class="text-xs font-bold text-slate-700 uppercase tracking-wide">Živý náhľad A4</span>
-                </div>
-
-                <div class="flex items-center gap-2">
-                    <button onclick="window.print()" class="px-3.5 py-2 text-xs font-semibold text-slate-700 bg-slate-100 hover:bg-slate-200 rounded-xl transition-colors flex items-center gap-2">
-                        <i class="fa-solid fa-print"></i> Vytlačiť
-                    </button>
-                    <button onclick="downloadPDF()" class="px-5 py-2 text-xs font-bold text-white bg-brand-600 hover:bg-brand-700 rounded-xl shadow-md hover:shadow-lg transition-all flex items-center gap-2">
-                        <i class="fa-solid fa-file-pdf text-sm"></i> Stiahnuť PDF
-                    </button>
-                </div>
-            </div>
-
-            <!-- PDF Container Printable Canvas -->
-            <div class="w-full overflow-x-auto pb-8">
-                <div id="invoice-preview-container">
-                    <div id="invoice-preview" class="a4-preview pdf-element">
-                        <!-- Invoice Layout Structure dynamically populated -->
+                    <!-- Footer Note -->
+                    <div class="inv-footer-note">
+                        Faktúra bola vygenerovaná prostredníctvom bezplatného nástroja na <strong>DataPay.sk</strong> <br> Mzdy, Účtovníctvo a Personalistika.
                     </div>
                 </div>
             </div>
 
-        </section>
+        </div>
 
     </main>
 
-    <!-- Footer -->
-    <footer class="bg-white border-t border-slate-200 py-6 mt-auto no-print text-center text-xs text-slate-500">
-        <div class="max-w-7xl mx-auto px-4 space-y-2">
-            <p>© <span id="currentYear"></span> <strong>DataPay.sk</strong> — Všetky práva vyhradené. Profesionálne služby účtovníctva a miezd.</p>
-            <p class="text-slate-400">Generátor neukladá žiadne osobné dáta. Všetky výpočty a PDF prebiehajú priamo vo vašom prehliadači.</p>
+    <!-- FOOTER -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-column">
+                    <h3>DataPay s.r.o.</h3>
+                    <p>Účtovníctvo, mzdy, personalistika a odborné poradenstvo.</p>
+                    <p>Služby poskytujeme firmám na celom Slovensku.</p>
+                </div>
+                <div class="footer-column">
+                    <h3>Kontakt</h3>
+                    <p><a href="mailto:datapaysk@gmail.com">datapaysk@gmail.com</a></p>
+                    <p><a href="tel:+421903270664">+421 903 270 664</a></p>
+                    <p><a href="tel:+421907837030">+421 907 837 030</a></p>
+                </div>
+                <div class="footer-column">
+                    <h3>Firemné údaje</h3>
+                    <p>IČO: 57456615</p>
+                    <p>DIČ: 2122742622</p>
+                    <p>IČ DPH: Nie sme platca DPH</p>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <a href="GDPR.html">GDPR</a><br><br>
+                © 2026 DataPay s.r.o. Všetky práva vyhradené.
+            </div>
         </div>
     </footer>
 
-    <!-- LOGIC APPLICATION SCRIPT -->
+    <!-- INTERACTIVE JAVASCRIPT LOGIC -->
     <script>
-        // State management
-        let items = [
-            { id: 1, name: 'Účtovné poradenstvo a spracovanie dokladov', quantity: 1, unit: 'mesiac', price: 150, vatRate: 23 }
-        ];
 
-        // Default initial setup on load
-        window.onload = function() {
-            document.getElementById('currentYear').textContent = new Date().getFullYear();
-            setTodayDates();
-            setDefaultInvoiceNumber();
-            renderItemsForm();
-            renderInvoice();
-        };
+        // Firemné údaje: Subjekt API. Len na vyžiadanie používateľa, bez automatického prepisovania.
+        function resetIcoStatus(prefix) {
+            const status = $(prefix + 'IcoStatus');
+            if (status) { status.textContent = ''; status.className = 'ico-status'; }
+        }
+        function setIcoStatus(prefix, message, kind = '') {
+            const status = $(prefix + 'IcoStatus');
+            if (status) { status.textContent = message; status.className = 'ico-status ' + kind; }
+        }
+        async function lookupCompany(prefix) {
+            if (!['sup', 'cust'].includes(prefix)) return;
+            const ico = val(prefix + 'Ico').replace(/\s/g, '');
+            if (!/^\d{8}$/.test(ico)) {
+                setIcoStatus(prefix, 'Zadajte platné 8-miestne IČO.', 'error'); return;
+            }
+            const btn = $(prefix + 'LookupBtn');
+            btn.disabled = true;
+            btn.textContent = 'Načítavam…';
+            setIcoStatus(prefix, 'Vyhľadávam firmu…');
+            try {
+                const controller = new AbortController();
+                const timeout = setTimeout(() => controller.abort(), 10000);
+                let response;
+                try {
+                    response = await fetch('https://api.subjekt.sk/v1/entity/' + encodeURIComponent(ico) + '?country=sk',
+                        { headers: { Accept: 'application/json' }, signal: controller.signal });
+                } finally { clearTimeout(timeout); }
+                if (response.status === 404) throw new Error('Firma nebola nájdená. Údaje môžete vyplniť ručne.');
+                if (!response.ok) throw new Error('Register momentálne neodpovedá (HTTP ' + response.status + ').');
+                const payload = await response.json();
+                const entity = payload.data && typeof payload.data === 'object' ? payload.data : payload;
+                if (!entity || !entity.name || String(entity.ico || ico).replace(/\D/g, '') !== ico)
+                    throw new Error('Register nevrátil zodpovedajúce údaje.');
+                // Ak používateľ počas načítania zmenil IČO, výsledok sa nesmie aplikovať.
+                if (val(prefix + 'Ico').replace(/\s/g, '') !== ico) return;
+                const a = entity.address || {};
+                const street = typeof a === 'string' ? a : [a.street, a.building_no || a.buildingNo].filter(Boolean).join(' ');
+                const city = typeof a === 'object' ? [a.zip || a.postal_code || a.postalCode, a.city || a.municipality].filter(Boolean).join(' ') : '';
+                const fields = {
+                    Name: entity.name,
+                    Street: street,
+                    City: city,
+                    Dic: entity.dic || entity.tax_id || entity.taxId,
+                    Icdph: entity.ic_dph || entity.icdph || entity.vat_id || entity.vatId
+                };
+                // Neznáme položky sa nevymýšľajú ani neprepisujú prázdnou hodnotou.
+                for (const [suffix, value] of Object.entries(fields)) {
+                    const field = $(prefix + suffix);
+                    if (field && value != null && String(value).trim()) field.value = String(value).trim();
+                }
+                updateInvoice();
+                setIcoStatus(prefix, 'Údaje načítané. Pred vystavením faktúry ich skontrolujte.', 'ok');
+            } catch (err) {
+                setIcoStatus(prefix, err.name === 'AbortError' ? 'Vyhľadávanie trvalo príliš dlho. Skúste to znova.' :
+                    (err instanceof TypeError ? 'Nepodarilo sa spojiť s registrom. Skontrolujte pripojenie alebo vyplňte údaje ručne.' : err.message), 'error');
+            } finally {
+                btn.disabled = false;
+                btn.textContent = 'Načítať';
+            }
+        }
 
-        function setTodayDates() {
+        const round2 = x => Math.round((Number(x) + Number.EPSILON) * 100) / 100;
+        const $ = id => document.getElementById(id);
+        const val = id => ($(id) ? $(id).value.trim() : '');
+        const num = id => ($(id) ? Number($(id).value) || 0 : 0);
+        const money = x => round2(x).toFixed(2) + ' ' + (val('currency') || 'EUR');
+
+        let itemsState = [];
+        let invoiceMode = 'simple';
+
+        window.addEventListener('DOMContentLoaded', () => {
+            setDefaultDates();
+            loadSampleData();
+        });
+
+        function setDefaultDates() {
             const today = new Date();
-            const dueDate = new Date();
-            dueDate.setDate(today.getDate() + 14);
+            const due = new Date();
+            due.setDate(today.getDate() + 14);
 
-            document.getElementById('issueDate').value = formatDateInput(today);
-            document.getElementById('deliveryDate').value = formatDateInput(today);
-            document.getElementById('dueDate').value = formatDateInput(dueDate);
+            if ($('dateIssue')) $('dateIssue').valueAsDate = today;
+            if ($('dateSupply')) $('dateSupply').valueAsDate = today;
+            if ($('dateDue')) $('dateDue').valueAsDate = due;
         }
 
-        function formatDateInput(date) {
-            return date.toISOString().split('T')[0];
+        function addItemRow(name = '', qty = 1, price = 0, discount = 0, vat = 23) {
+            itemsState.push({ name, qty: Number(qty), price: Number(price), discount: Number(discount), vat: Number(vat) });
+            renderItemsForm();
+            updateInvoice();
         }
 
-        function formatDateSlovak(dateString) {
-            if (!dateString) return '';
-            const d = new Date(dateString);
-            return `${d.getDate().toString().padStart(2, '0')}.${(d.getMonth() + 1).toString().padStart(2, '0')}.${d.getFullYear()}`;
+        function removeItemRow(index) {
+            itemsState.splice(index, 1);
+            renderItemsForm();
+            updateInvoice();
         }
 
-        function setDefaultInvoiceNumber() {
-            const year = new Date().getFullYear();
-            document.getElementById('invoiceNumber').value = `${year}0001`;
-            document.getElementById('variableSymbol').value = `${year}0001`;
+        function renderItemsForm() {
+            const tbody = $('itemsContainer');
+            if (!tbody) return;
+            tbody.replaceChildren();
+
+            itemsState.forEach((item, idx) => {
+                const tr = document.createElement('tr');
+                tr.innerHTML = `
+                    <td><input class="form-control" value="${escapeHTML(item.name)}" aria-label="Popis položky" oninput="updateItemField(${idx},'name',this.value)"></td>
+                    <td><input type="number" class="form-control" value="${item.qty}" min="0.001" step="any" aria-label="Množstvo" oninput="updateItemField(${idx},'qty',this.value)"></td>
+                    <td><input type="number" class="form-control" value="${item.price}" min="0" step="0.01" aria-label="Cena" oninput="updateItemField(${idx},'price',this.value)"></td>
+                    <td><input type="number" class="form-control" value="${item.discount || 0}" min="0" max="100" step="0.01" aria-label="Zľava percent" oninput="updateItemField(${idx},'discount',this.value)"></td>
+                    <td>
+                        <select class="form-control" aria-label="DPH položky" onchange="updateItemField(${idx},'vat',this.value)">
+                            ${[23, 19, 5, 0].map(r => `<option value="${r}" ${Number(item.vat) === r ? 'selected' : ''}>${r} %</option>`).join('')}
+                        </select>
+                    </td>
+                    <td><button class="btn-remove-row" aria-label="Odstrániť položku" onclick="removeItemRow(${idx})">×</button></td>
+                `;
+                tbody.append(tr);
+            });
         }
 
-        // Form Sample Data Loader
+        function updateItemField(index, field, value) {
+            if (!itemsState[index]) return;
+            itemsState[index][field] = field === 'name' ? value : Number(value);
+            updateInvoice();
+        }
+
+        function formatDate(dateStr) {
+            if (!/^\d{4}-\d{2}-\d{2}$/.test(dateStr || '')) return '';
+            const [year, month, day] = dateStr.split('-');
+            return `${day}.${month}.${year}`;
+        }
+
+        function escapeHTML(value) {
+            return String(value ?? '').replace(/[&<>"']/g, char => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[char]));
+        }
+
+        function calculate() {
+            const payer = $('isDphPayer') ? $('isDphPayer').checked : false;
+            const mode = val('taxMode') || 'domestic';
+            const taxable = payer && mode === 'domestic';
+            const groups = new Map();
+            const rows = [];
+
+            for (const item of itemsState) {
+                const base = Number(item.qty) * Number(item.price) * (1 - Number(item.discount || 0) / 100);
+                const rate = taxable ? Number(item.vat) : 0;
+                groups.set(rate, (groups.get(rate) || 0) + base);
+                rows.push({ item, base, rate });
+            }
+
+            let base = 0, tax = 0;
+            const summary = [...groups.entries()].sort((a, b) => b[0] - a[0]).map(([rate, raw]) => {
+                const net = round2(raw);
+                const vat = round2(raw * rate / 100);
+                base += net;
+                tax += vat;
+                return { rate, net, vat };
+            });
+
+            const gross = round2(base + tax);
+            const due = round2(Math.max(0, gross - round2(num('advance')) - round2(num('paid'))));
+            return { payer, mode, taxable, rows, summary, base: round2(base), tax: round2(tax), gross, due };
+        }
+
+        function validateInvoice(forExport = false) {
+            const errors = [];
+            const c = calculate();
+            const requiredFields = [
+                ['invNumber', 'Číslo faktúry'], ['dateIssue', 'Dátum vystavenia'],
+                ['dateSupply', 'Dátum dodania'], ['dateDue', 'Dátum splatnosti'],
+                ['supName', 'Názov dodávateľa'], ['supStreet', 'Ulica dodávateľa'],
+                ['supCity', 'Mesto a PSČ dodávateľa'], ['custName', 'Názov odberateľa'],
+                ['custStreet', 'Ulica odberateľa'], ['custCity', 'Mesto a PSČ odberateľa']
+            ];
+
+            for (const [id, label] of requiredFields) {
+                if (!val(id)) errors.push('Chýba: ' + label);
+            }
+
+            if (val('dateDue') && val('dateIssue') && val('dateDue') < val('dateIssue')) {
+                errors.push('Splatnosť predchádza vystaveniu.');
+            }
+
+            if (c.payer && !val('supIcdph')) errors.push('Platiteľ DPH musí vyplniť IČ DPH.');
+            if (c.mode !== 'domestic' && !c.payer) errors.push('Osobitný režim v tejto verzii vyžaduje platiteľa DPH.');
+            if (c.mode !== 'domestic' && !val('legalRef')) errors.push('Doplňte a overte právny dôvod osobitného režimu.');
+
+            if (!itemsState.length || itemsState.some(x => !String(x.name).trim() || !Number.isFinite(x.qty) || x.qty <= 0 || !Number.isFinite(x.price) || x.price < 0)) {
+                errors.push('Skontrolujte položky faktúry.');
+            }
+
+            if (val('paymentMethod') === 'Bankový prevod' && val('supIban') && !validIBAN(val('supIban'))) {
+                errors.push('Zadajte platný IBAN.');
+            }
+
+            const el = $('validationErrors');
+            if (el) {
+                el.textContent = errors.join('\n');
+                el.style.display = errors.length ? 'block' : 'none';
+                if (forExport && errors.length) el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            }
+
+            return !errors.length;
+        }
+
+        function formatIbanInput(input) {
+            if (!input) return;
+            const before = input.value.slice(0, input.selectionStart ?? input.value.length);
+            const countBefore = before.replace(/[^a-zA-Z0-9]/g, '').length;
+            const clean = input.value.replace(/[^a-zA-Z0-9]/g, '').toUpperCase().slice(0, 34);
+            const formatted = clean.replace(/(.{4})(?=.)/g, '$1 ');
+            input.value = formatted;
+            let cursor = 0, seen = 0;
+            while (cursor < formatted.length && seen < countBefore) {
+                if (/[A-Z0-9]/.test(formatted[cursor])) seen++;
+                cursor++;
+            }
+            if (formatted[cursor] === ' ' && cursor < formatted.length) cursor++;
+            input.setSelectionRange(cursor, cursor);
+            updateInvoice();
+        }
+
+        function validIBAN(value) {
+            const x = value.replace(/\s/g, '').toUpperCase();
+            if (!/^[A-Z]{2}[0-9]{2}[A-Z0-9]{11,30}$/.test(x)) return false;
+            const rearranged = x.slice(4) + x.slice(0, 4);
+            let remainder = 0;
+            for (const ch of rearranged) {
+                const str = /[A-Z]/.test(ch) ? String(ch.charCodeAt(0) - 55) : ch;
+                for (const digit of str) remainder = (remainder * 10 + Number(digit)) % 97;
+            }
+            return remainder === 1;
+        }
+
+        function updateInvoice() {
+            const c = calculate();
+            if ($('legalRefGroup')) $('legalRefGroup').style.display = c.mode === 'domestic' ? 'none' : 'block';
+
+            const txt = (id, value) => { if ($(id)) $(id).textContent = value; };
+
+            txt('prevSupNameTitle', val('supName') || 'Dodávateľ');
+            txt('prevInvNumber', val('invNumber') || '---');
+            txt('prevSupName', val('supName') || 'Dodávateľ');
+
+            if ($('prevSupAddress')) $('prevSupAddress').innerHTML = escapeHTML(val('supStreet')) + '<br>' + escapeHTML(val('supCity'));
+            if ($('prevSupTaxInfo')) {
+                $('prevSupTaxInfo').innerHTML = 'IČO: ' + escapeHTML(val('supIco') || '---') + '<br>DIČ: ' + escapeHTML(val('supDic') || '---') +
+                    (c.payer ? '<br>IČ DPH: ' + escapeHTML(val('supIcdph') || '---') : '<br>Nie je platiteľ DPH') +
+                    (val('registry') ? '<br>' + escapeHTML(val('registry')) : '');
+            }
+
+            txt('prevCustName', val('custName') || 'Odberateľ');
+            if ($('prevCustAddress')) $('prevCustAddress').innerHTML = escapeHTML(val('custStreet')) + '<br>' + escapeHTML(val('custCity'));
+            if ($('prevCustTaxInfo')) {
+                $('prevCustTaxInfo').innerHTML = 'IČO: ' + escapeHTML(val('custIco') || '---') + '<br>DIČ: ' + escapeHTML(val('custDic') || '---') +
+                    (val('custIcdph') ? '<br>IČ DPH: ' + escapeHTML(val('custIcdph')) : '');
+            }
+
+            for (const [dest, src] of [['prevDateIssue', 'dateIssue'], ['prevDateSupply', 'dateSupply'], ['prevDateDue', 'dateDue']]) {
+                txt(dest, formatDate(val(src)));
+            }
+
+            txt('prevVS', val('invVS') || '---');
+            txt('prevKS', val('invKS') || '---');
+            txt('prevIban', val('supIban') || '---');
+
+            if ($('thDphHeader')) $('thDphHeader').style.display = c.taxable ? 'table-cell' : 'none';
+            if ($('prevItemsBody')) {
+                $('prevItemsBody').replaceChildren();
+                for (const { item, base, rate } of c.rows) {
+                    const tr = document.createElement('tr');
+                    tr.innerHTML = `<td><strong>${escapeHTML(item.name || 'Položka')}</strong>${Number(item.discount) > 0 ? `<br><small>Zľava ${escapeHTML(item.discount)} %</small>` : ''}</td>
+                        <td class="text-right">${escapeHTML(item.qty)}</td>
+                        <td class="text-right">${money(item.price)}</td>
+                        ${c.taxable ? `<td class="text-right">${rate} %</td>` : ''}
+                        <td class="text-right"><strong>${money(base)}</strong></td>`;
+                    $('prevItemsBody').append(tr);
+                }
+            }
+
+            if ($('taxBreakdown')) {
+                $('taxBreakdown').replaceChildren();
+                for (const { rate, net, vat } of c.summary) {
+                    const row = document.createElement('div');
+                    row.innerHTML = `<div class="inv-total-row"><span>${c.taxable ? 'Základ ' + rate + ' %' : 'Základ'}:</span><span>${money(net)}</span></div>${c.taxable ? `<div class="inv-total-row"><span>DPH ${rate} %:</span><span>${money(vat)}</span></div>` : ''}`;
+                    $('taxBreakdown').append(row);
+                }
+            }
+
+            txt('prevGross', money(c.gross));
+            txt('prevAdvance', money(num('advance')));
+            txt('prevPaid', money(num('paid')));
+            txt('prevGrandTotal', money(c.due));
+
+            const notes = { reverse: 'Prenesenie daňovej povinnosti', exempt: 'Oslobodené od dane', intra: 'Dodanie tovaru do EÚ – § 43', export: 'Vývoz tovaru – § 47' };
+            if ($('prevExtra')) {
+                $('prevExtra').textContent = [val('orderRef') ? 'Objednávka: ' + val('orderRef') : '', 'Spôsob úhrady: ' + val('paymentMethod'), notes[c.mode] || '', val('legalRef')].filter(Boolean).join('\n');
+            }
+
+            if ($('prevNoteBlock')) $('prevNoteBlock').style.display = val('invNote') ? 'block' : 'none';
+            txt('prevNote', val('invNote'));
+
+            generateQRCode(val('supIban'), c.due, val('invVS'));
+            validateInvoice();
+        }
+
+        function setInvoiceMode(mode) {
+            if (mode !== 'simple' && mode !== 'advanced') return;
+            invoiceMode = mode;
+            document.body.classList.toggle('simple-mode', mode === 'simple');
+            if ($('modeSimple')) $('modeSimple').setAttribute('aria-pressed', String(mode === 'simple'));
+            if ($('modeAdvanced')) $('modeAdvanced').setAttribute('aria-pressed', String(mode === 'advanced'));
+            if ($('modeHint')) $('modeHint').textContent = mode === 'simple' ? 'Zobrazené sú len základné polia.' : 'Všetky rozšírené nastavenia sú dostupné.';
+            updateInvoice();
+        }
+
+        function generateQRCode(iban, amount, vs) {
+            const target = $('qrcode');
+            if (!target) return;
+            target.replaceChildren();
+
+            if (val('paymentMethod') !== 'Bankový prevod' || (val('currency') || 'EUR') !== 'EUR' || !validIBAN(iban) || !val('supName') || amount <= 0) {
+                target.textContent = 'SEPA QR kód (pre bankový prevod v EUR)';
+                return;
+            }
+
+            if (typeof QRCode === 'undefined') {
+                target.textContent = 'QR sa načítava...';
+                return;
+            }
+
+            const bic = val('supSwift').toUpperCase();
+            const payload = ['BCD', '002', '1', 'SCT', bic, val('supName').slice(0, 70), iban.replace(/\s/g, '').toUpperCase(), 'EUR' + amount.toFixed(2), '', 'VS ' + vs.replace(/\D/g, '').slice(0, 35), ''].join('\n');
+
+            try {
+                new QRCode(target, { text: payload, width: 90, height: 90, colorDark: '#052c64', colorLight: '#ffffff', correctLevel: QRCode.CorrectLevel.L });
+            } catch (e) {
+                target.textContent = 'QR kód';
+            }
+        }
+
         function loadSampleData() {
-            document.getElementById('supplierName').value = 'DataPay Solutions s.r.o.';
-            document.getElementById('supplierStreet').value = 'Mlynské Nivy 16';
-            document.getElementById('supplierCity').value = '821 09 Bratislava';
-            document.getElementById('supplierIco').value = '53123456';
-            document.getElementById('supplierDic').value = '2120987654';
-            document.getElementById('supplierIcDph').value = 'SK2120987654';
-            document.getElementById('supplierEmail').value = 'faktury@datapay.sk';
-            document.getElementById('supplierIban').value = 'SK8811000000001234567890';
-            document.getElementById('supplierSwift').value = 'TATRSKBX';
-            document.getElementById('supplierBank').value = 'Tatra banka, a.s.';
-            document.getElementById('isTaxPayer').checked = true;
+            if ($('isDphPayer')) $('isDphPayer').checked = false;
+            if ($('supName')) $('supName').value = 'Vzorová firma s.r.o.';
+            if ($('supStreet')) $('supStreet').value = 'Mlynské Nivy 10';
+            if ($('supCity')) $('supCity').value = '821 09 Bratislava';
+            if ($('supIco')) $('supIco').value = '12345678';
+            if ($('supDic')) $('supDic').value = '2021234567';
 
-            document.getElementById('customerName').value = 'Partnerská Firma s.r.o.';
-            document.getElementById('customerStreet').value = 'Vysoká 8';
-            document.getElementById('customerCity').value = '040 01 Košice';
-            document.getElementById('customerIco').value = '44987654';
-            document.getElementById('customerDic').value = '2023456789';
-            document.getElementById('customerIcDph').value = 'SK2023456789';
+            if ($('custName')) $('custName').value = 'Vzorový Partner s.r.o.';
+            if ($('custStreet')) $('custStreet').value = 'Vajnorská 45/A';
+            if ($('custCity')) $('custCity').value = '831 04 Bratislava';
+            if ($('custIco')) $('custIco').value = '35890123';
+            if ($('custDic')) $('custDic').value = '2020123456';
 
-            document.getElementById('invoiceNotes').value = 'Spoločnosť je zapísaná v Obchodnom registri Okresného súdu Bratislava I, oddiel Sro, vložka č. 123456/B.';
+            if ($('invNumber')) $('invNumber').value = '20260012';
+            if ($('invVS')) $('invVS').value = '20260012';
+            if ($('invNote')) $('invNote').value = 'Fakturujeme Vám služby mzdového účtovníctva za mesiac Október 2026.';
 
-            items = [
-                { id: 1, name: 'Vedenie podvojného účtovníctva', quantity: 1, unit: 'mesiac', price: 220, vatRate: 23 },
-                { id: 2, name: 'Spracovanie miezd (5 zamestnancov)', quantity: 5, unit: 'osoba', price: 15, vatRate: 23 }
+            itemsState = [
+                { name: 'Spracovanie mzdovej agendy (15 zamestnancov)', qty: 1, price: 150.00, discount: 0, vat: 23 },
+                { name: 'Ročné zúčtovanie dane a poradenstvo', qty: 1, price: 50.00, discount: 0, vat: 23 }
             ];
 
             renderItemsForm();
-            renderInvoice();
+            updateInvoice();
         }
 
         function clearForm() {
-            document.querySelectorAll('input, textarea').forEach(el => {
-                if (el.type !== 'checkbox' && el.type !== 'select-one') el.value = '';
-            });
-            items = [{ id: Date.now(), name: '', quantity: 1, unit: 'ks', price: 0, vatRate: 23 }];
+            if ($('isDphPayer')) $('isDphPayer').checked = false;
+            ['supName', 'supStreet', 'supCity', 'supIco', 'supDic', 'supIcdph', 'supIban', 'supSwift',
+             'custName', 'custStreet', 'custCity', 'custIco', 'custDic', 'custIcdph',
+             'invNumber', 'invVS', 'invNote'].forEach(id => { if ($(id)) $(id).value = ''; });
+
+            itemsState = [{ name: '', qty: 1, price: 0, discount: 0, vat: 23 }];
             renderItemsForm();
-            renderInvoice();
+            updateInvoice();
         }
 
-        // Items Handling
-        function renderItemsForm() {
-            const container = document.getElementById('itemsContainer');
-            const isTaxPayer = document.getElementById('isTaxPayer').checked;
-            
-            // Toggle visibility of supplier IČ DPH input container
-            document.getElementById('supplierIcDphWrapper').style.display = isTaxPayer ? 'block' : 'none';
-
-            container.innerHTML = '';
-            items.forEach((item, index) => {
-                const itemDiv = document.createElement('div');
-                itemDiv.className = 'p-3 bg-slate-50 border border-slate-200 rounded-xl space-y-3';
-                itemDiv.innerHTML = `
-                    <div class="flex items-center justify-between gap-2">
-                        <span class="text-xs font-bold text-slate-400">Položka #${index + 1}</span>
-                        ${items.length > 1 ? `
-                            <button onclick="removeItem(${item.id})" class="text-xs text-rose-600 hover:text-rose-800 font-semibold flex items-center gap-1">
-                                <i class="fa-solid fa-trash-can"></i> Zmazať
-                            </button>
-                        ` : ''}
-                    </div>
-                    <div class="grid grid-cols-1 sm:grid-cols-12 gap-2">
-                        <div class="sm:col-span-6">
-                            <input type="text" value="${item.name}" oninput="updateItem(${item.id}, 'name', this.value)" placeholder="Popis služby / tovaru" class="w-full text-xs px-2.5 py-1.5 rounded-md border border-slate-200 outline-none focus:border-brand-500">
-                        </div>
-                        <div class="sm:col-span-2">
-                            <input type="number" step="0.01" value="${item.quantity}" oninput="updateItem(${item.id}, 'quantity', this.value)" placeholder="Množstvo" class="w-full text-xs px-2.5 py-1.5 rounded-md border border-slate-200 outline-none focus:border-brand-500">
-                        </div>
-                        <div class="sm:col-span-2">
-                            <input type="text" value="${item.unit}" oninput="updateItem(${item.id}, 'unit', this.value)" placeholder="Jednotka" class="w-full text-xs px-2.5 py-1.5 rounded-md border border-slate-200 outline-none focus:border-brand-500">
-                        </div>
-                        <div class="${isTaxPayer ? 'sm:col-span-2' : 'sm:col-span-2'}">
-                            <input type="number" step="0.01" value="${item.price}" oninput="updateItem(${item.id}, 'price', this.value)" placeholder="Cena bez DPH" class="w-full text-xs px-2.5 py-1.5 rounded-md border border-slate-200 outline-none focus:border-brand-500">
-                        </div>
-                        ${isTaxPayer ? `
-                        <div class="sm:col-span-3 sm:col-start-10 mt-1">
-                            <div class="flex items-center gap-1">
-                                <span class="text-[10px] text-slate-500 font-semibold">DPH:</span>
-                                <select onchange="updateItem(${item.id}, 'vatRate', this.value)" class="w-full text-xs px-2 py-1 rounded border border-slate-200 bg-white">
-                                    <option value="23" ${item.vatRate == 23 ? 'selected' : ''}>23 %</option>
-                                    <option value="19" ${item.vatRate == 19 ? 'selected' : ''}>19 %</option>
-                                    <option value="10" ${item.vatRate == 10 ? 'selected' : ''}>10 %</option>
-                                    <option value="0" ${item.vatRate == 0 ? 'selected' : ''}>0 %</option>
-                                </select>
-                            </div>
-                        </div>
-                        ` : ''}
-                    </div>
-                `;
-                container.appendChild(itemDiv);
-            });
+        function printInvoice() {
+            if (validateInvoice(true)) window.print();
         }
 
-        function addItem() {
-            items.push({
-                id: Date.now(),
-                name: '',
-                quantity: 1,
-                unit: 'ks',
-                price: 0,
-                vatRate: 23
-            });
-            renderItemsForm();
-            renderInvoice();
-        }
 
-        function removeItem(id) {
-            items = items.filter(item => item.id !== id);
-            renderItemsForm();
-            renderInvoice();
-        }
 
-        function updateItem(id, field, value) {
-            const item = items.find(i => i.id === id);
-            if (item) {
-                item[field] = field === 'name' || field === 'unit' ? value : parseFloat(value) || 0;
-            }
-            renderInvoice();
-        }
 
-        // Live Invoice Renderer Engine
-        function renderInvoice() {
-            const isTaxPayer = document.getElementById('isTaxPayer').checked;
-            const currency = document.getElementById('currency').value;
-            const currencySymbol = currency === 'EUR' ? '€' : (currency === 'CZK' ? 'Kč' : '$');
 
-            // Gather values
-            const supplier = {
-                name: document.getElementById('supplierName').value || 'Meno / Firma dodávateľa',
-                street: document.getElementById('supplierStreet').value || 'Ulica 123',
-                city: document.getElementById('supplierCity').value || 'Mesto a PSČ',
-                ico: document.getElementById('supplierIco').value || '-',
-                dic: document.getElementById('supplierDic').value || '-',
-                icDph: document.getElementById('supplierIcDph').value || '',
-                email: document.getElementById('supplierEmail').value || '',
-                iban: document.getElementById('supplierIban').value || '',
-                swift: document.getElementById('supplierSwift').value || '',
-                bank: document.getElementById('supplierBank').value || ''
-            };
 
-            const customer = {
-                name: document.getElementById('customerName').value || 'Meno / Firma odberateľa',
-                street: document.getElementById('customerStreet').value || 'Ulica 456',
-                city: document.getElementById('customerCity').value || 'Mesto a PSČ',
-                ico: document.getElementById('customerIco').value || '-',
-                dic: document.getElementById('customerDic').value || '-',
-                icDph: document.getElementById('customerIcDph').value || ''
-            };
 
-            const details = {
-                number: document.getElementById('invoiceNumber').value || '20260001',
-                vs: document.getElementById('variableSymbol').value || document.getElementById('invoiceNumber').value || '',
-                issueDate: formatDateSlovak(document.getElementById('issueDate').value),
-                deliveryDate: formatDateSlovak(document.getElementById('deliveryDate').value),
-                dueDate: formatDateSlovak(document.getElementById('dueDate').value),
-                paymentMethod: document.getElementById('paymentMethod').value,
-                notes: document.getElementById('invoiceNotes').value
-            };
 
-            // Calculations
-            let subtotal = 0;
-            let totalVat = 0;
-            const vatGroups = {};
+async function downloadPDF() {
+    if (!validateInvoice(true)) return;
 
-            items.forEach(item => {
-                const itemTotal = (item.quantity || 0) * (item.price || 0);
-                subtotal += itemTotal;
+    if (typeof html2canvas === 'undefined' || !window.jspdf) {
+        alert('PDF knižnice sa nenačítali. Skontroluj internetové pripojenie.');
+        return;
+    }
 
-                if (isTaxPayer) {
-                    const rate = item.vatRate || 0;
-                    const vatAmount = itemTotal * (rate / 100);
-                    totalVat += vatAmount;
+    const original = document.getElementById('invoicePaper');
 
-                    if (!vatGroups[rate]) {
-                        vatGroups[rate] = { base: 0, vat: 0 };
-                    }
-                    vatGroups[rate].base += itemTotal;
-                    vatGroups[rate].vat += vatAmount;
+    if (!original) {
+        alert('Nenašiel sa náhľad faktúry.');
+        return;
+    }
+
+    const invNum = (val('invNumber') || 'faktura')
+        .replace(/[^a-zA-Z0-9_-]/g, '_');
+
+    const wrapper = document.createElement('div');
+
+    Object.assign(wrapper.style, {
+        position: 'absolute',
+        left: '0',
+        top: '0',
+        width: '794px',
+        minWidth: '794px',
+        margin: '0',
+        padding: '0',
+        background: '#ffffff',
+        zIndex: '-1',
+        pointerEvents: 'none'
+    });
+
+    const clone = original.cloneNode(true);
+
+    Object.assign(clone.style, {
+        display: 'flex',
+        position: 'relative',
+        left: '0',
+        top: '0',
+        transform: 'none',
+        width: '794px',
+        minWidth: '794px',
+        maxWidth: '794px',
+        height: 'auto',
+        minHeight: '1123px',
+        margin: '0',
+        border: 'none',
+        borderRadius: '0',
+        boxShadow: 'none',
+        boxSizing: 'border-box',
+        overflow: 'visible',
+        background: '#ffffff'
+    });
+
+    wrapper.appendChild(clone);
+    document.body.appendChild(wrapper);
+
+    try {
+        // Zachová obsah canvasov, napríklad QR kód.
+        const originalCanvases = original.querySelectorAll('canvas');
+        const clonedCanvases = clone.querySelectorAll('canvas');
+
+        originalCanvases.forEach((source, index) => {
+            const target = clonedCanvases[index];
+
+            if (target) {
+                target.width = source.width;
+                target.height = source.height;
+
+                const context = target.getContext('2d');
+                if (context) {
+                    context.drawImage(source, 0, 0);
                 }
-            });
-
-            const grandTotal = isTaxPayer ? subtotal + totalVat : subtotal;
-
-            // Generate Invoice HTML Inside Preview
-            const previewEl = document.getElementById('invoice-preview');
-            
-            previewEl.innerHTML = `
-                <!-- Top Brand Header -->
-                <div class="flex justify-between items-start border-b-2 border-brand-600 pb-5 mb-6">
-                    <div>
-                        <div class="flex items-center gap-2">
-                            <span class="text-2xl font-black text-brand-900 tracking-tight">FAKTÚRA</span>
-                            <span class="text-sm font-semibold text-slate-500">č. ${details.number}</span>
-                        </div>
-                        <p class="text-xs text-slate-500 mt-1">Variabilný symbol: <strong class="text-slate-700">${details.vs}</strong></p>
-                    </div>
-                    <div class="text-right">
-                        <div class="text-base font-extrabold text-brand-700">DataPay<span class="text-slate-400 font-normal">.sk</span></div>
-                        <span class="text-[10px] text-slate-400 font-medium">Služby účtovníctva a miezd</span>
-                    </div>
-                </div>
-
-                <!-- Supplier & Customer Grid -->
-                <div class="grid grid-cols-2 gap-8 mb-6 text-xs">
-                    <!-- Supplier -->
-                    <div class="bg-slate-50 p-4 rounded-xl border border-slate-100">
-                        <h3 class="text-[10px] font-bold uppercase tracking-wider text-brand-700 mb-2">DODÁVATEĽ</h3>
-                        <div class="font-bold text-sm text-slate-900 mb-1">${supplier.name}</div>
-                        <div class="text-slate-600 leading-relaxed">${supplier.street}</div>
-                        <div class="text-slate-600 leading-relaxed mb-2">${supplier.city}</div>
-                        
-                        <div class="pt-2 border-t border-slate-200/60 grid grid-cols-2 gap-y-1 text-[11px]">
-                            <div><span class="text-slate-400">IČO:</span> <span class="font-medium">${supplier.ico}</span></div>
-                            <div><span class="text-slate-400">DIČ:</span> <span class="font-medium">${supplier.dic}</span></div>
-                            ${isTaxPayer && supplier.icDph ? `<div class="col-span-2"><span class="text-slate-400">IČ DPH:</span> <span class="font-medium">${supplier.icDph}</span></div>` : ''}
-                        </div>
-
-                        ${!isTaxPayer ? `<div class="mt-2 text-[10px] text-slate-500 italic">Dodávateľ nie je platiteľom DPH</div>` : ''}
-                    </div>
-
-                    <!-- Customer -->
-                    <div class="bg-slate-50 p-4 rounded-xl border border-slate-100">
-                        <h3 class="text-[10px] font-bold uppercase tracking-wider text-slate-500 mb-2">ODBERATEĽ</h3>
-                        <div class="font-bold text-sm text-slate-900 mb-1">${customer.name}</div>
-                        <div class="text-slate-600 leading-relaxed">${customer.street}</div>
-                        <div class="text-slate-600 leading-relaxed mb-2">${customer.city}</div>
-                        
-                        <div class="pt-2 border-t border-slate-200/60 grid grid-cols-2 gap-y-1 text-[11px]">
-                            <div><span class="text-slate-400">IČO:</span> <span class="font-medium">${customer.ico}</span></div>
-                            <div><span class="text-slate-400">DIČ:</span> <span class="font-medium">${customer.dic}</span></div>
-                            ${customer.icDph ? `<div class="col-span-2"><span class="text-slate-400">IČ DPH:</span> <span class="font-medium">${customer.icDph}</span></div>` : ''}
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Payment Details Grid -->
-                <div class="grid grid-cols-4 gap-3 bg-slate-900 text-white rounded-xl p-3.5 mb-6 text-xs">
-                    <div>
-                        <div class="text-[10px] text-slate-400 uppercase">Dátum vystavenia</div>
-                        <div class="font-semibold mt-0.5">${details.issueDate}</div>
-                    </div>
-                    <div>
-                        <div class="text-[10px] text-slate-400 uppercase">Dátum dodania</div>
-                        <div class="font-semibold mt-0.5">${details.deliveryDate}</div>
-                    </div>
-                    <div>
-                        <div class="text-[10px] text-slate-400 uppercase">Dátum splatnosti</div>
-                        <div class="font-bold text-brand-300 mt-0.5">${details.dueDate}</div>
-                    </div>
-                    <div>
-                        <div class="text-[10px] text-slate-400 uppercase">Spôsob úhrady</div>
-                        <div class="font-semibold mt-0.5">${details.paymentMethod}</div>
-                    </div>
-                </div>
-
-                <!-- Bank Info Box -->
-                <div class="border border-slate-200 rounded-xl p-3.5 mb-6 text-xs grid grid-cols-3 gap-4">
-                    <div>
-                        <span class="text-slate-400 block text-[10px] uppercase">IBAN</span>
-                        <span class="font-mono font-bold text-slate-800">${supplier.iban || '-'}</span>
-                    </div>
-                    <div>
-                        <span class="text-slate-400 block text-[10px] uppercase">SWIFT / BIC</span>
-                        <span class="font-mono font-semibold text-slate-800">${supplier.swift || '-'}</span>
-                    </div>
-                    <div>
-                        <span class="text-slate-400 block text-[10px] uppercase">Banka</span>
-                        <span class="font-semibold text-slate-800">${supplier.bank || '-'}</span>
-                    </div>
-                </div>
-
-                <!-- Items Table -->
-                <div class="mb-6 overflow-hidden rounded-xl border border-slate-200">
-                    <table class="w-full text-left text-xs">
-                        <thead class="bg-slate-100 text-slate-600 font-bold uppercase text-[10px]">
-                            <tr>
-                                <th class="p-3">Popis položky</th>
-                                <th class="p-3 text-center">Mn.</th>
-                                <th class="p-3 text-center">J.Cena</th>
-                                ${isTaxPayer ? `<th class="p-3 text-center">DPH</th>` : ''}
-                                <th class="p-3 text-right">Spolu bez DPH</th>
-                            </tr>
-                        </thead>
-                        <tbody class="divide-y divide-slate-100">
-                            ${items.map(item => {
-                                const lineTotal = (item.quantity || 0) * (item.price || 0);
-                                return `
-                                    <tr>
-                                        <td class="p-3 font-medium text-slate-800">${item.name || 'Položka bez názvu'}</td>
-                                        <td class="p-3 text-center text-slate-600">${item.quantity} ${item.unit}</td>
-                                        <td class="p-3 text-center text-slate-600">${item.price.toFixed(2)} ${currencySymbol}</td>
-                                        ${isTaxPayer ? `<td class="p-3 text-center text-slate-600">${item.vatRate}%</td>` : ''}
-                                        <td class="p-3 text-right font-semibold text-slate-800">${lineTotal.toFixed(2)} ${currencySymbol}</td>
-                                    </tr>
-                                `;
-                            }).join('')}
-                        </tbody>
-                    </table>
-                </div>
-
-                <!-- Summary Breakdown Block -->
-                <div class="flex justify-between items-start gap-4 mb-8">
-                    
-                    <!-- Left: QR Payment & Notes -->
-                    <div class="w-7/12 space-y-4">
-                        ${document.getElementById('generateQr').value === 'yes' && supplier.iban ? `
-                            <div class="flex items-center gap-3 bg-slate-50 border border-slate-200 p-3 rounded-xl">
-                                <div id="qrcode" class="shrink-0 bg-white p-1 rounded border border-slate-200"></div>
-                                <div class="text-[11px]">
-                                    <div class="font-bold text-slate-800 flex items-center gap-1">
-                                        <i class="fa-solid fa-qrcode text-brand-600"></i> PAY by square
-                                    </div>
-                                    <p class="text-slate-500 mt-0.5">Naskenujte v banking aplikácii pre rýchlu úhradu faktúry.</p>
-                                </div>
-                            </div>
-                        ` : ''}
-
-                        ${details.notes ? `
-                            <div class="text-[11px] text-slate-500 leading-relaxed border-l-2 border-brand-500 pl-3 py-1">
-                                ${details.notes}
-                            </div>
-                        ` : ''}
-                    </div>
-
-                    <!-- Right: Grand Totals Calculation -->
-                    <div class="w-5/12 bg-slate-50 border border-slate-200 rounded-xl p-4 text-xs space-y-2">
-                        <div class="flex justify-between text-slate-600">
-                            <span>Základ dane:</span>
-                            <span class="font-semibold">${subtotal.toFixed(2)} ${currencySymbol}</span>
-                        </div>
-
-                        ${isTaxPayer ? `
-                            <div class="flex justify-between text-slate-600 border-b border-slate-200 pb-2">
-                                <span>DPH celkom:</span>
-                                <span class="font-semibold">${totalVat.toFixed(2)} ${currencySymbol}</span>
-                            </div>
-                        ` : ''}
-
-                        <div class="flex justify-between text-sm font-black text-slate-900 pt-1">
-                            <span>Celkom k úhrade:</span>
-                            <span class="text-brand-700">${grandTotal.toFixed(2)} ${currencySymbol}</span>
-                        </div>
-                    </div>
-
-                </div>
-
-                <!-- Footer Brand Disclaimer -->
-                <div class="absolute bottom-5 left-10 right-10 border-t border-slate-200 pt-3 flex items-center justify-between text-[10px] text-slate-400">
-                    <div>Faktúra bola vygenerovaná cez bezplatný nástroj na <strong>www.datapay.sk</strong></div>
-                    <div>Hľadáte účtovníka? Contact: info@datapay.sk</div>
-                </div>
-            `;
-
-            // Regenerate Payment QR code if enabled
-            if (document.getElementById('generateQr').value === 'yes' && supplier.iban) {
-                setTimeout(() => {
-                    const qrContainer = document.getElementById('qrcode');
-                    if (qrContainer) {
-                        qrContainer.innerHTML = '';
-                        // Standard EPC / Pay-By-Square Fallback String format
-                        const cleanIban = supplier.iban.replace(/\s+/g, '');
-                        const qrPayload = `BCD\n001\n1\nSCT\n${supplier.swift || ''}\n${supplier.name.substring(0, 30)}\n${cleanIban}\nEUR${grandTotal.toFixed(2)}\n\n${details.vs}\n\nFaktura ${details.number}`;
-                        
-                        new QRCode(qrContainer, {
-                            text: qrPayload,
-                            width: 72,
-                            height: 72,
-                            colorDark: "#0f172a",
-                            colorLight: "#ffffff",
-                            correctLevel: QRCode.CorrectLevel.M
-                        });
-                    }
-                }, 50);
             }
-        }
+        });
 
-        // PDF Export Handler using html2pdf
-        function downloadPDF() {
-            const invoiceElement = document.getElementById('invoice-preview');
-            const invoiceNum = document.getElementById('invoiceNumber').value || 'faktura';
+        await new Promise(resolve => {
+            requestAnimationFrame(() => {
+                requestAnimationFrame(resolve);
+            });
+        });
 
-            const opt = {
-                margin:       0,
-                filename:     `Faktura_${invoiceNum}.pdf`,
-                image:        { type: 'jpeg', quality: 0.98 },
-                html2canvas:  { scale: 2, useCORS: true, logging: false },
-                jsPDF:        { unit: 'mm', format: 'a4', orientation: 'portrait' }
-            };
+        const canvas = await html2canvas(clone, {
+            scale: 2,
+            backgroundColor: '#ffffff',
+            useCORS: true,
+            logging: false,
+            scrollX: 0,
+            scrollY: 0,
+            width: 794,
+            windowWidth: 1200
+        });
 
-            html2pdf().set(opt).from(invoiceElement).save();
-        }
+        const { jsPDF } = window.jspdf;
+
+        const pdf = new jsPDF({
+            orientation: 'portrait',
+            unit: 'mm',
+            format: 'a4',
+            compress: true
+        });
+
+        // Vloží celú faktúru na jednu stranu A4.
+        const pageWidth = 210;
+        const pageHeight = 297;
+        const margin = 8;
+
+        const availableWidth = pageWidth - margin * 2;
+        const availableHeight = pageHeight - margin * 2;
+
+        const ratio = Math.min(
+            availableWidth / canvas.width,
+            availableHeight / canvas.height
+        );
+
+        const imageWidth = canvas.width * ratio;
+        const imageHeight = canvas.height * ratio;
+
+        const x = (pageWidth - imageWidth) / 2;
+        const y = (pageHeight - imageHeight) / 2;
+
+        const imageData = canvas.toDataURL('image/jpeg', 0.98);
+
+        pdf.addImage(
+            imageData,
+            'JPEG',
+            x,
+            y,
+            imageWidth,
+            imageHeight
+        );
+
+        pdf.save(`Faktura_${invNum}.pdf`);
+
+    } catch (error) {
+        console.error('Chyba pri vytváraní PDF:', error);
+        alert('PDF sa nepodarilo vytvoriť. Otvor konzolu prehliadača pomocou F12.');
+    } finally {
+        wrapper.remove();
+    }
+}
+
+
+
     </script>
 </body>
+
 </html>
