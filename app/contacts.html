@@ -869,18 +869,43 @@ tr:last-child td {
                     </div>
 
 
-                    <div class="form-group">
+<div class="form-group">
 
-                        <label for="ico">
-                            IČO
-                        </label>
+    <label for="ico">
+        IČO
+    </label>
 
-                        <input
-                            id="ico"
-                            type="text"
-                            maxlength="8">
+    <div style="display:flex; gap:8px;">
 
-                    </div>
+        <input
+            id="ico"
+            type="text"
+            inputmode="numeric"
+            maxlength="8"
+            placeholder="12345678">
+
+        <button
+            id="lookupIcoButton"
+            class="secondary-button"
+            type="button"
+            style="white-space:nowrap;">
+
+            Načítať firmu
+
+        </button>
+
+    </div>
+
+    <div
+        id="icoMessage"
+        style="
+            display:none;
+            margin-top:6px;
+            font-size:12px;
+        ">
+    </div>
+
+</div>
 
 
                     <div class="form-group">
@@ -1729,7 +1754,364 @@ function escapeHtml(value) {
 /* =====================================================
    START
 ===================================================== */
+/* =====================================================
+   COMPANY LOOKUP BY ICO
+===================================================== */
 
+const lookupIcoButton =
+    document.getElementById("lookupIcoButton");
+
+const icoMessage =
+    document.getElementById("icoMessage");
+
+
+lookupIcoButton.addEventListener(
+    "click",
+    lookupCompanyByIco
+);
+
+
+document
+    .getElementById("ico")
+    .addEventListener(
+        "keydown",
+        function(event) {
+
+            if (event.key === "Enter") {
+
+                event.preventDefault();
+
+                lookupCompanyByIco();
+
+            }
+
+        }
+    );
+
+
+async function lookupCompanyByIco() {
+
+    const icoInput =
+        document.getElementById("ico");
+
+
+    const ico =
+        icoInput.value
+            .replace(/\D/g, "");
+
+
+    icoInput.value =
+        ico;
+
+
+    icoMessage.style.display =
+        "block";
+
+
+    if (!/^\d{8}$/.test(ico)) {
+
+        icoMessage.style.color =
+            "#a12626";
+
+        icoMessage.textContent =
+            "Zadajte platné 8-miestne IČO.";
+
+        return;
+
+    }
+
+
+    lookupIcoButton.disabled =
+        true;
+
+    lookupIcoButton.textContent =
+        "Načítavam...";
+
+
+    icoMessage.style.color =
+        "#718096";
+
+    icoMessage.textContent =
+        "Vyhľadávam firmu v registri...";
+
+
+    try {
+
+        const controller =
+            new AbortController();
+
+
+        const timeout =
+            setTimeout(
+                function() {
+
+                    controller.abort();
+
+                },
+                10000
+            );
+
+
+        let response;
+
+
+        try {
+
+            response =
+                await fetch(
+                    "https://api.subjekt.sk/v1/entity/" +
+                    encodeURIComponent(ico) +
+                    "?country=sk",
+                    {
+                        headers: {
+                            Accept:
+                                "application/json"
+                        },
+
+                        signal:
+                            controller.signal
+                    }
+                );
+
+        }
+
+        finally {
+
+            clearTimeout(timeout);
+
+        }
+
+
+        if (response.status === 404) {
+
+            throw new Error(
+                "Firma nebola nájdená. Údaje môžete vyplniť ručne."
+            );
+
+        }
+
+
+        if (!response.ok) {
+
+            throw new Error(
+                "Register momentálne neodpovedá (HTTP " +
+                response.status +
+                ")."
+            );
+
+        }
+
+
+        const payload =
+            await response.json();
+
+
+        const entity =
+            payload.data &&
+            typeof payload.data === "object"
+                ? payload.data
+                : payload;
+
+
+        if (
+            !entity ||
+            !entity.name ||
+            String(
+                entity.ico || ico
+            ).replace(/\D/g, "") !== ico
+        ) {
+
+            throw new Error(
+                "Register nevrátil zodpovedajúce údaje."
+            );
+
+        }
+
+
+        /*
+         * Používateľ mohol počas requestu
+         * zmeniť zadané IČO.
+         */
+
+        const currentIco =
+            document
+                .getElementById("ico")
+                .value
+                .replace(/\D/g, "");
+
+
+        if (currentIco !== ico) {
+
+            return;
+
+        }
+
+
+        const address =
+            entity.address || {};
+
+
+        let street =
+            "";
+
+
+        let city =
+            "";
+
+
+        let postalCode =
+            "";
+
+
+        if (
+            typeof address === "string"
+        ) {
+
+            street =
+                address;
+
+        }
+
+        else {
+
+            street = [
+                address.street,
+                address.building_no ||
+                address.buildingNo
+            ]
+                .filter(Boolean)
+                .join(" ");
+
+
+            city =
+                address.city ||
+                address.municipality ||
+                "";
+
+
+            postalCode =
+                address.zip ||
+                address.postal_code ||
+                address.postalCode ||
+                "";
+
+        }
+
+
+        /*
+         * Vyplnenie formulára
+         */
+
+        document.getElementById(
+            "name"
+        ).value =
+            entity.name || "";
+
+
+        document.getElementById(
+            "ico"
+        ).value =
+            ico;
+
+
+        document.getElementById(
+            "dic"
+        ).value =
+            entity.dic ||
+            entity.tax_id ||
+            entity.taxId ||
+            "";
+
+
+        document.getElementById(
+            "icDph"
+        ).value =
+            entity.ic_dph ||
+            entity.icdph ||
+            entity.vat_id ||
+            entity.vatId ||
+            "";
+
+
+        document.getElementById(
+            "street"
+        ).value =
+            street;
+
+
+        document.getElementById(
+            "city"
+        ).value =
+            city;
+
+
+        document.getElementById(
+            "postalCode"
+        ).value =
+            postalCode;
+
+
+        document.getElementById(
+            "country"
+        ).value =
+            "SK";
+
+
+        /*
+         * Success
+         */
+
+        icoMessage.style.color =
+            "#246b35";
+
+        icoMessage.textContent =
+            "✓ Údaje firmy boli načítané.";
+
+    }
+
+    catch (error) {
+
+        console.error(
+            "Company lookup error:",
+            error
+        );
+
+
+        icoMessage.style.color =
+            "#a12626";
+
+
+        if (
+            error.name ===
+            "AbortError"
+        ) {
+
+            icoMessage.textContent =
+                "Vyhľadávanie trvalo príliš dlho. Skúste to znova.";
+
+        }
+
+        else {
+
+            icoMessage.textContent =
+                error.message ||
+                "Firmu sa nepodarilo načítať.";
+
+        }
+
+    }
+
+    finally {
+
+        lookupIcoButton.disabled =
+            false;
+
+        lookupIcoButton.textContent =
+            "Načítať firmu";
+
+    }
+
+}
 initializePage();
 
 </script>
