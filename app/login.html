@@ -1,1 +1,300 @@
+<!DOCTYPE html>
+<html lang="sk">
 
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Prihlásenie | DataPay</title>
+
+<style>
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    min-height: 100vh;
+    font-family: Arial, Helvetica, sans-serif;
+    background: #f4f7fb;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #172b4d;
+}
+
+.login-wrapper {
+    width: 92%;
+    max-width: 430px;
+}
+
+.login-card {
+    background: #ffffff;
+    border: 1px solid #e3e9ef;
+    border-radius: 16px;
+    padding: 38px;
+    box-shadow: 0 20px 60px rgba(5,44,100,.10);
+}
+
+.logo {
+    text-align: center;
+    margin-bottom: 28px;
+}
+
+.logo img {
+    width: 64px;
+    margin-bottom: 12px;
+}
+
+.logo h1 {
+    margin: 0;
+    color: #052c64;
+    font-size: 26px;
+}
+
+.logo p {
+    margin: 6px 0 0;
+    color: #718096;
+    font-size: 13px;
+}
+
+.form-group {
+    margin-bottom: 18px;
+}
+
+label {
+    display: block;
+    margin-bottom: 7px;
+    font-size: 13px;
+    font-weight: 700;
+    color: #334155;
+}
+
+input {
+    width: 100%;
+    height: 48px;
+    border: 1px solid #d7e0e9;
+    border-radius: 8px;
+    padding: 0 14px;
+    font-size: 15px;
+    outline: none;
+}
+
+input:focus {
+    border-color: #397bb8;
+    box-shadow: 0 0 0 3px rgba(57,123,184,.10);
+}
+
+button {
+    width: 100%;
+    height: 50px;
+    border: none;
+    border-radius: 8px;
+    background: #052c64;
+    color: white;
+    font-size: 14px;
+    font-weight: 700;
+    cursor: pointer;
+    margin-top: 5px;
+}
+
+button:hover {
+    background: #0b3e80;
+}
+
+button:disabled {
+    opacity: .6;
+    cursor: not-allowed;
+}
+
+.message {
+    display: none;
+    margin-top: 18px;
+    padding: 11px 13px;
+    border-radius: 7px;
+    font-size: 13px;
+}
+
+.message.error {
+    display: block;
+    background: #fff2f2;
+    color: #a12626;
+    border: 1px solid #f1cccc;
+}
+
+.message.success {
+    display: block;
+    background: #eef9f1;
+    color: #246b35;
+    border: 1px solid #cde9d4;
+}
+
+.back {
+    text-align: center;
+    margin-top: 22px;
+}
+
+.back a {
+    color: #3972a8;
+    text-decoration: none;
+    font-size: 13px;
+}
+</style>
+
+</head>
+
+<body>
+
+<div class="login-wrapper">
+
+    <div class="login-card">
+
+        <div class="logo">
+            <img src="../logo.png" alt="DataPay logo">
+
+            <h1>DataPay</h1>
+
+            <p>Prihlásenie do zákazníckej zóny</p>
+        </div>
+
+        <form id="loginForm">
+
+            <div class="form-group">
+                <label for="email">E-mail</label>
+
+                <input
+                    type="email"
+                    id="email"
+                    autocomplete="email"
+                    required
+                >
+            </div>
+
+            <div class="form-group">
+                <label for="password">Heslo</label>
+
+                <input
+                    type="password"
+                    id="password"
+                    autocomplete="current-password"
+                    required
+                >
+            </div>
+
+            <button type="submit" id="loginButton">
+                Prihlásiť sa
+            </button>
+
+            <div id="message" class="message"></div>
+
+        </form>
+
+        <div class="back">
+            <a href="../index.html">
+                ← Späť na DataPay.sk
+            </a>
+        </div>
+
+    </div>
+
+</div>
+
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+<script>
+
+const SUPABASE_URL = "SEM_VLOZ_PROJECT_URL";
+
+const SUPABASE_PUBLISHABLE_KEY =
+    "SEM_VLOZ_PUBLISHABLE_KEY";
+
+
+const supabaseClient = supabase.createClient(
+    SUPABASE_URL,
+    SUPABASE_PUBLISHABLE_KEY
+);
+
+
+const form =
+    document.getElementById("loginForm");
+
+const message =
+    document.getElementById("message");
+
+const button =
+    document.getElementById("loginButton");
+
+
+form.addEventListener("submit", async function(event) {
+
+    event.preventDefault();
+
+    message.className = "message";
+    message.textContent = "";
+
+    button.disabled = true;
+    button.textContent = "Prihlasujem...";
+
+
+    const email =
+        document.getElementById("email").value.trim();
+
+    const password =
+        document.getElementById("password").value;
+
+
+    const { data, error } =
+        await supabaseClient.auth.signInWithPassword({
+            email: email,
+            password: password
+        });
+
+
+    if (error) {
+
+        message.className = "message error";
+        message.textContent =
+            "Prihlásenie sa nepodarilo. Skontrolujte e-mail a heslo.";
+
+        button.disabled = false;
+        button.textContent = "Prihlásiť sa";
+
+        return;
+    }
+
+
+    message.className = "message success";
+    message.textContent = "Prihlásenie úspešné.";
+
+    setTimeout(function() {
+
+        window.location.href =
+            "dashboard.html";
+
+    }, 500);
+
+});
+
+
+async function checkSession() {
+
+    const { data } =
+        await supabaseClient.auth.getSession();
+
+    if (data.session) {
+
+        window.location.href =
+            "dashboard.html";
+
+    }
+
+}
+
+
+checkSession();
+
+</script>
+
+</body>
+</html>
