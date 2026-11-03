@@ -100,4 +100,476 @@ body {
 }
 
 .user-email {
-    color: 
+    color: #718096;
+    font-size: 13px;
+}
+
+.logout {
+    border: 1px solid #dce3ea;
+    background: white;
+    padding: 9px 14px;
+    border-radius: 7px;
+    cursor: pointer;
+    color: #334155;
+}
+
+.logout:hover {
+    background: #f5f7fa;
+}
+
+/* CONTENT */
+
+.content {
+    padding: 34px;
+}
+
+.heading {
+    margin-bottom: 28px;
+}
+
+.heading h1 {
+    color: #052c64;
+    font-size: 30px;
+    margin-bottom: 5px;
+}
+
+.heading p {
+    color: #76869a;
+    font-size: 14px;
+}
+
+/* CARDS */
+
+.stats {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 18px;
+    margin-bottom: 30px;
+}
+
+.card {
+    background: white;
+    border: 1px solid #e3e9ef;
+    border-radius: 12px;
+    padding: 22px;
+}
+
+.card-label {
+    color: #7a889b;
+    font-size: 12px;
+    margin-bottom: 8px;
+}
+
+.card-value {
+    color: #052c64;
+    font-size: 26px;
+    font-weight: 700;
+}
+
+/* QUICK ACTIONS */
+
+.actions {
+    background: white;
+    border: 1px solid #e3e9ef;
+    border-radius: 12px;
+    padding: 25px;
+}
+
+.actions h2 {
+    color: #052c64;
+    font-size: 18px;
+    margin-bottom: 18px;
+}
+
+.action-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+}
+
+.action {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 44px;
+    padding: 0 18px;
+    border-radius: 7px;
+    text-decoration: none;
+    background: #052c64;
+    color: white;
+    font-size: 13px;
+    font-weight: 700;
+}
+
+.action.secondary {
+    background: #edf4fa;
+    color: #052c64;
+}
+
+/* LOADING */
+
+#loading {
+    padding: 40px;
+    font-size: 14px;
+    color: #718096;
+}
+
+/* MOBILE */
+
+@media (max-width: 900px) {
+
+    .app {
+        grid-template-columns: 1fr;
+    }
+
+    .sidebar {
+        display: none;
+    }
+
+    .stats {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+}
+
+@media (max-width: 550px) {
+
+    .content {
+        padding: 22px;
+    }
+
+    .topbar {
+        padding: 0 20px;
+    }
+
+    .user-email {
+        display: none;
+    }
+
+    .stats {
+        grid-template-columns: 1fr;
+    }
+
+}
+</style>
+</head>
+
+<body>
+
+<div id="loading">
+    Načítavam DataPay...
+</div>
+
+<div class="app" id="app" style="display:none;">
+
+    <aside class="sidebar">
+
+        <div class="brand">
+
+            <img src="../logo.png" alt="DataPay">
+
+            <strong>DataPay</strong>
+
+        </div>
+
+        <nav class="nav">
+
+            <a href="dashboard.html" class="active">
+                Prehľad
+            </a>
+
+            <a href="invoices.html">
+                Faktúry
+            </a>
+
+            <a href="contacts.html">
+                Odberatelia a dodávatelia
+            </a>
+
+            <a href="invoice-new.html">
+                + Nová faktúra
+            </a>
+
+            <a href="settings.html">
+                Nastavenia firmy
+            </a>
+
+        </nav>
+
+    </aside>
+
+
+    <main class="main">
+
+        <header class="topbar">
+
+            <div
+                class="company-name"
+                id="companyName">
+                DataPay
+            </div>
+
+            <div class="account">
+
+                <span
+                    class="user-email"
+                    id="userEmail">
+                </span>
+
+                <button
+                    class="logout"
+                    id="logoutButton"
+                    type="button">
+                    Odhlásiť sa
+                </button>
+
+            </div>
+
+        </header>
+
+
+        <section class="content">
+
+            <div class="heading">
+
+                <h1>Prehľad</h1>
+
+                <p>
+                    Vitajte v zákazníckej zóne DataPay.
+                </p>
+
+            </div>
+
+
+            <div class="stats">
+
+                <div class="card">
+                    <div class="card-label">
+                        Vystavené faktúry
+                    </div>
+                    <div class="card-value">
+                        0
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-label">
+                        Prijaté faktúry
+                    </div>
+                    <div class="card-value">
+                        0
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-label">
+                        Po splatnosti
+                    </div>
+                    <div class="card-value">
+                        0 €
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-label">
+                        Kontakty
+                    </div>
+                    <div class="card-value">
+                        0
+                    </div>
+                </div>
+
+            </div>
+
+
+            <div class="actions">
+
+                <h2>Rýchle akcie</h2>
+
+                <div class="action-grid">
+
+                    <a
+                        href="invoice-new.html"
+                        class="action">
+                        + Nová faktúra
+                    </a>
+
+                    <a
+                        href="contacts.html"
+                        class="action secondary">
+                        + Pridať kontakt
+                    </a>
+
+                    <a
+                        href="invoices.html"
+                        class="action secondary">
+                        Zobraziť faktúry
+                    </a>
+
+                </div>
+
+            </div>
+
+        </section>
+
+    </main>
+
+</div>
+
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+<script src="js/supabase.js"></script>
+
+<script>
+
+async function initializeDashboard() {
+
+    /*
+     * 1. Skontroluj session
+     */
+
+    const { data: sessionData, error: sessionError } =
+        await supabaseClient.auth.getSession();
+
+
+    if (
+        sessionError ||
+        !sessionData.session
+    ) {
+
+        window.location.href =
+            "login.html";
+
+        return;
+    }
+
+
+    const user =
+        sessionData.session.user;
+
+
+    document.getElementById(
+        "userEmail"
+    ).textContent =
+        user.email;
+
+
+    /*
+     * 2. Načítaj membership
+     */
+
+    const {
+        data: memberships,
+        error: membershipError
+    } =
+        await supabaseClient
+            .from("company_members")
+            .select("company_id")
+            .eq("user_id", user.id)
+            .limit(1);
+
+
+    if (
+        membershipError ||
+        !memberships ||
+        memberships.length === 0
+    ) {
+
+        document.getElementById(
+            "loading"
+        ).textContent =
+            "K používateľovi nie je priradená žiadna firma.";
+
+        console.error(
+            "Membership error:",
+            membershipError
+        );
+
+        return;
+    }
+
+
+    const companyId =
+        memberships[0].company_id;
+
+
+    /*
+     * 3. Načítaj firmu
+     */
+
+    const {
+        data: company,
+        error: companyError
+    } =
+        await supabaseClient
+            .from("companies")
+            .select("id, name")
+            .eq("id", companyId)
+            .single();
+
+
+    if (
+        companyError ||
+        !company
+    ) {
+
+        document.getElementById(
+            "loading"
+        ).textContent =
+            "Firmu sa nepodarilo načítať.";
+
+        console.error(
+            "Company error:",
+            companyError
+        );
+
+        return;
+    }
+
+
+    document.getElementById(
+        "companyName"
+    ).textContent =
+        company.name;
+
+
+    /*
+     * 4. Zobraz aplikáciu
+     */
+
+    document.getElementById(
+        "loading"
+    ).style.display =
+        "none";
+
+
+    document.getElementById(
+        "app"
+    ).style.display =
+        "grid";
+
+}
+
+
+document.getElementById(
+    "logoutButton"
+).addEventListener(
+    "click",
+    async function () {
+
+        await supabaseClient.auth.signOut();
+
+        window.location.href =
+            "login.html";
+
+    }
+);
+
+
+initializeDashboard();
+
+</script>
+
+</body>
+</html>
