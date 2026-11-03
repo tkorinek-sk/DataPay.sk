@@ -2,17 +2,102 @@
 <html lang="sk">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>DataPay | Dashboard</title>
-</head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<body>
+<title>Dashboard | DataPay</title>
 
-    <h1>DataPay Dashboard</h1>
+<style>
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
 
-    <p>Prihlásenie funguje ✅</p>
+body {
+    font-family: Arial, Helvetica, sans-serif;
+    background: #f5f7fb;
+    color: #172b4d;
+}
 
-</body>
+.app {
+    min-height: 100vh;
+    display: grid;
+    grid-template-columns: 240px 1fr;
+}
 
-</html>
+/* SIDEBAR */
+
+.sidebar {
+    background: #052c64;
+    color: white;
+    padding: 28px 20px;
+}
+
+.brand {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 40px;
+}
+
+.brand img {
+    width: 42px;
+    background: white;
+    border-radius: 8px;
+    padding: 4px;
+}
+
+.brand strong {
+    font-size: 19px;
+}
+
+.nav {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.nav a {
+    color: #dce8f5;
+    text-decoration: none;
+    padding: 12px 14px;
+    border-radius: 8px;
+    font-size: 14px;
+}
+
+.nav a:hover,
+.nav a.active {
+    background: rgba(255,255,255,.12);
+    color: white;
+}
+
+/* MAIN */
+
+.main {
+    min-width: 0;
+}
+
+.topbar {
+    height: 76px;
+    background: white;
+    border-bottom: 1px solid #e4eaf0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 34px;
+}
+
+.company-name {
+    font-weight: 700;
+    color: #052c64;
+}
+
+.account {
+    display: flex;
+    align-items: center;
+    gap: 18px;
+}
+
+.user-email {
+    color: 
