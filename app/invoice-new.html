@@ -1252,7 +1252,31 @@
                             <div class="section-title">
                                 Odberateľ
                             </div>
+<div class="form-group">
+    <label for="savedContactSelect">
+        Vybrať uloženého odberateľa
+    </label>
 
+    <div class="ico-row">
+        <select id="savedContactSelect"
+                class="form-control">
+            <option value="">
+                Vyberte uložený kontakt
+            </option>
+        </select>
+
+        <button type="button"
+                class="button button-outline"
+                id="clearContactButton">
+            Nový odberateľ
+        </button>
+    </div>
+
+    <small id="contactSelectionStatus"
+           class="ico-status">
+        Výber kontaktu automaticky vyplní údaje odberateľa.
+    </small>
+</div>
                             <div class="form-group">
                                 <label for="customerIco">IČO</label>
 
@@ -1330,7 +1354,15 @@
                                 </div>
 
                             </div>
+<div style="display:flex;justify-content:flex-end;margin-top:8px">
 
+    <button type="button"
+            class="button button-outline"
+            id="saveContactButton">
+        Uložiť odberateľa medzi kontakty
+    </button>
+
+</div>
                         </div>
 
                         <div class="card">
@@ -1652,6 +1684,8 @@
 let currentUser = null;
 let currentInvoiceId = null;
 let currentCompanyId = null;
+let selectedContactId = null;
+let contacts = [];
 let items = [];
 
         const $ = id => document.getElementById(id);
@@ -1687,13 +1721,22 @@ let items = [];
                 const parameters = new URLSearchParams(window.location.search);
                 currentInvoiceId = parameters.get('id');
 
-                if (currentInvoiceId) {
-                    $('pageTitle').textContent = 'Upraviť faktúru';
-                    await loadInvoice(currentInvoiceId);
-                } else {
-                    await setSuggestedInvoiceNumber();
-                    await loadOwnCompany();
-                }
+/*
+Najskôr vždy zistíme firmu prihláseného používateľa.
+Je to potrebné aj pri editácii existujúcej faktúry,
+pretože kontakty sú naviazané na company_id.
+*/
+await loadCompanyContext();
+
+if *currentInvoiceId) {
+    $('pageTit*e').textContent = 'Upraviť faktúru*;
+    await loadInvoice(currentInv*iceId);
+} else {
+    await setSugg*stedInvoiceNumber();
+    await loa*OwnCompany();
+}
+
+await loadContact*();
 
                 showApplication();
                 updatePreview();
@@ -1740,7 +1783,20 @@ let items = [];
                 'click',
                 () => lookupCompany('customer')
             );
+$('savedContactSelect').addEventListener(
+    'change',
+    handleContactSelection
+);
 
+$('clearContactButton').addEventListener(
+    'click',
+    clearCustomerForm
+);
+
+$('saveContactButton').addEventListener(
+    'click',
+    saveCustomerAsContact
+);
             $('saveButton').addEventListener('click', saveInvoice);
             $('saveTopButton').addEventListener('click', saveInvoice);
             $('printButton').addEventListener('click', printInvoice);
@@ -1810,65 +1866,69 @@ let items = [];
         NAČÍTANIE VLASTNEJ FIRMY
         =============================================================
         */
+async function*loadCompanyContext() {
+    const {*data: membership, error } =
+      * await supabaseClient
+            *from('company_members')
+          * .select('company_id')
+           *.eq('user_id', currentUser.id)
+   *        .limit(1)
+            .may*eSingle();
 
-       async function loadOwnCompany() {
+    if (error) {
+     *  throw error;
+    }
+
+    if (!mem*ership || !membership.company_id) *
+        throw new Error(
+        *   'Používateľ nie je priradený k *iadnej firme.'
+        );
+    }
+
+ *  currentCompanyId = membership.co*pany_id;
+}
+      async function loadO*nCompany() {
     try {
-        // 1. Zistíme, ku ktorej firme patrí prihlásený používateľ
-        const { data: membership, error: membershipError } =
-            await supabaseClient
-                .from('company_members')
-                .select('company_id')
-                .eq('user_id', currentUser.id)
-                .limit(1)
-                .maybeSingle();
+        if *!currentCompanyId) {
+            a*ait loadCompanyContext();
+        *
 
-        if (membershipError) {
-            throw membershipError;
+        const { data: company, e*ror } =
+            await supabase*lient
+                .from('compa*ies')
+                .select('*')*                .eq('id', currentC*mpanyId)
+                .single()*
+
+        if (error) {
+           *throw error;
         }
 
-        if (!membership || !membership.company_id) {
-            console.warn('Používateľ zatiaľ nie je priradený k firme.');
-            return;
-        }
+        $(*supplierName').value = company.nam* || '';
+        $('supplierIco').v*lue = company.ico || '';
+        $*'supplierDic').value = company.dic*|| '';
+        $('supplierIcdph').*alue = company.ic_dph || '';
+     *  $('supplierStreet').value = comp*ny.street || '';
 
-        // Zapamätáme si firmu aj pre kontakty
-        currentCompanyId = membership.company_id;
+        $('suppl*erCity').value = [
+            com*any.postal_code,
+            compa*y.city
+        ].filter(Boolean).j*in(' ');
 
-        // 2. Načítame údaje firmy
-        const { data: company, error: companyError } =
-            await supabaseClient
-                .from('companies')
-                .select('*')
-                .eq('id', currentCompanyId)
-                .single();
+        $('supplierIban'*.value = company.iban || '';
+     *  $('supplierSwift').value = compa*y.bic || '';
 
-        if (companyError) {
-            throw companyError;
-        }
-
-        $('supplierName').value = company.name || '';
-        $('supplierIco').value = company.ico || '';
-        $('supplierDic').value = company.dic || '';
-        $('supplierIcdph').value = company.ic_dph || '';
-        $('supplierStreet').value = company.street || '';
-
-        $('supplierCity').value =
-            [company.postal_code, company.city]
-                .filter(Boolean)
-                .join(' ');
-
-        $('supplierIban').value = company.iban || '';
-        $('supplierSwift').value = company.bic || '';
-
-        updatePreview();
+        updatePrevie*();
 
     } catch (error) {
-        console.error('Chyba pri načítaní firmy:', error);
+       *console.error(
+            'Chyba *ri načítaní firmy:',
+            e*ror
+        );
 
-        showMessage(
-            'Údaje vašej firmy sa nepodarilo načítať. ' +
-            getReadableError(error),
-            'error'
+        showMessag*(
+            'Údaje dodávateľa sa*nepodarilo načítať. ' +
+          * getReadableError(error),
+        *   'error'
         );
     }
 }
@@ -2582,7 +2642,366 @@ let items = [];
 
             renderItems();
         }
+/*
+==============================*==============================
+KON*AKTY
+=============================*===============================
+*/*
+async function loadContacts() {
+ *  if (!currentCompanyId) {
+       *return;
+    }
 
+    const { data, e*ror } = await supabaseClient
+     *  .from('contacts')
+        .selec*(`
+            id,
+            com*any_id,
+            type,
+        *   name,
+            ico,
+        *   dic,
+            ic_dph,
+      *     street,
+            city,
+   *        postal_code,
+            c*untry,
+            email,
+        *   phone,
+            iban
+       *`)
+        .eq('company_id', curre*tCompanyId)
+        .order('name',*{ ascending: true });
+
+    if (err*r) {
+        throw error;
+    }
+
+ *  contacts = Array.isArray(data) ?*data : [];
+
+    renderContactOptio*s();
+}
+
+
+function renderContactOpt*ons() {
+    const select = $('save*ContactSelect');
+
+    if (!select)*{
+        return;
+    }
+
+    const*currentValue = select.value;
+
+    *elect.innerHTML = `
+        <optio* value="">
+            Vyberte ulo*ený kontakt
+        </option>
+    *;
+
+    contacts.forEach(contact =>*{
+        const option = document.*reateElement('option');
+
+        o*tion.value = contact.id;
+
+        *ption.textContent = [
+            *ontact.name || 'Kontakt',
+        *   contact.ico ? 'IČO: ' + contact*ico : ''
+        ].filter(Boolean)*join(' | ');
+
+        select.appen*Child(option);
+    });
+
+    if (
+ *      currentValue &&
+        cont*cts.some(contact => contact.id ===*currentValue)
+    ) {
+        sele*t.value = currentValue;
+    }
+}
+
+
+*unction handleContactSelection() {*    const contactId = $('savedCont*ctSelect').value;
+
+    if (!contac*Id) {
+        selectedContactId = *ull;
+        return;
+    }
+
+    co*st contact = contacts.find(item =>*{
+        return item.id === conta*tId;
+    });
+
+    if (!contact) {
+*       return;
+    }
+
+    selectedContactId = contact.id;
+
+    $('customerName').value = contact.name || '';
+    $('customerIco').value = contact.ico || '';
+    $('customerDic').value = contact.dic || '';
+    $('customerIcdph').value = contact.ic_dph || '';
+    $('customerStreet').value = contact.street || '';
+
+    $('customerCity').value = [
+        contact.postal_code,
+        contact.city
+    ].filter(Boolean).join(' ');
+
+    $('contactSelectionStatus').textContent =
+        'Údaje odberateľa boli načítané z kontaktov.';
+
+    $('contactSelectionStatus').className =
+        'ico-status ok';
+
+    updatePreview();
+}
+
+
+function clearCustomerForm() {
+    selectedContactId = null;
+
+    $('savedContactSelect').value = '';
+
+    [
+        'customerIco',
+        'customerName',
+        'customerStreet',
+        'customerCity',
+        'customerDic',
+        'customerIcdph'
+    ].forEach(id => {
+        $(id).value = '';
+    });
+
+    $('customerIcoStatus').textContent = '';
+
+    $('contactSelectionStatus').textContent =
+        'Zadajte nového odberateľa alebo ho načítajte podľa IČO.';
+
+    $('contactSelectionStatus').className =
+        'ico-status';
+
+    updatePreview();
+
+    $('customerIco').focus();
+}
+
+
+async function saveCustomerAsContact() {
+    clearMessage();
+
+    if (!currentCompanyId) {
+        showMessage(
+            'Nie je známe ID vašej firmy.',
+            'error'
+        );
+
+        return;
+    }
+
+    const name = $('customerName').value.trim();
+
+    if (!name) {
+        showMessage(
+            'Pred uložením kontaktu vyplňte názov odberateľa.',
+            'error'
+        );
+
+        $('customerName').focus();
+        return;
+    }
+
+    const parsedAddress =
+        splitPostalCodeAndCity(
+            $('customerCity').value
+        );
+
+    const contactData = {
+        company_id: currentCompanyId,
+        type: 'company',
+        name: name,
+
+        ico: nullIfEmpty(
+            $('customerIco').value
+        ),
+
+        dic: nullIfEmpty(
+            $('customerDic').value
+        ),
+
+        ic_dph: nullIfEmpty(
+            $('customerIcdph').value
+        ),
+
+        street: nullIfEmpty(
+            $('customerStreet').value
+        ),
+
+        postal_code: nullIfEmpty(
+            parsedAddress.postalCode
+        ),
+
+        city: nullIfEmpty(
+            parsedAddress.city
+        ),
+
+        country: 'SK',
+        updated_at: new Date().toISOString()
+    };
+
+    const button = $('saveContactButton');
+
+    button.disabled = true;
+    button.textContent = 'Ukladám kontakt…';
+
+    try {
+        let savedContact;
+
+        if (selectedContactId) {
+            const { data, error } = await supabaseClient
+                .from('contacts')
+                .update(contactData)
+                .eq('id', selectedContactId)
+                .eq('company_id', currentCompanyId)
+                .select('*')
+                .single();
+
+            if (error) {
+                throw error;
+            }
+
+            savedContact = data;
+
+        } else {
+            /*
+            Ak už existuje kontakt s rovnakým IČO,
+            nebudeme vytvárať duplicitu.
+            */
+            const ico = $('customerIco')
+                .value
+                .replace(/\D/g, '');
+
+            let existingContact = null;
+
+            if (ico) {
+                const {
+                    data: existing,
+                    error: existingError
+                } = await supabaseClient
+                    .from('contacts')
+                    .select('id')
+                    .eq('company_id', currentCompanyId)
+                    .eq('ico', ico)
+                    .limit(1)
+                    .maybeSingle();
+
+                if (existingError) {
+                    throw existingError;
+                }
+
+                existingContact = existing;
+            }
+
+            if (existingContact) {
+                const { data, error } = await supabaseClient
+                    .from('contacts')
+                    .update(contactData)
+                    .eq('id', existingContact.id)
+                    .eq('company_id', currentCompanyId)
+                    .select('*')
+                    .single();
+
+                if (error) {
+                    throw error;
+                }
+
+                savedContact = data;
+
+            } else {
+                const { data, error } = await supabaseClient
+                    .from('contacts')
+                    .insert({
+                        ...contactData,
+                        created_at: new Date().toISOString()
+                    })
+                    .select('*')
+                    .single();
+
+                if (error) {
+                    throw error;
+                }
+
+                savedContact = data;
+            }
+        }
+
+        selectedContactId = savedContact.id;
+
+        await loadContacts();
+
+        $('savedContactSelect').value =
+            selectedContactId;
+
+        $('contactSelectionStatus').textContent =
+            'Odberateľ bol uložený medzi kontakty.';
+
+        $('contactSelectionStatus').className =
+            'ico-status ok';
+
+        showMessage(
+            'Odberateľ bol úspešne uložený medzi kontakty.',
+            'success'
+        );
+
+    } catch (error) {
+        console.error(
+            'Uloženie kontaktu zlyhalo:',
+            error
+        );
+
+        showMessage(
+            'Kontakt sa nepodarilo uložiť. ' +
+            getReadableError(error),
+            'error'
+        );
+
+    } finally {
+        button.disabled = false;
+        button.textContent =
+            'Uložiť odberateľa medzi kontakty';
+    }
+}
+
+
+function splitPostalCodeAndCity(value) {
+    const clean = String(value || '').trim();
+
+    /*
+    Podporí napríklad:
+    811 01 Bratislava
+    81101 Bratislava
+    */
+
+    const match = clean.match(
+        /^(\d{3}\s?\d{2})\s+(.+)$/
+    );
+
+    if (!match) {
+        return {
+            postalCode: '',
+            city: clean
+        };
+    }
+
+    return {
+        postalCode: match[1].replace(
+            /^(\d{3})(\d{2})$/,
+            '$1 $2'
+        ),
+        city: match[2].trim()
+    };
+}
         /*
         =============================================================
         IČO
@@ -2701,8 +3120,20 @@ let items = [];
                 status.textContent =
                     'Údaje boli načítané. Pred uložením ich skontroluj.';
 
-                status.classList.add('ok');
-                updatePreview();
+              status.classList.add('ok');
+
+if (!isSupplier) {
+    selectedContactId = null;
+    $('savedContactSelect').value = '';
+
+    $('contactSelectionStatus').textContent =
+        'Firma bola načítaná podľa IČO. Ak ju chcete používať opakovane, kliknite na Uložiť odberateľa medzi kontakty.';
+
+    $('contactSelectionStatus').className =
+        'ico-status ok';
+}
+
+updatePreview();
 
             } catch (error) {
                 console.error(error);
