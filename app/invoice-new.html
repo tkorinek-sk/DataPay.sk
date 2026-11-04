@@ -2983,21 +2983,29 @@
                 disabled ? 'Ukladám…' : 'Uložiť faktúru';
         }
 
-        function showMessage(message, type) {
-            const element = $('pageMessage');
+       function showMessage(message, type) {
+    const element = $('pageMessage');
 
-            element.textContent = message;
-            element.className =
-                'page-message show ' +
-                (type === 'success'
-                    ? 'message-success'
-                    : 'message-error');
+    element.textContent = message;
+    element.style.whiteSpace = 'pre-line';
 
-            element.scrollIntoView({
-                behavior: 'smooth',
-                block: 'start'
-            });
-        }
+    element.className =
+        'page-message show ' +
+        (type === 'success'
+            ? 'message-success'
+            : 'message-error');
+
+    window.scrollTo({
+        top: 0,
+        behavior: 'smooth'
+    });
+
+    if (type === 'error') {
+        setTimeout(() => {
+            alert(message);
+        }, 100);
+    }
+}
 
         function clearMessage() {
             $('pageMessage').textContent = '';
