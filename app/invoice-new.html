@@ -1810,93 +1810,67 @@
         =============================================================
         */
 
-        async function loadOwnCompany() {
-            try {
-                const { data, error } = await supabaseClient
-                    .from('companies')
-                    .select('*')
-                    .eq('user_id', currentUser.id)
-                    .limit(1)
-                    .maybeSingle();
+       async function loadOwnCompany() {
+    try {
+        // 1. Zistíme, ku ktorej firme patrí prihlásený používateľ
+        const { data: membership, error: membershipError } =
+            await supabaseClient
+                .from('company_members')
+                .select('company_id')
+                .eq('user_id', currentUser.id)
+                .limit(1)
+                .maybeSingle();
 
-                if (error) {
-                    console.warn('Firma nebola načítaná:', error);
-                    return;
-                }
-
-                if (!data) {
-                    return;
-                }
-
-                setFirstAvailableValue(
-                    'supplierName',
-                    data.name,
-                    data.company_name,
-                    data.business_name
-                );
-
-                setFirstAvailableValue(
-                    'supplierIco',
-                    data.ico,
-                    data.company_id
-                );
-
-                setFirstAvailableValue(
-                    'supplierDic',
-                    data.dic,
-                    data.tax_id
-                );
-
-                setFirstAvailableValue(
-                    'supplierIcdph',
-                    data.ic_dph,
-                    data.icdph,
-                    data.vat_id
-                );
-
-                setFirstAvailableValue(
-                    'supplierStreet',
-                    data.street,
-                    data.address,
-                    data.address_street
-                );
-
-                setFirstAvailableValue(
-                    'supplierCity',
-                    combineCity(
-                        data.zip || data.postal_code,
-                        data.city
-                    ),
-                    data.address_city
-                );
-
-                setFirstAvailableValue(
-                    'supplierIban',
-                    data.iban
-                );
-
-                setFirstAvailableValue(
-                    'supplierSwift',
-                    data.swift,
-                    data.bic
-                );
-
-            } catch (error) {
-                console.warn('Načítanie firmy zlyhalo:', error);
-            }
+        if (membershipError) {
+            throw membershipError;
         }
 
-        function setFirstAvailableValue(elementId, ...values) {
-            const value = values.find(item => {
-                return item !== null &&
-                       item !== undefined &&
-                       String(item).trim();
-            });
-
-            if (value !== undefined) {
-                $(elementId).value = String(value).trim();
-            }
+        if (!membership || !membership.company_id) {
+            console.warn('Používateľ zatiaľ nie je priradený k firme.');
+            return;
         }
+
+        // Zapamätáme si firmu aj pre kontakty
+        currentCompanyId = membership.company_id;
+
+        // 2. Načítame údaje firmy
+        const { data: company, error: companyError } =
+            await supabaseClient
+                .from('companies')
+                .select('*')
+                .eq('id', currentCompanyId)
+                .single();
+
+        if (companyError) {
+            throw companyError;
+        }
+
+        $('supplierName').value = company.name || '';
+        $('supplierIco').value = company.ico || '';
+        $('supplierDic').value = company.dic || '';
+        $('supplierIcdph').value = company.ic_dph || '';
+        $('supplierStreet').value = company.street || '';
+
+        $('supplierCity').value =
+            [company.postal_code, company.city]
+                .filter(Boolean)
+                .join(' ');
+
+        $('supplierIban').value = company.iban || '';
+        $('supplierSwift').value = company.bic || '';
+
+        updatePreview();
+
+    } catch (error) {
+        console.error('Chyba pri načítaní firmy:', error);
+
+        showMessage(
+            'Údaje vašej firmy sa nepodarilo načítať. ' +
+            getReadableError(error),
+            'error'
+        );
+    }
+}
 
         /*
         =============================================================
