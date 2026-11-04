@@ -211,5 +211,6 @@
         function getReadableError(error) { const message=String(error?.message || 'Neznáma chyba.'); if (message.includes('permission denied') || message.includes('row-level security')) return 'Supabase odmietol prístup k údajom. Skontrolujte GRANT oprávnenia a RLS policies.'; return message; }
         async function logout() { const button=$('logoutButton'); button.disabled=true; button.textContent='Odhlasujem…'; const { error }=await supabaseClient.auth.signOut(); if (error) { button.disabled=false; button.textContent='Odhlásiť sa'; showMessage(getReadableError(error)); return; } window.location.replace('login.html'); }
     </script>
+    <script src="js/mydatapay-navigation.js"></script>
 </body>
 </html>
