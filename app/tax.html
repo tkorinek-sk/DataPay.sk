@@ -54,9 +54,12 @@
         .tax-row{display:flex;justify-content:space-between;padding:12px 0;border-bottom:1px solid var(--border);font-size:13px}
         .tax-row:last-child{border-bottom:0}
         .tax-row strong{color:var(--primary)}
+        .mode-switcher{display:flex;gap:12px;margin-bottom:24px}
+        .mode-btn{flex:1;padding:14px;border:2px solid var(--border);border-radius:10px;background:#fff;color:var(--text);font-weight:800;font-size:14px;text-align:center;cursor:pointer;transition:.2s}
+        .mode-btn.active{border-color:var(--primary);background:var(--accent-light);color:var(--primary)}
         .message{display:none;margin-bottom:20px;padding:13px 15px;border-radius:9px;font-size:13px;line-height:1.5}.message.show{display:block}.message-error{color:#991b1b;border:1px solid #fecaca;background:var(--danger-light)}
         .sidebar-overlay{position:fixed;inset:0;z-index:990;display:none;background:rgba(15,23,42,.55)}.sidebar-overlay.show{display:block}
-        @media(max-width:850px){.sidebar{transform:translateX(-100%);transition:.25s}.sidebar.open{transform:translateX(0)}.main{width:100%;margin-left:0}.menu-button{display:inline-flex;align-items:center;justify-content:center}.content{padding:22px 18px}.summary-grid{grid-template-columns:1fr}}
+        @media(max-width:850px){.sidebar{transform:translateX(-100%);transition:.25s}.sidebar.open{transform:translateX(0)}.main{width:100%;margin-left:0}.menu-button{display:inline-flex;align-items:center;justify-content:center}.content{padding:22px 18px}.summary-grid,.mode-switcher{grid-template-columns:1fr}}
     </style>
 </head>
 <body>
@@ -82,15 +85,27 @@
             <div class="sidebar-footer"><div class="user-card"><div class="user-email" id="userEmail">Používateľ</div><div class="user-status">Živnostenský účet</div></div><button type="button" class="logout-button" id="logoutButton">Odhlásiť sa</button></div>
         </aside>
         <main class="main">
-            <header class="topbar"><div class="topbar-left"><button type="button" class="menu-button" id="menuButton">☰</button><div><div class="topbar-title">Daňové priznanie (DPFO typ B)</div><div class="topbar-subtitle">Prehľad príjmov, paušálu, odvodov a knihy jázd</div></div></div></header>
+            <header class="topbar"><div class="topbar-left"><button type="button" class="menu-button" id="menuButton">☰</button><div><div class="topbar-title">Daňové priznanie (DPFO typ B)</div><div class="topbar-subtitle">Výber režimu výdavkov a príprava podkladov</div></div></div></header>
             <div class="content">
                 <div id="pageMessage" class="message" role="alert"></div>
                 <section class="page-heading">
                     <div>
-                        <h1>Podklady pre daňové priznanie</h1>
-                        <p>Tieto súčty sa generujú na základe vašich uhradených faktúr, zadaných odvodov, bločkov a zaevidovaných ciest v knihe jázd za aktuálny rok.</p>
+                        <h1>Optimalizácia daňového priznania</h1>
+                        <p>Zvoľte si spôsob uplatňovania výdavkov. Aplikácia automaticky prepočíta základ dane a pripraví podklady.</p>
                     </div>
                 </section>
+
+                <!-- PREPÍNAČ REŽIMU VÝDAVKOV -->
+                <div class="mode-switcher">
+                    <button type="button" class="mode-btn active" id="modeFlatBtn" onclick="switchTaxMode('flat')">
+                        📊 Paušálne výdavky (60 %)
+                        <div style="font-size:11px; font-weight:normal; margin-top:4px; opacity:0.8;">Najobľúbenejšie pre väčšinu živnostníkov</div>
+                    </button>
+                    <button type="button" class="mode-btn" id="modeRealBtn" onclick="switchTaxMode('real')">
+                        🧾 Skutočné výdavky (Daňová evidencia)
+                        <div style="font-size:11px; font-weight:normal; margin-top:4px; opacity:0.8;">Bločky, prijaté faktúry & Kniha jázd</div>
+                    </button>
+                </div>
 
                 <!-- Štatistiky -->
                 <div class="summary-grid">
@@ -99,42 +114,46 @@
                         <div class="stat-box-value" id="taxRevenue">0,00 €</div>
                     </div>
                     <div class="stat-box">
-                        <div class="stat-box-title">Paušálne výdavky (60%)</div>
-                        <div class="stat-box-value" id="taxFlatExpense">0,00 €</div>
+                        <div class="stat-box-title" id="activeExpenseTitle">Paušálne výdavky (60%)</div>
+                        <div class="stat-box-value" id="taxExpenseValue">0,00 €</div>
                     </div>
                     <div class="stat-box">
-                        <div class="stat-box-title">Cestovné náhrady (Kniha jázd)</div>
-                        <div class="stat-box-value" id="taxTripsAllowance">0,00 €</div>
+                        <div class="stat-box-title">Predbežný základ dane</div>
+                        <div class="stat-box-value" id="taxBaseValue" style="color:var(--success);">0,00 €</div>
                     </div>
                 </div>
 
                 <!-- Detailný prehľad výpočtu -->
                 <div class="card">
-                    <h2 style="font-size:16px; margin-bottom:16px; color:var(--primary);">Podrobný rozpis pre DPFO typ B</h2>
+                    <h2 style="font-size:16px; margin-bottom:16px; color:var(--primary);" id="detailHeading">Podrobný rozpis pre paušálne výdavky</h2>
                     <div class="tax-row">
-                        <span>Zhrnutie príjmov z vystavených faktúr (§ 6 ods. 1 a 2 zákona o dani z príjmov):</span>
+                        <span>Zhrnutie príjmov (§ 6 ods. 1 a 2 zákona):</span>
                         <strong id="detailRevenue">0,00 €</strong>
                     </div>
-                    <div class="tax-row">
+                    <div class="tax-row" id="rowFlatDetail">
                         <span>Uplatnené paušálne výdavky (60 % z príjmov, max. 20 000 €):</span>
                         <strong id="detailFlat">0,00 €</strong>
                     </div>
-                    <div class="tax-row">
-                        <span>Zaplatené povinné odvody do ZP a SP (pripočítavajú sa k paušálu):</span>
-                        <strong id="detailInsurance">0,00 €</strong>
+                    <div class="tax-row" id="rowRealDetail" style="display:none;">
+                        <span>Uznané reálne výdavky (prijaté faktúry a bločky):</span>
+                        <strong id="detailRealExpenses">0,00 €</strong>
                     </div>
-                    <div class="tax-row">
-                        <span>Cestovné náhrady z Knihy jázd (náhrada za km + PHM):</span>
+                    <div class="tax-row" id="rowTripsDetail" style="display:none;">
+                        <span>Cestovné náhrady z Knihy jázd (km + PHM):</span>
                         <strong id="detailTrips">0,00 €</strong>
                     </div>
+                    <div class="tax-row">
+                        <span>Zaplatené povinné odvody do ZP a SP (pripočítavajú sa k výdavkom):</span>
+                        <strong id="detailInsurance">0,00 €</strong>
+                    </div>
                     <div class="tax-row" style="border-top: 2px solid var(--border); margin-top: 10px; padding-top: 15px; font-size: 15px;">
-                        <span><strong>Predbežný základ dane:</strong></span>
+                        <span><strong>Výsledný základ dane (základ pre výpočet dane):</strong></span>
                         <strong id="detailTaxBase" style="color: var(--success);">0,00 €</strong>
                     </div>
                 </div>
 
                 <div style="display: flex; gap: 12px; justify-content: flex-end;">
-                    <button type="button" class="button button-primary" onclick="window.print()">🖨️ Vytlačiť alebo uložiť ako PDF</button>
+                    <button type="button" class="button button-primary" onclick="window.print()">🖨️ Vytlačiť alebo uložiť podklady ako PDF</button>
                 </div>
             </div>
         </main>
@@ -143,6 +162,8 @@
     <script>
         let currentUser = null;
         let currentCompanyId = null;
+        let globalData = null;
+        let currentMode = 'flat'; // 'flat' alebo 'real'
         const $ = id => document.getElementById(id);
 
         document.addEventListener('DOMContentLoaded', initializePage);
@@ -179,44 +200,84 @@
         async function loadTaxData(companyId) {
             const currentYear = new Date().getFullYear().toString();
 
-            // Parralelné načítanie údajov z firiem, faktúr, odvodov a knihy jázd
-            const [compRes, invRes, tripsRes] = await Promise.all([
+            const [compRes, invRes, expensesRes, tripsRes] = await Promise.all([
                 supabaseClient.from('companies').select('*').eq('id', companyId).single(),
                 supabaseClient.from('invoices').select('*').eq('user_id', currentUser.id),
+                supabaseClient.from('received_invoices').select('*').eq('company_id', companyId),
                 supabaseClient.from('trips').select('*').eq('company_id', companyId)
             ]);
 
             if (compRes.error) throw compRes.error;
-            const company = compRes.data;
 
-            const invoices = (invRes.data || []).filter(i => (i.issue_date || '').startsWith(currentYear) && i.status !== 'cancelled');
+            globalData = {
+                company: compRes.data,
+                invoices: (invRes.data || []).filter(i => (i.issue_date || '').startsWith(currentYear) && i.status !== 'cancelled'),
+                expenses: (expensesRes.data || []).filter(e => (e.issue_date || '').startsWith(currentYear)),
+                trips: (tripsRes.data || []).filter(t => (t.trip_date || '').startsWith(currentYear))
+            };
+
+            renderTaxCalculations();
+        }
+
+        function switchTaxMode(mode) {
+            currentMode = mode;
+            if (mode === 'flat') {
+                $('modeFlatBtn').className = 'mode-btn active';
+                $('modeRealBtn').className = 'mode-btn';
+            } else {
+                $('modeFlatBtn').className = 'mode-btn';
+                $('modeRealBtn').className = 'mode-btn active';
+            }
+            renderTaxCalculations();
+        }
+
+        function renderTaxCalculations() {
+            if (!globalData) return;
+            const { company, invoices, expenses, trips } = globalData;
+
             const totalRevenue = invoices.reduce((sum, i) => sum + Number(i.total || 0), 0);
-
-            // 60% paušál (max 20 000 €)
-            let flatExpense = totalRevenue * 0.60;
-            if (flatExpense > 20000) flatExpense = 20000;
-
-            // Ročné odvody (mesačné * 12)
             const annualInsurance = (Number(company.health_insurance || 0) + Number(company.social_insurance || 0)) * 12;
 
-            // Celkové cestovné náhrady z knihy jázd za rok
-            const trips = (tripsRes.data || []).filter(t => (t.trip_date || '').startsWith(currentYear));
-            const totalTripsAllowance = trips.reduce((sum, t) => sum + Number(t.total_allowance || 0), 0);
-
-            // Výpočet základu dane pri paušálnych výdavkoch: Príjmy - Paušál - Odvody
-            // (Cestovné náhrady sa pri paušále špeciálne nezapočítavajú, pretože paušál v sebe zahŕňa prevádzkové náklady auta, okrem odvodov. Pri reálnych výdavkoch by sa však sčítavali.)
-            const taxBase = Math.max(0, totalRevenue - flatExpense - annualInsurance);
-
-            // Zobrazenie v UI
             $('taxRevenue').textContent = money(totalRevenue);
-            $('taxFlatExpense').textContent = money(flatExpense);
-            $('taxTripsAllowance').textContent = money(totalTripsAllowance);
-
             $('detailRevenue').textContent = money(totalRevenue);
-            $('detailFlat').textContent = money(flatExpense);
             $('detailInsurance').textContent = money(annualInsurance);
-            $('detailTrips').textContent = money(totalTripsAllowance) + ` (${trips.length} ciest v knihe jázd)`;
-            $('detailTaxBase').textContent = money(taxBase);
+
+            if (currentMode === 'flat') {
+                $('activeExpenseTitle').textContent = 'Paušálne výdavky (60%)';
+                $('detailHeading').textContent = 'Podrobný rozpis pre paušálne výdavky';
+                $('rowFlatDetail').style.display = 'flex';
+                $('rowRealDetail').style.display = 'none';
+                $('rowTripsDetail').style.display = 'none';
+
+                let flatExpense = totalRevenue * 0.60;
+                if (flatExpense > 20000) flatExpense = 20000;
+
+                const taxBase = Math.max(0, totalRevenue - flatExpense - annualInsurance);
+
+                $('taxExpenseValue').textContent = money(flatExpense);
+                $('detailFlat').textContent = money(flatExpense);
+                $('taxBaseValue').textContent = money(taxBase);
+                $('detailTaxBase').textContent = money(taxBase);
+            } else {
+                $('activeExpenseTitle').textContent = 'Reálne výdavky + Náhrady';
+                $('detailHeading').textContent = 'Podrobný rozpis pre daňovú evidenciu (reálne výdavky)';
+                $('rowFlatDetail').style.display = 'none';
+                $('rowRealDetail').style.display = 'flex';
+                $('rowTripsDetail').style.display = 'flex';
+
+                const totalRealExpenses = expenses.reduce((sum, e) => sum + Number(e.total || 0), 0);
+                const totalTripsAllowance = trips.reduce((sum, t) => sum + Number(t.total_allowance || 0), 0);
+
+                // Pri reálnych výdavkoch sa výdavky z bločkov, náhrady z ciest a odvody sčítavajú
+                const totalExpensesSum = totalRealExpenses + totalTripsAllowance + annualInsurance;
+                const taxBase = Math.max(0, totalRevenue - totalExpensesSum);
+
+                $('taxExpenseValue').textContent = money(totalRealExpenses + totalTripsAllowance);
+                $('detailRealExpenses').textContent = money(totalRealExpenses);
+                $('detailTrips').textContent = money(totalTripsAllowance) + ` (${trips.length} ciest)`;
+                $('taxBaseValue').textContent = money(taxBase);
+                $('detailTaxBase').textContent = money(taxBase);
+            }
         }
 
         function setupEvents() {
