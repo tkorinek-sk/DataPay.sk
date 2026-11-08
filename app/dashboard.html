@@ -71,11 +71,15 @@
             <nav class="sidebar-nav">
                 <div class="nav-label">Prehľad</div>
                 <a class="nav-link active" href="dashboard.html"><span class="nav-icon">⌂</span><span>Dashboard</span></a>
+                
                 <div class="nav-label">Fakturácia</div>
-                <a class="nav-link" href="invoices.html"><span class="nav-icon">▤</span><span>Faktúry</span></a>
+                <a class="nav-link" href="invoices.html"><span class="nav-icon">▤</span><span>Vystavené faktúry</span></a>
+                <a class="nav-link" href="received-invoices.html"><span class="nav-icon">⇩</span><span>Prijaté faktúry</span></a>
                 <a class="nav-link" href="invoice-new.html"><span class="nav-icon">＋</span><span>Nová faktúra</span></a>
                 <a class="nav-link" href="contacts.html"><span class="nav-icon">♙</span><span>Kontakty</span></a>
+                
                 <div class="nav-label">Dane & Nastavenia</div>
+                <a class="nav-link" href="tax.html"><span class="nav-icon">§</span><span>Daňové priznanie</span></a>
                 <a class="nav-link" href="company.html"><span class="nav-icon">▣</span><span>Moja firma</span></a>
                 <a class="nav-link" href="../index.html"><span class="nav-icon">↗</span><span>DataPay.sk</span></a>
             </nav>
@@ -99,26 +103,31 @@
                     <div>
                         <section class="panel"><div class="panel-header"><div><h2>Posledné faktúry</h2><p>Najnovšie vystavené doklady</p></div><a class="panel-link" href="invoices.html">Zobraziť všetky</a></div><div id="invoiceTableArea"><div class="empty">Načítavam faktúry…</div></div></section>
                         
-                        <!-- Zmenené na daňový prehľad pre živnostníka -->
+                        <!-- Daňový prehľad pre živnostníka prepojený na tax.html -->
                         <section class="panel">
                             <div class="panel-header">
                                 <div><h2>Daňové priznanie & Uzávierka</h2><p>Príprava dokumentov pre daňový úrad (DPFO typ B)</p></div>
+                                <a class="panel-link" href="tax.html">Otvoriť portál daní</a>
                             </div>
                             <div class="service-card">
-                                <div class="service-row">
-                                    <div>
-                                        <div class="service-title">Paušálne výdavky a príjmy</div>
-                                        <div class="service-detail">Automatický súčet pre riadky daňového priznania na základe vašich úhrad.</div>
+                                <a href="tax.html" style="text-decoration:none; color:inherit; display:block;">
+                                    <div class="service-row">
+                                        <div>
+                                            <div class="service-title">Paušálne výdavky a príjmy</div>
+                                            <div class="service-detail">Automatický súčet pre riadky daňového priznania na základe vašich úhrad.</div>
+                                        </div>
+                                        <span class="service-state ready">Aktivované</span>
                                     </div>
-                                    <span class="service-state ready">Aktivované</span>
-                                </div>
-                                <div class="service-row">
-                                    <div>
-                                        <div class="service-title">Daňové priznanie (XML pre Finančnú správu)</div>
-                                        <div class="service-detail">Jedno kliknutie na konci roka – vygeneruje pripravené podklady pre e-Government.</div>
+                                </a>
+                                <a href="tax.html" style="text-decoration:none; color:inherit; display:block;">
+                                    <div class="service-row">
+                                        <div>
+                                            <div class="service-title">Daňové priznanie (XML pre Finančnú správu)</div>
+                                            <div class="service-detail">Jedno kliknutie na konci roka – vygeneruje pripravené podklady pre e-Government.</div>
+                                        </div>
+                                        <span class="service-state ready">Generovať</span>
                                     </div>
-                                    <span class="service-state">Pripravujeme na 31.12.</span>
-                                </div>
+                                </a>
                             </div>
                         </section>
                     </div>
@@ -126,7 +135,7 @@
                         <section class="panel"><div class="panel-header"><div><h2>Rýchle akcie</h2><p>Najčastejšie úkony</p></div></div><div class="quick-actions">
                             <a class="quick-action" href="invoice-new.html"><strong>＋ Nová faktúra</strong><span>Vystaviť nový doklad</span></a>
                             <a class="quick-action" href="contacts.html"><strong>♙ Kontakty</strong><span>Správa odberateľov</span></a>
-                            <a class="quick-action" href="invoices.html"><strong>▤ Faktúry</strong><span>Zoznam a stav dokladów</span></a>
+                            <a class="quick-action" href="invoices.html"><strong>▤ Faktúry</strong><span>Zoznam a stav dokladov</span></a>
                             <a class="quick-action" href="company.html"><strong>▣ Moja firma</strong><span>Fakturačné údaje</span></a>
                         </div></section>
                     </aside>
@@ -183,19 +192,15 @@
 
         function updateFreelancerStatistics(invoices) {
             const currentYear = new Date().getFullYear().toString();
-            // Filtrujeme zaplatené/vystavené faktúry za aktuálny kalendárny rok pre výpočet obratu živnostníka
             const yearInvoices = invoices.filter(i => (i.issue_date || '').startsWith(currentYear) && i.status !== 'cancelled');
             const totalRevenue = yearInvoices.reduce((sum, i) => sum + eurValue(i.total, i.currency), 0);
             
-            // Výpočet paušálnych výdavkov (60 %, max 20 000 €)
             let calculatedFlatExpenses = totalRevenue * 0.60;
             if (calculatedFlatExpenses > 20000) calculatedFlatExpenses = 20000;
 
-            // Limit pre povinnú registráciu DPH na Slovensku (49 790 €)
             const dphLimit = 49790;
             const dphPercentage = Math.min(100, (totalRevenue / dphLimit) * 100);
 
-            // Neuhradené faktúry na preplatenie
             const today = localDate(new Date());
             const collectible = invoices.filter(i => ['issued', 'overdue'].includes(displayStatus(i, today)));
             const dueTotal = collectible.reduce((sum, i) => sum + eurValue(i.amount_due, i.currency), 0);
