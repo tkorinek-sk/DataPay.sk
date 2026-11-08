@@ -782,7 +782,7 @@
                 <section class="page-heading">
                     <h1>Údaje vašej firmy</h1>
                     <p>
-                        Tieto údaje sa budú automaticky používať ako
+                        Tieto údaje sa budú automaticky použíwać ako
                         dodávateľ na nových faktúrach. Pred uložením
                         skontrolujte najmä IČO, adresu, IBAN a BIC.
                     </p>
@@ -874,7 +874,7 @@
 
                         </div>
 
-                        <!-- NOVÁ SEKCIA: Mesačné odvody -->
+                        <!-- SEKCIA: Mesačné odvody -->
                         <div class="card">
                             <div class="section-title">
                                 Mesačné odvody (Zdravotné & Sociálne)
@@ -1045,6 +1045,7 @@
 
     </div>
 
+    <!-- JAVASCRIPT ČASŤ, ABY STRÁNKU NAOZAJ NAČÍtalo -->
     <script>
         const SUPABASE_URL = 'https://sqzxludiwdazcafcynwt.supabase.co';
         const SUPABASE_ANON_KEY = 'sb_publishable_mWxTg8rzobN0zxgDl8QAxA_vCQ-CeGY';
@@ -1067,7 +1068,6 @@
                 $('userEmail').textContent = currentUser.email || 'Používateľ';
                 setupEvents();
 
-                // Zistenie firmy
                 const { data: membership, error: memErr } = await supabaseClient
                     .from('company_members')
                     .select('company_id')
@@ -1099,14 +1099,19 @@
 
             if (error) throw error;
             if (data) {
-                $('companyIco').value = data.ico \vert{}\vert{} '';$('companyName').value = data.name || '';
-                $('companyDic').value = data.dic \vert{}\vert{} '';$('companyIcdph').value = data.ic_dph || '';
-                $('companyCountry').value = data.country \vert{}\vert{} 'SK';$('companyStreet').value = data.street || '';
-                $('companyPostalCode').value = data.postal_code \vert{}\vert{} '';$('companyCity').value = data.city || '';
-                $('companyIban').value = data.iban \vert{}\vert{} '';$('companyBic').value = data.bic || '';
-                $('companyEmail').value = data.email \vert{}\vert{} '';$('companyPhone').value = data.phone || '';
+                $('companyIco').value = data.ico || '';
+                $('companyName').value = data.name || '';
+                $('companyDic').value = data.dic || '';
+                $('companyIcdph').value = data.ic_dph || '';
+                $('companyCountry').value = data.country || 'SK';
+                $('companyStreet').value = data.street || '';
+                $('companyPostalCode').value = data.postal_code || '';
+                $('companyCity').value = data.city || '';
+                $('companyIban').value = data.iban || '';
+                $('companyBic').value = data.bic || '';
+                $('companyEmail').value = data.email || '';
+                $('companyPhone').value = data.phone || '';
                 
-                // Načítanie odvodov (ak sú v DB)
                 if (data.health_insurance !== undefined) $('healthInsuranceMonthly').value = data.health_insurance || '';
                 if (data.social_insurance !== undefined) $('socialInsuranceMonthly').value = data.social_insurance || '';
 
@@ -1194,10 +1199,8 @@
             
             try {
                 const response = await fetch(`https://ofis.sk/api/ore/v1/subjekt?ico=${ico}`);
-                // fallback na verejnú štátnu / obdobnú logiku alebo simuláciu úspechu
                 if (!response.ok) throw new Error('Nepodarilo sa načítať údaje.');
                 const data = await response.json();
-                // Jednoduché vyplnenie ak existuje odpoveď
                 if (data && data.obchodneMeno) {
                     $('companyName').value = data.obchodneMeno;
                     if (data.ulica) $('companyStreet').value = data.ulica + ' ' + (data.cislo || '');
@@ -1208,7 +1211,6 @@
                     $('lookupStatus').className = 'lookup-status ok';
                 }
             } catch (err) {
-                // Skúsime alternatívny lookup alebo fallback pre slovenské IČO cez register
                 $('lookupStatus').textContent = 'IČO skontrolované (zadajte detaily manuálne, ak sa nevyplnili).';
                 $('lookupStatus').className = 'lookup-status ok';
             }
@@ -1218,19 +1220,27 @@
             $('summaryName').textContent = d.name || 'Vaša firma';
             $('summaryAddress').textContent = [d.street, d.postal, d.city].filter(Boolean).join(', ') || 'Adresa nezadaná';
             $('summaryIco').textContent = d.ico || '—';
-            $('summaryDic').textContent = d.dic \vert{}\vert{} '—';$('summaryIcdph').textContent = d.icdph || 'Nie je uvedené';
-            $('summaryIban').textContent = d.iban \vert{}\vert{} '—';$('summaryContact').textContent = [d.email, d.phone].filter(Boolean).join(' | ') || '—';
+            $('summaryDic').textContent = d.dic || '—';
+            $('summaryIcdph').textContent = d.icdph || 'Nie je uvedené';
+            $('summaryIban').textContent = d.iban || '—';
+            $('summaryContact').textContent = [d.email, d.phone].filter(Boolean).join(' | ') || '—';
         }
 
         function setupEvents() {
             $('lookupButton').onclick = lookupAres;
             $('saveButton').onclick = saveCompanyData;
             $('saveTopButton').onclick = saveCompanyData;
-            $('logoutButton').onclick = async () => { await supabaseClient.auth.signOut(); location.replace('login.html'); };$('menuButton').onclick = () => {
-                $('sidebar').classList.add('open');$('sidebarOverlay').classList.add('show');
+            $('logoutButton').onclick = async () => {
+                await supabaseClient.auth.signOut();
+                location.replace('login.html');
+            };
+            $('menuButton').onclick = () => {
+                $('sidebar').classList.add('open');
+                $('sidebarOverlay').classList.add('show');
             };
             $('sidebarOverlay').onclick = () => {
-                $('sidebar').classList.remove('open');$('sidebarOverlay').classList.remove('show');
+                $('sidebar').classList.remove('open');
+                $('sidebarOverlay').classList.remove('show');
             };
         }
 
@@ -1248,7 +1258,8 @@
         }
 
         function showApp() {
-            $('pageLoader').style.display = 'none';$('app').classList.add('ready');
+            $('pageLoader').style.display = 'none';
+            $('app').classList.add('ready');
         }
     </script>
 </body>
