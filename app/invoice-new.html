@@ -93,6 +93,13 @@ document.addEventListener('DOMContentLoaded',initializePage);
 
 async function initializePage(){try{const {data:{session},error}=await supabaseClient.auth.getSession();if(error)throw error;if(!session?.user){location.replace('login.html');return}currentUser=session.user;$('userEmail').textContent=currentUser.email||'Používateľ';setupEvents();setDefaultDates();currentInvoiceId=new URLSearchParams(location.search).get('id');await loadCompanyContext();if(currentInvoiceId){$('pageTitle').textContent='Upraviť faktúru';await loadInvoice(currentInvoiceId)}else{addItem();await setSuggestedInvoiceNumber();await loadOwnCompany()}await loadContacts();showApp();updatePreview()}catch(e){console.error(e);showApp();showMessage(readError(e),'error')}
 }
+  function clearMessage() {
+    const msgEl = document.getElementById('pageMessage') || document.getElementById('message');
+    if (msgEl) {
+        msgEl.textContent = '';
+        msgEl.className = 'message';
+    }
+}
 function showApp(){$('pageLoader').style.display='none';$('app').classList.add('ready')}
 function setupEvents(){document.querySelectorAll('input,select,textarea').forEach(el=>{el.addEventListener('input',updatePreview);el.addEventListener('change',updatePreview)});$('addItemButton').onclick=()=>addItem();$('supplierLookupButton').onclick=()=>lookupCompany('supplier');$('customerLookupButton').onclick=()=>lookupCompany('customer');$('savedContactSelect').onchange=handleContactSelection;$('clearContactButton').onclick=clearCustomerForm;$('saveContactButton').onclick=saveCustomerAsContact;$('saveButton').onclick=saveInvoice;$('saveTopButton').onclick=saveInvoice;$('printButton').onclick=printInvoice;$('pdfButton').onclick=downloadPDF;$('logoutButton').onclick=logout;$('menuButton').onclick=()=>{$('sidebar').classList.add('open');$('sidebarOverlay').classList.add('show')};$('sidebarOverlay').onclick=()=>{$('sidebar').classList.remove('open');$('sidebarOverlay').classList.remove('show')};$('supplierIban').addEventListener('input',e=>{e.target.value=formatIban(e.target.value);updatePreview()})}
 function setDefaultDates(){const t=new Date(),d=new Date();d.setDate(d.getDate()+14);$('issueDate').value=dateInput(t);$('supplyDate').value=dateInput(t);$('dueDate').value=dateInput(d)}
