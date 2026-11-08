@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Daňové priznanie | MyDataPay</title>
+    <title>Daňové priznanie (DPFO typ B) | MyDataPay</title>
     <meta name="robots" content="noindex, nofollow">
     <meta name="theme-color" content="#052c64">
     <link rel="icon" href="../favicon.png" type="image/png">
@@ -59,18 +59,21 @@
         .mode-btn.active{border-color:var(--primary);background:var(--accent-light);color:var(--primary)}
         .message{display:none;margin-bottom:20px;padding:13px 15px;border-radius:9px;font-size:13px;line-height:1.5}.message.show{display:block}.message-error{color:#991b1b;border:1px solid #fecaca;background:var(--danger-light)}
         .sidebar-overlay{position:fixed;inset:0;z-index:990;display:none;background:rgba(15,23,42,.55)}.sidebar-overlay.show{display:block}
-        /* ŠPECIÁLNE TLAČOVÉ ŠTÝLY (ZOBRAZIA IBA ÚRADNÝ DOKUMENT) */
-        #printDocument { display: none; }
+
+        /* TLAČOVÝ FORMULÁR DPFO TYP B - SKRYTÝ NA BEŽNEJ OBRAZOVKE */
+        #printOfficialForm { display: none; }
+
         @media print {
             body * { visibility: hidden; }
-            #printDocument, #printDocument * { visibility: visible; }
-            #printDocument {
+            #printOfficialForm, #printOfficialForm * { visibility: visible; }
+            #printOfficialForm {
                 display: block !important;
                 position: absolute;
                 inset: 0;
                 background: #fff;
-                padding: 0;
-                width: 100%;
+                padding: 10px;
+                font-family: Arial, sans-serif;
+                color: #000;
             }
         }
         @media(max-width:850px){.sidebar{transform:translateX(-100%);transition:.25s}.sidebar.open{transform:translateX(0)}.main{width:100%;margin-left:0}.menu-button{display:inline-flex;align-items:center;justify-content:center}.content{padding:22px 18px}.summary-grid,.mode-switcher{grid-template-columns:1fr}}
@@ -99,15 +102,16 @@
             <div class="sidebar-footer"><div class="user-card"><div class="user-email" id="userEmail">Používateľ</div><div class="user-status">Živnostenský účet</div></div><button type="button" class="logout-button" id="logoutButton">Odhlásiť sa</button></div>
         </aside>
         <main class="main">
-            <header class="topbar"><div class="topbar-left"><button type="button" class="menu-button" id="menuButton">☰</button><div><div class="topbar-title">Daňové priznanie (DPFO typ B)</div><div class="topbar-subtitle">Výber režimu výdavkov a príprava podkladov</div></div></div></header>
+            <header class="topbar"><div class="topbar-left"><button type="button" class="menu-button" id="menuButton">☰</button><div><div class="topbar-title">Daňové priznanie (DPFO typ B)</div><div class="topbar-subtitle">Výber režimu výdavkov a kontrola pred podaním</div></div></div></header>
             <div class="content">
                 <div id="pageMessage" class="message" role="alert"></div>
                 <section class="page-heading">
                     <div>
-                        <h1>Optimalizácia daňového priznania</h1>
-                        <p>Zvoľte si spôsob uplatňovania výdavkov. Aplikácia automaticky prepočíta základ dane a pripraví podklady.</p>
+                        <h1>Daňové priznanie (DPFO typ B)</h1>
+                        <p>Skontrolujte si predbežný výpočet, stiahnite si vernú kópiu úradného tlačiva pre kontrolu alebo vygenerujte XML pre Finančnú správu.</p>
                     </div>
                 </section>
+
                 <!-- PREPÍNAČ REŽIMU VÝDAVKOV -->
                 <div class="mode-switcher">
                     <button type="button" class="mode-btn active" id="modeFlatBtn" onclick="switchTaxMode('flat')">
@@ -165,78 +169,77 @@
                     </div>
                 </div>
 
+                <!-- Tlačidlá na akcie -->
                 <div style="display: flex; gap: 12px; justify-content: flex-end; flex-wrap: wrap;">
-                    <button type="button" class="button button-success" onclick="generateFinancnaSpravaXML()">⚡ Stiahnuť XML pre Finančnú správu</button>
-                    <button type="button" class="button button-primary" onclick="handlePrint()">🖨️ Stiahnuť oficiálne PDF podklady</button>
+                    <button type="button" class="button button-outline" onclick="triggerOfficialPrint()">📄 Stiahnuť kópiu daňového priznania (PDF)</button>
+                    <button type="button" class="button button-primary" onclick="generateTaxXML()">⚡ Stiahnuť XML pre Finančnú správu</button>
                 </div>
             </div>
         </main>
     </div>
 
-    <!-- TLAČOVÁ ŠABLÓNA PRE OFICIÁLNY VZHĽAD ÚRADNÉHO DOKUMENTU -->
-    <div id="printDocument">
-        <div style="font-family: Arial, sans-serif; color: #000; padding: 25px; font-size: 12px; line-height: 1.5; max-width: 800px; margin: 0 auto;">
-            <div style="text-align: right; font-size: 10px; color: #555; margin-bottom: 25px; border-bottom: 1px solid #ccc; padding-bottom: 8px;">
-                Oficiálna príloha k daňovému priznaniu DPFO (typ B) — Vygenerované v MyDataPay
-            </div>
-            
-            <h2 style="text-align: center; font-size: 16px; margin-bottom: 5px; text-transform: uppercase; letter-spacing: 0.5px;">PODKLADY NA VÝPOČET ZÁKLADU DANE Z PRÍJMOV</h2>
-            <div style="text-align: center; font-size: 12px; margin-bottom: 25px; color: #333;" id="printYearHeader">Za zdaňovacie obdobie rok 2026</div>
+    <!-- VERNÁ KÓPIA ÚRADNÉHO TLAČIVA DPFO TYP B (ZOBRAZÍ SA IBA PRI TLAČI) -->
+    <div id="printOfficialForm">
+        <div style="text-align: right; font-size: 9px; margin-bottom: 5px;">Vzor schválený MF SR / Vygenerované v MyDataPay</div>
+        <table style="width: 100%; border: 2px solid #000; border-collapse: collapse; font-size: 11px;">
+            <tr>
+                <td style="border: 1px solid #000; padding: 8px; text-align: center; background: #eee;" colspan="2">
+                    <strong style="font-size: 13px;">DAŇOVÉ PRIZNANIE K DANI Z PRÍJMOV FYZICKEJ OSOBY (TYP B)</strong><br>
+                    <span>za zdaňovacie obdobie rok <span id="pYear">2026</span></span>
+                </td>
+            </tr>
+            <tr>
+                <td style="border: 1px solid #000; padding: 6px; width: 50%;">
+                    <strong>I. ODDDIEL - Údaje o daňovníkovi</strong><br>
+                    Meno a priezvisko / Obchodné meno: <span id="pName" style="font-weight: bold;">—</span><br>
+                    IČO: <span id="pIco">—</span> | DIČ: <span id="pDic">—</span>
+                </td>
+                <td style="border: 1px solid #000; padding: 6px;">
+                    <strong>Druh priznania:</strong><br>
+                    [X] Riadne priznanie &nbsp;&nbsp;&nbsp; [ ] Opravné &nbsp;&nbsp;&nbsp; [ ] Dodatočné
+                </td>
+            </tr>
+        </table>
 
-            <table style="width: 100%; border-collapse: collapse; margin-bottom: 25px; font-size: 11px;">
-                <tr>
-                    <td style="border: 1px solid #000; padding: 8px; width: 35%; background: #f9f9f9;"><strong>Daňovník (Meno / Firma):</strong></td>
-                    <td style="border: 1px solid #000; padding: 8px;" id="printCompanyName">—</td>
-                </tr>
-                <tr>
-                    <td style="border: 1px solid #000; padding: 8px; background: #f9f9f9;"><strong>IČO / DIČ:</strong></td>
-                    <td style="border: 1px solid #000; padding: 8px;" id="printCompanyId">—</td>
-                </tr>
-                <tr>
-                    <td style="border: 1px solid #000; padding: 8px; background: #f9f9f9;"><strong>Zvolený režim výdavkov:</strong></td>
-                    <td style="border: 1px solid #000; padding: 8px;" id="printCompanyMode">—</td>
-                </tr>
-            </table>
+        <div style="margin-top: 15px; font-weight: bold; font-size: 11px; background: #ddd; padding: 4px; border: 1px solid #000;">
+            V. ODDDIEL – Výpočet základu dane (čiastkového základu dane) z príjmov zo podnikania (§ 6 ods. 1 a 2 zákona)
+        </div>
 
-            <table style="width: 100%; border-collapse: collapse; font-size: 11px;">
-                <thead>
-                    <tr style="background: #e0e0e0;">
-                        <th style="border: 1px solid #000; padding: 8px; text-align: left;">Položka / Riadok tlačiva priznania</th>
-                        <th style="border: 1px solid #000; padding: 8px; text-align: right; width: 140px;">Suma (€)</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td style="border: 1px solid #000; padding: 8px;">Zhrnutie príjmov z faktúry (§ 6 ods. 1 a 2 zákona)</td>
-                        <td style="border: 1px solid #000; padding: 8px; text-align: right;" id="printValRevenue">0,00 €</td>
-                    </tr>
-                    <tr id="printRowFlat">
-                        <td style="border: 1px solid #000; padding: 8px;">Uplatnené paušálne výdavky (60 %, max. 20 000 €)</td>
-                        <td style="border: 1px solid #000; padding: 8px; text-align: right;" id="printValFlat">0,00 €</td>
-                    </tr>
-                    <tr id="printRowReal" style="display:none;">
-                        <td style="border: 1px solid #000; padding: 8px;">Uznané reálne výdavky (prijaté faktúry a bločky)</td>
-                        <td style="border: 1px solid #000; padding: 8px; text-align: right;" id="printValReal">0,00 €</td>
-                    </tr>
-                    <tr id="printRowTrips" style="display:none;">
-                        <td style="border: 1px solid #000; padding: 8px;">Cestovné náhrady z Knihy jázd (km + PHM)</td>
-                        <td style="border: 1px solid #000; padding: 8px; text-align: right;" id="printValTrips">0,00 €</td>
-                    </tr>
-                    <tr>
-                        <td style="border: 1px solid #000; padding: 8px;">Zaplatené povinné odvody do ZP a SP</td>
-                        <td style="border: 1px solid #000; padding: 8px; text-align: right;" id="printValInsurance">0,00 €</td>
-                    </tr>
-                    <tr style="background: #f5f5f5; font-weight: bold;">
-                        <td style="border: 1px solid #000; padding: 10px; font-size: 12px;">VÝSLEDNÝ ZÁKLAD DANE</td>
-                        <td style="border: 1px solid #000; padding: 10px; text-align: right; font-size: 12px;" id="printValTaxBase">0,00 €</td>
-                    </tr>
-                </tbody>
-            </table>
+        <table style="width: 100%; border: 1px solid #000; border-collapse: collapse; font-size: 11px;">
+            <tr style="background: #f5f5f5;">
+                <th style="border: 1px solid #000; padding: 5px; text-align: left;">Označenie riadku / Položka v tlačive</th>
+                <th style="border: 1px solid #000; padding: 5px; text-align: right; width: 100px;">Riadok</th>
+                <th style="border: 1px solid #000; padding: 5px; text-align: right; width: 120px;">Suma v €</th>
+            </tr>
+            <tr>
+                <td style="border: 1px solid #000; padding: 5px;">Príjmy z podnikania a z inej samostatnej zárobkovej činnosti (§ 6 ods. 1 a 2)</td>
+                <td style="border: 1px solid #000; padding: 5px; text-align: right; font-weight: bold;">ř. 37 / sl. 1</td>
+                <td style="border: 1px solid #000; padding: 5px; text-align: right; font-weight: bold;" id="pRev">0,00</td>
+            </tr>
+            <tr>
+                <td style="border: 1px solid #000; padding: 5px;">Výdavky vynaložené na dosiahnutie, zabezpečenie a udržanie príjmov (paušálne alebo reálne)</td>
+                <td style="border: 1px solid #000; padding: 5px; text-align: right; font-weight: bold;">ř. 38 / sl. 2</td>
+                <td style="border: 1px solid #000; padding: 5px; text-align: right; font-weight: bold;" id="pExp">0,00</td>
+            </tr>
+            <tr>
+                <td style="border: 1px solid #000; padding: 5px;">Zaplatené povinné odvody do zdravotnej a sociálnej poisťovne (zahrnuté vo výdavkoch / pripočítané)</td>
+                <td style="border: 1px solid #000; padding: 5px; text-align: right; font-weight: bold;">ř. 39</td>
+                <td style="border: 1px solid #000; padding: 5px; text-align: right; font-weight: bold;" id="pIns">0,00</td>
+            </tr>
+            <tr style="background: #eef5fc;">
+                <td style="border: 1px solid #000; padding: 6px;"><strong>Čiastkový základ dane z príjmov (§ 6 ods. 1 a 2) (ř. 37 minus ř. 38)</strong></td>
+                <td style="border: 1px solid #000; padding: 6px; text-align: right; font-weight: bold;">ř. 41</td>
+                <td style="border: 1px solid #000; padding: 6px; text-align: right; font-weight: bold; color: #052c64;" id="pTaxBase">0,00</td>
+            </tr>
+        </table>
 
-            <div style="margin-top: 60px; display: flex; justify-content: space-between;">
-                <div style="border-top: 1px solid #000; width: 220px; text-align: center; padding-top: 6px; font-size: 11px;">Dátum vyhotovenia</div>
-                <div style="border-top: 1px solid #000; width: 220px; text-align: center; padding-top: 6px; font-size: 11px;">Podpis daňovníka (SZČO)</div>
-            </div>
+        <div style="margin-top: 20px; font-size: 10px; line-height: 1.4;">
+            <strong>Poznámka pre daňovníka:</strong> Táto kópia slúži na kontrolu správnosti údajov pred ich prepísaním do oficiálneho elektronického formulára na portáli Finančnej správy SR. Zvolený režim výdavkov: <span id="pModeText" style="font-weight: bold;">Paušálne výdavky</span>.
+        </div>
+
+        <div style="margin-top: 50px; display: flex; justify-content: space-between; font-size: 11px;">
+            <div>Dátum vyhotovenia: <strong><script>document.write(new Date().toLocaleDateString('sk-SK'))</script></strong></div>
+            <div style="border-top: 1px solid #000; width: 220px; text-align: center; padding-top: 4px;">Podpis / Odtlačok pečiatky daňovníka</div>
         </div>
     </div>
 
@@ -244,7 +247,7 @@
         let currentUser = null;
         let currentCompanyId = null;
         let globalData = null;
-        let currentMode = 'flat'; // 'flat' alebo 'real'
+        let currentMode = 'flat';
         const $ = id => document.getElementById(id);
 
         document.addEventListener('DOMContentLoaded', initializePage);
@@ -360,68 +363,51 @@
             }
         }
 
-        function handlePrint() {
+        function triggerOfficialPrint() {
             if (!globalData) return;
             const { company, invoices, expenses, trips } = globalData;
             const currentYear = new Date().getFullYear();
 
-            $('printCompanyName').textContent = company.name || 'Neznáma firma';
-            $('printCompanyId').textContent = `IČO: ${company.ico || '—'} | DIČ: ${company.dic || '—'}`;
-            $('printCompanyMode').textContent = currentMode === 'flat' ? 'Paušálne výdavky (60%)' : 'Skutočné výdavky (Daňová evidencia)';
-            $('printYearHeader').textContent = `Za zdaňovacie obdobie rok ${currentYear}`;
+            $('pYear').textContent = currentYear;
+            $('pName').textContent = company.name || 'Neznáma firma';
+            $('pIco').textContent = company.ico || '—';
+            $('pDic').textContent = company.dic || '—';
+            $('pModeText').textContent = currentMode === 'flat' ? 'Paušálne výdavky (60%)' : 'Skutočné výdavky';
 
             const totalRevenue = invoices.reduce((sum, i) => sum + Number(i.total || 0), 0);
             const annualInsurance = (Number(company.health_insurance || 0) + Number(company.social_insurance || 0)) * 12;
 
-            $('printValRevenue').textContent = money(totalRevenue);
-            $('printValInsurance').textContent = money(annualInsurance);
-
+            let totalExp = 0;
             if (currentMode === 'flat') {
-                let flatExpense = totalRevenue * 0.60;
-                if (flatExpense > 20000) flatExpense = 20000;
-                const taxBase = Math.max(0, totalRevenue - flatExpense - annualInsurance);
-
-                $('printRowFlat').style.display = 'table-row';
-                $('printRowReal').style.display = 'none';
-                $('printRowTrips').style.display = 'none';
-                $('printValFlat').textContent = money(flatExpense);
-                $('printValTaxBase').textContent = money(taxBase);
+                let flat = totalRevenue * 0.60;
+                if (flat > 20000) flat = 20000;
+                totalExp = flat + annualInsurance;
             } else {
-                const totalRealExpenses = expenses.reduce((sum, e) => sum + Number(e.total || 0), 0);
-                const totalTripsAllowance = trips.reduce((sum, t) => sum + Number(t.total_allowance || 0), 0);
-                const totalExpensesSum = totalRealExpenses + totalTripsAllowance + annualInsurance;
-                const taxBase = Math.max(0, totalRevenue - totalExpensesSum);
-
-                $('printRowFlat').style.display = 'none';
-                $('printRowReal').style.display = 'table-row';
-                $('printRowTrips').style.display = 'table-row';
-                $('printValReal').textContent = money(totalRealExpenses);
-                $('printValTrips').textContent = money(totalTripsAllowance);
-                $('printValTaxBase').textContent = money(taxBase);
+                const realExp = expenses.reduce((sum, e) => sum + Number(e.total || 0), 0);
+                const tripsAll = trips.reduce((sum, t) => sum + Number(t.total_allowance || 0), 0);
+                totalExp = realExp + tripsAll + annualInsurance;
             }
+
+            const taxBase = Math.max(0, totalRevenue - totalExp);
+
+            $('pRev').textContent = totalRevenue.toFixed(2) + ' €';
+            $('pExp').textContent = totalExp.toFixed(2) + ' €';
+            $('pIns').textContent = annualInsurance.toFixed(2) + ' €';
+            $('pTaxBase').textContent = taxBase.toFixed(2) + ' €';
 
             window.print();
         }
 
-        function generateFinancnaSpravaXML() {
+        function generateTaxXML() {
             if (!globalData) return;
-            const { company, invoices, expenses, trips } = globalData;
+            const { company, invoices } = globalData;
             const currentYear = new Date().getFullYear();
-
             const totalRevenue = invoices.reduce((sum, i) => sum + Number(i.total || 0), 0);
             const annualInsurance = (Number(company.health_insurance || 0) + Number(company.social_insurance || 0)) * 12;
-
-            let expenseSum = 0;
-            if (currentMode === 'flat') {
-                expenseSum = totalRevenue * 0.60;
-                if (expenseSum > 20000) expenseSum = 20000;
-            } else {
-                const totalRealExpenses = expenses.reduce((sum, e) => sum + Number(e.total || 0), 0);
-                const totalTripsAllowance = trips.reduce((sum, t) => sum + Number(t.total_allowance || 0), 0);
-                expenseSum = totalRealExpenses + totalTripsAllowance;
-            }
-
-            const taxBase = Math.max(0, totalRevenue - expenseSum - annualInsurance);
+            
+            let flatExpense = totalRevenue * 0.60;
+            if (flatExpense > 20000) flatExpense = 20000;
+            const taxBase = Math.max(0, totalRevenue - flatExpense - annualInsurance);
 
             const xmlContent = `<?xml version="1.0" encoding="UTF-8"?>
 <PriznanieDPFO typ="B" rok="${currentYear}">
@@ -430,14 +416,14 @@
         <ICO>${escapeXML(company.ico || '')}</ICO>
         <DIC>${escapeXML(company.dic || '')}</DIC>
     </Danovnik>
-    <OddielIV>
-        <RezimVydavkov>${currentMode}</RezimVydavkov>
-        <PrijmyPar6_1_2>${totalRevenue.toFixed(2)}</PrijmyPar6_1_2>
-        <Vydavky>${expenseSum.toFixed(2)}</Vydavky>
-        <OdvodyZP_SP>${annualInsurance.toFixed(2)}</OdvodyZP_SP>
-        <ZakladDane>${taxBase.toFixed(2)}</ZakladDane>
-    </OddielIV>
+    <OddielV>
+        <Riadok37>${totalRevenue.toFixed(2)}</Riadok37>
+        <Riadok38>${flatExpense.toFixed(2)}</Riadok38>
+        <Riadok39>${annualInsurance.toFixed(2)}</Riadok39>
+        <Riadok41>${taxBase.toFixed(2)}</Riadok41>
+    </OddielV>
 </PriznanieDPFO>`;
+
             const blob = new Blob([xmlContent], { type: 'application/xml;charset=utf-8;' });
             const link = document.createElement('a');
             link.href = URL.createObjectURL(blob);
@@ -446,7 +432,7 @@
         }
 
         function escapeXML(str) {
-            return String(str || '').replace(/[<>&'"]/g, c => ({ '<':'&lt;', '>':'&gt;', '&':'&amp;', "'":'&apos;', '"':'&quot;' }[c]));
+            return String(str).replace(/[<>&'"]/g, c => ({ '<':'&lt;', '>':'&gt;', '&':'&amp;', "'":'&apos;', '"':'&quot;' }[c]));
         }
 
         function setupEvents() {
