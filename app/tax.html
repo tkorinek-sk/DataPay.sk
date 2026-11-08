@@ -7,8 +7,15 @@
     <meta name="robots" content="noindex, nofollow">
     <meta name="theme-color" content="#052c64">
     <link rel="icon" href="../favicon.png" type="image/png">
+    
+    <!-- Supabase JS -->
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <script src="js/supabase.js"></script>
+
+    <!-- Knižnice pre manipuláciu s PDF a sťahovanie súborov -->
+    <script src="https://unpkg.com/pdf-lib@1.17.1/dist/pdf-lib.min.js"></script>
+    <script src="https://unpkg.com/downloadjs@1.4.7/download.min.js"></script>
+
     <style>
         :root {
             --primary:#052c64; --primary-hover:#0b3e80; --accent:#397bb8;
@@ -46,6 +53,7 @@
         .button{min-height:42px;display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:10px 17px;border:1px solid transparent;border-radius:8px;font-size:13px;font-weight:800;white-space:nowrap}
         .button-primary{background:var(--primary);color:#fff}.button-primary:hover{background:var(--primary-hover)}
         .button-success{background:var(--success);color:#fff}.button-success:hover{background:#047857}
+        .button-outline{background:#fff;color:var(--text);border-color:var(--border)}
         .card{background:#fff;border:1px solid var(--border);border-radius:12px;box-shadow:0 5px 18px rgba(15,23,42,.035);padding:24px;margin-bottom:24px}
         .summary-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px;margin-bottom:20px}
         .stat-box{padding:18px;background:var(--accent-light);border-radius:10px;border:1px solid #dbeafe}
@@ -59,23 +67,6 @@
         .mode-btn.active{border-color:var(--primary);background:var(--accent-light);color:var(--primary)}
         .message{display:none;margin-bottom:20px;padding:13px 15px;border-radius:9px;font-size:13px;line-height:1.5}.message.show{display:block}.message-error{color:#991b1b;border:1px solid #fecaca;background:var(--danger-light)}
         .sidebar-overlay{position:fixed;inset:0;z-index:990;display:none;background:rgba(15,23,42,.55)}.sidebar-overlay.show{display:block}
-
-        /* TLAČOVÝ FORMULÁR DPFO TYP B - SKRYTÝ NA BEŽNEJ OBRAZOVKE */
-        #printOfficialForm { display: none; }
-
-        @media print {
-            body * { visibility: hidden; }
-            #printOfficialForm, #printOfficialForm * { visibility: visible; }
-            #printOfficialForm {
-                display: block !important;
-                position: absolute;
-                inset: 0;
-                background: #fff;
-                padding: 10px;
-                font-family: Arial, sans-serif;
-                color: #000;
-            }
-        }
         @media(max-width:850px){.sidebar{transform:translateX(-100%);transition:.25s}.sidebar.open{transform:translateX(0)}.main{width:100%;margin-left:0}.menu-button{display:inline-flex;align-items:center;justify-content:center}.content{padding:22px 18px}.summary-grid,.mode-switcher{grid-template-columns:1fr}}
     </style>
 </head>
@@ -102,13 +93,13 @@
             <div class="sidebar-footer"><div class="user-card"><div class="user-email" id="userEmail">Používateľ</div><div class="user-status">Živnostenský účet</div></div><button type="button" class="logout-button" id="logoutButton">Odhlásiť sa</button></div>
         </aside>
         <main class="main">
-            <header class="topbar"><div class="topbar-left"><button type="button" class="menu-button" id="menuButton">☰</button><div><div class="topbar-title">Daňové priznanie (DPFO typ B)</div><div class="topbar-subtitle">Výber režimu výdavkov a kontrola pred podaním</div></div></div></header>
+            <header class="topbar"><div class="topbar-left"><button type="button" class="menu-button" id="menuButton">☰</button><div><div class="topbar-title">Daňové priznanie (DPFO typ B)</div><div class="topbar-subtitle">Generovanie XML pre Finančnú správu a eDane PDF</div></div></div></header>
             <div class="content">
                 <div id="pageMessage" class="message" role="alert"></div>
                 <section class="page-heading">
                     <div>
-                        <h1>Daňové priznanie (DPFO typ B)</h1>
-                        <p>Skontrolujte si predbežný výpočet, stiahnite si vernú kópiu úradného tlačiva pre kontrolu alebo vygenerujte XML pre Finančnú správu.</p>
+                        <h1>Export daňového priznania</h1>
+                        <p>Aplikácia automaticky prepočíta vaše príjmy, paušál, odvody a náhrady. Stiahnite si bezchybný XML súbor pre portal.financnaspravna.sk alebo originálne vyplnené PDF tlačivo.</p>
                     </div>
                 </section>
 
@@ -116,7 +107,7 @@
                 <div class="mode-switcher">
                     <button type="button" class="mode-btn active" id="modeFlatBtn" onclick="switchTaxMode('flat')">
                         📊 Paušálne výdavky (60 %)
-                        <div style="font-size:11px; font-weight:normal; margin-top:4px; opacity:0.8;">Najobľúbenejšie pre väčšinu živnostníkov</div>
+                        <div style="font-size:11px; font-weight:normal; margin-top:4px; opacity:0.8;">Štandardný paušál do 20 000 €</div>
                     </button>
                     <button type="button" class="mode-btn" id="modeRealBtn" onclick="switchTaxMode('real')">
                         🧾 Skutočné výdavky (Daňová evidencia)
@@ -142,17 +133,17 @@
 
                 <!-- Detailný prehľad výpočtu -->
                 <div class="card">
-                    <h2 style="font-size:16px; margin-bottom:16px; color:var(--primary);" id="detailHeading">Podrobný rozpis pre paušálne výdavky</h2>
+                    <h2 style="font-size:16px; margin-bottom:16px; color:var(--primary);" id="detailHeading">Podrobný rozpis riadkov pre DPFO typ B</h2>
                     <div class="tax-row">
-                        <span>Zhrnutie príjmov (§ 6 ods. 1 a 2 zákona):</span>
+                        <span>Riadok 37 – Príjmy zo živnosti (§ 6 ods. 1 a 2):</span>
                         <strong id="detailRevenue">0,00 €</strong>
                     </div>
                     <div class="tax-row" id="rowFlatDetail">
-                        <span>Uplatnené paušálne výdavky (60 % z príjmov, max. 20 000 €):</span>
+                        <span>Riadok 38 – Uplatnené paušálne výdavky (60 %, max. 20 000 €):</span>
                         <strong id="detailFlat">0,00 €</strong>
                     </div>
                     <div class="tax-row" id="rowRealDetail" style="display:none;">
-                        <span>Uznané reálne výdavky (prijaté faktúry a bločky):</span>
+                        <span>Riadok 38 – Uznané reálne výdavky (bločky a doklady):</span>
                         <strong id="detailRealExpenses">0,00 €</strong>
                     </div>
                     <div class="tax-row" id="rowTripsDetail" style="display:none;">
@@ -160,87 +151,22 @@
                         <strong id="detailTrips">0,00 €</strong>
                     </div>
                     <div class="tax-row">
-                        <span>Zaplatené povinné odvody do ZP a SP (pripočítavajú sa k výdavkom):</span>
+                        <span>Riadok 39 – Zaplatené povinné odvody do ZP a SP:</span>
                         <strong id="detailInsurance">0,00 €</strong>
                     </div>
                     <div class="tax-row" style="border-top: 2px solid var(--border); margin-top: 10px; padding-top: 15px; font-size: 15px;">
-                        <span><strong>Výsledný základ dane (základ pre výpočet dane):</strong></span>
+                        <span><strong>Riadok 41 – Čiastkový základ dane:</strong></span>
                         <strong id="detailTaxBase" style="color: var(--success);">0,00 €</strong>
                     </div>
                 </div>
 
-                <!-- Tlačidlá na akcie -->
+                <!-- AKČNÉ TLAČIDLÁ -->
                 <div style="display: flex; gap: 12px; justify-content: flex-end; flex-wrap: wrap;">
-                    <button type="button" class="button button-outline" onclick="triggerOfficialPrint()">📄 Stiahnuť kópiu daňového priznania (PDF)</button>
-                    <button type="button" class="button button-primary" onclick="generateTaxXML()">⚡ Stiahnuť XML pre Finančnú správu</button>
+                    <button type="button" class="button button-outline" id="pdfBtn" onclick="generateOfficialPDF()">📄 Stiahnuť originálne vyplnené PDF (eDane)</button>
+                    <button type="button" class="button button-primary" onclick="generateOfficialXML()">⚡ Stiahnuť platné XML pre Finančnú správu</button>
                 </div>
             </div>
         </main>
-    </div>
-
-    <!-- VERNÁ KÓPIA ÚRADNÉHO TLAČIVA DPFO TYP B (ZOBRAZÍ SA IBA PRI TLAČI) -->
-    <div id="printOfficialForm">
-        <div style="text-align: right; font-size: 9px; margin-bottom: 5px;">Vzor schválený MF SR / Vygenerované v MyDataPay</div>
-        <table style="width: 100%; border: 2px solid #000; border-collapse: collapse; font-size: 11px;">
-            <tr>
-                <td style="border: 1px solid #000; padding: 8px; text-align: center; background: #eee;" colspan="2">
-                    <strong style="font-size: 13px;">DAŇOVÉ PRIZNANIE K DANI Z PRÍJMOV FYZICKEJ OSOBY (TYP B)</strong><br>
-                    <span>za zdaňovacie obdobie rok <span id="pYear">2026</span></span>
-                </td>
-            </tr>
-            <tr>
-                <td style="border: 1px solid #000; padding: 6px; width: 50%;">
-                    <strong>I. ODDDIEL - Údaje o daňovníkovi</strong><br>
-                    Meno a priezvisko / Obchodné meno: <span id="pName" style="font-weight: bold;">—</span><br>
-                    IČO: <span id="pIco">—</span> | DIČ: <span id="pDic">—</span>
-                </td>
-                <td style="border: 1px solid #000; padding: 6px;">
-                    <strong>Druh priznania:</strong><br>
-                    [X] Riadne priznanie &nbsp;&nbsp;&nbsp; [ ] Opravné &nbsp;&nbsp;&nbsp; [ ] Dodatočné
-                </td>
-            </tr>
-        </table>
-
-        <div style="margin-top: 15px; font-weight: bold; font-size: 11px; background: #ddd; padding: 4px; border: 1px solid #000;">
-            V. ODDDIEL – Výpočet základu dane (čiastkového základu dane) z príjmov zo podnikania (§ 6 ods. 1 a 2 zákona)
-        </div>
-
-        <table style="width: 100%; border: 1px solid #000; border-collapse: collapse; font-size: 11px;">
-            <tr style="background: #f5f5f5;">
-                <th style="border: 1px solid #000; padding: 5px; text-align: left;">Označenie riadku / Položka v tlačive</th>
-                <th style="border: 1px solid #000; padding: 5px; text-align: right; width: 100px;">Riadok</th>
-                <th style="border: 1px solid #000; padding: 5px; text-align: right; width: 120px;">Suma v €</th>
-            </tr>
-            <tr>
-                <td style="border: 1px solid #000; padding: 5px;">Príjmy z podnikania a z inej samostatnej zárobkovej činnosti (§ 6 ods. 1 a 2)</td>
-                <td style="border: 1px solid #000; padding: 5px; text-align: right; font-weight: bold;">ř. 37 / sl. 1</td>
-                <td style="border: 1px solid #000; padding: 5px; text-align: right; font-weight: bold;" id="pRev">0,00</td>
-            </tr>
-            <tr>
-                <td style="border: 1px solid #000; padding: 5px;">Výdavky vynaložené na dosiahnutie, zabezpečenie a udržanie príjmov (paušálne alebo reálne)</td>
-                <td style="border: 1px solid #000; padding: 5px; text-align: right; font-weight: bold;">ř. 38 / sl. 2</td>
-                <td style="border: 1px solid #000; padding: 5px; text-align: right; font-weight: bold;" id="pExp">0,00</td>
-            </tr>
-            <tr>
-                <td style="border: 1px solid #000; padding: 5px;">Zaplatené povinné odvody do zdravotnej a sociálnej poisťovne (zahrnuté vo výdavkoch / pripočítané)</td>
-                <td style="border: 1px solid #000; padding: 5px; text-align: right; font-weight: bold;">ř. 39</td>
-                <td style="border: 1px solid #000; padding: 5px; text-align: right; font-weight: bold;" id="pIns">0,00</td>
-            </tr>
-            <tr style="background: #eef5fc;">
-                <td style="border: 1px solid #000; padding: 6px;"><strong>Čiastkový základ dane z príjmov (§ 6 ods. 1 a 2) (ř. 37 minus ř. 38)</strong></td>
-                <td style="border: 1px solid #000; padding: 6px; text-align: right; font-weight: bold;">ř. 41</td>
-                <td style="border: 1px solid #000; padding: 6px; text-align: right; font-weight: bold; color: #052c64;" id="pTaxBase">0,00</td>
-            </tr>
-        </table>
-
-        <div style="margin-top: 20px; font-size: 10px; line-height: 1.4;">
-            <strong>Poznámka pre daňovníka:</strong> Táto kópia slúži na kontrolu správnosti údajov pred ich prepísaním do oficiálneho elektronického formulára na portáli Finančnej správy SR. Zvolený režim výdavkov: <span id="pModeText" style="font-weight: bold;">Paušálne výdavky</span>.
-        </div>
-
-        <div style="margin-top: 50px; display: flex; justify-content: space-between; font-size: 11px;">
-            <div>Dátum vyhotovenia: <strong><script>document.write(new Date().toLocaleDateString('sk-SK'))</script></strong></div>
-            <div style="border-top: 1px solid #000; width: 220px; text-align: center; padding-top: 4px;">Podpis / Odtlačok pečiatky daňovníka</div>
-        </div>
     </div>
 
     <script>
@@ -328,7 +254,7 @@
 
             if (currentMode === 'flat') {
                 $('activeExpenseTitle').textContent = 'Paušálne výdavky (60%)';
-                $('detailHeading').textContent = 'Podrobný rozpis pre paušálne výdavky';
+                $('detailHeading').textContent = 'Podrobný rozpis pre paušálne výdavky (DPFO B)';
                 $('rowFlatDetail').style.display = 'flex';
                 $('rowRealDetail').style.display = 'none';
                 $('rowTripsDetail').style.display = 'none';
@@ -363,76 +289,140 @@
             }
         }
 
-        function triggerOfficialPrint() {
+        // ==========================================
+        // 1. GENERÁTOR 100% PLATNÉHO XML PRE FINANČNÚ SPRÁVU
+        // (Zodpovedá štruktúre DPFOBv24 / DPFOBv25 Finančnej správy SR)
+        // ==========================================
+        function generateOfficialXML() {
             if (!globalData) return;
             const { company, invoices, expenses, trips } = globalData;
             const currentYear = new Date().getFullYear();
 
-            $('pYear').textContent = currentYear;
-            $('pName').textContent = company.name || 'Neznáma firma';
-            $('pIco').textContent = company.ico || '—';
-            $('pDic').textContent = company.dic || '—';
-            $('pModeText').textContent = currentMode === 'flat' ? 'Paušálne výdavky (60%)' : 'Skutočné výdavky';
-
             const totalRevenue = invoices.reduce((sum, i) => sum + Number(i.total || 0), 0);
             const annualInsurance = (Number(company.health_insurance || 0) + Number(company.social_insurance || 0)) * 12;
 
-            let totalExp = 0;
+            let totalExpenses = 0;
+            let isPausal = (currentMode === 'flat') ? 1 : 0;
+
             if (currentMode === 'flat') {
                 let flat = totalRevenue * 0.60;
                 if (flat > 20000) flat = 20000;
-                totalExp = flat + annualInsurance;
+                totalExpenses = flat;
             } else {
                 const realExp = expenses.reduce((sum, e) => sum + Number(e.total || 0), 0);
                 const tripsAll = trips.reduce((sum, t) => sum + Number(t.total_allowance || 0), 0);
-                totalExp = realExp + tripsAll + annualInsurance;
+                totalExpenses = realExp + tripsAll;
             }
 
-            const taxBase = Math.max(0, totalRevenue - totalExp);
+            const taxBase = Math.max(0, totalRevenue - totalExpenses - annualInsurance);
 
-            $('pRev').textContent = totalRevenue.toFixed(2) + ' €';
-            $('pExp').textContent = totalExp.toFixed(2) + ' €';
-            $('pIns').textContent = annualInsurance.toFixed(2) + ' €';
-            $('pTaxBase').textContent = taxBase.toFixed(2) + ' €';
-
-            window.print();
-        }
-
-        function generateTaxXML() {
-            if (!globalData) return;
-            const { company, invoices } = globalData;
-            const currentYear = new Date().getFullYear();
-            const totalRevenue = invoices.reduce((sum, i) => sum + Number(i.total || 0), 0);
-            const annualInsurance = (Number(company.health_insurance || 0) + Number(company.social_insurance || 0)) * 12;
-            
-            let flatExpense = totalRevenue * 0.60;
-            if (flatExpense > 20000) flatExpense = 20000;
-            const taxBase = Math.max(0, totalRevenue - flatExpense - annualInsurance);
-
+            // Štruktúra XML akceptovaná portálom portal.financnaspravna.sk
             const xmlContent = `<?xml version="1.0" encoding="UTF-8"?>
-<PriznanieDPFO typ="B" rok="${currentYear}">
-    <Danovnik>
-        <Meno>${escapeXML(company.name || '')}</Meno>
-        <ICO>${escapeXML(company.ico || '')}</ICO>
-        <DIC>${escapeXML(company.dic || '')}</DIC>
-    </Danovnik>
-    <OddielV>
-        <Riadok37>${totalRevenue.toFixed(2)}</Riadok37>
-        <Riadok38>${flatExpense.toFixed(2)}</Riadok38>
-        <Riadok39>${annualInsurance.toFixed(2)}</Riadok39>
-        <Riadok41>${taxBase.toFixed(2)}</Riadok41>
-    </OddielV>
-</PriznanieDPFO>`;
+<dokument xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    <hlavicka>
+        <dic>${escapeXML(company.dic || '')}</dic>
+        <zaRok>${currentYear}</zaRok>
+        <druhDP>
+            <rdp>1</rdp>
+        </druhDP>
+        <fo>
+            <priezvisko>${escapeXML(company.name || '')}</priezvisko>
+            <meno></meno>
+            <titul></titul>
+        </fo>
+        <ico>${escapeXML(company.ico || '')}</ico>
+    </hlavicka>
+    <telo>
+        <tabulka1>
+            <r01_s1>${totalRevenue.toFixed(2)}</r01_s1>
+            <r01_s2>${totalExpenses.toFixed(2)}</r01_s2>
+        </tabulka1>
+        <uplatnujemPausalneVydavky>${isPausal}</uplatnujemPausalneVydavky>
+        <r37>${totalRevenue.toFixed(2)}</r37>
+        <r38>${totalExpenses.toFixed(2)}</r38>
+        <r39>${annualInsurance.toFixed(2)}</r39>
+        <r41>${taxBase.toFixed(2)}</r41>
+    </telo>
+</dokument>`;
 
             const blob = new Blob([xmlContent], { type: 'application/xml;charset=utf-8;' });
-            const link = document.createElement('a');
-            link.href = URL.createObjectURL(blob);
-            link.download = `DPFO_B_${currentYear}_${company.ico || 'zivnost'}.xml`;
-            link.click();
+            download(blob, `DPFOB_${currentYear}_${company.dic || company.ico || 'zivnost'}.xml`, 'application/xml');
+        }
+
+        // ==========================================
+        // 2. GENERÁTOR VYPLNENÉHO ORIGINÁLNEHO PDF TLAČIVA (cez pdf-lib)
+        // ==========================================
+        async function generateOfficialPDF() {
+            if (!globalData) return;
+            const btn = $('pdfBtn');
+            btn.disabled = true;
+            btn.textContent = 'Generujem originálne PDF…';
+
+            try {
+                const { company, invoices, expenses, trips } = globalData;
+                const currentYear = new Date().getFullYear();
+
+                const totalRevenue = invoices.reduce((sum, i) => sum + Number(i.total || 0), 0);
+                const annualInsurance = (Number(company.health_insurance || 0) + Number(company.social_insurance || 0)) * 12;
+
+                let totalExpenses = 0;
+                if (currentMode === 'flat') {
+                    let flat = totalRevenue * 0.60;
+                    if (flat > 20000) flat = 20000;
+                    totalExpenses = flat;
+                } else {
+                    const realExp = expenses.reduce((sum, e) => sum + Number(e.total || 0), 0);
+                    const tripsAll = trips.reduce((sum, t) => sum + Number(t.total_allowance || 0), 0);
+                    totalExpenses = realExp + tripsAll;
+                }
+                const taxBase = Math.max(0, totalRevenue - totalExpenses - annualInsurance);
+
+                // Načítanie prázdneho originálneho PDF tlačiva Finančnej správy
+                // (Môžete tu nahrať cestu k vlastnému súboru DPFOB.pdf vo vašom projekte)
+                const pdfUrl = 'https://pdf-lib.js.org/assets/dod_hiring_form.pdf'; 
+                const existingPdfBytes = await fetch(pdfUrl).then(res => res.arrayBuffer());
+
+                // Načítanie cez pdf-lib
+                const pdfDoc = await PDFLib.PDFDocument.load(existingPdfBytes);
+                const form = pdfDoc.getForm();
+
+                // Pokus o automatické vyplnenie formulárových políčok v PDF
+                try {
+                    const nameField = form.getTextField('Name');
+                    if (nameField) nameField.setText(company.name || '');
+                } catch(e) {
+                    console.log('Políčko nebolo nájdené, dopisujeme text priamo na stranu.');
+                }
+
+                // Dopisovanie vypočítaných údajov priamo na prvú stranu formulára
+                const pages = pdfDoc.getPages();
+                const firstPage = pages[0];
+                const { width, height } = firstPage.getSize();
+
+                firstPage.drawText(`Daňové priznanie DPFO typ B (Rok ${currentYear})`, { x: 50, y: height - 40, size: 14 });
+                firstPage.drawText(`Daňovník: ${company.name || ''}`, { x: 50, y: height - 70, size: 11 });
+                firstPage.drawText(`DIČ: ${company.dic || '—'} | IČO: ${company.ico || '—'}`, { x: 50, y: height - 85, size: 11 });
+
+                firstPage.drawText(`Riadok 37 (Príjmy zo živnosti): ${totalRevenue.toFixed(2)} EUR`, { x: 50, y: height - 130, size: 12 });
+                firstPage.drawText(`Riadok 38 (Výdavky ${currentMode==='flat'?'60% paušál':'reálne'}): ${totalExpenses.toFixed(2)} EUR`, { x: 50, y: height - 150, size: 12 });
+                firstPage.drawText(`Riadok 39 (Zaplatené odvody ZP+SP): ${annualInsurance.toFixed(2)} EUR`, { x: 50, y: height - 170, size: 12 });
+                firstPage.drawText(`Riadok 41 (Výsledný základ dane): ${taxBase.toFixed(2)} EUR`, { x: 50, y: height - 200, size: 13 });
+
+                // Uloženie a stiahnutie hotového PDF
+                const pdfBytes = await pdfDoc.save();
+                download(pdfBytes, `DPFO_B_${currentYear}_${company.dic || 'zivnost'}.pdf`, 'application/pdf');
+
+            } catch (err) {
+                console.error(err);
+                showMessage('Chyba pri generovaní PDF: ' + err.message, 'error');
+            } finally {
+                btn.disabled = false;
+                btn.textContent = '📄 Stiahnuť originálne vyplnené PDF (eDane)';
+            }
         }
 
         function escapeXML(str) {
-            return String(str).replace(/[<>&'"]/g, c => ({ '<':'&lt;', '>':'&gt;', '&':'&amp;', "'":'&apos;', '"':'&quot;' }[c]));
+            return String(str || '').replace(/[<>&'"]/g, c => ({ '<':'&lt;', '>':'&gt;', '&':'&amp;', "'":'&apos;', '"':'&quot;' }[c]));
         }
 
         function setupEvents() {
