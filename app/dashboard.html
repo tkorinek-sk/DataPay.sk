@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Prehľad | MyDataPay</title>
+    <title>Prehľad pre živnostníkov | MyDataPay</title>
     <meta name="robots" content="noindex, nofollow">
     <meta name="theme-color" content="#052c64">
     <link rel="icon" href="../favicon.png" type="image/png">
@@ -48,14 +48,14 @@
         .message{display:none;margin-bottom:20px;padding:13px 15px;border-radius:9px;font-size:13px;line-height:1.5}.message.show{display:block}.message-error{color:#991b1b;border:1px solid #fecaca;background:var(--danger-light)}
         .stats-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:16px;margin-bottom:24px}.stat-card{min-width:0;padding:19px;background:#fff;border:1px solid var(--border);border-radius:12px;box-shadow:0 5px 18px rgba(15,23,42,.035)}
         .stat-top{display:flex;align-items:center;justify-content:space-between;gap:15px}.stat-label{color:var(--muted);font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:.45px}.stat-icon{width:36px;height:36px;display:flex;align-items:center;justify-content:center;border-radius:9px;background:var(--accent-light);color:var(--primary);font-size:17px}
-        .stat-value{overflow:hidden;margin-top:12px;color:var(--primary);font-size:25px;font-weight:800;text-overflow:ellipsis;white-space:nowrap}.stat-note{margin-top:4px;color:#94a3b8;font-size:11px}.stat-card.danger .stat-icon{background:var(--danger-light);color:var(--danger)}.stat-card.danger .stat-value{color:var(--danger)}
+        .stat-value{overflow:hidden;margin-top:12px;color:var(--primary);font-size:23px;font-weight:800;text-overflow:ellipsis;white-space:nowrap}.stat-note{margin-top:4px;color:#94a3b8;font-size:11px}.stat-card.warning .stat-icon{background:var(--warning-light);color:var(--warning)}.stat-card.warning .stat-value{color:var(--warning)}
         .dashboard-grid{display:grid;grid-template-columns:minmax(0,1.45fr) minmax(330px,.75fr);gap:20px;align-items:start}.panel{background:#fff;border:1px solid var(--border);border-radius:12px;box-shadow:0 5px 18px rgba(15,23,42,.035);overflow:hidden}.panel+.panel{margin-top:20px}
         .panel-header{display:flex;align-items:center;justify-content:space-between;gap:14px;padding:18px 20px;border-bottom:1px solid var(--border)}.panel-header h2{color:var(--primary);font-size:17px}.panel-header p{margin-top:4px;color:var(--muted);font-size:11px}.panel-link{color:var(--accent);font-size:12px;font-weight:800}
         .table-wrap{overflow-x:auto}.invoice-table{width:100%;min-width:720px;border-collapse:collapse}.invoice-table th{padding:12px 16px;background:#f8fafc;border-bottom:1px solid var(--border);color:var(--muted);font-size:10px;text-align:left;text-transform:uppercase}.invoice-table td{padding:14px 16px;border-bottom:1px solid #edf2f7;color:#334155;font-size:12px}.invoice-table tr:last-child td{border-bottom:0}.invoice-no{color:var(--primary);font-weight:800}.amount{color:var(--primary);font-weight:800;white-space:nowrap}
         .pill{display:inline-flex;align-items:center;justify-content:center;padding:5px 9px;border-radius:999px;font-size:10px;font-weight:800;white-space:nowrap}.pill-draft{color:#475569;background:#f1f5f9}.pill-issued{color:#1d4ed8;background:#eff6ff}.pill-paid{color:#047857;background:var(--success-light)}.pill-overdue{color:#b91c1c;background:var(--danger-light)}.pill-cancelled{color:#64748b;background:#e2e8f0}
         .empty{padding:35px 20px;color:var(--muted);font-size:13px;text-align:center}.quick-actions{display:grid;grid-template-columns:1fr 1fr;gap:10px;padding:18px}.quick-action{min-height:68px;display:flex;flex-direction:column;justify-content:center;padding:12px;border:1px solid var(--border);border-radius:9px;background:#fff}.quick-action:hover{background:#f8fafc;border-color:#bfdbfe}.quick-action strong{color:var(--primary);font-size:12px}.quick-action span{margin-top:4px;color:var(--muted);font-size:10px}
         .service-card{padding:18px 20px}.service-row{display:flex;align-items:flex-start;justify-content:space-between;gap:15px;padding:13px 0;border-bottom:1px solid var(--border)}.service-row:last-child{border-bottom:0}.service-title{color:var(--primary);font-size:13px;font-weight:800}.service-detail{margin-top:4px;color:var(--muted);font-size:11px;line-height:1.5}.service-state{flex:0 0 auto;padding:5px 8px;border-radius:999px;background:#f1f5f9;color:#64748b;font-size:9px;font-weight:800;text-transform:uppercase}
-        .request-box{padding:20px}.request-zero{display:flex;align-items:center;gap:12px;padding:14px;border-radius:9px;background:var(--success-light);color:#065f46}.request-icon{width:34px;height:34px;display:flex;align-items:center;justify-content:center;border-radius:50%;background:#d1fae5;font-weight:800}.request-zero strong{display:block;font-size:12px}.request-zero span{display:block;margin-top:3px;font-size:10px}
+        .service-state.ready{background:var(--success-light);color:var(--success)}
         .sidebar-overlay{position:fixed;inset:0;z-index:990;display:none;background:rgba(15,23,42,.55)}.sidebar-overlay.show{display:block}
         @media(max-width:1100px){.stats-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.dashboard-grid{grid-template-columns:1fr}}
         @media(max-width:850px){.sidebar{transform:translateX(-100%);transition:.25s}.sidebar.open{transform:translateX(0)}.main{width:100%;margin-left:0}.menu-button{display:inline-flex;align-items:center;justify-content:center}.content{padding:22px 18px}.topbar{padding:12px 18px}}
@@ -67,7 +67,7 @@
     <div class="sidebar-overlay" id="sidebarOverlay"></div>
     <div class="app" id="app">
         <aside class="sidebar" id="sidebar">
-            <a class="sidebar-brand" href="dashboard.html"><img src="../logo.png" alt="DataPay logo"><div><div class="brand-name">MyDataPay</div><div class="brand-subtitle">Klientsky portál</div></div></a>
+            <a class="sidebar-brand" href="dashboard.html"><img src="../logo.png" alt="DataPay logo"><div><div class="brand-name">MyDataPay</div><div class="brand-subtitle">Živnostenská zóna</div></div></a>
             <nav class="sidebar-nav">
                 <div class="nav-label">Prehľad</div>
                 <a class="nav-link active" href="dashboard.html"><span class="nav-icon">⌂</span><span>Dashboard</span></a>
@@ -75,39 +75,58 @@
                 <a class="nav-link" href="invoices.html"><span class="nav-icon">▤</span><span>Faktúry</span></a>
                 <a class="nav-link" href="invoice-new.html"><span class="nav-icon">＋</span><span>Nová faktúra</span></a>
                 <a class="nav-link" href="contacts.html"><span class="nav-icon">♙</span><span>Kontakty</span></a>
-                <div class="nav-label">Nastavenia</div>
+                <div class="nav-label">Dane & Nastavenia</div>
                 <a class="nav-link" href="company.html"><span class="nav-icon">▣</span><span>Moja firma</span></a>
                 <a class="nav-link" href="../index.html"><span class="nav-icon">↗</span><span>DataPay.sk</span></a>
             </nav>
-            <div class="sidebar-footer"><div class="user-card"><div class="user-email" id="userEmail">Používateľ</div><div class="user-status">Prihlásený účet</div></div><button type="button" class="logout-button" id="logoutButton">Odhlásiť sa</button></div>
+            <div class="sidebar-footer"><div class="user-card"><div class="user-email" id="userEmail">Používateľ</div><div class="user-status">Živnostenský účet</div></div><button type="button" class="logout-button" id="logoutButton">Odhlásiť sa</button></div>
         </aside>
         <main class="main">
-            <header class="topbar"><div class="topbar-left"><button type="button" class="menu-button" id="menuButton" aria-label="Otvoriť menu">☰</button><div><div class="topbar-title">Prehľad</div><div class="topbar-subtitle">Vaša firma a služby DataPay na jednom mieste</div></div></div><div class="company-chip" id="companyChip">Načítavam firmu…</div></header>
+            <header class="topbar"><div class="topbar-left"><button type="button" class="menu-button" id="menuButton" aria-label="Otvoriť menu">☰</button><div><div class="topbar-title">Prehľad živnosti</div><div class="topbar-subtitle">Fakturácia a paušálne výdavky pod kontrolou</div></div></div><div class="company-chip" id="companyChip">Načítavam firmu…</div></header>
             <div class="content">
                 <div id="pageMessage" class="message" role="alert"></div>
-                <section class="page-heading"><div><h1 id="welcomeTitle">Vitajte v MyDataPay</h1><p>Rýchly prehľad fakturácie a budúcich účtovno-mzdových služieb vašej firmy.</p></div><a class="button button-primary" href="invoice-new.html">＋ Vytvoriť faktúru</a></section>
+                <section class="page-heading"><div><h1 id="welcomeTitle">Vitajte v MyDataPay</h1><p>Vystavujte faktúry, sledujte si obrat pre DPH a pripravte si daňové priznanie jedným kliknutím.</p></div><a class="button button-primary" href="invoice-new.html">＋ Vytvoriť faktúru</a></section>
+                
+                <!-- Štatistiky prispôsobené pre živnostníkov -->
                 <section class="stats-grid">
-                    <article class="stat-card"><div class="stat-top"><div class="stat-label">Vystavené tento mesiac</div><div class="stat-icon">€</div></div><div class="stat-value" id="monthIssued">0,00 €</div><div class="stat-note" id="monthIssuedNote">0 faktúr</div></article>
-                    <article class="stat-card"><div class="stat-top"><div class="stat-label">Na úhradu</div><div class="stat-icon">↗</div></div><div class="stat-value" id="amountDue">0,00 €</div><div class="stat-note">Vystavené a neuhradené faktúry</div></article>
-                    <article class="stat-card danger"><div class="stat-top"><div class="stat-label">Po splatnosti</div><div class="stat-icon">!</div></div><div class="stat-value" id="overdueAmount">0,00 €</div><div class="stat-note" id="overdueNote">0 faktúr po splatnosti</div></article>
-                    <article class="stat-card"><div class="stat-top"><div class="stat-label">Kontakty</div><div class="stat-icon">♙</div></div><div class="stat-value" id="contactCount">0</div><div class="stat-note">Uložení odberatelia a dodávatelia</div></article>
+                    <article class="stat-card"><div class="stat-top"><div class="stat-label">Celkovo zarobené (Rok)</div><div class="stat-icon">€</div></div><div class="stat-value" id="yearTotalRevenue">0,00 €</div><div class="stat-note" id="yearRevenueNote">Uhradené faktúry v tomto roku</div></article>
+                    <article class="stat-card warning"><div class="stat-top"><div class="stat-label">Limit pre DPH (49 790 €)</div><div class="stat-icon">⚡</div></div><div class="stat-value" id="dphLimitProgress">0 %</div><div class="stat-note" id="dphLimitNote">Zostáva do povinnej registrácie DPH</div></article>
+                    <article class="stat-card"><div class="stat-top"><div class="stat-label">Paušálne výdavky (60%)</div><div class="stat-icon">📊</div></div><div class="stat-value" id="flatExpenses">0,00 €</div><div class="stat-note">Automatický výpočtový odhad (max 20k)</div></article>
+                    <article class="stat-card"><div class="stat-top"><div class="stat-label">Na úhradu od klientov</div><div class="stat-icon">↗</div></div><div class="stat-value" id="amountDue">0,00 €</div><div class="stat-note">Vystavené a neuhradené faktúry</div></article>
                 </section>
+
                 <div class="dashboard-grid">
                     <div>
                         <section class="panel"><div class="panel-header"><div><h2>Posledné faktúry</h2><p>Najnovšie vystavené doklady</p></div><a class="panel-link" href="invoices.html">Zobraziť všetky</a></div><div id="invoiceTableArea"><div class="empty">Načítavam faktúry…</div></div></section>
-                        <section class="panel"><div class="panel-header"><div><h2>Účtovno-mzdové služby</h2><p>Budúci prehľad služieb poskytovaných spoločnosťou DataPay</p></div></div><div class="service-card">
-                            <div class="service-row"><div><div class="service-title">Prijaté faktúry</div><div class="service-detail">Príjem, kontrola a schvaľovanie dodávateľských dokladov.</div></div><span class="service-state">Pripravujeme</span></div>
-                            <div class="service-row"><div><div class="service-title">Účtovníctvo</div><div class="service-detail">Stav spracovania obdobia, doklady a komunikácia s účtovníkom.</div></div><span class="service-state">Neaktivované</span></div>
-                            <div class="service-row"><div><div class="service-title">DPH</div><div class="service-detail">Stav priznania, termín a predpokladaná daňová povinnosť.</div></div><span class="service-state">Neaktivované</span></div>
-                            <div class="service-row"><div><div class="service-title">Mzdy</div><div class="service-detail">Mzdové obdobie, zamestnanci a výsledky spracovania.</div></div><span class="service-state">Neaktivované</span></div>
-                        </div></section>
+                        
+                        <!-- Zmenené na daňový prehľad pre živnostníka -->
+                        <section class="panel">
+                            <div class="panel-header">
+                                <div><h2>Daňové priznanie & Uzávierka</h2><p>Príprava dokumentov pre daňový úrad (DPFO typ B)</p></div>
+                            </div>
+                            <div class="service-card">
+                                <div class="service-row">
+                                    <div>
+                                        <div class="service-title">Paušálne výdavky a príjmy</div>
+                                        <div class="service-detail">Automatický súčet pre riadky daňového priznania na základe vašich úhrad.</div>
+                                    </div>
+                                    <span class="service-state ready">Aktivované</span>
+                                </div>
+                                <div class="service-row">
+                                    <div>
+                                        <div class="service-title">Daňové priznanie (XML pre Finančnú správu)</div>
+                                        <div class="service-detail">Jedno kliknutie na konci roka – vygeneruje pripravené podklady pre e-Government.</div>
+                                    </div>
+                                    <span class="service-state">Pripravujeme na 31.12.</span>
+                                </div>
+                            </div>
+                        </section>
                     </div>
                     <aside>
-                        <section class="panel"><div class="panel-header"><div><h2>Potrebujeme od vás</h2><p>Otvorené požiadavky od DataPay</p></div></div><div class="request-box"><div class="request-zero"><div class="request-icon">✓</div><div><strong>Žiadne otvorené požiadavky</strong><span>Momentálne od vás nič nepotrebujeme.</span></div></div></div></section>
                         <section class="panel"><div class="panel-header"><div><h2>Rýchle akcie</h2><p>Najčastejšie úkony</p></div></div><div class="quick-actions">
                             <a class="quick-action" href="invoice-new.html"><strong>＋ Nová faktúra</strong><span>Vystaviť nový doklad</span></a>
                             <a class="quick-action" href="contacts.html"><strong>♙ Kontakty</strong><span>Správa odberateľov</span></a>
-                            <a class="quick-action" href="invoices.html"><strong>▤ Faktúry</strong><span>Zoznam a stav dokladov</span></a>
+                            <a class="quick-action" href="invoices.html"><strong>▤ Faktúry</strong><span>Zoznam a stav dokladów</span></a>
                             <a class="quick-action" href="company.html"><strong>▣ Moja firma</strong><span>Fakturačné údaje</span></a>
                         </div></section>
                     </aside>
@@ -146,7 +165,7 @@
                 if (invoiceResult.error) throw invoiceResult.error;
                 if (contactResult.error) throw contactResult.error;
                 const invoices = invoiceResult.data || [];
-                updateStatistics(invoices, contactResult.count || 0);
+                updateFreelancerStatistics(invoices);
                 renderRecentInvoices(invoices.slice(0, 6));
                 showApplication();
             } catch (error) {
@@ -162,21 +181,34 @@
             $('sidebarOverlay').addEventListener('click', () => { $('sidebar').classList.remove('open'); $('sidebarOverlay').classList.remove('show'); });
         }
 
-        function updateStatistics(invoices, contacts) {
+        function updateFreelancerStatistics(invoices) {
+            const currentYear = new Date().getFullYear().toString();
+            // Filtrujeme zaplatené/vystavené faktúry za aktuálny kalendárny rok pre výpočet obratu živnostníka
+            const yearInvoices = invoices.filter(i => (i.issue_date || '').startsWith(currentYear) && i.status !== 'cancelled');
+            const totalRevenue = yearInvoices.reduce((sum, i) => sum + eurValue(i.total, i.currency), 0);
+            
+            // Výpočet paušálnych výdavkov (60 %, max 20 000 €)
+            let calculatedFlatExpenses = totalRevenue * 0.60;
+            if (calculatedFlatExpenses > 20000) calculatedFlatExpenses = 20000;
+
+            // Limit pre povinnú registráciu DPH na Slovensku (49 790 €)
+            const dphLimit = 49790;
+            const dphPercentage = Math.min(100, (totalRevenue / dphLimit) * 100);
+
+            // Neuhradené faktúry na preplatenie
             const today = localDate(new Date());
-            const monthStart = today.slice(0, 7) + '-01';
-            const monthInvoices = invoices.filter(i => i.issue_date >= monthStart && i.issue_date <= today && i.status !== 'cancelled');
-            const monthTotal = monthInvoices.reduce((sum, i) => sum + eurValue(i.total, i.currency), 0);
             const collectible = invoices.filter(i => ['issued', 'overdue'].includes(displayStatus(i, today)));
             const dueTotal = collectible.reduce((sum, i) => sum + eurValue(i.amount_due, i.currency), 0);
-            const overdue = invoices.filter(i => displayStatus(i, today) === 'overdue');
-            const overdueTotal = overdue.reduce((sum, i) => sum + eurValue(i.amount_due, i.currency), 0);
-            $('monthIssued').textContent = money(monthTotal);
-            $('monthIssuedNote').textContent = `${monthInvoices.length} ${invoiceWord(monthInvoices.length)}`;
+
+            $('yearTotalRevenue').textContent = money(totalRevenue);
+            $('yearRevenueNote').textContent = `${yearInvoices.length} ${invoiceWord(yearInvoices.length)} v roku ${currentYear}`;
+            
+            $('dphLimitProgress').textContent = `${dphPercentage.toFixed(1)} %`;
+            const remainingDph = Math.max(0, dphLimit - totalRevenue);
+            $('dphLimitNote').textContent = `Zostáva do limitu (${money(remainingDph)})`;
+
+            $('flatExpenses').textContent = money(calculatedFlatExpenses);
             $('amountDue').textContent = money(dueTotal);
-            $('overdueAmount').textContent = money(overdueTotal);
-            $('overdueNote').textContent = `${overdue.length} ${invoiceWord(overdue.length)} po splatnosti`;
-            $('contactCount').textContent = String(contacts);
         }
 
         function renderRecentInvoices(invoices) {
