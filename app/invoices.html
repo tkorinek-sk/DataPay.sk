@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>Faktúry | DataPay</title>
+    <title>Faktúry | MyDataPay</title>
     <meta name="robots" content="noindex, nofollow">
     <meta name="theme-color" content="#052c64">
 
@@ -804,8 +804,8 @@
                 <img src="../logo.png" alt="DataPay logo">
 
                 <div>
-                    <div class="brand-name">DataPay</div>
-                    <div class="brand-subtitle">Firemná aplikácia</div>
+                    <div class="brand-name">MyDataPay</div>
+                    <div class="brand-subtitle">Živnostenská zóna</div>
                 </div>
             </a>
 
@@ -835,7 +835,12 @@
                     <span>Kontakty</span>
                 </a>
 
-                <div class="nav-label">Nastavenia</div>
+                <div class="nav-label">Dane & Nastavenia</div>
+
+                <a class="nav-link" href="tax.html">
+                    <span class="nav-icon">§</span>
+                    <span>Daňové priznanie</span>
+                </a>
 
                 <a class="nav-link" href="company.html">
                     <span class="nav-icon">▣</span>
@@ -880,7 +885,7 @@
                     <div>
                         <div class="topbar-title">Faktúry</div>
                         <div class="topbar-subtitle">
-                            Evidencia vystavených faktúr
+                            Evidencia vystavených faktúr pre živnosť
                         </div>
                     </div>
 
@@ -1057,15 +1062,6 @@
     </div>
 
     <script>
-        /*
-        ============================================================
-        SUPABASE NASTAVENIE
-        ============================================================
-
-        Sem vlož rovnaký Project URL a anon public key,
-        aké už používaš vo funkčnom súbore login.html.
-        */
-
         const SUPABASE_URL = 'https://sqzxludiwdazcafcynwt.supabase.co';
         const SUPABASE_ANON_KEY = 'sb_publishable_mWxTg8rzobN0zxgDl8QAxA_vCQ-CeGY';
 
@@ -1091,12 +1087,10 @@
         const statusFilter = document.getElementById('statusFilter');
         const yearFilter = document.getElementById('yearFilter');
         const clearFiltersButton = document.getElementById('clearFiltersButton');
-
-        /*
-        ============================================================
-        SPUSTENIE STRÁNKY
-        ============================================================
-        */
+        const menuButton = document.getElementById('menuButton');
+        const sidebar = document.getElementById('sidebar');
+        const sidebarOverlay = document.getElementById('sidebarOverlay');
+        const logoutButton = document.getElementById('logoutButton');
 
         document.addEventListener('DOMContentLoaded', initializePage);
 
@@ -1159,12 +1153,6 @@
             app.classList.add('ready');
         }
 
-        /*
-        ============================================================
-        EVENTY
-        ============================================================
-        */
-
         function setupEventListeners() {
             searchInput.addEventListener('input', applyFilters);
             statusFilter.addEventListener('change', applyFilters);
@@ -1177,614 +1165,292 @@
                 applyFilters();
             });
 
-            document
-                .getElementById('logoutButton')
-                .addEventListener('click', logout);
+            menuButton.addEventListener('click', () => {
+                sidebar.classList.add('open');
+                sidebarOverlay.classList.add('show');
+            });
 
-            document
-                .getElementById('menuButton')
-                .addEventListener('click', openSidebar);
+            sidebarOverlay.addEventListener('click', () => {
+                sidebar.classList.remove('open');
+                sidebarOverlay.classList.remove('show');
+            });
 
-            document
-                .getElementById('sidebarOverlay')
-                .addEventListener('click', closeSidebar);
+            logoutButton.addEventListener('click', async () => {
+                try {
+                    await supabaseClient.auth.signOut();
+                    window.location.replace('login.html');
+                } catch (e) {
+                    console.error(e);
+                }
+            });
         }
 
-        /*
-        ============================================================
-        NAČÍTANIE FAKTÚR
-        ============================================================
-        */
-
         async function loadInvoices() {
-            setTableLoading(true);
-            clearMessage();
-
             try {
+                tableLoading.style.display = 'block';
+                invoiceTable.style.display = 'none';
+                emptyState.classList.remove('show');
+
                 const { data, error } = await supabaseClient
                     .from('invoices')
-                    .select(`
-                        id,
-                        invoice_number,
-                        variable_symbol,
-                        issue_date,
-                        supply_date,
-                        due_date,
-                        currency,
-                        customer_name,
-                        customer_ico,
-                        total,
-                        paid_amount,
-                        amount_due,
-                        status,
-                        created_at,
-                        updated_at
-                    `)
+                    .select('*')
                     .eq('user_id', currentUser.id)
-                    .order('issue_date', { ascending: false })
-                    .order('created_at', { ascending: false });
+                    .order('issue_date', { ascending: false });
 
                 if (error) {
                     throw error;
                 }
 
-                allInvoices = Array.isArray(data) ? data : [];
-
-                automaticallyMarkOverdueInvoices();
-                populateYearFilter();
-                updateStatistics();
+                allInvoices = data || [];
+                populateYearFilter(allInvoices);
+                updateStatistics(allInvoices);
                 applyFilters();
 
             } catch (error) {
-                console.error('Chyba pri načítaní faktúr:', error);
-
-                allInvoices = [];
-                renderInvoices([]);
-
-                showMessage(
-                    'Faktúry sa nepodarilo načítať. ' + getReadableError(error),
-                    'error'
-                );
-
-            } finally {
-                setTableLoading(false);
+                console.error('Chyba pri načítavaní faktúr:', error);
+                tableLoading.style.display = 'none';
+                showMessage('Nepodarilo sa načítať faktúry. ' + getReadableError(error), 'error');
             }
         }
 
-        /*
-        Faktúru zobrazíme ako "po splatnosti", ak:
-        - stav je issued,
-        - dátum splatnosti už uplynul,
-        - stále existuje suma na úhradu.
+        function populateYearFilter(invoices) {
+            const currentSelected = yearFilter.value;
+            const years = new Set();
 
-        Táto funkcia zatiaľ nemení databázu. Mení iba zobrazenie.
-        */
-
-        function automaticallyMarkOverdueInvoices() {
-            const today = getLocalDateString(new Date());
-
-            allInvoices = allInvoices.map(invoice => {
-                const shouldBeOverdue =
-                    invoice.status === 'issued' &&
-                    invoice.due_date &&
-                    invoice.due_date < today &&
-                    Number(invoice.amount_due || 0) > 0;
-
-                if (shouldBeOverdue) {
-                    return {
-                        ...invoice,
-                        display_status: 'overdue'
-                    };
+            invoices.forEach(inv => {
+                if (inv.issue_date) {
+                    const year = inv.issue_date.split('-')[0];
+                    if (year) {
+                        years.add(year);
+                    }
                 }
-
-                return {
-                    ...invoice,
-                    display_status: invoice.status
-                };
             });
+
+            const sortedYears = Array.from(years).sort((a, b) => b - a);
+
+            yearFilter.innerHTML = '<option value="">Všetky roky</option>';
+            sortedYears.forEach(year => {
+                const opt = document.createElement('option');
+                opt.value = year;
+                opt.textContent = year;
+                yearFilter.appendChild(opt);
+            });
+
+            if (sortedYears.includes(currentSelected)) {
+                yearFilter.value = currentSelected;
+            }
         }
 
-        /*
-        ============================================================
-        FILTRE
-        ============================================================
-        */
+        function updateStatistics(invoices) {
+            let totalCount = invoices.length;
+            let totalAmount = 0;
+            let paidAmount = 0;
+            let dueAmount = 0;
+
+            invoices.forEach(inv => {
+                const total = Number(inv.total || 0);
+                const due = Number(inv.amount_due || 0);
+                const status = getEffectiveStatus(inv);
+
+                if (status !== 'cancelled') {
+                    totalAmount += total;
+                }
+
+                if (status === 'paid') {
+                    paidAmount += total;
+                } else if (status === 'issued' || status === 'overdue') {
+                    dueAmount += due > 0 ? due : total;
+                }
+            });
+
+            document.getElementById('statTotalCount').textContent = totalCount;
+            document.getElementById('statTotalAmount').textContent = formatMoney(totalAmount);
+            document.getElementById('statPaidAmount').textContent = formatMoney(paidAmount);
+            document.getElementById('statDueAmount').textContent = formatMoney(dueAmount);
+        }
+
+        function getEffectiveStatus(inv) {
+            if (inv.status === 'paid' || inv.status === 'cancelled' || inv.status === 'draft') {
+                return inv.status;
+            }
+
+            if (inv.due_date && inv.status !== 'paid') {
+                const today = new Date().toISOString().split('T')[0];
+                if (inv.due_date < today) {
+                    return 'overdue';
+                }
+            }
+
+            return inv.status || 'issued';
+        }
 
         function applyFilters() {
-            const searchTerm = normalizeText(searchInput.value);
+            const query = searchInput.value.toLowerCase().trim();
             const selectedStatus = statusFilter.value;
             const selectedYear = yearFilter.value;
 
-            const filteredInvoices = allInvoices.filter(invoice => {
-                const searchSource = normalizeText([
-                    invoice.invoice_number,
-                    invoice.variable_symbol,
-                    invoice.customer_name,
-                    invoice.customer_ico
-                ].filter(Boolean).join(' '));
+            const filtered = allInvoices.filter(inv => {
+                const invNo = String(inv.invoice_number || '').toLowerCase();
+                const custName = String(inv.customer_name || '').toLowerCase();
+                const custIco = String(inv.customer_ico || '').toLowerCase();
 
-                const matchesSearch =
-                    !searchTerm || searchSource.includes(searchTerm);
+                const matchesQuery = !query || invNo.includes(query) || custName.includes(query) || custIco.includes(query);
 
-                const matchesStatus =
-                    !selectedStatus ||
-                    invoice.display_status === selectedStatus;
+                const effectiveStatus = getEffectiveStatus(inv);
+                const matchesStatus = !selectedStatus || effectiveStatus === selectedStatus;
 
-                const invoiceYear = invoice.issue_date
-                    ? invoice.issue_date.slice(0, 4)
-                    : '';
+                const invYear = inv.issue_date ? inv.issue_date.split('-')[0] : '';
+                const matchesYear = !selectedYear || invYear === selectedYear;
 
-                const matchesYear =
-                    !selectedYear || invoiceYear === selectedYear;
-
-                return matchesSearch && matchesStatus && matchesYear;
+                return matchesQuery && matchesStatus && matchesYear;
             });
 
-            renderInvoices(filteredInvoices);
+            renderTable(filtered);
         }
 
-        function populateYearFilter() {
-            const existingValue = yearFilter.value;
-
-            const years = [
-                ...new Set(
-                    allInvoices
-                        .map(invoice => {
-                            return invoice.issue_date
-                                ? invoice.issue_date.slice(0, 4)
-                                : '';
-                        })
-                        .filter(Boolean)
-                )
-            ].sort((a, b) => Number(b) - Number(a));
-
-            yearFilter.innerHTML =
-                '<option value="">Všetky roky</option>';
-
-            years.forEach(year => {
-                const option = document.createElement('option');
-                option.value = year;
-                option.textContent = year;
-                yearFilter.appendChild(option);
-            });
-
-            if (years.includes(existingValue)) {
-                yearFilter.value = existingValue;
-            }
-        }
-
-        /*
-        ============================================================
-        VYKRESLENIE TABUĽKY
-        ============================================================
-        */
-
-        function renderInvoices(invoices) {
-            invoiceTableBody.replaceChildren();
-
-            const filtersAreActive =
-                searchInput.value.trim() ||
-                statusFilter.value ||
-                yearFilter.value;
+        function renderTable(invoices) {
+            tableLoading.style.display = 'none';
 
             if (!invoices.length) {
                 invoiceTable.style.display = 'none';
                 emptyState.classList.add('show');
 
-                if (allInvoices.length && filtersAreActive) {
-                    emptyTitle.textContent = 'Nenašli sa žiadne faktúry';
-                    emptyText.textContent =
-                        'Skúste zmeniť vyhľadávanie alebo odstrániť použité filtre.';
+                if (allInvoices.length > 0) {
+                    emptyTitle.textContent = 'Žiadne faktúry nevyhovujú filtrom';
+                    emptyText.textContent = 'Skúste zmeniť vyhľadávanie alebo zrušiť zvolené filtre.';
                 } else {
-                    emptyTitle.textContent =
-                        'Zatiaľ nemáte žiadne faktúry';
-
-                    emptyText.textContent =
-                        'Vytvorte prvú faktúru. Údaje sa bezpečne uložia pod vaším prihláseným účtom.';
+                    emptyTitle.textContent = 'Zatiaľ nemáte žiadne faktúry';
+                    emptyText.textContent = 'Vytvorte prvú faktúru. Údaje sa bezpečne uložia pod vaším prihláseným účtom.';
                 }
-
                 return;
             }
 
             emptyState.classList.remove('show');
             invoiceTable.style.display = 'table';
+            invoiceTableBody.innerHTML = '';
 
-            invoices.forEach(invoice => {
-                const row = document.createElement('tr');
+            invoices.forEach(inv => {
+                const tr = document.createElement('tr');
+                const effectiveStatus = getEffectiveStatus(inv);
 
-                const status = invoice.display_status || invoice.status;
-                const statusInfo = getStatusInfo(status);
-
-                const customerInfo = invoice.customer_ico
-                    ? `<div class="customer-ico">IČO: ${escapeHTML(invoice.customer_ico)}</div>`
-                    : '';
-
-                const dueClass =
-                    Number(invoice.amount_due || 0) > 0
-                        ? 'amount amount-due'
-                        : 'amount';
-
-                row.innerHTML = `
+                tr.innerHTML = `
                     <td>
-                        <div class="invoice-number">
-                            ${escapeHTML(invoice.invoice_number || 'Bez čísla')}
-                        </div>
+                        <div class="invoice-number">${escapeHtml(inv.invoice_number || '---')}</div>
+                        <div class="customer-ico">VS: ${escapeHtml(inv.variable_symbol || inv.invoice_number || '---')}</div>
                     </td>
-
                     <td>
-                        <div class="customer-name">
-                            ${escapeHTML(invoice.customer_name || 'Neznámy odberateľ')}
-                        </div>
-                        ${customerInfo}
+                        <div class="customer-name">${escapeHtml(inv.customer_name || 'Neznámy odberateľ')}</div>
+                        ${inv.customer_ico ? `<div class="customer-ico">IČO: ${escapeHtml(inv.customer_ico)}</div>` : ''}
                     </td>
-
-                    <td>
-                        ${formatDate(invoice.issue_date)}
-                    </td>
-
-                    <td>
-                        ${formatDate(invoice.due_date)}
-                    </td>
-
-                    <td>
-                        <span class="status ${statusInfo.className}">
-                            ${statusInfo.label}
-                        </span>
-                    </td>
-
-                    <td>
-                        <span class="amount">
-                            ${formatMoney(invoice.total, invoice.currency)}
-                        </span>
-                    </td>
-
-                    <td>
-                        <span class="${dueClass}">
-                            ${formatMoney(invoice.amount_due, invoice.currency)}
-                        </span>
-                    </td>
-
+                    <td>${formatDate(inv.issue_date)}</td>
+                    <td>${formatDate(inv.due_date)}</td>
+                    <td>${renderStatusBadge(effectiveStatus)}</td>
+                    <td class="amount">${formatMoney(inv.total, inv.currency)}</td>
+                    <td class="amount ${Number(inv.amount_due) > 0 ? 'amount-due' : ''}">${formatMoney(inv.amount_due ?? inv.total, inv.currency)}</td>
                     <td>
                         <div class="row-actions">
-
-                            <a class="action-button"
-                               href="invoice-new.html?id=${encodeURIComponent(invoice.id)}"
-                               title="Otvoriť faktúru"
-                               aria-label="Otvoriť faktúru">
-                                ✎
-                            </a>
-
-                            <button type="button"
-                                    class="action-button delete"
-                                    title="Vymazať faktúru"
-                                    aria-label="Vymazať faktúru"
-                                    data-delete-id="${escapeHTML(invoice.id)}"
-                                    data-invoice-number="${escapeHTML(invoice.invoice_number || '')}">
-                                ×
-                            </button>
-
+                            <a class="action-button" href="invoice-new.html?id=${inv.id}" title="Upraviť / Zobraziť">✎</a>
+                            <button type="button" class="action-button delete" onclick="deleteInvoice('${inv.id}')" title="Vymazať">×</button>
                         </div>
                     </td>
                 `;
 
-                invoiceTableBody.appendChild(row);
-            });
-
-            invoiceTableBody
-                .querySelectorAll('[data-delete-id]')
-                .forEach(button => {
-                    button.addEventListener('click', () => {
-                        deleteInvoice(
-                            button.dataset.deleteId,
-                            button.dataset.invoiceNumber
-                        );
-                    });
-                });
-        }
-
-        /*
-        ============================================================
-        ŠTATISTIKY
-        ============================================================
-        */
-
-        function updateStatistics() {
-            const eurInvoices = allInvoices.filter(invoice => {
-                return (invoice.currency || 'EUR') === 'EUR' &&
-                       invoice.display_status !== 'cancelled';
-            });
-
-            const totalAmount = eurInvoices.reduce((sum, invoice) => {
-                return sum + Number(invoice.total || 0);
-            }, 0);
-
-            const paidAmount = eurInvoices.reduce((sum, invoice) => {
-                if (invoice.display_status === 'paid') {
-                    return sum + Number(invoice.total || 0);
-                }
-
-                return sum + Number(invoice.paid_amount || 0);
-            }, 0);
-
-            const dueAmount = eurInvoices.reduce((sum, invoice) => {
-                if (
-                    invoice.display_status === 'draft' ||
-                    invoice.display_status === 'cancelled'
-                ) {
-                    return sum;
-                }
-
-                return sum + Number(invoice.amount_due || 0);
-            }, 0);
-
-            document.getElementById('statTotalCount').textContent =
-                String(allInvoices.length);
-
-            document.getElementById('statTotalAmount').textContent =
-                formatMoney(totalAmount, 'EUR');
-
-            document.getElementById('statPaidAmount').textContent =
-                formatMoney(paidAmount, 'EUR');
-
-            document.getElementById('statDueAmount').textContent =
-                formatMoney(dueAmount, 'EUR');
-        }
-
-        /*
-        ============================================================
-        VYMAZANIE FAKTÚRY
-        ============================================================
-        */
-
-        async function deleteInvoice(invoiceId, invoiceNumber) {
-            if (!invoiceId) {
-                return;
-            }
-
-            const confirmed = window.confirm(
-                `Naozaj chcete vymazať faktúru ${invoiceNumber || ''}?\n\n` +
-                'Vymazanie odstráni aj všetky položky faktúry a nebude ho možné vrátiť späť.'
-            );
-
-            if (!confirmed) {
-                return;
-            }
-
-            clearMessage();
-
-            try {
-                const { error } = await supabaseClient
-                    .from('invoices')
-                    .delete()
-                    .eq('id', invoiceId)
-                    .eq('user_id', currentUser.id);
-
-                if (error) {
-                    throw error;
-                }
-
-                allInvoices = allInvoices.filter(invoice => {
-                    return invoice.id !== invoiceId;
-                });
-
-                populateYearFilter();
-                updateStatistics();
-                applyFilters();
-
-                showMessage(
-                    `Faktúra ${invoiceNumber || ''} bola vymazaná.`,
-                    'success'
-                );
-
-            } catch (error) {
-                console.error('Chyba pri vymazaní faktúry:', error);
-
-                showMessage(
-                    'Faktúru sa nepodarilo vymazať. ' +
-                    getReadableError(error),
-                    'error'
-                );
-            }
-        }
-
-        /*
-        ============================================================
-        ODHLÁSENIE
-        ============================================================
-        */
-
-        async function logout() {
-            const logoutButton =
-                document.getElementById('logoutButton');
-
-            logoutButton.disabled = true;
-            logoutButton.textContent = 'Odhlasujem…';
-
-            try {
-                const { error } =
-                    await supabaseClient.auth.signOut();
-
-                if (error) {
-                    throw error;
-                }
-
-                window.location.replace('login.html');
-
-            } catch (error) {
-                console.error('Chyba pri odhlásení:', error);
-
-                showMessage(
-                    'Odhlásenie sa nepodarilo. ' +
-                    getReadableError(error),
-                    'error'
-                );
-
-                logoutButton.disabled = false;
-                logoutButton.textContent = 'Odhlásiť sa';
-            }
-        }
-
-        /*
-        ============================================================
-        MOBILE MENU
-        ============================================================
-        */
-
-        function openSidebar() {
-            document.getElementById('sidebar').classList.add('open');
-            document.getElementById('sidebarOverlay').classList.add('show');
-        }
-
-        function closeSidebar() {
-            document.getElementById('sidebar').classList.remove('open');
-            document.getElementById('sidebarOverlay').classList.remove('show');
-        }
-
-        /*
-        ============================================================
-        POMOCNÉ FUNKCIE
-        ============================================================
-        */
-
-        function setTableLoading(isLoading) {
-            tableLoading.style.display = isLoading ? 'block' : 'none';
-
-            if (isLoading) {
-                invoiceTable.style.display = 'none';
-                emptyState.classList.remove('show');
-            }
-        }
-
-        function showMessage(message, type = 'error') {
-            pageMessage.textContent = message;
-
-            pageMessage.className =
-                'message show ' +
-                (type === 'success'
-                    ? 'message-success'
-                    : 'message-error');
-
-            pageMessage.scrollIntoView({
-                behavior: 'smooth',
-                block: 'nearest'
+                invoiceTableBody.appendChild(tr);
             });
         }
 
-        function clearMessage() {
-            pageMessage.textContent = '';
-            pageMessage.className = 'message';
-        }
-
-        function getStatusInfo(status) {
-            const statuses = {
-                draft: {
-                    label: 'Koncept',
-                    className: 'status-draft'
-                },
-                issued: {
-                    label: 'Vystavená',
-                    className: 'status-issued'
-                },
-                paid: {
-                    label: 'Uhradená',
-                    className: 'status-paid'
-                },
-                overdue: {
-                    label: 'Po splatnosti',
-                    className: 'status-overdue'
-                },
-                cancelled: {
-                    label: 'Zrušená',
-                    className: 'status-cancelled'
-                }
+        function renderStatusBadge(status) {
+            const map = {
+                draft: { label: 'Koncept', class: 'status-draft' },
+                issued: { label: 'Vystavená', class: 'status-issued' },
+                paid: { label: 'Uhradená', class: 'status-paid' },
+                overdue: { label: 'Po splatnosti', class: 'status-overdue' },
+                cancelled: { label: 'Zrušená', class: 'status-cancelled' }
             };
 
-            return statuses[status] || statuses.draft;
+            const info = map[status] || { label: status, class: 'status-issued' };
+            return `<span class="status ${info.class}">${info.label}</span>`;
         }
 
-        function formatMoney(value, currency = 'EUR') {
-            const amount = Number(value || 0);
+        async function deleteInvoice(id) {
+            if (!confirm('Naozaj chcete vymazať túto faktúru? Táto akcia je nevratná.')) {
+                return;
+            }
 
             try {
-                return new Intl.NumberFormat('sk-SK', {
-                    style: 'currency',
-                    currency: currency || 'EUR',
-                    minimumFractionDigits: 2,
-                    maximumFractionDigits: 2
-                }).format(amount);
+                clearMessage();
+
+                const { error: itemsError } = await supabaseClient
+                    .from('invoice_items')
+                    .delete()
+                    .eq('invoice_id', id)
+                    .eq('user_id', currentUser.id);
+
+                if (itemsError) throw itemsError;
+
+                const { error: invError } = await supabaseClient
+                    .from('invoices')
+                    .delete()
+                    .eq('id', id)
+                    .eq('user_id', currentUser.id);
+
+                if (invError) throw invError;
+
+                showMessage('Faktúra bola úspešne vymazaná.', 'success');
+                await loadInvoices();
 
             } catch (error) {
-                return amount.toFixed(2) + ' ' + (currency || 'EUR');
+                console.error('Chyba pri mazaní faktúry:', error);
+                showMessage('Nepodarilo sa vymazať faktúru. ' + getReadableError(error), 'error');
             }
         }
 
-        function formatDate(dateString) {
-            if (!dateString) {
-                return '—';
+        function formatMoney(amount, currency = 'EUR') {
+            const num = Number(amount || 0);
+            return new Intl.NumberFormat('sk-SK', {
+                style: 'currency',
+                currency: currency || 'EUR'
+            }).format(num);
+        }
+
+        function formatDate(dateStr) {
+            if (!dateStr) return '---';
+            const parts = dateStr.split('-');
+            if (parts.length === 3) {
+                return `${parts[2]}.${parts[1]}.${parts[0]}`;
             }
-
-            const parts = dateString.split('-');
-
-            if (parts.length !== 3) {
-                return dateString;
-            }
-
-            return `${parts[2]}.${parts[1]}.${parts[0]}`;
+            return dateStr;
         }
 
-        function getLocalDateString(date) {
-            const year = date.getFullYear();
-            const month = String(date.getMonth() + 1).padStart(2, '0');
-            const day = String(date.getDate()).padStart(2, '0');
-
-            return `${year}-${month}-${day}`;
+        function escapeHtml(str) {
+            return String(str || '').replace(/[&<>"']/g, match => ({
+                '&': '&amp;',
+                '<': '&lt;',
+                '>': '&gt;',
+                '"': '&quot;',
+                "'": '&#039;'
+            }[match]));
         }
 
-        function normalizeText(value) {
-            return String(value || '')
-                .toLocaleLowerCase('sk')
-                .normalize('NFD')
-                .replace(/[\u0300-\u036f]/g, '')
-                .trim();
-        }
+        function showMessage(text, type = 'success') {
+            pageMessage.textContent = text;
+            pageMessage.className = `message show ${type === 'success' ? 'message-success' : 'message-error'}`;
+            window.scrollTo({ top: 0, behavior: 'smooth' });
 
-        function escapeHTML(value) {
-            return String(value ?? '').replace(
-                /[&<>"']/g,
-                character => ({
-                    '&': '&amp;',
-                    '<': '&lt;',
-                    '>': '&gt;',
-                    '"': '&quot;',
-                    "'": '&#039;'
-                })[character]
-            );
+            setTimeout(() => {
+                pageMessage.className = 'message';
+            }, 6000);
         }
 
         function getReadableError(error) {
-            const message = String(
-                error?.message || 'Neznáma chyba.'
-            );
-
-            if (
-                message.includes('Failed to fetch') ||
-                message.includes('NetworkError')
-            ) {
-                return 'Nepodarilo sa pripojiť k databáze. Skontrolujte internetové pripojenie a Supabase nastavenia.';
+            const msg = String(error?.message || 'Neznáma chyba');
+            if (msg.includes('row-level security')) {
+                return 'Databáza odmietla prístup. Skontrolujte Supabase RLS politiky pre tabuľku invoices.';
             }
-
-            if (message.includes('Invalid API key')) {
-                return 'Supabase anon key nie je správny.';
-            }
-
-            if (message.includes('relation') &&
-                message.includes('does not exist')) {
-                return 'Tabuľka invoices v Supabase neexistuje.';
-            }
-
-            return message;
+            return msg;
         }
     </script>
-<script src="js/mydatapay-navigation.js"></script>
+    <script src="js/mydatapay-navigation.js"></script>
 </body>
+
 </html>
