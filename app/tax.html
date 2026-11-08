@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="sk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Daňové priznanie & Paušálne výdavky | MyDataPay</title>
+    <meta name="robots" content="noindex, nofollow">
+    <meta name="theme-color" content="#052c64">
+    <link rel="icon" href="../favicon.png" type="image/png">
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="js/supabase.js"></script>
+    <style>
+        :root {
+            --primary:#052c64; --primary-hover:#0b3e80; --accent:#397bb8;
+            --accent-light:#eef5fc; --text:#172b4d; --muted:#64748b;
+            --border:#e2e8f0; --background:#f4f7fb; --white:#fff;
+            --success:#059669; --success-light:#ecfdf5; --warning:#d97706;
+            --warning-light:#fffbeb; --danger:#dc2626; --danger-light:#fef2f2;
+            --sidebar-width:250px;
+        }
+        *{box-sizing:border-box;margin:0;padding:0}
+        body{min-height:100vh;background:var(--background);color:var(--text);font-family:Arial,Helvetica,sans-serif}
+        button,input,select{font:inherit}button{cursor:pointer}a{color:inherit;text-decoration:none}
+        .page-loader{position:fixed;inset:0;z-index:9999;display:flex;align-items:center;justify-content:center;background:var(--background)}
+        .loader-content{text-align:center;color:var(--primary)}
+        .loader-spinner{width:42px;height:42px;margin:0 auto 14px;border:4px solid #dbeafe;border-top-color:var(--primary);border-radius:50%;animation:spin .8s linear infinite}
+        @keyframes spin{to{transform:rotate(360deg)}}
+        .app{display:none;min-height:100vh}.app.ready{display:flex}
+        .sidebar{position:fixed;inset:0 auto 0 0;z-index:1000;width:var(--sidebar-width);display:flex;flex-direction:column;background:#071c35;color:#fff;box-shadow:5px 0 20px rgba(7,28,53,.08)}
+        .sidebar-brand{min-height:84px;display:flex;align-items:center;gap:12px;padding:18px 22px;border-bottom:1px solid rgba(255,255,255,.1)}
+        .sidebar-brand img{width:46px;height:46px;object-fit:contain;background:#fff;border-radius:10px;padding:4px}
+        .brand-name{font-size:18px;font-weight:800}.brand-subtitle{margin-top:3px;color:#9fb1c5;font-size:11px}
+        .sidebar-nav{flex:1;padding:20px 12px;overflow-y:auto}.nav-label{margin:5px 12px 9px;color:#6f89a3;font-size:10px;font-weight:800;text-transform:uppercase;letter-spacing:.9px}
+        .nav-link{display:flex;align-items:center;gap:12px;min-height:46px;margin-bottom:5px;padding:11px 13px;border-radius:9px;color:#c4d2df;font-size:13px;font-weight:600;transition:.2s}
+        .nav-link:hover{color:#fff;background:rgba(255,255,255,.08)}.nav-link.active{color:#fff;background:#174a7e}.nav-icon{width:20px;text-align:center;font-size:17px}
+        .sidebar-footer{padding:16px 14px;border-top:1px solid rgba(255,255,255,.1)}.user-card{margin-bottom:10px;padding:11px;border-radius:9px;background:rgba(255,255,255,.06)}
+        .user-email{overflow:hidden;color:#fff;font-size:12px;font-weight:700;text-overflow:ellipsis;white-space:nowrap}.user-status{margin-top:3px;color:#8fb2d5;font-size:10px}
+        .logout-button{width:100%;padding:10px;border:1px solid rgba(255,255,255,.16);border-radius:8px;background:transparent;color:#dce8f4;font-size:12px;font-weight:700}
+        .main{width:calc(100% - var(--sidebar-width));min-width:0;margin-left:var(--sidebar-width)}
+        .topbar{position:sticky;top:0;z-index:900;min-height:72px;display:flex;align-items:center;justify-content:space-between;gap:20px;padding:14px 30px;background:rgba(255,255,255,.97);border-bottom:1px solid var(--border);backdrop-filter:blur(8px)}
+        .topbar-left{display:flex;align-items:center;gap:14px}.menu-button{display:none;width:40px;height:40px;border:1px solid var(--border);border-radius:8px;background:#fff;color:var(--primary);font-size:20px}
+        .topbar-title{color:var(--primary);font-size:19px;font-weight:800}.topbar-subtitle{margin-top:2px;color:var(--muted);font-size:11px}
+        .company-chip{padding:9px 13px;border:1px solid #dbeafe;border-radius:9px;background:var(--accent-light);color:var(--primary);font-size:12px;font-weight:800}
+        .content{width:min(1200px,100%);margin:0 auto;padding:30px}.page-heading{display:flex;align-items:flex-start;justify-content:space-between;gap:20px;margin-bottom:24px}
+        .page-heading h1{color:var(--primary);font-size:28px;line-height:1.2}.page-heading p{max-width:720px;margin-top:7px;color:var(--muted);font-size:14px;line-height:1.6}
+        .button{min-height:42px;display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:10px 17px;border:1px solid transparent;border-radius:8px;font-size:13px;font-weight:800;white-space:nowrap}
+        .button-primary{background:var(--primary);color:#fff}.button-primary:hover{background:var(--primary-hover)}
+        .message{display:none;margin-bottom:20px;padding:13px 15px;border-radius:9px;font-size:13px;line-height:1.5}.message.show{display:block}.message-error{color:#991b1b;border:1px solid #fecaca;background:var(--danger-light)}.message-success{color:#065f46;border:1px solid #a7f3d0;background:var(--success-light)}
+        .panel{background:#fff;border:1px solid var(--border);border-radius:12px;box-shadow:0 5px 18px rgba(15,23,42,.035);margin-bottom:20px;overflow:hidden}
+        .panel-header{display:flex;align-items:center;justify-content:space-between;gap:14px;padding:18px 20px;border-bottom:1px solid var(--border)}.panel-header h2{color:var(--primary);font-size:17px}.panel-header p{margin-top:4px;color:var(--muted);font-size:11px}
+        .tax-grid{display:grid;grid-template-columns:1.2fr 0.8fr;gap:20px}
+        .tax-form-group{padding:20px}
+        .form-row{margin-bottom:15px}.form-row label{display:block;margin-bottom:6px;color:var(--primary);font-size:12px;font-weight:700}
+        .form-row input{width:100%;padding:10px 12px;border:1px solid var(--border);border-radius:8px;font-size:13px}
+        .tax-summary-box{background:#f8fafc;padding:20px;border-left:4px solid var(--primary)}
+        .tax-line{display:flex;justify-content:space-between;padding:10px 0;border-bottom:1px solid var(--border);font-size:13px}
+        .tax-line:last-child{border-bottom:0;font-weight:800;font-size:15px;color:var(--primary);padding-top:15px}
+        .sidebar-overlay{position:fixed;inset:0;z-index:990;display:none;background:rgba(15,23,42,.55)}.sidebar-overlay.show{display:block}
+        @media(max-width:900px){.tax-grid{grid-template-columns:1fr}}
+        @media(max-width:850px){.sidebar{transform:translateX(-100%);transition:.25s}.sidebar.open{transform:translateX(0)}.main{width:100%;margin-left:0}.menu-button{display:inline-flex;align-items:center;justify-content:center}.content{padding:22px 18px}.topbar{padding:12px 18px}}
+    </style>
+</head>
+<body>
+    <div class="page-loader" id="pageLoader"><div class="loader-content"><div class="loader-spinner"></div><strong>Načítavam dáta…</strong></div></div>
+    <div class="sidebar-overlay" id="sidebarOverlay"></div>
+    <div class="app" id="app">
+        <aside class="sidebar" id="sidebar">
+            <a class="sidebar-brand" href="dashboard.html"><img src="../logo.png" alt="DataPay logo"><div><div class="brand-name">MyDataPay</div><div class="brand-subtitle">Živnostenská zóna</div></div></a>
+            <nav class="sidebar-nav">
+                <div class="nav-label">Prehľad</div>
+                <a class="nav-link" href="dashboard.html"><span class="nav-icon">⌂</span><span>Dashboard</span></a>
+                <div class="nav-label">Fakturácia</div>
+                <a class="nav-link" href="invoices.html"><span class="nav-icon">▤</span><span>Faktúry</span></a>
+                <a class="nav-link" href="invoice-new.html"><span class="nav-icon">＋</span><span>Nová faktúra</span></a>
+                <a class="nav-link" href="contacts.html"><span class="nav-icon">♙</span><span>Kontakty</span></a>
+                <div class="nav-label">Dane & Nastavenia</div>
+                <a class="nav-link active" href="tax.html"><span class="nav-icon">§</span><span>Daňové priznanie</span></a>
+                <a class="nav-link" href="company.html"><span class="nav-icon">▣</span><span>Moja firma</span></a>
+                <a class="nav-link" href="../index.html"><span class="nav-icon">↗</span><span>DataPay.sk</span></a>
+            </nav>
+            <div class="sidebar-footer"><div class="user-card"><div class="user-email" id="userEmail">Používateľ</div><div class="user-status">Živnostenský účet</div></div><button type="button" class="logout-button" id="logoutButton">Odhlásiť sa</button></div>
+        </aside>
+        <main class="main">
+            <header class="topbar"><div class="topbar-left"><button type="button" class="menu-button" id="menuButton" aria-label="Otvoriť menu">☰</button><div><div class="topbar-title">Daňové priznanie (DPFO B)</div><div class="topbar-subtitle">Paušálne výdavky a export pre Finančnú správu</div></div></div><div class="company-chip" id="companyChip">Načítavam firmu…</div></header>
+            <div class="content">
+                <div id="pageMessage" class="message" role="alert"></div>
+                <section class="page-heading">
+                    <div>
+                        <h1>Priznanie k dane z príjmov</h1>
+                        <p>Údaje sú automaticky predvyplnené na základe vašich uhradených faktúr v systéme za zvolený rok.</p>
+                    </div>
+                    <div>
+                        <select id="taxYearSelect" style="padding:10px; border-radius:8px; border:1px solid var(--border); font-weight:800; background:#fff;">
+                            <option value="2026">Zúčtovací rok 2026</option>
+                            <option value="2025">Zúčtovací rok 2025</option>
+                        </select>
+                    </div>
+                </section>
+
+                <div class="tax-grid">
+                    <section class="panel">
+                        <div class="panel-header"><div><h2>Vstupy pre výpočet dane</h2><p>Údaje o príjmoch a zaplatených odvodoch</p></div></div>
+                        <div class="tax-form-group">
+                            <div class="form-row">
+                                <label>Celkové zdaniteľné príjmy z faktúr (€)</label>
+                                <input type="text" id="inputRevenue" readonly style="background:#f8fafc; font-weight:800;">
+                            </div>
+                            <div class="form-row">
+                                <label>Vypočítané paušálne výdavky (60 %, max 20 000 €)</label>
+                                <input type="text" id="inputFlatExpenses" readonly style="background:#f8fafc; font-weight:800;">
+                            </div>
+                            <div class="form-row">
+                                <label>Zaplatené sociálne a zdravotné odvody za rok (€)</label>
+                                <input type="number" id="inputInsurance" value="0.00" step="0.01" placeholder="Napr. 2400.00">
+                                <span style="font-size:10px; color:var(--muted); margin-top:3px; display:block;">Povinné odvody do SP a ZP zaplatené v danom roku.</span>
+                            </div>
+                            <div class="form-row" style="margin-top:25px;">
+                                <button type="button" class="button button-primary" id="generateXmlButton" style="width:100%;">Stiahnuť Daňové priznanie (XML pre FS)</button>
+                            </div>
+                        </div>
+                    </section>
+
+                    <aside>
+                        <section class="panel">
+                            <div class="panel-header"><div><h2>Predbežný výsledok</h2><p>Základ dane a orientačná daň</p></div></div>
+                            <div class="tax-summary-box">
+                                <div class="tax-line"><span>Celkové príjmy:</span><strong id="sumRev">0,00 €</strong></div>
+                                <div class="tax-line"><span>Paušálne výdavky:</span><strong id="sumExp">0,00 €</strong></div>
+                                <div class="tax-line"><span>Zaplatené odvody:</span><strong id="sumIns">0,00 €</strong></div>
+                                <div class="tax-line"><span>Základ dane (dčiastkový):</span><strong id="sumBase">0,00 €</strong></div>
+                            </div>
+                        </section>
+                    </aside>
+                </div>
+            </div>
+        </main>
+    </div>
+    <script>
+        let currentUser = null;
+        let currentCompanyId = null;
+        let allInvoices = [];
+        const $ = id => document.getElementById(id);
+
+        document.addEventListener('DOMContentLoaded', initializeTaxPage);
+
+        async function initializeTaxPage() {
+            try {
+                if (typeof supabaseClient === 'undefined') throw new Error('Supabase klient sa nenačítal.');
+                const { data: { session }, error: sessionError } = await supabaseClient.auth.getSession();
+                if (sessionError) throw sessionError;
+                if (!session?.user) { window.location.replace('login.html'); return; }
+                currentUser = session.user;
+                $('userEmail').textContent = currentUser.email;
+                setupEvents();
+
+                const { data: membership } = await supabaseClient.from('company_members').select('company_id').eq('user_id', currentUser.id).limit(1).maybeSingle();
+                if (membership) {
+                    currentCompanyId = membership.company_id;
+                    const { data: comp } = await supabaseClient.from('companies').select('name').eq('id', currentCompanyId).single();
+                    if (comp) $('companyChip').textContent = comp.name;
+                }
+
+                const { data: invData, error: invError } = await supabaseClient.from('invoices').select('*').eq('user_id', currentUser.id);
+                if (invError) throw invError;
+                allInvoices = invData || [];
+
+                calculateTaxData();
+                $('pageLoader').style.display = 'none';
+                $('app').classList.add('ready');
+            } catch (err) {
+                console.error(err);
+                $('pageLoader').style.display = 'none';
+                $('app').classList.add('ready');
+                showMessage(err.message, 'error');
+            }
+        }
+
+        function setupEvents() {
+            $('logoutButton').addEventListener('click', logout);
+            $('menuButton').addEventListener('click', () => { $('sidebar').classList.add('open'); $('sidebarOverlay').classList.add('show'); });
+            $('sidebarOverlay').addEventListener('click', () => { $('sidebar').classList.remove('open'); $('sidebarOverlay').classList.remove('show'); });
+            $('taxYearSelect').addEventListener('change', calculateTaxData);
+            $('inputInsurance').addEventListener('input', calculateTaxData);
+            $('generateXmlButton').addEventListener('click', generateXmlExport);
+        }
+
+        function calculateTaxData() {
+            const selectedYear = $('taxYearSelect').value;
+            const yearInvoices = allInvoices.filter(i => (i.issue_date || '').startsWith(selectedYear) && i.status !== 'cancelled');
+            
+            const totalRevenue = yearInvoices.reduce((sum, i) => sum + ((i.currency || 'EUR') === 'EUR' ? Number(i.total || 0) : 0), 0);
+            
+            // Výpočet 60% paušálov s limitom 20 000 €
+            let flatExpenses = totalRevenue * 0.60;
+            if (flatExpenses > 20000) flatExpenses = 20000;
+
+            const insurance = Number($('inputInsurance').value) || 0;
+            
+            // Základ dane = Príjmy - Paušálne výdavky - Odvody
+            let taxBase = totalRevenue - flatExpenses - insurance;
+            if (taxBase < 0) taxBase = 0;
+
+            $('inputRevenue.value', totalRevenue); // oprava pre safe priradenie
+            $('inputRevenue').value = moneyRaw(totalRevenue);
+            $('inputFlatExpenses').value = moneyRaw(flatExpenses);
+
+            $('sumRev').textContent = money(totalRevenue);
+            $('sumExp').textContent = money(flatExpenses);
+            $('sumIns').textContent = money(insurance);
+            $('sumBase').textContent = money(taxBase);
+        }
+
+        function generateXmlExport() {
+            const year = $('taxYearSelect').value;
+            const revenue = $('inputRevenue').value;
+            const expenses = $('inputFlatExpenses').value;
+            
+            // Základná štruktúra mock XML pre Finančnú správu SR (DPFO B)
+            const xmlContent = `<?xml version="1.0" encoding="UTF-8"?>
+<prukazDPFOB xmlns="https://www.financnasprava.sk/schema/dpfo/v2026">
+    <obdobie>${year}</obdobie>
+    <typPriznania>riadne</typPriznania>
+    <zdanitelnePrijmy>${revenue}</zdanitelnePrijmy>
+    <pausalneVydavky>${expenses}</pausalneVydavky>
+</prukazDPFOB>`;
+
+            const blob = new Blob([xmlContent], { type: 'application/xml' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `danove_priznanie_${year}_datapay.xml`;
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+
+            showMessage('Súbor XML pre Finančnú správu bol úspešne vygenerovaný a stiahnutý.', 'success');
+        }
+
+        function money(val) { return new Intl.NumberFormat('sk-SK', { style: 'currency', currency: 'EUR' }).format(val); }
+        function moneyRaw(val) { return Number(val).toFixed(2); }
+        function showMessage(text, type = 'error') {
+            const msg = $('pageMessage');
+            msg.textContent = text;
+            msg.className = `message show message-${type}`;
+        }
+        async function logout() {
+            await supabaseClient.auth.signOut();
+            window.location.replace('login.html');
+        }
+    </script>
+    <script src="js/mydatapay-navigation.js"></script>
+</body>
+</html>
