@@ -59,6 +59,17 @@
         .mode-btn.active{border-color:var(--primary);background:var(--accent-light);color:var(--primary)}
         .message{display:none;margin-bottom:20px;padding:13px 15px;border-radius:9px;font-size:13px;line-height:1.5}.message.show{display:block}.message-error{color:#991b1b;border:1px solid #fecaca;background:var(--danger-light)}
         .sidebar-overlay{position:fixed;inset:0;z-index:990;display:none;background:rgba(15,23,42,.55)}.sidebar-overlay.show{display:block}
+        /* Tlačové štylizácie pre oficiálny vzhľad daňového priznania */
+        @media print {
+            body { background: #fff; color: #000; }
+            .sidebar, .topbar, .mode-switcher, .page-heading button, .button, .sidebar-overlay, .page-loader { display: none !important; }
+            .main { width: 100% !important; margin: 0 !important; }
+            .content { padding: 0 !important; max-width: 100% !important; }
+            .card { border: 1px solid #000; box-shadow: none; margin-bottom: 15px; }
+            .summary-grid { border: 1px solid #000; padding: 10px; }
+            .stat-box { background: #fff; border: 1px solid #ccc; }
+        }
+
         @media(max-width:850px){.sidebar{transform:translateX(-100%);transition:.25s}.sidebar.open{transform:translateX(0)}.main{width:100%;margin-left:0}.menu-button{display:inline-flex;align-items:center;justify-content:center}.content{padding:22px 18px}.summary-grid,.mode-switcher{grid-template-columns:1fr}}
     </style>
 </head>
@@ -93,8 +104,10 @@
                         <h1>Optimalizácia daňového priznania</h1>
                         <p>Zvoľte si spôsob uplatňovania výdavkov. Aplikácia automaticky prepočíta základ dane a pripraví podklady.</p>
                     </div>
+                    <div style="display:flex; gap:10px; flex-wrap:wrap;">
+                        <button type="button" class="button button-success" onclick="generateFinancnaSpravaXML()">⚡ Stiahnuť XML pre Finančnú správu</button>
+                    </div>
                 </section>
-
                 <!-- PREPÍNAČ REŽIMU VÝDAVKOV -->
                 <div class="mode-switcher">
                     <button type="button" class="mode-btn active" id="modeFlatBtn" onclick="switchTaxMode('flat')">
@@ -268,7 +281,6 @@
                 const totalRealExpenses = expenses.reduce((sum, e) => sum + Number(e.total || 0), 0);
                 const totalTripsAllowance = trips.reduce((sum, t) => sum + Number(t.total_allowance || 0), 0);
 
-                // Pri reálnych výdavkoch sa výdavky z bločkov, náhrady z ciest a odvody sčítavajú
                 const totalExpensesSum = totalRealExpenses + totalTripsAllowance + annualInsurance;
                 const taxBase = Math.max(0, totalRevenue - totalExpensesSum);
 
@@ -278,6 +290,52 @@
                 $('taxBaseValue').textContent = money(taxBase);
                 $('detailTaxBase').textContent = money(taxBase);
             }
+        }
+
+        function generateFinancnaSpravaXML() {
+            if (!globalData) return;
+            const { company, invoices, expenses, trips } = globalData;
+            const currentYear = new Date().getFullYear();
+
+            const totalRevenue = invoices.reduce((sum, i) => sum + Number(i.total || 0), 0);
+            const annualInsurance = (Number(company.health_insurance || 0) + Number(company.social_insurance || 0)) * 12;
+
+            let expenseSum = 0;
+            if (currentMode === 'flat') {
+                expenseSum = totalRevenue * 0.60;
+                if (expenseSum > 20000) expenseSum = 20000;
+            } else {
+                const totalRealExpenses = expenses.reduce((sum, e) => sum + Number(e.total || 0), 0);
+                const totalTripsAllowance = trips.reduce((sum, t) => sum + Number(t.total_allowance || 0), 0);
+                expenseSum = totalRealExpenses + totalTripsAllowance;
+            }
+
+            const taxBase = Math.max(0, totalRevenue - expenseSum - annualInsurance);
+
+            const xmlContent = `<?xml version="1.0" encoding="UTF-8"?>
+<PriznanieDPFO typ="B" rok="${currentYear}" xmlns="http://www.financnasprava.sk/schema">
+    <Danovnik>
+        <Meno>${escapeXML(company.name || '')}</Meno>
+        <ICO>${escapeXML(company.ico || '')}</ICO>
+        <DIC>${escapeXML(company.dic || '')}</DIC>
+    </Danovnik>
+    <OddielIV>
+        <RezimVydavkov>${currentMode === 'flat' ? 'Pausalne' : 'Realne'}</RezimVydavkov>
+        <PríjmyPar6_1_2>${totalRevenue.toFixed(2)}</PríjmyPar6_1_2>
+        <VydavkyCelkovo>${expenseSum.toFixed(2)}</VydavkyCelkovo>
+        <OdvodyZP_SP>${annualInsurance.toFixed(2)}</OdvodyZP_SP>
+        <ZakladDane>${taxBase.toFixed(2)}</ZakladDane>
+    </OddielIV>
+</PriznanieDPFO>`;
+            const blob = new Blob([xmlContent], { type: 'application/xml;charset=utf-8;' });
+            const link = document.createElement('a');
+            link.href = URL.createObjectURL(blob);
+            link.download = `DPFO_B_${currentYear}_${company.ico || 'zivnost'}.xml`;
+            link.click();
+        }
+
+        function escapeXML(str) {
+            return String(str || '').replace(/[<>&'"]/g, c => ({ '<':'&lt;', '>':'&gt;', '&':'&amp;', "'":'&apos;', '"':'&quot;' }[c]));
         }
 
         function setupEvents() {
