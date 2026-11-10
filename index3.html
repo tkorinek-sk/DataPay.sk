@@ -12,7 +12,10 @@
     <meta name="robots" content="index, follow">
     <meta name="author" content="DataPay s.r.o.">
     <link rel="canonical" href="https://datapay.sk/">
-
+    <link rel="alternate" hreflang="sk" href="https://datapay.sk/">
+    <link rel="alternate" hreflang="en" href="https://datapay.sk/en/">
+    <link rel="alternate" hreflang="x-default" href="https://datapay.sk/">
+    <meta name="msvalidate.01" content="A7B11D2A2BFC2CD45C22B4AAF5FF0023" />
     <meta property="og:locale" content="sk_SK">
     <meta property="og:type" content="website">
     <meta property="og:site_name" content="DataPay">
@@ -409,12 +412,26 @@ a {
 }
 
 .hero-buttons {
-
-    display: flex;
-
-    flex-wrap: wrap;
-
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
     gap: 12px;
+    width: 100%;
+    max-width: 557.5px;
+    box-sizing: border-box;
+}
+
+.hero-buttons > .btn {
+    width: 100%;
+    min-width: 0;
+    box-sizing: border-box;
+    text-align: center;
+}
+
+.hero-buttons > .btn-invoice {
+    grid-column: 1 / -1;
+    width: 100%;
+    max-width: none;
+    justify-self: stretch;
 }
 
 .btn {
@@ -460,311 +477,225 @@ a {
     background: #0b3e80;
 }
 
-
 /* =====================================================
-   HERO DYNAMIC VISUAL
+   DATAPAY 3D COVERFLOW CAROUSEL (INTEGROVANÝ)
 ===================================================== */
-
 .hero-visual {
-
-    height: 500px;
-
     position: relative;
-
+    width: 100%;
     display: flex;
-
+    flex-direction: column;
     align-items: center;
-
     justify-content: center;
+    overflow: visible;
 }
 
+.dp-carousel-wrapper {
+    position: relative;
+    width: 100%;
+    max-width: 540px;
+    height: 380px;
+    perspective: 1000px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    user-select: none;
+    touch-action: pan-y;
+}
 
-/* =====================================================
-   BACKGROUND GLOW
-===================================================== */
+.dp-carousel-track {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    transform-style: preserve-3d;
+}
 
-.visual-glow {
-
+.dp-card {
     position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 220px;
+    height: 310px;
+    margin-top: -155px;
+    margin-left: -110px;
+    border-radius: 16px;
+    background: #ffffff;
+    border: 1px solid #e1e8f0;
+    box-shadow: 0 15px 35px rgba(5, 44, 100, 0.12);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 22px;
+    cursor: pointer;
+    transition: transform 0.45s cubic-bezier(0.25, 1, 0.5, 1), opacity 0.45s ease, filter 0.45s ease, box-shadow 0.45s ease;
+    will-change: transform, opacity;
+    overflow: hidden;
+}
 
-    width: 320px;
-
-    height: 320px;
-
-    border-radius: 50%;
-
-    background:
-        radial-gradient(
-            circle,
-            rgba(50,128,198,.17),
-            rgba(50,128,198,.03) 55%,
-            transparent 70%
-        );
-
-    filter: blur(5px);
-
-    animation:
-        glowPulse 4s ease-in-out infinite;
-
+.dp-card-bg-gradient {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 110px;
+    background: linear-gradient(135deg, #052c64 0%, #1e5ba8 100%);
+    border-top-left-radius: 15px;
+    border-top-right-radius: 15px;
     z-index: 1;
 }
 
-
-/* =====================================================
-   CENTER
-===================================================== */
-
-.data-center {
-
-    width: 190px;
-
-    height: 190px;
-
-    border-radius: 50%;
-
-    background:
-        linear-gradient(
-            145deg,
-            #ffffff,
-            #edf4fa
-        );
-
-    border:
-        1px solid rgba(5,44,100,.13);
-
-    box-shadow:
-        0 25px 70px rgba(5,44,100,.16);
-
-    display: flex;
-
-    align-items: center;
-
-    justify-content: center;
-
+.dp-card-tag {
     position: relative;
-
-    z-index: 5;
-
-    will-change: transform;
+    z-index: 2;
+    align-self: flex-start;
+    padding: 4px 10px;
+    border-radius: 20px;
+    background: rgba(255, 255, 255, 0.2);
+    backdrop-filter: blur(4px);
+    color: #ffffff;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.8px;
+    text-transform: uppercase;
 }
 
-.data-center::before {
-
-    content: "";
-
-    position: absolute;
-
-    inset: -12px;
-
-    border-radius: 50%;
-
-    border:
-        1px solid rgba(56,124,184,.20);
-
-    animation:
-        centerPulse 3s infinite;
-}
-
-.data-center-inner {
-
-    text-align: center;
-}
-
-.data-center strong {
-
-    display: block;
-
-    font-size: 27px;
-
+.dp-card-icon {
+    position: relative;
+    z-index: 2;
+    width: 44px;
+    height: 44px;
+    border-radius: 12px;
+    background: #ffffff;
     color: #052c64;
-
-    letter-spacing: -.5px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+    font-weight: 800;
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.12);
+    margin-top: 15px;
 }
 
-.data-center span {
+.dp-card-body {
+    position: relative;
+    z-index: 2;
+    margin-top: 20px;
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+}
 
-    display: block;
+.dp-card-title {
+    color: #052c64;
+    font-size: 17px;
+    font-weight: 700;
+    line-height: 1.3;
+    margin-bottom: 6px;
+}
 
-    margin-top: 3px;
+.dp-card-desc {
+    color: #63748a;
+    font-size: 11px;
+    line-height: 1.5;
+}
 
-    color: #71849b;
+.dp-card-footer {
+    position: relative;
+    z-index: 2;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-top: 12px;
+    border-top: 1px solid #edf2f7;
+    margin-top: 10px;
+}
 
-    font-size: 9px;
-
-    letter-spacing: 2px;
-
+.dp-card-action {
+    color: #397bb8;
+    font-size: 11px;
     font-weight: 700;
 }
 
-
-/* =====================================================
-   ORBITS
-===================================================== */
-
-.orbit {
-
-    position: absolute;
-
-    border:
-        1px dashed rgba(45,112,171,.20);
-
-    border-radius: 50%;
-
-    z-index: 2;
-
-    animation:
-        rotateOrbit 18s linear infinite;
-
-    will-change: transform;
-}
-
-.orbit-one {
-
-    width: 330px;
-
-    height: 330px;
-}
-
-.orbit-two {
-
-    width: 460px;
-
-    height: 460px;
-
-    animation-duration:
-        26s;
-
-    animation-direction:
-        reverse;
-}
-
-
-/* =====================================================
-   SERVICE NODES
-===================================================== */
-
-.service-node {
-
-    position: absolute;
-
-    z-index: 7;
-
+/* Navigácia a indikátory */
+.dp-carousel-nav {
     display: flex;
-
     align-items: center;
-
-    gap: 10px;
-
-    min-width: 175px;
-
-    padding:
-        12px 15px;
-
-    border-radius: 11px;
-
-    background:
-        rgba(255,255,255,.96);
-
-    border:
-        1px solid #e2eaf2;
-
-    box-shadow:
-        0 12px 30px rgba(5,44,100,.10);
-
-    transition:
-        box-shadow .3s ease;
-
-    will-change:
-        transform;
-
-    /*
-     * Dôležité:
-     * JS bude meniť transform,
-     * preto tu nepoužívame CSS transform.
-     */
+    gap: 15px;
+    margin-top: 10px;
+    z-index: 10;
 }
 
-.service-node:hover {
-
-    box-shadow:
-        0 18px 38px rgba(5,44,100,.17);
-}
-
-.service-node strong {
-
-    display: block;
-
-    color: #17385f;
-
-    font-size: 13px;
-
-    line-height: 1.2;
-}
-
-.service-node span {
-
-    display: block;
-
-    color: #8290a0;
-
-    font-size: 9px;
-
-    margin-top: 2px;
-}
-
-.node-icon {
-
+.dp-nav-btn {
     width: 36px;
-
     height: 36px;
-
-    border-radius: 9px;
-
-    background: #edf5fb;
-
-    color: #23669d;
-
+    border-radius: 50%;
+    background: #ffffff;
+    border: 1px solid #cbdbe9;
+    color: #052c64;
     display: flex;
-
     align-items: center;
-
     justify-content: center;
+    cursor: pointer;
+    font-size: 14px;
+    box-shadow: 0 4px 12px rgba(5, 44, 100, 0.08);
+    transition: all 0.2s ease;
+}
 
+.dp-nav-btn:hover {
+    background: #052c64;
+    color: #ffffff;
+    border-color: #052c64;
+}
+
+.dp-dots {
+    display: flex;
+    gap: 8px;
+}
+
+.dp-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: #cbd5e1;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.dp-dot.active {
+    width: 24px;
+    border-radius: 10px;
+    background: #052c64;
+}
+
+.hero-app-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    min-height: 46px;
+    padding: 0 22px;
+    border: 1px solid #397bb8;
+    border-radius: 7px;
+    background: #ffffff;
+    color: #052c64;
     font-size: 13px;
-
-    font-weight: 800;
-
-    flex-shrink: 0;
+    font-weight: 700;
+    box-shadow: 0 8px 22px rgba(5,44,100,.09);
+    transition: transform .25s ease, box-shadow .25s ease, background .25s ease;
+    margin-top: 15px;
 }
 
-.node-accounting {
-
-    top: 45px;
-
-    left: 15px;
+.hero-app-button:hover {
+    transform: translateY(-2px);
+    background: #f3f8fc;
+    box-shadow: 0 12px 27px rgba(5,44,100,.15);
 }
 
-.node-payroll {
-
-    top: 45px;
-
-    right: 0;
+.hero-app-button span {
+    font-size: 17px;
+    line-height: 1;
 }
-
-.node-hr {
-
-    bottom: 58px;
-
-    left: 20px;
-}
-
-.node-consulting {
-
-    bottom: 55px;
-
-    right: -3px;
-}
-
 
 /* =====================================================
    SERVICES
@@ -1422,62 +1353,6 @@ a {
    ANIMATIONS
 ===================================================== */
 
-@keyframes rotateOrbit {
-
-    from {
-        transform: rotate(0deg);
-    }
-
-    to {
-        transform: rotate(360deg);
-    }
-}
-
-
-@keyframes glowPulse {
-
-    0%, 100% {
-
-        transform:
-            scale(.95);
-
-        opacity:
-            .65;
-    }
-
-    50% {
-
-        transform:
-            scale(1.08);
-
-        opacity:
-            1;
-    }
-}
-
-
-@keyframes centerPulse {
-
-    0%, 100% {
-
-        transform:
-            scale(.96);
-
-        opacity:
-            .45;
-    }
-
-    50% {
-
-        transform:
-            scale(1.04);
-
-        opacity:
-            1;
-    }
-}
-
-
 @keyframes dotPulse {
 
     0%, 100% {
@@ -1567,10 +1442,16 @@ a {
             repeat(2, 1fr);
     }
 
-    .hero-visual {
-
-        transform:
-            scale(.9);
+    .dp-carousel-wrapper {
+        max-width: 440px;
+        height: 340px;
+    }
+    
+    .dp-card {
+        width: 200px;
+        height: 280px;
+        margin-top: -140px;
+        margin-left: -100px;
     }
 }
 
@@ -1624,18 +1505,6 @@ a {
 
         justify-content:
             center;
-    }
-
-    .hero-visual {
-
-        height:
-            430px;
-
-        transform:
-            scale(.85);
-
-        margin-top:
-            -15px;
     }
 
     .footer-content {
@@ -1700,16 +1569,25 @@ a {
             100%;
     }
 
-    .hero-visual {
+    .dp-carousel-wrapper {
+        max-width: 320px;
+        height: 310px;
+    }
 
-        transform:
-            scale(.68);
-
-        height:
-            350px;
-
-        margin:
-            -10px -60px;
+    .dp-card {
+        width: 175px;
+        height: 250px;
+        margin-top: -125px;
+        margin-left: -87.5px;
+        padding: 16px;
+    }
+    
+    .dp-card-title {
+        font-size: 14px;
+    }
+    
+    .dp-card-desc {
+        font-size: 10px;
     }
 
     .services-grid {
@@ -1769,6 +1647,14 @@ a {
     }
 }
 
+/* Medzera medzi ikonou a textom generátora faktúr */
+.hero-buttons .btn-invoice {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+}
+
 </style>
 
 </head>
@@ -1823,9 +1709,10 @@ a {
             </a>
 
             <a href="FAQ.html">
-                FAQ
+                Časté Otázky
             </a>
-
+                   <a href="faktura.html">Generátor faktúr</a>
+                <a href="kalkulacka.html">Mzdová kalkulačka</a>
 
             <div class="language">
 
@@ -1835,7 +1722,7 @@ a {
 
                 <span>/</span>
 
-                <a href="en.html">
+                <a href="en/">
                     EN
                 </a>
 
@@ -1854,16 +1741,16 @@ a {
 
 <div class="announcement-bar">
 
-    <div class="announcement-text">
+<div class="announcement-text">
+    <span class="announcement-dot"></span>
 
-        <span class="announcement-dot"></span>
-
-        <strong>NOVINKA:</strong>
-        DataPay rozšíril svoje služby o
-        <strong>účtovníctvo</strong>
-        – jednoduché aj podvojné účtovníctvo pre firmy.
-
-    </div>
+    <strong>NOVINKA:</strong>
+    V DataPay sme pre Vás pripravili interaktívny
+    <a href="faktura.html" class="announcement-link">
+        Generátor faktúr
+        <span aria-hidden="true">↗</span>
+    </a>.
+</div>
 
 </div>
 
@@ -1928,121 +1815,108 @@ a {
 
             </a>
 
+<a class="btn btn-invoice" href="faktura.html">
+    <span class="invoice-icon">▤</span>
+    Generátor faktúr / e-faktura (pripravujeme)
+  </a>
+
         </div>
 
     </div>
 
 
     <!-- =================================================
-         DYNAMIC VISUAL
+         DYNAMIC VISUAL (3D COVERFLOW CAROUSEL)
     ================================================== -->
 
     <div class="hero-visual">
 
-        <div class="visual-glow"></div>
+        <div class="dp-carousel-wrapper" id="dpCarousel">
+            <div class="dp-carousel-track" id="dpTrack">
+                
+                <!-- Card 1 -->
+                <div class="dp-card" onclick="window.location.href='payroll.html'">
+                    <div class="dp-card-bg-gradient"></div>
+                    <span class="dp-card-tag">Účtovníctvo</span>
+                    <div class="dp-card-icon">€</div>
+                    <div class="dp-card-body">
+                        <div class="dp-card-title">Podvojné účtovníctvo</div>
+                        <div class="dp-card-desc">Kompletné vedenie účtovných kníh, výkazy a daňové priznania pre s.r.o. a a.s.</div>
+                    </div>
+                    <div class="dp-card-footer">
+                        <span class="dp-card-action">Zistiť viac →</span>
+                    </div>
+                </div>
 
-        <div class="orbit orbit-one"></div>
+                <!-- Card 2 -->
+                <div class="dp-card" onclick="window.location.href='payroll.html'">
+                    <div class="dp-card-bg-gradient" style="background: linear-gradient(135deg, #0b3e80 0%, #397bb8 100%);"></div>
+                    <span class="dp-card-tag">Mzdy</span>
+                    <div class="dp-card-icon">MZ</div>
+                    <div class="dp-card-body">
+                        <div class="dp-card-title">Spracovanie miezd</div>
+                        <div class="dp-card-desc">Výpočet miezd, výplatné pásky, odvody a ročné zúčtovania bez starostí.</div>
+                    </div>
+                    <div class="dp-card-footer">
+                        <span class="dp-card-action">Zistiť viac →</span>
+                    </div>
+                </div>
 
-        <div class="orbit orbit-two"></div>
+                <!-- Card 3 -->
+                <div class="dp-card" onclick="window.location.href='payroll.html'">
+                    <div class="dp-card-bg-gradient" style="background: linear-gradient(135deg, #17385f 0%, #286b9f 100%);"></div>
+                    <span class="dp-card-tag">HR</span>
+                    <div class="dp-card-icon">HR</div>
+                    <div class="dp-card-body">
+                        <div class="dp-card-title">Personalistika</div>
+                        <div class="dp-card-desc">Pracovné zmluvy, prihlasovanie zamestnancov a kompletná personálna agenda.</div>
+                    </div>
+                    <div class="dp-card-footer">
+                        <span class="dp-card-action">Zistiť viac →</span>
+                    </div>
+                </div>
 
+                <!-- Card 4 -->
+                <div class="dp-card" onclick="window.location.href='faktura.html'">
+                    <div class="dp-card-bg-gradient" style="background: linear-gradient(135deg, #052c64 0%, #347dc4 100%);"></div>
+                    <span class="dp-card-tag">Nástroje</span>
+                    <div class="dp-card-icon">▤</div>
+                    <div class="dp-card-body">
+                        <div class="dp-card-title">Generátor faktúr</div>
+                        <div class="dp-card-desc">Rýchle a jednoduché vystavovanie online faktúr pre vašich odberateľov.</div>
+                    </div>
+                    <div class="dp-card-footer">
+                        <span class="dp-card-action">Vyskúšať →</span>
+                    </div>
+                </div>
 
-        <div class="data-center">
-
-            <div class="data-center-inner">
-
-                <strong>DataPay</strong>
-
-                <span>
-                    BUSINESS SUPPORT
-                </span>
+                <!-- Card 5 -->
+                <div class="dp-card" onclick="window.location.href='kalkulacka.html'">
+                    <div class="dp-card-bg-gradient" style="background: linear-gradient(135deg, #09407d 0%, #206fae 100%);"></div>
+                    <span class="dp-card-tag">Kalkulačka</span>
+                    <div class="dp-card-icon">%</div>
+                    <div class="dp-card-body">
+                        <div class="dp-card-title">Mzdová kalkulačka</div>
+                        <div class="dp-card-desc">Presný výpočet čistej mzdy, odvodov zamestnávateľa a celkovej ceny práce.</div>
+                    </div>
+                    <div class="dp-card-footer">
+                        <span class="dp-card-action">Vypočítať →</span>
+                    </div>
+                </div>
 
             </div>
-
         </div>
 
-
-        <div class="service-node node-accounting">
-
-            <div class="node-icon">
-                €
-            </div>
-
-            <div>
-
-                <strong>
-                    Účtovníctvo
-                </strong>
-
-                <span>
-                    Jednoduché &amp; podvojné
-                </span>
-
-            </div>
-
+        <div class="dp-carousel-nav">
+            <button class="dp-nav-btn" id="dpPrevBtn" aria-label="Predchádzajúca karta">❮</button>
+            <div class="dp-dots" id="dpDots"></div>
+            <button class="dp-nav-btn" id="dpNextBtn" aria-label="Nasledujúca karta">❯</button>
         </div>
 
-
-        <div class="service-node node-payroll">
-
-            <div class="node-icon">
-                MZ
-            </div>
-
-            <div>
-
-                <strong>
-                    Mzdy
-                </strong>
-
-                <span>
-                    Kompletné spracovanie
-                </span>
-
-            </div>
-
-        </div>
-
-
-        <div class="service-node node-hr">
-
-            <div class="node-icon">
-                HR
-            </div>
-
-            <div>
-
-                <strong>
-                    Personalistika
-                </strong>
-
-                <span>
-                    Personálna agenda
-                </span>
-
-            </div>
-
-        </div>
-
-
-        <div class="service-node node-consulting">
-
-            <div class="node-icon">
-                +
-            </div>
-
-            <div>
-
-                <strong>
-                    Poradenstvo
-                </strong>
-
-                <span>
-                    Odborná podpora
-                </span>
-
-            </div>
-
-        </div>
+        <a class="hero-app-button" href="https://datapay.sk/app/dashboard.html">
+            Služby pre živnostníkov
+            <span aria-hidden="true">→</span>
+        </a>
 
     </div>
 
@@ -2193,836 +2067,167 @@ a {
 
         </a>
 
-
     </div>
 
 </div>
 
 </section>
 
-
-<!-- =====================================================
-     TESTIMONIALS
-===================================================== 
-
-<section class="testimonials">
-
-<div class="container">
-
-    <h2>
-        Čo hovoria naši zákazníci
-    </h2>
-
-    <p class="section-subtitle">
-
-        Dôvera našich klientov je pre nás
-        tou najlepšou referenciou.
-
-    </p>
-
-</div>
-
-
-<div class="testimonials-wrapper">
-
-<div class="testimonials-track"
-     id="testimonialsTrack">
-
-
-    <article class="testimonial-card">
-
-        <div class="testimonial-top">
-
-            <div class="testimonial-company">
-
-                <div class="testimonial-logo">
-                    <span>LOGO</span>
-                </div>
-
-                <div>
-
-                    <strong>
-                        ABC s.r.o.
-                    </strong>
-
-                    <small>
-                        Bratislava
-                    </small>
-
-                </div>
-
-            </div>
-
-            <div class="testimonial-stars">
-                ★★★★★
-            </div>
-
-        </div>
-
-
-        <p class="testimonial-text">
-
-            „S DataPay sme veľmi spokojní.
-            Oceňujeme najmä spoľahlivosť,
-            rýchlu komunikáciu a individuálny
-            prístup.“
-
-        </p>
-
-
-        <div class="testimonial-author">
-
-            <strong>
-                Ján Novák
-            </strong>
-
-            <span>
-                Konateľ
-            </span>
-
-        </div>
-
-    </article>
-
-
-    <article class="testimonial-card">
-
-        <div class="testimonial-top">
-
-            <div class="testimonial-company">
-
-                <div class="testimonial-logo">
-                    <span>LOGO</span>
-                </div>
-
-                <div>
-
-                    <strong>
-                        XYZ Group
-                    </strong>
-
-                    <small>
-                        Dunajská Streda
-                    </small>
-
-                </div>
-
-            </div>
-
-            <div class="testimonial-stars">
-                ★★★★★
-            </div>
-
-        </div>
-
-
-        <p class="testimonial-text">
-
-            „Spolupráca s DataPay nám výrazne
-            zjednodušila mzdovú a personálnu
-            agendu. Oceňujeme profesionálny
-            prístup a rýchle riešenie požiadaviek.“
-
-        </p>
-
-
-        <div class="testimonial-author">
-
-            <strong>
-                Peter Horváth
-            </strong>
-
-            <span>
-                HR Manager
-            </span>
-
-        </div>
-
-    </article>
-
-
-    <article class="testimonial-card">
-
-        <div class="testimonial-top">
-
-            <div class="testimonial-company">
-
-                <div class="testimonial-logo">
-                    <span>LOGO</span>
-                </div>
-
-                <div>
-
-                    <strong>
-                        Modern Company
-                    </strong>
-
-                    <small>
-                        Bratislava
-                    </small>
-
-                </div>
-
-            </div>
-
-            <div class="testimonial-stars">
-                ★★★★
-            </div>
-
-        </div>
-
-
-        <p class="testimonial-text">
-
-            „DataPay nám poskytuje presne to,
-            čo sme hľadali – spoľahlivé spracovanie
-            miezd, odborné poradenstvo a
-            bezproblémovú komunikáciu.“
-
-        </p>
-
-
-        <div class="testimonial-author">
-
-            <strong>
-                Martin Kováč
-            </strong>
-
-            <span>
-                CEO
-            </span>
-
-        </div>
-
-    </article>
-
-
-    <article class="testimonial-card">
-
-        <div class="testimonial-top">
-
-            <div class="testimonial-company">
-
-                <div class="testimonial-logo">
-                    <span>LOGO</span>
-                </div>
-
-                <div>
-
-                    <strong>
-                        Business Solutions
-                    </strong>
-
-                    <small>
-                        Slovensko
-                    </small>
-
-                </div>
-
-            </div>
-
-            <div class="testimonial-stars">
-                ★★★
-            </div>
-
-        </div>
-
-
-        <p class="testimonial-text">
-
-            „Profesionálny prístup, rýchla
-            komunikácia a spoľahlivé služby.
-            DataPay môžeme určite odporučiť
-            aj ďalším firmám.“
-
-        </p>
-
-
-        <div class="testimonial-author">
-
-            <strong>
-                Lucia Šimková
-            </strong>
-
-            <span>
-                Executive Manager
-            </span>
-
-        </div>
-
-    </article>
-
-
-</div>
-
-</div>
-
-</section> -->
-
-
-<!-- =====================================================
-     BENEFITS
-===================================================== -->
-
-<section class="benefits">
-
-<h2>
-    Prečo firmy spolupracujú s DataPay
-</h2>
-
-<p class="section-subtitle">
-
-    Spoľahlivé účtovné, mzdové a HR služby
-    postavené na odbornosti, dôvere
-    a moderných technológiách.
-
-</p>
-
-
-<div class="benefits-grid">
-
-
-    <div class="benefit-card">
-
-        <h3>
-            Legislatívna istota
-        </h3>
-
-        <p>
-
-            Sledujeme legislatívne zmeny a
-            zabezpečujeme, aby vaše procesy
-            zostali v súlade s aktuálnymi
-            predpismi.
-
-        </p>
-
-    </div>
-
-
-    <div class="benefit-card">
-
-        <h3>
-            Individuálny prístup
-        </h3>
-
-        <p>
-
-            Každé riešenie prispôsobujeme
-            veľkosti firmy, procesom a
-            špecifickým potrebám klienta.
-
-        </p>
-
-    </div>
-
-
-    <div class="benefit-card">
-
-        <h3>
-            Bezpečné spracovanie údajov
-        </h3>
-
-        <p>
-
-            Účtovné, mzdové a personálne
-            údaje spracúvame bezpečne,
-            diskrétne a s dôrazom na
-            ochranu informácií.
-
-        </p>
-
-    </div>
-
-
-    <div class="benefit-card">
-
-        <h3>
-            Digitálne riešenia
-        </h3>
-
-        <p>
-
-            Využívame moderné nástroje
-            a automatizáciu na zjednodušenie
-            administratívy a zvýšenie
-            efektivity.
-
-        </p>
-
-    </div>
-
-
-</div>
-
-</section>
-
-
-<!-- =====================================================
-     PROCESS
-===================================================== -->
-
-<section class="process">
-
-<div class="container">
-
-    <h2>
-        Ako prebieha spolupráca?
-    </h2>
-
-    <p class="section-subtitle">
-
-        Jednoduchý a efektívny proces
-        od prvého kontaktu až po
-        dlhodobú spoluprácu.
-
-    </p>
-
-
-    <div class="process-grid">
-
-
-        <div class="process-step">
-
-            <div class="step-number">
-                1
-            </div>
-
-            <h3>
-                Úvodná konzultácia
-            </h3>
-
-            <p>
-
-                Spoločne si prejdeme vaše potreby
-                a nastavíme optimálny rozsah služieb.
-
-            </p>
-
-        </div>
-
-
-        <div class="process-step">
-
-            <div class="step-number">
-                2
-            </div>
-
-            <h3>
-                Nastavenie procesov
-            </h3>
-
-            <p>
-
-                Pripravíme potrebnú dokumentáciu
-                a nastavíme efektívny spôsob
-                komunikácie.
-
-            </p>
-
-        </div>
-
-
-        <div class="process-step">
-
-            <div class="step-number">
-                3
-            </div>
-
-            <h3>
-                Prevzatie agendy
-            </h3>
-
-            <p>
-
-                Prevezmeme účtovnú, mzdovú
-                a personálnu agendu bez
-                zbytočného zaťaženia vášho tímu.
-
-            </p>
-
-        </div>
-
-
-        <div class="process-step">
-
-            <div class="step-number">
-                4
-            </div>
-
-            <h3>
-                Priebežná podpora
-            </h3>
-
-            <p>
-
-                Poskytujeme odborné poradenstvo
-                a podporu pri každodenných otázkach.
-
-            </p>
-
-        </div>
-
-
-    </div>
-
-</div>
-
-</section>
-
-
-<!-- =====================================================
-     CTA
-===================================================== -->
-
-<section class="contact-cta">
-
-<div class="container">
-
-    <h2>
-        Nechajte účtovníctvo, mzdy a personalistiku na nás
-    </h2>
-
-    <p>
-
-        Získajte spoľahlivého partnera
-        pre účtovníctvo, mzdy, personálnu
-        administratívu a odborné poradenstvo.
-
-    </p>
-
-
-    <a href="Formular.html"
-       class="btn">
-
-        Nezáväzná konzultácia
-
-    </a>
-
-</div>
-
-</section>
-
-
-<!-- =====================================================
-     FOOTER
-===================================================== -->
-
-<footer class="footer">
-
-<div class="container">
-
-<div class="footer-content">
-
-
-   <div class="footer-column">
-
-    <h3>
-        DataPay s.r.o.
-    </h3>
-
-    <p>
-
-        Účtovníctvo, mzdy,
-        personalistika a odborné
-        poradenstvo.
-
-    </p>
-
-    <p>
-
-        Služby poskytujeme firmám
-        na celom Slovensku.
-
-    </p>
-
-</div>
-
-
-    <div class="footer-column">
-
-        <h3>
-            Kontakt
-        </h3>
-
-        <p>
-
-            <a href="mailto:datapaysk@gmail.com">
-                datapaysk@gmail.com
-            </a>
-
-        </p>
-
-        <p>
-            +421 903 270 664
-        </p>
-
-        <p>
-            +421 907 837 030
-        </p>
-
-    </div>
-
-
-    <div class="footer-column">
-
-        <h3>
-            Firemné údaje
-        </h3>
-
-        <p>
-            IČO: 57456615
-        </p>
-
-        <p>
-            DIČ: 2122742622
-        </p>
-
-        <p>
-            IČ DPH: Nie sme platca DPH
-        </p>
-
-    </div>
-
-
-</div>
-
-
-<div class="footer-bottom">
-
-    <a href="GDPR.html">
-        GDPR
-    </a>
-
-    <br><br>
-
-    © 2026 DataPay s.r.o.
-    Všetky práva vyhradené.
-
-</div>
-
-</div>
-
-</footer>
-
-
-<!-- =====================================================
-     JAVASCRIPT
-===================================================== -->
-
+<!-- SCRIPT PRE 3D COVERFLOW CAROUSEL -->
 <script>
+document.addEventListener('DOMContentLoaded', () => {
+    const wrapper = document.getElementById('dpCarousel');
+    const cards = document.querySelectorAll('.dp-card');
+    const dotsContainer = document.getElementById('dpDots');
+    const prevBtn = document.getElementById('dpPrevBtn');
+    const nextBtn = document.getElementById('dpNextBtn');
+    
+    let currentIndex = 1; // Štartujeme na druhej karte (Mzdy)
+    const totalCards = cards.length;
+    let autoplayTimer = null;
+    let isDragging = false;
+    let startX = 0;
+    let currentTranslateX = 0;
 
-/* =====================================================
-   DYNAMIC HERO ANIMATION
-===================================================== */
+    // Vytvorenie indikátorov (dots)
+    cards.forEach((_, idx) => {
+        const dot = document.createElement('div');
+        dot.classList.add('dp-dot');
+        if (idx === currentIndex) dot.classList.add('active');
+        dot.addEventListener('click', () => goToSlide(idx));
+        dotsContainer.appendChild(dot);
+    });
 
-document.addEventListener(
-    "DOMContentLoaded",
-    function () {
+    const dots = document.querySelectorAll('.dp-dot');
 
-        const nodes =
-            document.querySelectorAll(
-                ".service-node"
-            );
-
-        const center =
-            document.querySelector(
-                ".data-center"
-            );
-
-
-        /*
-         * Respektovanie nastavenia
-         * používateľa pre zníženie animácií.
-         */
-
-        const reducedMotion =
-            window.matchMedia(
-                "(prefers-reduced-motion: reduce)"
-            ).matches;
-
-
-        if (reducedMotion) {
-
-            return;
-
-        }
-
-
-        let time = 0;
-
-
-        function animateHero() {
-
-            time += 0.018;
-
-
-            /* =========================================
-               FLOATING SERVICE CARDS
-            ========================================= */
-
-            nodes.forEach(
-                function (node, index) {
-
-                    /*
-                     * Každá karta má inú rýchlosť.
-                     */
-
-                    const speed =
-                        0.85 +
-                        (index * 0.10);
-
-
-                    /*
-                     * Pohyb hore a dole.
-                     */
-
-                    const vertical =
-                        Math.sin(
-                            time * speed +
-                            index * 1.7
-                        ) * 14;
-
-
-                    /*
-                     * Jemný pohyb do strán.
-                     */
-
-                    const horizontal =
-                        Math.cos(
-                            time * 0.65 +
-                            index * 1.3
-                        ) * 5;
-
-
-                    /*
-                     * Jemná rotácia.
-                     */
-
-                    const rotation =
-                        Math.sin(
-                            time * 0.7 +
-                            index
-                        ) * 1.3;
-
-
-                    node.style.transform =
-                        "translate(" +
-                        horizontal +
-                        "px, " +
-                        vertical +
-                        "px) rotate(" +
-                        rotation +
-                        "deg)";
-
-                }
-            );
-
-
-            /* =========================================
-               DATAPAY CENTER
-            ========================================= */
-
-            if (center) {
-
-                const centerScale =
-                    1 +
-                    Math.sin(
-                        time * 1.5
-                    ) * 0.025;
-
-
-                center.style.transform =
-                    "scale(" +
-                    centerScale +
-                    ")";
-
+    function updateCarousel() {
+        cards.forEach((card, index) => {
+            const offset = index - currentIndex;
+            const absOffset = Math.abs(offset);
+            
+            if (offset === 0) {
+                // Aktívna karta uprostred
+                card.style.transform = `translateX(0px) translateZ(0px) rotateY(0deg) scale(1)`;
+                card.style.opacity = '1';
+                card.style.zIndex = '5';
+                card.style.filter = 'none';
+                card.style.pointerEvents = 'auto';
+            } else if (offset < 0) {
+                // Karty vľavo
+                const translateX = offset * 110 - 40;
+                const translateZ = -absOffset * 100;
+                const rotateY = Math.min(absOffset * 25, 45);
+                card.style.transform = `translateX(${translateX}px) translateZ(${translateZ}px) rotateY(${rotateY}deg) scale(0.88)`;
+                card.style.opacity = absOffset > 2 ? '0' : '0.65';
+                card.style.zIndex = `${5 - absOffset}`;
+                card.style.filter = 'blur(1px)';
+                card.style.pointerEvents = 'none';
+            } else {
+                // Karty vpravo
+                const translateX = offset * 110 + 40;
+                const translateZ = -absOffset * 100;
+                const rotateY = -Math.min(absOffset * 25, 45);
+                card.style.transform = `translateX(${translateX}px) translateZ(${translateZ}px) rotateY(${rotateY}deg) scale(0.88)`;
+                card.style.opacity = absOffset > 2 ? '0' : '0.65';
+                card.style.zIndex = `${5 - absOffset}`;
+                card.style.filter = 'blur(1px)';
+                card.style.pointerEvents = 'none';
             }
+        });
 
-
-            requestAnimationFrame(
-                animateHero
-            );
-
-        }
-
-
-        animateHero();
-
+        dots.forEach((dot, idx) => {
+            dot.classList.toggle('active', idx === currentIndex);
+        });
     }
-);
 
-
-/* =====================================================
-   TESTIMONIAL LOOP
-===================================================== */
-
-document.addEventListener(
-    "DOMContentLoaded",
-    function () {
-
-        const track =
-            document.getElementById(
-                "testimonialsTrack"
-            );
-
-
-        if (!track) {
-
-            return;
-
-        }
-
-
-        /*
-         * Zabránime opakovanému klonovaniu.
-         */
-
-        if (
-            track.dataset.cloned === "true"
-        ) {
-
-            return;
-
-        }
-
-
-        const cards =
-            Array.from(
-                track.children
-            );
-
-
-        cards.forEach(
-            function (card) {
-
-                const clone =
-                    card.cloneNode(true);
-
-
-                clone.setAttribute(
-                    "aria-hidden",
-                    "true"
-                );
-
-
-                track.appendChild(
-                    clone
-                );
-
-            }
-        );
-
-
-        track.dataset.cloned =
-            "true";
-
+    function goToSlide(index) {
+        currentIndex = (index + totalCards) % totalCards;
+        updateCarousel();
+        resetAutoplay();
     }
-);
 
+    function nextSlide() {
+        goToSlide(currentIndex + 1);
+    }
+
+    function prevSlide() {
+        goToSlide(currentIndex - 1);
+    }
+
+    // Event listeners pre tlačidlá
+    nextBtn.addEventListener('click', nextSlide);
+    prevBtn.addEventListener('click', prevSlide);
+
+    // Touch & Drag podpora
+    wrapper.addEventListener('mousedown', (e) => {
+        isDragging = true;
+        startX = e.clientX;
+        stopAutoplay();
+    });
+
+    window.addEventListener('mousemove', (e) => {
+        if (!isDragging) return;
+        currentTranslateX = e.clientX - startX;
+    });
+
+    window.addEventListener('mouseup', (e) => {
+        if (!isDragging) return;
+        isDragging = false;
+        if (currentTranslateX < -40) {
+            nextSlide();
+        } else if (currentTranslateX > 40) {
+            prevSlide();
+        } else {
+            startAutoplay();
+        }
+        currentTranslateX = 0;
+    });
+
+    // Touch udalosti pre mobily
+    wrapper.addEventListener('touchstart', (e) => {
+        isDragging = true;
+        startX = e.touches[0].clientX;
+        stopAutoplay();
+    }, { passive: true });
+
+    wrapper.addEventListener('touchend', (e) => {
+        if (!isDragging) return;
+        isDragging = false;
+        const endX = e.changedTouches[0].clientX;
+        const diffX = endX - startX;
+
+        if (diffX < -40) {
+            nextSlide();
+        } else if (diffX > 40) {
+            prevSlide();
+        } else {
+            startAutoplay();
+        }
+    });
+
+    // Autoplay
+    function startAutoplay() {
+        stopAutoplay();
+        autoplayTimer = setInterval(nextSlide, 4000);
+    }
+
+    function stopAutoplay() {
+        if (autoplayTimer) clearInterval(autoplayTimer);
+    }
+
+    function resetAutoplay() {
+        stopAutoplay();
+        startAutoplay();
+    }
+
+    wrapper.addEventListener('mouseenter', stopAutoplay);
+    wrapper.addEventListener('mouseleave', startAutoplay);
+
+    // Inicializácia
+    updateCarousel();
+    startAutoplay();
+});
 </script>
 
-
 </body>
-
 </html>
