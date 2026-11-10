@@ -2082,7 +2082,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const prevBtn = document.getElementById('dpPrevBtn');
     const nextBtn = document.getElementById('dpNextBtn');
     
-    let currentIndex = 1; // Štartujeme na druhej karte (Mzdy)
+    let currentIndex = 1;
     const totalCards = cards.length;
     let autoplayTimer = null;
     let isDragging = false;
@@ -2102,7 +2102,16 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function updateCarousel() {
         cards.forEach((card, index) => {
-            const offset = index - currentIndex;
+            // Výpočet najkratšej cesty pre nekonečný kruhový cyklus
+            let offset = index - currentIndex;
+            
+            // Ošetrenie pre plynulý prechod cez okraje (nekonečná slučka)
+            if (offset > totalCards / 2) {
+                offset -= totalCards;
+            } else if (offset < -totalCards / 2) {
+                offset += totalCards;
+            }
+
             const absOffset = Math.abs(offset);
             
             if (offset === 0) {
@@ -2170,7 +2179,7 @@ document.addEventListener('DOMContentLoaded', () => {
         currentTranslateX = e.clientX - startX;
     });
 
-    window.addEventListener('mouseup', (e) => {
+    window.addEventListener('mouseup', () => {
         if (!isDragging) return;
         isDragging = false;
         if (currentTranslateX < -40) {
@@ -2205,10 +2214,10 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
-    // Autoplay
+    // Autoplay v nekonečnej slučke (každé 3.5 sekundy)
     function startAutoplay() {
         stopAutoplay();
-        autoplayTimer = setInterval(nextSlide, 4000);
+        autoplayTimer = setInterval(nextSlide, 3500);
     }
 
     function stopAutoplay() {
