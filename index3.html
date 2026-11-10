@@ -60,11 +60,6 @@
       type="image/png">
 
 
-<!-- =====================================================
-     OPEN GRAPH
-===================================================== -->
-
-
 <style>
 
 /* =====================================================
@@ -82,18 +77,10 @@ html {
 }
 
 body {
-
-    font-family:
-        Arial,
-        Helvetica,
-        sans-serif;
-
+    font-family: Arial, Helvetica, sans-serif;
     background: #f7f9fc;
-
     color: #172b4d;
-
     line-height: 1.6;
-
     overflow-x: hidden;
 }
 
@@ -103,9 +90,7 @@ a {
 }
 
 .container {
-
     width: min(1180px, 92%);
-
     margin: 0 auto;
 }
 
@@ -127,7 +112,6 @@ a {
     max-width: 1200px;
     min-height: 88px;
     margin: 0 auto;
-
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -215,57 +199,35 @@ a {
 ===================================================== */
 
 .announcement-bar {
-
     background: #052c64;
-
     color: #ffffff;
-
     min-height: 44px;
-
     display: flex;
-
     align-items: center;
-
     justify-content: center;
-
     padding: 9px 20px;
-
     overflow: hidden;
 }
 
 .announcement-text {
-
     font-size: 13px;
-
     text-align: center;
-
     letter-spacing: .1px;
-
-    animation:
-        announcementFade 1s ease;
+    animation: announcementFade 1s ease;
 }
 
 .announcement-text strong {
-
     color: #ffffff;
 }
 
 .announcement-dot {
-
     display: inline-block;
-
     width: 7px;
-
     height: 7px;
-
     border-radius: 50%;
-
     background: #6bc5ff;
-
     margin-right: 8px;
-
-    animation:
-        dotPulse 2s infinite;
+    animation: dotPulse 2s infinite;
 }
 
 
@@ -274,140 +236,82 @@ a {
 ===================================================== */
 
 .hero {
-
     background:
-
         radial-gradient(
             circle at 82% 35%,
             rgba(52,125,196,.12),
             transparent 32%
         ),
-
         linear-gradient(
             135deg,
             #ffffff 0%,
             #f4f7fb 100%
         );
-
-    padding:
-        80px 0 95px;
-
+    padding: 80px 0 95px;
     position: relative;
-
     overflow: hidden;
 }
 
 .hero::before {
-
     content: "";
-
     position: absolute;
-
     width: 500px;
-
     height: 500px;
-
     border-radius: 50%;
-
-    border:
-        1px solid rgba(5,44,100,.05);
-
+    border: 1px solid rgba(5,44,100,.05);
     right: -220px;
-
     top: -250px;
 }
 
 .hero-grid {
-
     display: grid;
-
-    grid-template-columns:
-        1fr
-        1fr;
-
+    grid-template-columns: 1fr 1fr;
     align-items: center;
-
     gap: 65px;
 }
 
 .hero-content {
-
     position: relative;
-
     z-index: 2;
 }
 
 .hero-label {
-
     display: inline-flex;
-
     align-items: center;
-
     gap: 8px;
-
     font-size: 12px;
-
     font-weight: 700;
-
     letter-spacing: 2px;
-
     color: #3972a8;
-
     margin-bottom: 18px;
 }
 
-.hero-label::before {
-
-    content: "";
-
-    width: 26px;
-
-    height: 2px;
-
-    background: #3972a8;
-}
+.hero-label::before,
 .hero-label::after {
-
     content: "";
-
     width: 26px;
-
     height: 2px;
-
     background: #3972a8;
 }
       
 .hero h1 {
-
-    font-size:
-        clamp(38px, 5vw, 62px);
-
+    font-size: clamp(38px, 5vw, 62px);
     line-height: 1.08;
-
     letter-spacing: -1.7px;
-
     color: #052c64;
-
     margin-bottom: 26px;
-
     max-width: 650px;
 }
 
 .hero h1 span {
-
     color: #397bb8;
 }
 
 .hero-content > p {
-
     color: #63748a;
-
     font-size: 17px;
-
     line-height: 1.75;
-
     max-width: 630px;
-
     margin-bottom: 34px;
 }
 
@@ -435,50 +339,28 @@ a {
 }
 
 .btn {
-
     display: inline-flex;
-
     align-items: center;
-
     justify-content: center;
-
     min-height: 48px;
-
-    padding:
-        0 24px;
-
+    padding: 0 24px;
     border-radius: 7px;
-
     background: #052c64;
-
     color: #ffffff;
-
     font-size: 14px;
-
     font-weight: 700;
-
-    border:
-        1px solid #052c64;
-
-    transition:
-        transform .25s ease,
-        box-shadow .25s ease,
-        background .25s ease;
+    border: 1px solid #052c64;
+    transition: transform .25s ease, box-shadow .25s ease, background .25s ease;
 }
 
 .btn:hover {
-
-    transform:
-        translateY(-2px);
-
-    box-shadow:
-        0 10px 25px rgba(5,44,100,.18);
-
+    transform: translateY(-2px);
+    box-shadow: 0 10px 25px rgba(5,44,100,.18);
     background: #0b3e80;
 }
 
 /* =====================================================
-   DATAPAY 3D COVERFLOW CAROUSEL (INTEGROVANÝ)
+   PLYNULÝ 3D COVERFLOW CAROUSEL (CONTINUOUS ROTATION)
 ===================================================== */
 .hero-visual {
     position: relative;
@@ -527,7 +409,6 @@ a {
     justify-content: space-between;
     padding: 22px;
     cursor: pointer;
-    transition: transform 0.45s cubic-bezier(0.25, 1, 0.5, 1), opacity 0.45s ease, filter 0.45s ease, box-shadow 0.45s ease;
     will-change: transform, opacity;
     overflow: hidden;
 }
@@ -617,40 +498,11 @@ a {
     font-weight: 700;
 }
 
-/* Navigácia a indikátory */
-.dp-carousel-nav {
-    display: flex;
-    align-items: center;
-    gap: 15px;
-    margin-top: 10px;
-    z-index: 10;
-}
-
-.dp-nav-btn {
-    width: 36px;
-    height: 36px;
-    border-radius: 50%;
-    background: #ffffff;
-    border: 1px solid #cbdbe9;
-    color: #052c64;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
-    font-size: 14px;
-    box-shadow: 0 4px 12px rgba(5, 44, 100, 0.08);
-    transition: all 0.2s ease;
-}
-
-.dp-nav-btn:hover {
-    background: #052c64;
-    color: #ffffff;
-    border-color: #052c64;
-}
-
+/* Bodky dole pre indikáciu */
 .dp-dots {
     display: flex;
     gap: 8px;
+    margin-top: 15px;
 }
 
 .dp-dot {
@@ -668,217 +520,112 @@ a {
     background: #052c64;
 }
 
-.hero-app-button {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    gap: 10px;
-    min-height: 46px;
-    padding: 0 22px;
-    border: 1px solid #397bb8;
-    border-radius: 7px;
-    background: #ffffff;
-    color: #052c64;
-    font-size: 13px;
-    font-weight: 700;
-    box-shadow: 0 8px 22px rgba(5,44,100,.09);
-    transition: transform .25s ease, box-shadow .25s ease, background .25s ease;
-    margin-top: 15px;
-}
-
-.hero-app-button:hover {
-    transform: translateY(-2px);
-    background: #f3f8fc;
-    box-shadow: 0 12px 27px rgba(5,44,100,.15);
-}
-
-.hero-app-button span {
-    font-size: 17px;
-    line-height: 1;
-}
-
 /* =====================================================
    SERVICES
 ===================================================== */
 
 .services {
-
     background: #ffffff;
-
-    padding:
-        90px 0;
+    padding: 90px 0;
 }
 
 .services h2,
 .testimonials h2,
 .benefits h2,
 .process h2 {
-
     text-align: center;
-
     color: #052c64;
-
-    font-size:
-        clamp(29px, 4vw, 40px);
-
+    font-size: clamp(29px, 4vw, 40px);
     line-height: 1.2;
-
     margin-bottom: 12px;
-
     letter-spacing: -.7px;
 }
 
 .section-subtitle {
-
     text-align: center;
-
     max-width: 650px;
-
-    margin:
-        0 auto 45px;
-
+    margin: 0 auto 45px;
     color: #748297;
-
     font-size: 15px;
 }
 
 .services-grid {
-
     display: grid;
-
-    grid-template-columns:
-        repeat(4, 1fr);
-
+    grid-template-columns: repeat(4, 1fr);
     gap: 18px;
 }
 
 .service-card {
-
     position: relative;
-
     background: #ffffff;
-
-    border:
-        1px solid #e3e9ef;
-
+    border: 1px solid #e3e9ef;
     border-radius: 13px;
-
     padding: 29px 25px 27px;
-
     min-height: 300px;
-
     overflow: hidden;
-
-    transition:
-        transform .3s ease,
-        box-shadow .3s ease,
-        border-color .3s ease;
+    transition: transform .3s ease, box-shadow .3s ease, border-color .3s ease;
 }
 
 .service-card::after {
-
     content: "";
-
     position: absolute;
-
     width: 100px;
-
     height: 100px;
-
     border-radius: 50%;
-
     background: rgba(46,117,177,.055);
-
     right: -45px;
-
     bottom: -45px;
-
-    transition:
-        transform .4s ease;
+    transition: transform .4s ease;
 }
 
 .service-card:hover {
-
-    transform:
-        translateY(-7px);
-
-    border-color:
-        #cbdbe9;
-
-    box-shadow:
-        0 18px 45px rgba(5,44,100,.10);
+    transform: translateY(-7px);
+    border-color: #cbdbe9;
+    box-shadow: 0 18px 45px rgba(5,44,100,.10);
 }
 
 .service-card:hover::after {
-
-    transform:
-        scale(2);
+    transform: scale(2);
 }
 
 .service-number {
-
     position: absolute;
-
     top: 19px;
-
     right: 21px;
-
     color: #c8d5e2;
-
     font-size: 12px;
-
     font-weight: 700;
 }
 
 .service-card-icon {
-
     width: 48px;
-
     height: 48px;
-
     display: flex;
-
     align-items: center;
-
     justify-content: center;
-
     border-radius: 12px;
-
     background: #edf5fb;
-
     color: #23699f;
-
     font-weight: 800;
-
     margin-bottom: 22px;
 }
 
 .service-card h3 {
-
     color: #052c64;
-
     font-size: 20px;
-
     margin-bottom: 11px;
 }
 
 .service-card p {
-
     color: #718096;
-
     font-size: 13px;
-
     line-height: 1.7;
-
     margin-bottom: 19px;
 }
 
 .service-link {
-
     color: #286b9f;
-
     font-size: 13px;
-
     font-weight: 700;
 }
 
@@ -888,166 +635,103 @@ a {
 ===================================================== */
 
 .testimonials {
-
     background: #f4f7fa;
-
-    padding:
-        85px 0;
-
+    padding: 85px 0;
     overflow: hidden;
 }
 
 .testimonials-wrapper {
-
     overflow: hidden;
-
     width: 100%;
 }
 
 .testimonials-track {
-
     display: flex;
-
     gap: 20px;
-
     width: max-content;
-
-    animation:
-        testimonialScroll 45s linear infinite;
-
-    will-change:
-        transform;
+    animation: testimonialScroll 45s linear infinite;
+    will-change: transform;
 }
 
 .testimonials-track:hover {
-
-    animation-play-state:
-        paused;
+    animation-play-state: paused;
 }
 
 .testimonial-card {
-
     width: 360px;
-
     background: #ffffff;
-
-    border:
-        1px solid #e4eaf0;
-
+    border: 1px solid #e4eaf0;
     border-radius: 13px;
-
     padding: 24px;
-
     flex-shrink: 0;
-
-    box-shadow:
-        0 8px 25px rgba(5,44,100,.04);
+    box-shadow: 0 8px 25px rgba(5,44,100,.04);
 }
 
 .testimonial-top {
-
     display: flex;
-
     justify-content: space-between;
-
     align-items: center;
-
     gap: 15px;
-
     margin-bottom: 20px;
 }
 
 .testimonial-company {
-
     display: flex;
-
     align-items: center;
-
     gap: 10px;
 }
 
 .testimonial-logo {
-
     width: 40px;
-
     height: 40px;
-
     border-radius: 8px;
-
     background: #edf2f7;
-
     display: flex;
-
     align-items: center;
-
     justify-content: center;
-
     font-size: 8px;
-
     color: #8290a0;
 }
 
 .testimonial-company strong {
-
     display: block;
-
     color: #244263;
-
     font-size: 13px;
 }
 
 .testimonial-company small {
-
     display: block;
-
     color: #8b98a8;
-
     font-size: 10px;
 }
 
 .testimonial-stars {
-
     color: #3977a9;
-
     font-size: 12px;
-
     letter-spacing: 1px;
 }
 
 .testimonial-text {
-
     color: #697a8d;
-
     font-size: 13px;
-
     line-height: 1.7;
-
     min-height: 92px;
 }
 
 .testimonial-author {
-
-    border-top:
-        1px solid #edf0f3;
-
+    border-top: 1px solid #edf0f3;
     padding-top: 15px;
-
     margin-top: 15px;
 }
 
 .testimonial-author strong {
-
     display: block;
-
     color: #274566;
-
     font-size: 12px;
 }
 
 .testimonial-author span {
-
     color: #8995a4;
-
     font-size: 10px;
 }
 
@@ -1057,66 +741,39 @@ a {
 ===================================================== */
 
 .benefits {
-
     background: #ffffff;
-
-    padding:
-        90px 5%;
+    padding: 90px 5%;
 }
 
 .benefits-grid {
-
     max-width: 1120px;
-
     margin: 0 auto;
-
     display: grid;
-
-    grid-template-columns:
-        repeat(4, 1fr);
-
+    grid-template-columns: repeat(4, 1fr);
     gap: 20px;
 }
 
 .benefit-card {
-
-    padding:
-        28px 24px;
-
-    border-left:
-        3px solid #3977a9;
-
+    padding: 28px 24px;
+    border-left: 3px solid #3977a9;
     background: #f8fafc;
-
-    transition:
-        transform .3s ease,
-        box-shadow .3s ease;
+    transition: transform .3s ease, box-shadow .3s ease;
 }
 
 .benefit-card:hover {
-
-    transform:
-        translateY(-4px);
-
-    box-shadow:
-        0 12px 30px rgba(5,44,100,.07);
+    transform: translateY(-4px);
+    box-shadow: 0 12px 30px rgba(5,44,100,.07);
 }
 
 .benefit-card h3 {
-
     color: #052c64;
-
     font-size: 17px;
-
     margin-bottom: 10px;
 }
 
 .benefit-card p {
-
     color: #718095;
-
     font-size: 13px;
-
     line-height: 1.7;
 }
 
@@ -1126,91 +783,53 @@ a {
 ===================================================== */
 
 .process {
-
-    background:
-        linear-gradient(
-            135deg,
-            #052c64,
-            #0a427b
-        );
-
-    padding:
-        90px 0;
-
+    background: linear-gradient(135deg, #052c64, #0a427b);
+    padding: 90px 0;
     color: #ffffff;
 }
 
 .process h2 {
-
     color: #ffffff;
 }
 
 .process .section-subtitle {
-
     color: #c8d7e6;
 }
 
 .process-grid {
-
     display: grid;
-
-    grid-template-columns:
-        repeat(4, 1fr);
-
+    grid-template-columns: repeat(4, 1fr);
     gap: 20px;
 }
 
 .process-step {
-
     text-align: center;
-
-    padding:
-        15px;
+    padding: 15px;
 }
 
 .step-number {
-
     width: 54px;
-
     height: 54px;
-
-    margin:
-        0 auto 20px;
-
+    margin: 0 auto 20px;
     border-radius: 50%;
-
-    border:
-        1px solid rgba(255,255,255,.30);
-
-    background:
-        rgba(255,255,255,.08);
-
+    border: 1px solid rgba(255,255,255,.30);
+    background: rgba(255,255,255,.08);
     display: flex;
-
     align-items: center;
-
     justify-content: center;
-
     font-size: 18px;
-
     font-weight: 700;
-
     color: #ffffff;
 }
 
 .process-step h3 {
-
     font-size: 16px;
-
     margin-bottom: 9px;
 }
 
 .process-step p {
-
     color: #c6d5e5;
-
     font-size: 12px;
-
     line-height: 1.7;
 }
 
@@ -1220,39 +839,23 @@ a {
 ===================================================== */
 
 .contact-cta {
-
     background: #ffffff;
-
-    padding:
-        90px 20px;
-
+    padding: 90px 20px;
     text-align: center;
 }
 
 .contact-cta h2 {
-
     color: #052c64;
-
-    font-size:
-        clamp(29px, 4vw, 42px);
-
+    font-size: clamp(29px, 4vw, 42px);
     line-height: 1.2;
-
     max-width: 800px;
-
-    margin:
-        0 auto 17px;
+    margin: 0 auto 17px;
 }
 
 .contact-cta p {
-
     color: #728095;
-
     max-width: 650px;
-
-    margin:
-        0 auto 28px;
-
+    margin: 0 auto 28px;
     font-size: 15px;
 }
 
@@ -1262,392 +865,119 @@ a {
 ===================================================== */
 
 .footer {
-
     background: #071c35;
-
     color: #ffffff;
-
-    padding:
-        60px 0 25px;
+    padding: 60px 0 25px;
 }
 
 .footer-content {
-
     display: grid;
-
-    grid-template-columns:
-        1fr
-        1fr
-        1fr;
-
+    grid-template-columns: 1fr 1fr 1fr;
     gap: 50px;
-
     padding-bottom: 40px;
 }
 
-/* Ľavý stĺpec */
-.footer-column:nth-child(1) {
-    text-align: left;
-}
-
-/* Stredný stĺpec */
-.footer-column:nth-child(2) {
-    text-align: center;
-}
-
-/* Pravý stĺpec */
-.footer-column:nth-child(3) {
-    text-align: right;
-}
+.footer-column:nth-child(1) { text-align: left; }
+.footer-column:nth-child(2) { text-align: center; }
+.footer-column:nth-child(3) { text-align: right; }
 
 .footer-column h3 {
-
     font-size: 16px;
-
     margin-bottom: 16px;
 }
 
 .footer-column p {
-
     color: #aebdcd;
-
     font-size: 13px;
-
     line-height: 1.8;
 }
 
 .footer-column a {
-
     color: #c8d6e5;
-
-    transition:
-        color .2s ease;
+    transition: color .2s ease;
 }
 
 .footer-column a:hover {
-
     color: #ffffff;
 }
 
 .footer-bottom {
-
-    border-top:
-        1px solid rgba(255,255,255,.10);
-
+    border-top: 1px solid rgba(255,255,255,.10);
     padding-top: 22px;
-
     color: #8fa1b4;
-
     font-size: 11px;
-
     text-align: center;
 }
 
 .footer-bottom a {
-
     color: #c2d1df;
 }
 
 
 /* =====================================================
-   ANIMATIONS
+   ANIMATIONS & RESPONSIVE
 ===================================================== */
 
 @keyframes dotPulse {
-
-    0%, 100% {
-
-        opacity:
-            .5;
-
-        transform:
-            scale(.85);
-    }
-
-    50% {
-
-        opacity:
-            1;
-
-        transform:
-            scale(1.2);
-    }
+    0%, 100% { opacity: .5; transform: scale(.85); }
+    50% { opacity: 1; transform: scale(1.2); }
 }
-
 
 @keyframes announcementFade {
-
-    from {
-
-        opacity:
-            0;
-
-        transform:
-            translateY(-5px);
-    }
-
-    to {
-
-        opacity:
-            1;
-
-        transform:
-            translateY(0);
-    }
+    from { opacity: 0; transform: translateY(-5px); }
+    to { opacity: 1; transform: translateY(0); }
 }
-
 
 @keyframes testimonialScroll {
-
-    from {
-
-        transform:
-            translateX(0);
-    }
-
-    to {
-
-        transform:
-            translateX(-50%);
-    }
+    from { transform: translateX(0); }
+    to { transform: translateX(-50%); }
 }
-
-
-/* =====================================================
-   RESPONSIVE
-===================================================== */
 
 @media (max-width: 1050px) {
-
-    .hero-grid {
-
-        gap: 35px;
-    }
-
-    .services-grid {
-
-        grid-template-columns:
-            repeat(2, 1fr);
-    }
-
-    .benefits-grid {
-
-        grid-template-columns:
-            repeat(2, 1fr);
-    }
-
-    .process-grid {
-
-        grid-template-columns:
-            repeat(2, 1fr);
-    }
-
-    .dp-carousel-wrapper {
-        max-width: 440px;
-        height: 340px;
-    }
-    
-    .dp-card {
-        width: 200px;
-        height: 280px;
-        margin-top: -140px;
-        margin-left: -100px;
-    }
+    .hero-grid { gap: 35px; }
+    .services-grid, .benefits-grid, .process-grid { grid-template-columns: repeat(2, 1fr); }
+    .dp-carousel-wrapper { max-width: 440px; height: 340px; }
+    .dp-card { width: 200px; height: 280px; margin-top: -140px; margin-left: -100px; }
 }
-
 
 @media (max-width: 800px) {
-
-    .nav-container {
-        flex-direction: column;
-        justify-content: center;
-        padding: 18px 0;
-        gap: 15px;
-    }
-
-    .main-nav {
-        flex-wrap: wrap;
-        justify-content: center;
-        gap: 14px 20px;
-    }
-
-    .hero {
-
-        padding:
-            60px 0 70px;
-    }
-
-    .hero-grid {
-
-        grid-template-columns:
-            1fr;
-
-        text-align:
-            center;
-    }
-
-    .hero-label {
-
-        justify-content:
-            center;
-    }
-
-    .hero-content > p {
-
-        margin-left:
-            auto;
-
-        margin-right:
-            auto;
-    }
-
-    .hero-buttons {
-
-        justify-content:
-            center;
-    }
-
-    .footer-content {
-
-        grid-template-columns:
-            1fr;
-
-        gap:
-            30px;
-    }
+    .nav-container { flex-direction: column; justify-content: center; padding: 18px 0; gap: 15px; }
+    .main-nav { flex-wrap: wrap; justify-content: center; gap: 14px 20px; }
+    .hero { padding: 60px 0 70px; }
+    .hero-grid { grid-template-columns: 1fr; text-align: center; }
+    .hero-label { justify-content: center; }
+    .hero-content > p { margin-left: auto; margin-right: auto; }
+    .hero-buttons { justify-content: center; }
+    .footer-content { grid-template-columns: 1fr; gap: 30px; }
 }
-
 
 @media (max-width: 560px) {
-
-    .brand-subtitle {
-        font-size: 11px;
-    }
-
-    .main-nav {
-        gap: 12px 16px;
-    }
-
-    .main-nav > a {
-        font-size: 13px;
-    }
-
-    .language {
-        font-size: 12px;
-    }
-
-    .announcement-text {
-
-        font-size:
-            11px;
-    }
-
-    .hero h1 {
-
-        font-size:
-            38px;
-    }
-
-    .hero-content > p {
-
-        font-size:
-            15px;
-    }
-
-    .hero-buttons {
-
-        flex-direction:
-            column;
-
-        align-items:
-            stretch;
-    }
-
-    .hero-buttons .btn {
-
-        width:
-            100%;
-    }
-
-    .dp-carousel-wrapper {
-        max-width: 320px;
-        height: 310px;
-    }
-
-    .dp-card {
-        width: 175px;
-        height: 250px;
-        margin-top: -125px;
-        margin-left: -87.5px;
-        padding: 16px;
-    }
-    
-    .dp-card-title {
-        font-size: 14px;
-    }
-    
-    .dp-card-desc {
-        font-size: 10px;
-    }
-
-    .services-grid {
-
-        grid-template-columns:
-            1fr;
-    }
-
-    .benefits {
-
-        padding-left:
-            20px;
-
-        padding-right:
-            20px;
-    }
-
-    .benefits-grid {
-
-        grid-template-columns:
-            1fr;
-    }
-
-    .process-grid {
-
-        grid-template-columns:
-            1fr;
-    }
-
-    .testimonial-card {
-
-        width:
-            310px;
-    }
-
+    .brand-subtitle { font-size: 11px; }
+    .main-nav { gap: 12px 16px; }
+    .main-nav > a { font-size: 13px; }
+    .language { font-size: 12px; }
+    .announcement-text { font-size: 11px; }
+    .hero h1 { font-size: 38px; }
+    .hero-content > p { font-size: 15px; }
+    .hero-buttons { flex-direction: column; align-items: stretch; }
+    .hero-buttons .btn { width: 100%; }
+    .dp-carousel-wrapper { max-width: 320px; height: 310px; }
+    .dp-card { width: 175px; height: 250px; margin-top: -125px; margin-left: -87.5px; padding: 16px; }
+    .dp-card-title { font-size: 14px; }
+    .dp-card-desc { font-size: 10px; }
+    .services-grid, .benefits-grid, .process-grid { grid-template-columns: 1fr; }
+    .benefits { padding-left: 20px; padding-right: 20px; }
+    .testimonial-card { width: 310px; }
 }
-
-
-/* =====================================================
-   REDUCED MOTION
-===================================================== */
 
 @media (prefers-reduced-motion: reduce) {
-
-    *,
-    *::before,
-    *::after {
-
-        animation-duration:
-            0.01ms !important;
-
-        animation-iteration-count:
-            1 !important;
-
-        scroll-behavior:
-            auto !important;
+    *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        scroll-behavior: auto !important;
     }
 }
 
-/* Medzera medzi ikonou a textom generátora faktúr */
 .hero-buttons .btn-invoice {
     display: inline-flex;
     align-items: center;
@@ -1668,70 +998,31 @@ a {
 ===================================================== -->
 
 <header class="site-header">
-
     <div class="nav-container">
-
         <a href="index.html" class="brand">
-
             <img src="logo.png" alt="DataPay logo">
-
             <div class="brand-text">
-
-                <div class="brand-name">
-                    DataPay s.r.o.
-                </div>
-
-                <div class="brand-subtitle">
-                    Mzdy • Účtovníctvo • Personalistika
-                </div>
-
+                <div class="brand-name">DataPay s.r.o.</div>
+                <div class="brand-subtitle">Mzdy • Účtovníctvo • Personalistika</div>
             </div>
-
         </a>
 
-
         <nav class="main-nav">
-
-            <a href="index.html" class="active">
-                Domov
-            </a>
-
-            <a href="About.html">
-                O nás
-            </a>
-
-            <a href="payroll.html">
-                Služby
-            </a>
-
-            <a href="Cennik.html">
-                Cenník
-            </a>
-
-            <a href="FAQ.html">
-                Časté Otázky
-            </a>
-                   <a href="faktura.html">Generátor faktúr</a>
-                <a href="kalkulacka.html">Mzdová kalkulačka</a>
+            <a href="index.html" class="active">Domov</a>
+            <a href="About.html">O nás</a>
+            <a href="payroll.html">Služby</a>
+            <a href="Cennik.html">Cenník</a>
+            <a href="FAQ.html">Časté Otázky</a>
+            <a href="faktura.html">Generátor faktúr</a>
+            <a href="kalkulacka.html">Mzdová kalkulačka</a>
 
             <div class="language">
-
-                <a href="index.html" class="active">
-                    SK
-                </a>
-
+                <a href="index.html" class="active">SK</a>
                 <span>/</span>
-
-                <a href="en/">
-                    EN
-                </a>
-
+                <a href="en/">EN</a>
             </div>
-
         </nav>
-
     </div>
-
 </header>
 
 
@@ -1740,18 +1031,11 @@ a {
 ===================================================== -->
 
 <div class="announcement-bar">
-
-<div class="announcement-text">
-    <span class="announcement-dot"></span>
-
-    <strong>NOVINKA:</strong>
-    V DataPay sme pre Vás pripravili interaktívny
-    <a href="faktura.html" class="announcement-link">
-        Generátor faktúr
-        <span aria-hidden="true">↗</span>
-    </a>.
-</div>
-
+    <div class="announcement-text">
+        <span class="announcement-dot"></span>
+        <strong>NOVINKA:</strong> V DataPay sme pre Vás pripravili interaktívny
+        <a href="faktura.html" class="announcement-link">Generátor faktúr <span aria-hidden="true">↗</span></a>.
+    </div>
 </div>
 
 
@@ -1760,77 +1044,28 @@ a {
 ===================================================== -->
 
 <section class="hero">
-
 <div class="container hero-grid">
 
-
     <div class="hero-content">
-
-        <div class="hero-label">
-            DATAPAY • BUSINESS
-        </div>
-
-
-        <h1>
-
-            Účtovníctvo, mzdy a
-            personalistika pre
-            <span>moderné firmy.</span>
-
-        </h1>
-
-
-        <p>
-
-            Komplexné účtovné, mzdové a personálne služby
-            pre firmy na Slovensku. Postaráme sa o
-            administratívu, legislatívu aj každodennú agendu,
-            aby ste sa mohli sústrediť na svoje podnikanie.
-
-        </p>
-
-
+        <div class="hero-label">DATAPAY • BUSINESS</div>
+        <h1>Účtovníctvo, mzdy a personalistika pre <span>moderné firmy.</span></h1>
+        <p>Komplexné účtovné, mzdové a personálne služby pre firmy na Slovensku. Postaráme sa o administratívu, legislatívu aj každodennú agendu, aby ste sa mohli sústrediť na svoje podnikanie.</p>
         <div class="hero-buttons">
-
-            <a class="btn"
-               href="Formular.html">
-
-                Kontaktujte nás
-
+            <a class="btn" href="Formular.html">Kontaktujte nás</a>
+            <a class="btn" href="payroll.html">Naše služby</a>
+            <a class="btn" href="Cennik.html">Cenník služieb</a>
+            <a class="btn btn-invoice" href="faktura.html">
+                <span class="invoice-icon">▤</span> Generátor faktúr / e-faktura (pripravujeme)
             </a>
-
-
-            <a class="btn"
-               href="payroll.html">
-
-                Naše služby
-
-            </a>
-
-
-            <a class="btn"
-               href="Cennik.html">
-
-                Cenník služieb
-
-            </a>
-
-<a class="btn btn-invoice" href="faktura.html">
-    <span class="invoice-icon">▤</span>
-    Generátor faktúr / e-faktura (pripravujeme)
-  </a>
-
         </div>
-
     </div>
 
 
     <!-- =================================================
-         DYNAMIC VISUAL (3D COVERFLOW CAROUSEL)
+         DYNAMIC VISUAL (CONTINUOUS 3D ROTATION)
     ================================================== -->
 
     <div class="hero-visual">
-
         <div class="dp-carousel-wrapper" id="dpCarousel">
             <div class="dp-carousel-track" id="dpTrack">
                 
@@ -1907,21 +1142,10 @@ a {
             </div>
         </div>
 
-        <div class="dp-carousel-nav">
-            <button class="dp-nav-btn" id="dpPrevBtn" aria-label="Predchádzajúca karta">❮</button>
-            <div class="dp-dots" id="dpDots"></div>
-            <button class="dp-nav-btn" id="dpNextBtn" aria-label="Nasledujúca karta">❯</button>
-        </div>
-
-        <a class="hero-app-button" href="https://datapay.sk/app/dashboard.html">
-            Služby pre živnostníkov
-            <span aria-hidden="true">→</span>
-        </a>
-
+        <div class="dp-dots" id="dpDots"></div>
     </div>
 
 </div>
-
 </section>
 
 
@@ -1930,147 +1154,44 @@ a {
 ===================================================== -->
 
 <section class="services">
-
 <div class="container">
-
-    <h2>
-        Služby pre vaše podnikanie
-    </h2>
-
-    <p class="section-subtitle">
-
-        Od účtovníctva až po personalistiku –
-        všetko pod jednou strechou.
-
-    </p>
-
+    <h2>Služby pre vaše podnikanie</h2>
+    <p class="section-subtitle">Od účtovníctva až po personalistiku – všetko pod jednou strechou.</p>
 
     <div class="services-grid">
-
-
-        <a href="payroll.html"
-           class="service-card">
-
-            <div class="service-number">
-                01
-            </div>
-
-            <div class="service-card-icon">
-                €
-            </div>
-
-            <h3>
-                Účtovníctvo
-            </h3>
-
-            <p>
-
-                Jednoduché aj podvojné účtovníctvo,
-                spracovanie dokladov, účtovné výkazy
-                a administratíva spojená s účtovníctvom.
-
-            </p>
-
-            <span class="service-link">
-                Zistiť viac →
-            </span>
-
+        <a href="payroll.html" class="service-card">
+            <div class="service-number">01</div>
+            <div class="service-card-icon">€</div>
+            <h3>Účtovníctvo</h3>
+            <p>Jednoduché aj podvojné účtovníctvo, spracovanie dokladov, účtovné výkazy a administratíva spojená s účtovníctvom.</p>
+            <span class="service-link">Zistiť viac →</span>
         </a>
 
-
-        <a href="payroll.html"
-           class="service-card">
-
-            <div class="service-number">
-                02
-            </div>
-
-            <div class="service-card-icon">
-                MZ
-            </div>
-
-            <h3>
-                Mzdy
-            </h3>
-
-            <p>
-
-                Kompletné spracovanie miezd,
-                výpočty odvodov, výplatné pásky
-                a súvisiaca administratíva.
-
-            </p>
-
-            <span class="service-link">
-                Zistiť viac →
-            </span>
-
+        <a href="payroll.html" class="service-card">
+            <div class="service-number">02</div>
+            <div class="service-card-icon">MZ</div>
+            <h3>Mzdy</h3>
+            <p>Kompletné spracovanie miezd, výpočty odvodov, výplatné pásky a súvisiaca administratíva.</p>
+            <span class="service-link">Zistiť viac →</span>
         </a>
 
-
-        <a href="payroll.html"
-           class="service-card">
-
-            <div class="service-number">
-                03
-            </div>
-
-            <div class="service-card-icon">
-                HR
-            </div>
-
-            <h3>
-                Personalistika
-            </h3>
-
-            <p>
-
-                Personálna administratíva,
-                pracovnoprávna agenda a podpora
-                pri každodennej práci so zamestnancami.
-
-            </p>
-
-            <span class="service-link">
-                Zistiť viac →
-            </span>
-
+        <a href="payroll.html" class="service-card">
+            <div class="service-number">03</div>
+            <div class="service-card-icon">HR</div>
+            <h3>Personalistika</h3>
+            <p>Personálna administratíva, pracovnoprávna agenda a podpora pri každodennej práci so zamestnancami.</p>
+            <span class="service-link">Zistiť viac →</span>
         </a>
 
-
-        <a href="payroll.html"
-           class="service-card">
-
-            <div class="service-number">
-                04
-            </div>
-
-            <div class="service-card-icon">
-                +
-            </div>
-
-            <h3>
-                Poradenstvo
-            </h3>
-
-            <p>
-
-                Účtovné, mzdové a personálne
-                poradenstvo prispôsobené potrebám
-                vašej firmy.
-
-            </p>
-
-            <span class="service-link">
-                Zistiť viac →
-            </span>
-
+        <a href="payroll.html" class="service-card">
+            <div class="service-number">04</div>
+            <div class="service-card-icon">+</div>
+            <h3>Poradenstvo</h3>
+            <p>Účtovné, mzdové a personálne poradenstvo prispôsobené potrebám vašej firmy.</p>
+            <span class="service-link">Zistiť viac →</span>
         </a>
-
     </div>
-
 </div>
-
 </section>
 
 <!-- =====================================================
@@ -2109,85 +1230,49 @@ a {
     </div>
     <div class="testimonials-wrapper">
         <div class="testimonials-track">
-            <!-- Testimonial 1 -->
             <div class="testimonial-card">
                 <div class="testimonial-top">
                     <div class="testimonial-company">
                         <div class="testimonial-logo">LOGO</div>
-                        <div>
-                            <strong>Tech Solutions s.r.o.</strong>
-                            <small>IT sektor</small>
-                        </div>
+                        <div><strong>Tech Solutions s.r.o.</strong><small>IT sektor</small></div>
                     </div>
                     <div class="testimonial-stars">★★★★★</div>
                 </div>
-                <div class="testimonial-text">
-                    "Služby DataPay využívame už viac ako dva roky. Oceňujem najmä rýchlu komunikáciu, prehľadnosť a profesionálny prístup v oblasti miezd."
-                </div>
-                <div class="testimonial-author">
-                    <strong>Ing. Peter Novák</strong>
-                    <span>Konateľ spoločnosti</span>
-                </div>
+                <div class="testimonial-text">"Služby DataPay využívame už viac ako dva roky. Oceňujem najmä rýchlu komunikáciu, prehľadnosť a profesionálny prístup v oblasti miezd."</div>
+                <div class="testimonial-author"><strong>Ing. Peter Novák</strong><span>Konateľ spoločnosti</span></div>
             </div>
-            <!-- Testimonial 2 -->
             <div class="testimonial-card">
                 <div class="testimonial-top">
                     <div class="testimonial-company">
                         <div class="testimonial-logo">LOGO</div>
-                        <div>
-                            <strong>Gastro Group SK</strong>
-                            <small>Gastronómia</small>
-                        </div>
+                        <div><strong>Gastro Group SK</strong><small>Gastronómia</small></div>
                     </div>
                     <div class="testimonial-stars">★★★★★</div>
                 </div>
-                <div class="testimonial-text">
-                    "Spracovanie miezd pre desiatok zamestnancov prebieha vždy načas a bez chýb. Ďakujeme za obrovskú úsporu času a starostí."
-                </div>
-                <div class="testimonial-author">
-                    <strong>Mgr. Zuzana Kováčová</strong>
-                    <span>HR Manager</span>
-                </div>
+                <div class="testimonial-text">"Spracovanie miezd pre desiatok zamestnancov prebieha vždy načas a bez chýb. Ďakujeme za obrovskú úsporu času a starostí."</div>
+                <div class="testimonial-author"><strong>Mgr. Zuzana Kováčová</strong><span>HR Manager</span></div>
             </div>
-            <!-- Testimonial 3 -->
             <div class="testimonial-card">
                 <div class="testimonial-top">
                     <div class="testimonial-company">
                         <div class="testimonial-logo">LOGO</div>
-                        <div>
-                            <strong>BuildFlow s.r.o.</strong>
-                            <small>Stavebníctvo</small>
-                        </div>
+                        <div><strong>BuildFlow s.r.o.</strong><small>Stavebníctvo</small></div>
                     </div>
                     <div class="testimonial-stars">★★★★★</div>
                 </div>
-                <div class="testimonial-text">
-                    "Spoľahlivé podvojné účtovníctvo a výborné daňové poradenstvo. Odporúčam každému podnikateľovi, ktorý hľadá istotu."
-                </div>
-                <div class="testimonial-author">
-                    <strong>Martin Horváth</strong>
-                    <span>Konateľ</span>
-                </div>
+                <div class="testimonial-text">"Spoľahlivé podvojné účtovníctvo a výborné daňové poradenstvo. Odporúčam každému podnikateľovi, ktorý hľadá istotu."</div>
+                <div class="testimonial-author"><strong>Martin Horváth</strong><span>Konateľ</span></div>
             </div>
-            <!-- Testimonial 4 (Duplikát pre plynulý nekonečný scroll) -->
             <div class="testimonial-card">
                 <div class="testimonial-top">
                     <div class="testimonial-company">
                         <div class="testimonial-logo">LOGO</div>
-                        <div>
-                            <strong>Tech Solutions s.r.o.</strong>
-                            <small>IT sektor</small>
-                        </div>
+                        <div><strong>Tech Solutions s.r.o.</strong><small>IT sektor</small></div>
                     </div>
                     <div class="testimonial-stars">★★★★★</div>
                 </div>
-                <div class="testimonial-text">
-                    "Služby DataPay využívame už viac ako dva roky. Oceňujem najmä rýchlu komunikáciu, prehľadnosť a profesionálny prístup v oblasti miezd."
-                </div>
-                <div class="testimonial-author">
-                    <strong>Ing. Peter Novák</strong>
-                    <span>Konateľ spoločnosti</span>
-                </div>
+                <div class="testimonial-text">"Služby DataPay využívame už viac ako dva roky. Oceňujem najmä rýchlu komunikáciu, prehľadnosť a profesionálny prístup v oblasti miezd."</div>
+                <div class="testimonial-author"><strong>Ing. Peter Novák</strong><span>Konateľ spoločnosti</span></div>
             </div>
         </div>
     </div>
@@ -2272,158 +1357,125 @@ a {
     </div>
 </footer>
 
-<!-- SCRIPT PRE 3D COVERFLOW CAROUSEL (NEKONEČNÝ CYKLUS) -->
+<!-- SCRIPT PRE CONTINUOUS SMOOTH 3D ROTATION -->
 <script>
 document.addEventListener('DOMContentLoaded', () => {
     const wrapper = document.getElementById('dpCarousel');
     const cards = document.querySelectorAll('.dp-card');
     const dotsContainer = document.getElementById('dpDots');
-    const prevBtn = document.getElementById('dpPrevBtn');
-    const nextBtn = document.getElementById('dpNextBtn');
     
-    let currentIndex = 1;
     const totalCards = cards.length;
-    let autoplayTimer = null;
+    let rotationAngle = 0; // Priebežný uhol rotácie v reálnom čase
+    let isHovered = false;
     let isDragging = false;
     let startX = 0;
-    let currentTranslateX = 0;
+    let lastX = 0;
+    const speed = 0.005; // Rýchlosť automatického otáčania (nižšie = plynulejšie)
 
-    // Vytvorenie indikátorov (dots)
+    // Vytvorenie bodiek
     cards.forEach((_, idx) => {
         const dot = document.createElement('div');
         dot.classList.add('dp-dot');
-        if (idx === currentIndex) dot.classList.add('active');
-        dot.addEventListener('click', () => goToSlide(idx));
+        if (idx === 0) dot.classList.add('active');
+        dot.addEventListener('click', () => {
+            // Po kliknutí na bodku plynule pootočíme na danú kartu
+            targetAngle = (idx / totalCards) * (Math.PI * 2);
+            rotationAngle = targetAngle;
+        });
         dotsContainer.appendChild(dot);
     });
 
     const dots = document.querySelectorAll('.dp-dot');
 
-    function updateCarousel() {
-        cards.forEach((card, index) => {
-            let offset = index - currentIndex;
-            
-            if (offset > totalCards / 2) {
-                offset -= totalCards;
-            } else if (offset < -totalCards / 2) {
-                offset += totalCards;
-            }
+    function render3D() {
+        if (!isHovered && !isDragging) {
+            rotationAngle += speed;
+        }
 
-            const absOffset = Math.abs(offset);
+        // Udržujeme uhol v rozmedzí 0 - 2PI
+        if (rotationAngle >= Math.PI * 2) rotationAngle -= Math.PI * 2;
+        if (rotationAngle < 0) rotationAngle += Math.PI * 2;
+
+        const currentActiveIndex = Math.round((rotationAngle / (Math.PI * 2)) * totalCards) % totalCards;
+
+        cards.forEach((card, index) => {
+            // Vypočítame uhol pre každú kartu
+            const cardAngle = (index / totalCards) * (Math.PI * 2) - rotationAngle;
             
-            if (offset === 0) {
-                card.style.transform = `translateX(0px) translateZ(0px) rotateY(0deg) scale(1)`;
-                card.style.opacity = '1';
-                card.style.zIndex = '5';
+            // Transformácia na osi X a Z
+            const sin = Math.sin(cardAngle);
+            const cos = Math.cos(cardAngle);
+
+            const translateX = sin * 180; // Šírka rozptylu
+            const translateZ = (cos - 1) * 120; // Hĺbka 3D priestoru
+            const rotateY = -sin * 35; // Uhlové natočenie
+            const opacity = Math.max(0.2, (cos + 1.2) / 2.2);
+            const scale = Math.max(0.75, (cos + 1.8) / 2.8);
+            const zIndex = Math.round((cos + 1) * 10);
+
+            card.style.transform = `translateX(${translateX}px) translateZ(${translateZ}px) rotateY(${rotateY}deg) scale(${scale})`;
+            card.style.opacity = opacity.toString();
+            card.style.zIndex = zIndex.toString();
+            
+            if (zIndex > 15) {
                 card.style.filter = 'none';
                 card.style.pointerEvents = 'auto';
-            } else if (offset < 0) {
-                const translateX = offset * 110 - 40;
-                const translateZ = -absOffset * 100;
-                const rotateY = Math.min(absOffset * 25, 45);
-                card.style.transform = `translateX(${translateX}px) translateZ(${translateZ}px) rotateY(${rotateY}deg) scale(0.88)`;
-                card.style.opacity = absOffset > 2 ? '0' : '0.65';
-                card.style.zIndex = `${5 - absOffset}`;
-                card.style.filter = 'blur(1px)';
-                card.style.pointerEvents = 'none';
             } else {
-                const translateX = offset * 110 + 40;
-                const translateZ = -absOffset * 100;
-                const rotateY = -Math.min(absOffset * 25, 45);
-                card.style.transform = `translateX(${translateX}px) translateZ(${translateZ}px) rotateY(${rotateY}deg) scale(0.88)`;
-                card.style.opacity = absOffset > 2 ? '0' : '0.65';
-                card.style.zIndex = `${5 - absOffset}`;
                 card.style.filter = 'blur(1px)';
                 card.style.pointerEvents = 'none';
             }
         });
 
         dots.forEach((dot, idx) => {
-            dot.classList.toggle('active', idx === currentIndex);
+            dot.classList.toggle('active', idx === currentActiveIndex);
         });
+
+        requestAnimationFrame(render3D);
     }
 
-    function goToSlide(index) {
-        currentIndex = (index + totalCards) % totalCards;
-        updateCarousel();
-        resetAutoplay();
-    }
-
-    function nextSlide() {
-        goToSlide(currentIndex + 1);
-    }
-
-    function prevSlide() {
-        goToSlide(currentIndex - 1);
-    }
-
-    nextBtn.addEventListener('click', nextSlide);
-    prevBtn.addEventListener('click', prevSlide);
+    // Touch & Mouse interakcie pre manuálne posúvanie
+    wrapper.addEventListener('mouseenter', () => isHovered = true);
+    wrapper.addEventListener('mouseleave', () => {
+        isHovered = false;
+        isDragging = false;
+    });
 
     wrapper.addEventListener('mousedown', (e) => {
         isDragging = true;
         startX = e.clientX;
-        stopAutoplay();
+        lastX = e.clientX;
     });
 
     window.addEventListener('mousemove', (e) => {
         if (!isDragging) return;
-        currentTranslateX = e.clientX - startX;
+        const deltaX = e.clientX - lastX;
+        lastX = e.clientX;
+        rotationAngle -= deltaX * 0.005;
     });
 
     window.addEventListener('mouseup', () => {
-        if (!isDragging) return;
         isDragging = false;
-        if (currentTranslateX < -40) {
-            nextSlide();
-        } else if (currentTranslateX > 40) {
-            prevSlide();
-        } else {
-            startAutoplay();
-        }
-        currentTranslateX = 0;
     });
 
     wrapper.addEventListener('touchstart', (e) => {
         isDragging = true;
         startX = e.touches[0].clientX;
-        stopAutoplay();
+        lastX = e.touches[0].clientX;
     }, { passive: true });
 
-    wrapper.addEventListener('touchend', (e) => {
+    wrapper.addEventListener('touchmove', (e) => {
         if (!isDragging) return;
-        isDragging = false;
-        const endX = e.changedTouches[0].clientX;
-        const diffX = endX - startX;
+        const deltaX = e.touches[0].clientX - lastX;
+        lastX = e.touches[0].clientX;
+        rotationAngle -= deltaX * 0.005;
+    }, { passive: true });
 
-        if (diffX < -40) {
-            nextSlide();
-        } else if (diffX > 40) {
-            prevSlide();
-        } else {
-            startAutoplay();
-        }
+    wrapper.addEventListener('touchend', () => {
+        isDragging = false;
     });
 
-    function startAutoplay() {
-        stopAutoplay();
-        autoplayTimer = setInterval(nextSlide, 3500);
-    }
-
-    function stopAutoplay() {
-        if (autoplayTimer) clearInterval(autoplayTimer);
-    }
-
-    function resetAutoplay() {
-        stopAutoplay();
-        startAutoplay();
-    }
-
-    wrapper.addEventListener('mouseenter', stopAutoplay);
-    wrapper.addEventListener('mouseleave', startAutoplay);
-
-    updateCarousel();
-    startAutoplay();
+    // Spustenie plynulého renderingu
+    requestAnimationFrame(render3D);
 });
 </script>
 
