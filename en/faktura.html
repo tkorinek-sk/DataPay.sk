@@ -1,1 +1,1813 @@
+<!DOCTYPE html>
+<html lang="en">
 
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Free Online Invoice Generator | DataPay s.r.o.</title>
+    <meta name="description" content="Create a professional invoice online for free, with no registration required. VAT calculation, SEPA QR code and PDF download by DataPay s.r.o.">
+    <meta name="author" content="DataPay s.r.o.">
+    <meta name="theme-color" content="#052c64">
+    <link rel="icon" href="/favicon.png" type="image/png">
+    <link rel="canonical" href="https://datapay.sk/en/invoice.html">
+
+    <!-- External Libraries for QR Code and PDF Export -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/jspdf@2.5.1/dist/jspdf.umd.min.js"></script>
+
+    <style>
+        /* =====================================================
+           1. RESET & CORE VARIABLES
+        ===================================================== */
+        :root {
+            --primary: #052c64;
+            --primary-hover: #0b3e80;
+            --accent: #397bb8;
+            --accent-light: #eef5fc;
+            --text-dark: #172b4d;
+            --text-muted: #64748b;
+            --border-color: #e2e8f0;
+            --bg-light: #f7f9fc;
+            --white: #ffffff;
+            --danger: #ef4444;
+            --success: #10b981;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+            background-color: var(--bg-light);
+            color: var(--text-dark);
+            line-height: 1.5;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        /* =====================================================
+           2. HEADER & NAVIGATION
+        ===================================================== */
+        .site-header {
+            background: #ffffff;
+            border-bottom: 1px solid #e6ebf2;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .nav-container {
+            width: 90%;
+            max-width: 1200px;
+            min-height: 88px;
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 35px;
+        }
+
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+        }
+
+        .brand img {
+            width: 54px;
+            height: 54px;
+            object-fit: contain;
+            display: block;
+        }
+
+        .brand-text {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .brand-name {
+            color: #052c64;
+            font-size: 20px;
+            font-weight: 700;
+            line-height: 1.2;
+        }
+
+        .brand-subtitle {
+            color: #718096;
+            font-size: 12px;
+            margin-top: 4px;
+        }
+
+        .main-nav {
+            display: flex;
+            align-items: center;
+            gap: 28px;
+        }
+
+        .main-nav > a {
+            color: #334155;
+            font-size: 14px;
+            font-weight: 500;
+            transition: color 0.2s ease;
+        }
+
+        .main-nav > a:hover {
+            color: #052c64;
+        }
+
+        .main-nav > a.active {
+            color: #052c64;
+            font-weight: 700;
+        }
+
+        .language {
+            display: flex;
+            align-items: center;
+            gap: 7px;
+            margin-left: 5px;
+            font-size: 13px;
+        }
+
+        .language a {
+            color: #94a3b8;
+            font-weight: 500;
+        }
+
+        .language a.active {
+            color: #052c64;
+            font-weight: 700;
+        }
+
+        .language span {
+            color: #cbd5e1;
+        }
+
+        /* =====================================================
+           3. PAGE BANNER
+        ===================================================== */
+        .page-banner {
+            background: linear-gradient(135deg, #ffffff 0%, #edf4fa 100%);
+            border-bottom: 1px solid var(--border-color);
+            padding: 28px 0;
+        }
+
+        .banner-content {
+            width: 92%;
+            max-width: 1240px;
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        .banner-title h1 {
+            color: var(--primary);
+            font-size: 26px;
+            font-weight: 800;
+        }
+
+        .banner-title p {
+            color: var(--text-muted);
+            font-size: 14px;
+            margin-top: 4px;
+        }
+
+        .badge-free {
+            background: #dbeafe;
+            color: var(--primary);
+            padding: 6px 14px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 700;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            border: 1px solid #bfdbfe;
+        }
+
+        /* =====================================================
+           4. MAIN APP WORKSPACE
+        ===================================================== */
+        .app-workspace {
+            width: 92%;
+            max-width: 1240px;
+            margin: 30px auto 60px;
+            flex: 1;
+        }
+
+        .toolbar {
+            background: var(--white);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 16px 20px;
+            margin-bottom: 25px;
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            justify-content: space-between;
+            gap: 15px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.03);
+        }
+
+        .toolbar-group {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            padding: 10px 18px;
+            font-size: 13px;
+            font-weight: 700;
+            border-radius: 7px;
+            border: 1px solid transparent;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            white-space: nowrap;
+        }
+
+        .btn-primary {
+            background-color: var(--primary);
+            color: var(--white);
+        }
+
+        .btn-primary:hover {
+            background-color: var(--primary-hover);
+            box-shadow: 0 4px 12px rgba(5, 44, 100, 0.25);
+        }
+
+        .btn-accent {
+            background-color: var(--accent);
+            color: var(--white);
+        }
+
+        .btn-accent:hover {
+            background-color: #2b6194;
+        }
+
+        .btn-outline {
+            background-color: var(--white);
+            color: var(--text-dark);
+            border-color: var(--border-color);
+        }
+
+        .btn-outline:hover {
+            background-color: #f1f5f9;
+            border-color: #cbd5e1;
+        }
+
+        .btn-danger-outline {
+            background-color: var(--white);
+            color: var(--danger);
+            border-color: #fca5a5;
+        }
+
+        .btn-danger-outline:hover {
+            background-color: #fef2f2;
+        }
+
+        .workspace-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            align-items: start;
+        }
+
+        .form-card {
+            background: var(--white);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 24px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.03);
+        }
+
+        .form-section-title {
+            font-size: 15px;
+            font-weight: 700;
+            color: var(--primary);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            padding-bottom: 8px;
+            margin-bottom: 16px;
+            border-bottom: 2px solid var(--accent-light);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .form-grid-2 {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 14px;
+        }
+
+        .form-grid-3 {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 12px;
+        }
+
+        .form-group {
+            margin-bottom: 14px;
+        }
+
+        .form-group label {
+            display: block;
+            font-size: 12px;
+            font-weight: 700;
+            color: #334155;
+            margin-bottom: 5px;
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 9px 12px;
+            font-size: 13px;
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            background-color: #ffffff;
+            color: var(--text-dark);
+            transition: border-color 0.2s, box-shadow 0.2s;
+        }
+
+        .form-control:focus {
+            outline: none;
+            border-color: var(--accent);
+            box-shadow: 0 0 0 3px rgba(57, 123, 184, 0.15);
+        }
+
+        .toggle-container {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            background: var(--bg-light);
+            padding: 10px 14px;
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+            margin-bottom: 16px;
+            cursor: pointer;
+        }
+
+        .toggle-container input[type="checkbox"] {
+            width: 18px;
+            height: 18px;
+            accent-color: var(--primary);
+            cursor: pointer;
+        }
+
+        .toggle-container label {
+            font-size: 13px;
+            font-weight: 700;
+            color: var(--primary);
+            cursor: pointer;
+            margin: 0;
+        }
+
+        .items-form-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 12px;
+        }
+
+        .items-form-table th {
+            text-align: left;
+            font-size: 11px;
+            font-weight: 700;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            padding: 6px;
+        }
+
+        .items-form-table td {
+            padding: 4px;
+            vertical-align: top;
+        }
+
+        .btn-remove-row {
+            background: #fee2e2;
+            color: var(--danger);
+            border: none;
+            width: 32px;
+            height: 32px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .btn-remove-row:hover {
+            background: #fca5a5;
+            color: #7f1d1d;
+        }
+
+        /* =====================================================
+           5. LIVE INVOICE PREVIEW (A4 CANVAS)
+        ===================================================== */
+        .preview-wrapper {
+            position: sticky;
+            top: 100px;
+        }
+
+        .invoice-paper {
+            background: var(--white);
+            border: 1px solid #cbd5e1;
+            border-radius: 4px;
+            padding: 40px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+            min-height: 842px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            font-size: 12px;
+            color: #1e293b;
+            box-sizing: border-box; /* Zabezpečí, že padding nevytláča obsah von */
+        }
+
+        .inv-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            border-bottom: 2px solid var(--primary);
+            padding-bottom: 18px;
+            margin-bottom: 24px;
+        }
+
+        .inv-brand-title {
+            color: var(--primary);
+            font-size: 24px;
+            font-weight: 800;
+            letter-spacing: -0.5px;
+        }
+
+        .inv-type-title {
+            text-align: right;
+        }
+
+        .inv-type-title h2 {
+            font-size: 20px;
+            color: var(--primary);
+            font-weight: 800;
+        }
+
+        .inv-type-title .inv-number {
+            font-size: 14px;
+            font-weight: 700;
+            color: var(--accent);
+        }
+
+        .inv-parties {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 25px;
+            margin-bottom: 25px;
+        }
+
+        .inv-party-box {
+            background: #f8fafc;
+            border-radius: 8px;
+            padding: 14px 16px;
+            border: 1px solid #e2e8f0;
+        }
+
+        .inv-party-box h3 {
+            font-size: 11px;
+            text-transform: uppercase;
+            color: var(--primary);
+            letter-spacing: 0.5px;
+            margin-bottom: 8px;
+            border-bottom: 1px solid #cbd5e1;
+            padding-bottom: 4px;
+        }
+
+        .inv-party-name {
+            font-size: 14px;
+            font-weight: 700;
+            color: #0f172a;
+            margin-bottom: 4px;
+        }
+
+        .inv-party-details {
+            line-height: 1.5;
+            color: #475569;
+        }
+
+        .inv-meta-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 12px;
+            background: var(--accent-light);
+            border-radius: 8px;
+            padding: 12px 16px;
+            margin-bottom: 25px;
+            border: 1px solid #dbeafe;
+        }
+
+        .inv-meta-item label {
+            display: block;
+            font-size: 10px;
+            text-transform: uppercase;
+            color: var(--text-muted);
+            font-weight: 700;
+        }
+
+        .inv-meta-item span {
+            font-size: 12px;
+            font-weight: 700;
+            color: var(--primary);
+            overflow-wrap: anywhere;
+        }
+
+        .inv-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 25px;
+        }
+
+        .inv-table th {
+            background: var(--primary);
+            color: var(--white);
+            text-align: left;
+            padding: 8px 10px;
+            font-size: 11px;
+            text-transform: uppercase;
+            font-weight: 700;
+        }
+
+        .inv-table th:first-child { border-top-left-radius: 6px; border-bottom-left-radius: 6px; }
+        .inv-table th:last-child { border-top-right-radius: 6px; border-bottom-right-radius: 6px; text-align: right; }
+
+        .inv-table td {
+            padding: 10px;
+            border-bottom: 1px solid #e2e8f0;
+            color: #334155;
+        }
+
+        .inv-table td.text-right {
+            text-align: right;
+        }
+
+        .inv-table tr:nth-child(even) td {
+            background-color: #f8fafc;
+        }
+
+        .inv-bottom-section {
+            display: grid;
+            grid-template-columns: 1.2fr 1fr;
+            gap: 20px;
+            align-items: flex-start;
+            margin-top: 15px;
+        }
+
+        .inv-qr-block {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            background: #ffffff;
+            border: 1px dashed #cbd5e1;
+            padding: 12px;
+            border-radius: 8px;
+        }
+
+        #qrcode img, #qrcode canvas {
+            width: 90px !important;
+            height: 90px !important;
+            display: block;
+        }
+
+        .qr-info h4 {
+            font-size: 11px;
+            font-weight: 800;
+            color: var(--primary);
+            margin-bottom: 3px;
+        }
+
+        .qr-info p {
+            font-size: 10px;
+            color: var(--text-muted);
+            line-height: 1.3;
+        }
+
+        .inv-totals-box {
+            background: #f8fafc;
+            border-radius: 8px;
+            padding: 14px 16px;
+            border: 1px solid #e2e8f0;
+        }
+
+        .inv-total-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 4px 0;
+            color: #475569;
+        }
+
+
+.inv-total-row.grand-total {
+    border-top: 2px solid var(--primary);
+    margin-top: 8px;
+    padding-top: 8px;
+    font-size: 1špx;
+    font-weight: 800;
+    color: var(--primary);
+}
+
+
+        .inv-footer-note {
+            margin-top: auto;
+            padding-top: 25px;
+            border-top: 1px solid #e2e8f0;
+            font-size: 10px;
+            color: var(--text-muted);
+            text-align: center;
+        }
+
+        /* Mode Switcher */
+        .mode-picker {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 12px;
+            margin: 0 0 22px;
+        }
+
+        .mode-choice {
+            display: block;
+            text-align: left;
+            border: 2px solid #dbe5f1;
+            border-radius: 12px;
+            padding: 17px;
+            background: #fff;
+            color: #052c64;
+            cursor: pointer;
+            font: inherit;
+            transition: border-color .2s, background .2s;
+        }
+
+        .mode-choice strong { display: block; font-size: 16px; margin-bottom: 5px; }
+        .mode-choice small { display: block; color: #64748b; line-height: 1.5; }
+        .mode-choice[aria-pressed="true"] {
+            border-color: #052c64;
+            background: #eef5fd;
+            box-shadow: 0 0 0 2px rgba(5,44,100,.07);
+        }
+
+        .mode-hint { font-size: 12px; color: #526780; margin: -8px 0 18px; }
+        body.simple-mode .advanced-only { display: none !important; }
+        body.simple-mode .items-form-table th:nth-child(4),
+        body.simple-mode .items-form-table td:nth-child(4) { display: none !important; }
+
+        /* =====================================================
+           6. SITE FOOTER
+        ===================================================== */
+        .footer {
+            background: #071c35;
+            color: #ffffff;
+            padding: 60px 0 25px;
+            margin-top: auto;
+        }
+
+        .footer .container {
+            width: min(1180px, 92%);
+            margin: 0 auto;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 50px;
+            padding-bottom: 40px;
+        }
+
+        .footer-column:nth-child(1) { text-align: left; }
+        .footer-column:nth-child(2) { text-align: center; }
+        .footer-column:nth-child(3) { text-align: right; }
+
+        .footer-column h3 { font-size: 16px; margin-bottom: 16px; }
+        .footer-column p { color: #aebdcd; font-size: 13px; line-height: 1.8; }
+        .footer-column a { color: #c8d6e5; transition: color .2s ease; }
+        .footer-column a:hover { color: #ffffff; }
+
+        .footer-bottom {
+            border-top: 1px solid rgba(255,255,255,.10);
+            padding-top: 22px;
+            color: #8fa1b4;
+            font-size: 11px;
+            text-align: center;
+        }
+
+        .footer-bottom a { color: #c2d1df; }
+
+        /* =====================================================
+           7. RESPONSIVE & PRINT BREAKPOINTS
+        ===================================================== */
+        @media (max-width: 992px) {
+            .workspace-grid { grid-template-columns: 1fr; }
+            .preview-wrapper { position: static; }
+        }
+
+        @media (max-width: 800px) {
+            .site-header .nav-container { flex-direction: column; justify-content: center; padding: 18px 0; gap: 15px; }
+            .site-header .main-nav { display: flex; flex-direction: row; flex-wrap: wrap; justify-content: center; gap: 14px 20px; }
+            .footer-content { grid-template-columns: 1fr; gap: 30px; }
+            .footer-column:nth-child(n) { text-align: center; }
+        }
+
+        @media (max-width: 600px) {
+            .mode-picker { grid-template-columns: 1fr; }
+        }
+
+        @media print {
+            @page {
+                size: A4 portrait;
+                margin: 0;
+            }
+
+            html, body {
+                background: #ffffff !important;
+                color: #1e293b !important;
+                margin: 0 !important;
+                padding: 0 !important;
+                width: 210mm !important;
+                height: 297mm !important;
+                -webkit-print-color-adjust: exact !important;
+                print-color-adjust: exact !important;
+            }
+
+            .site-header,
+            .page-banner,
+            .toolbar,
+            .form-card,
+            .footer,
+            .mode-picker,
+            .mode-hint {
+                display: none !important;
+            }
+
+            .app-workspace {
+                width: 100% !important;
+                max-width: 100% !important;
+                margin: 0 !important;
+                padding: 0 !important;
+            }
+
+            .workspace-grid { display: block !important; }
+
+            .preview-wrapper {
+                position: static !important;
+                width: 100% !important;
+                margin: 0 !important;
+                padding: 0 !important;
+            }
+
+            .invoice-paper {
+                border: none !important;
+                box-shadow: none !important;
+                padding: 15mm 15mm !important;
+                width: 210mm !important;
+                min-height: 297mm !important;
+                box-sizing: border-box !important;
+                margin: 0 auto !important;
+            }
+
+            .inv-parties { grid-template-columns: 1fr 1fr !important; }
+            .inv-meta-grid { grid-template-columns: 1fr 1fr 1fr !important; }
+            .inv-bottom-section { grid-template-columns: 1.2fr 1fr !important; }
+
+            .inv-table th {
+                background-color: var(--primary) !important;
+                color: var(--white) !important;
+                -webkit-print-color-adjust: exact !important;
+                print-color-adjust: exact !important;
+            }
+        }
+
+
+        /* Zvýraznené prvé vyplnenie firmy podľa Company ID (IČO) */
+        .ico-first-card { background:#f0fdf4; border:1.5px solid #86c9a3; border-radius:10px; padding:15px; margin:0 0 19px; }
+        .ico-first-title { color:#166534; font-size:13px; font-weight:800; margin-bottom:5px; }
+        .ico-first-card p { color:#466b54; font-size:12px; margin-bottom:11px; }
+        .ico-first-card .form-group { margin-bottom:0; }
+        .ico-first-card .form-group label { color:#166534; }
+        .ico-first-card .ico-lookup .form-control { border-color:#86c9a3; background:#fff; }
+        .ico-first-card .ico-lookup .form-control:focus { border-color:#16a34a; box-shadow:0 0 0 3px rgba(22,163,74,.13); }
+        .ico-first-card .ico-lookup .btn { background:#16834a; color:#fff; border-color:#16834a; }
+        .ico-first-card .ico-lookup .btn:hover { background:#166534; }
+
+        /* Vyhľadávanie firmy podľa Company ID (IČO) */
+        .ico-lookup { display:flex; gap:7px; align-items:center; }
+        .ico-lookup .form-control { min-width:0; flex:1; }
+        .ico-lookup .btn { padding:9px 11px; font-size:12px; }
+        .ico-status { display:block; font-size:11px; margin-top:5px; color:var(--text-muted); min-height:15px; }
+        .ico-status.error { color:#b91c1c; }
+        .ico-status.ok { color:#047857; }
+        @media(max-width:480px) { .ico-lookup { flex-wrap:wrap; } }
+    </style>
+</head>
+
+<body class="simple-mode">
+
+    <!-- SITE HEADER & NAVIGATION -->
+    <header class="site-header">
+        <div class="nav-container">
+            <a class="brand" href="/en/">
+                <img alt="DataPay logo" src="/logo.png"/>
+                <div class="brand-text">
+                    <div class="brand-name">DataPay s.r.o.</div>
+                    <div class="brand-subtitle">Payroll • Accounting • HR</div>
+                </div>
+            </a>
+            <nav class="main-nav">
+                <a href="/en/">Home</a>
+                <a href="/en/About.html">About Us</a>
+                <a href="/en/payroll.html">Services</a>
+                <a href="/en/Cennik.html">Pricing</a>
+                <a href="/en/FAQ.html">FAQ</a>
+                 <a href="/en/invoice.html" class="active">Invoice Generator</a>
+                <a href="/en/kalkulacka.html">Payroll Calculator</a>
+                <div class="language">
+                    <a href="/faktura.html">SK</a>
+                    <span>/</span>
+                    <a class="active" href="/en/invoice.html">EN</a>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <!-- PAGE HERO STRIP -->
+    <section class="page-banner">
+        <div class="banner-content">
+            <div class="banner-title">
+                <h1>Online Invoice Generator</h1>
+                <p>Create an invoice and a SEPA QR payment code (EPC).</p>
+            </div>
+            <div>
+                <span class="badge-free">✓ 100% Free & No Registration Required</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- MAIN WORKSPACE -->
+    <main class="app-workspace">
+
+        <!-- ACTION TOOLBAR -->
+        <div class="toolbar">
+            <div class="toolbar-group">
+                <button class="btn btn-primary" onclick="downloadPDF()">
+                    <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path></svg>
+                    Download PDF
+                </button>
+                <button class="btn btn-accent" onclick="printInvoice()">
+                    <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z"></path></svg>
+                    Print
+                </button>
+            </div>
+            <div class="toolbar-group">
+                <button class="btn btn-outline" onclick="loadSampleData()">
+                    Sample Data
+                </button>
+                <button class="btn btn-danger-outline" onclick="clearForm()">
+                    Clear Form
+                </button>
+            </div>
+        </div>
+
+        <!-- DUAL COLUMN WORKSPACE GRID -->
+        <div class="workspace-grid">
+
+            <!-- LEFT COLUMN: INPUT FORM -->
+            <div class="form-card">
+                
+                <div class="mode-picker" role="group" aria-label="Invoice complexity">
+                    <button type="button" class="mode-choice" id="modeSimple" aria-pressed="true" onclick="setInvoiceMode('simple')">
+                        <strong>Simple Invoice</strong>
+                        <small>A standard invoice in EUR. Enter only the basic details, customer information and line items.</small>
+                    </button>
+                    <button type="button" class="mode-choice" id="modeAdvanced" aria-pressed="false" onclick="setInvoiceMode('advanced')">
+                        <strong>Advanced Invoice</strong>
+                        <small>International transactions, special VAT schemes, discounts, advance payments, multiple currencies and more.</small>
+                    </button>
+                </div>
+                <p class="mode-hint" id="modeHint" aria-live="polite">Advanced fields are hidden, not removed. You can switch to the advanced invoice at any time.</p>
+                
+                <!-- VAT Switcher -->
+                <div class="toggle-container">
+                    <input type="checkbox" id="isDphPayer" onchange="updateInvoice()">
+                    <label for="isDphPayer">Supplier is VAT registered</label>
+                </div>
+
+                <div class="advanced-only" id="advancedTaxFields">
+                    <div class="form-section-title">Tax Scheme</div>
+                    <div class="form-group">
+                        <label for="taxMode">Type of Supply</label>
+                        <select id="taxMode" class="form-control" onchange="updateInvoice()">
+                            <option value="domestic">Standard domestic supply</option>
+                            <option value="reverse">Reverse charge</option>
+                            <option value="exempt">VAT exempt</option>
+                            <option value="intra">Intra-EU supply of goods – Section 43</option>
+                            <option value="export">Export of goods – Section 47</option>
+                        </select>
+                    </div>
+                    <div class="form-group" id="legalRefGroup" style="display:none">
+                        <label>Legal basis / provision</label>
+                        <input id="legalRef" class="form-control" oninput="updateInvoice()" placeholder="E.g. specific legal provision">
+                    </div>
+                    <div class="form-group">
+                        <label>Order number / reference</label>
+                        <input id="orderRef" class="form-control" oninput="updateInvoice()">
+                    </div>
+                    <div class="form-group">
+                        <label>Supplier registration details</label>
+                        <input id="registry" class="form-control" oninput="updateInvoice()" placeholder="Commercial Register ..., Section ..., Entry ...">
+                    </div>
+                    <div class="form-grid-2">
+                        <div class="form-group">
+                            <label>Invoice Currency</label>
+                            <select id="currency" class="form-control" onchange="updateInvoice()">
+                                <option>EUR</option>
+                                <option>CZK</option>
+                                <option>USD</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Exchange Rate to EUR</label>
+                            <input id="eurRate" type="number" min="0" step="0.000001" value="1" class="form-control" oninput="updateInvoice()">
+                        </div>
+                    </div>
+                    <div class="form-grid-2">
+                        <div class="form-group">
+                            <label>Payment Method</label>
+                            <select id="paymentMethod" class="form-control" onchange="updateInvoice()">
+                                <option>Bank Transfer</option>
+                                <option>Cash</option>
+                                <option>Payment Card</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Advance Payment Received</label>
+                            <input id="advance" type="number" min="0" step="0.01" value="0" class="form-control" oninput="updateInvoice()">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>Additional Amount Paid</label>
+                        <input id="paid" type="number" min="0" step="0.01" value="0" class="form-control" oninput="updateInvoice()">
+                    </div>
+                </div>
+
+                <!-- Invoice Meta Settings -->
+                <div class="form-section-title">Invoice Details</div>
+                <div class="form-grid-3">
+                    <div class="form-group">
+                        <label>Invoice Number</label>
+                        <input type="text" id="invNumber" class="form-control" value="20260001" oninput="updateInvoice()">
+                    </div>
+                    <div class="form-group">
+                        <label>Variable Symbol</label>
+                        <input type="text" id="invVS" class="form-control" value="20260001" oninput="updateInvoice()">
+                    </div>
+                    <div class="form-group advanced-only">
+                        <label>Constant Symbol</label>
+                        <input type="text" id="invKS" class="form-control" value="0308" oninput="updateInvoice()">
+                    </div>
+                </div>
+
+                <div class="form-grid-3">
+                    <div class="form-group">
+                        <label>Issue Date</label>
+                        <input type="date" id="dateIssue" class="form-control" oninput="updateInvoice()">
+                    </div>
+                    <div class="form-group">
+                        <label>Supply Date</label>
+                        <input type="date" id="dateSupply" class="form-control" oninput="updateInvoice()">
+                    </div>
+                    <div class="form-group">
+                        <label>Due Date</label>
+                        <input type="date" id="dateDue" class="form-control" oninput="updateInvoice()">
+                    </div>
+                </div>
+
+                <!-- Supplier Form -->
+                <div class="form-section-title">Supplier (Your Company)</div>
+                <div class="ico-first-card">
+                    <div class="ico-first-title">✦ Quick Company Details</div>
+                    <p>Start by entering the Company ID (IČO). We will automatically fill in the other available details.</p>
+                    <div class="form-group">
+                        <label>Company ID (IČO)</label>
+                        <div class="ico-lookup"><input type="text" id="supIco" class="form-control" placeholder="8-digit Company ID" inputmode="numeric" maxlength="8" oninput="updateInvoice(); resetIcoStatus('sup')" onkeydown="if(event.key==='Enter'){event.preventDefault();lookupCompany('sup')}"><button type="button" class="btn btn-outline" id="supLookupBtn" onclick="lookupCompany('sup')">Look Up</button></div><small id="supIcoStatus" class="ico-status" role="status" aria-live="polite"></small>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>Company Name / Full Name</label>
+                    <input type="text" id="supName" class="form-control" placeholder="napr. DataPay s.r.o." oninput="updateInvoice()">
+                </div>
+                <div class="form-grid-2">
+                    <div class="form-group">
+                        <label>Street and Number</label>
+                        <input type="text" id="supStreet" class="form-control" placeholder="Main Street 123/4" oninput="updateInvoice()">
+                    </div>
+                    <div class="form-group">
+                        <label>City and Postal Code</label>
+                        <input type="text" id="supCity" class="form-control" placeholder="811 01 Bratislava" oninput="updateInvoice()">
+                    </div>
+                </div>
+                <div class="form-grid-3">
+                    <div class="form-group">
+                        <label>Tax ID</label>
+                        <input type="text" id="supDic" class="form-control" placeholder="2021234567" oninput="updateInvoice()">
+                    </div>
+                    <div class="form-group advanced-only">
+                        <label>VAT ID</label>
+                        <input type="text" id="supIcdph" class="form-control" placeholder="SK2021234567" oninput="updateInvoice()">
+                    </div>
+                </div>
+
+                <!-- Banking Info -->
+                <div class="form-section-title">Bank Details (For QR Code)</div>
+                <div class="form-grid-2">
+                    <div class="form-group">
+                        <label>IBAN</label>
+                        <input type="text" id="supIban" class="form-control" placeholder="SK31 1200 0000 0012 3456 7890" autocomplete="off" spellcheck="false" oninput="formatIbanInput(this)">
+                    </div>
+                    <div class="form-group advanced-only">
+                        <label>SWIFT / BIC</label>
+                        <input type="text" id="supSwift" class="form-control" placeholder="SUBASKBX" oninput="updateInvoice()">
+                    </div>
+                </div>
+
+                <!-- Customer Form -->
+                <div class="form-section-title">Customer (Client)</div>
+                <div class="ico-first-card">
+                    <div class="ico-first-title">✦ Quick Company Details</div>
+                    <p>Start by entering the Company ID (IČO). We will automatically fill in the other available details.</p>
+                    <div class="form-group">
+                        <label>Company ID (IČO)</label>
+                        <div class="ico-lookup"><input type="text" id="custIco" class="form-control" placeholder="8-digit Company ID" inputmode="numeric" maxlength="8" oninput="updateInvoice(); resetIcoStatus('cust')" onkeydown="if(event.key==='Enter'){event.preventDefault();lookupCompany('cust')}"><button type="button" class="btn btn-outline" id="custLookupBtn" onclick="lookupCompany('cust')">Look Up</button></div><small id="custIcoStatus" class="ico-status" role="status" aria-live="polite"></small>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>Customer Name / Full Name</label>
+                    <input type="text" id="custName" class="form-control" placeholder="Klient Firma s.r.o." oninput="updateInvoice()">
+                </div>
+                <div class="form-grid-2">
+                    <div class="form-group">
+                        <label>Street and Number</label>
+                        <input type="text" id="custStreet" class="form-control" placeholder="Business Street 45" oninput="updateInvoice()">
+                    </div>
+                    <div class="form-group">
+                        <label>City and Postal Code</label>
+                        <input type="text" id="custCity" class="form-control" placeholder="040 01 Košice, Slovakia" oninput="updateInvoice()">
+                    </div>
+                </div>
+                <div class="form-grid-3">
+                    <div class="form-group advanced-only">
+                        <label>Tax ID</label>
+                        <input type="text" id="custDic" class="form-control" placeholder="2098765432" oninput="updateInvoice()">
+                    </div>
+                    <div class="form-group advanced-only">
+                        <label>VAT ID</label>
+                        <input type="text" id="custIcdph" class="form-control" placeholder="SK2098765432" oninput="updateInvoice()">
+                    </div>
+                </div>
+
+                <!-- Invoice Line Items -->
+                <div class="form-section-title">
+                    <span>Invoice Line Items</span>
+                    <button class="btn btn-outline" style="padding: 4px 10px; font-size: 11px;" onclick="addItemRow()">+ Add Item</button>
+                </div>
+                
+                <table class="items-form-table">
+                    <thead>
+                        <tr>
+                            <th style="width: 45%;">Item description</th>
+                            <th style="width: 15%;">Quantity</th>
+                            <th style="width: 20%;">Unit Price</th>
+                            <th class="advanced-only">Discount %</th>
+                            <th>VAT %</th>
+                            <th style="width: 15%;"></th>
+                        </tr>
+                    </thead>
+                    <tbody id="itemsContainer">
+                        <!-- Items rendered via JS -->
+                    </tbody>
+                </table>
+
+                <div id="validationErrors" role="alert" aria-live="polite" style="display:none;border:1px solid #fca5a5;background:#fef2f2;color:#991b1b;padding:12px;border-radius:8px;margin:15px 0;white-space:pre-line"></div>
+                
+                <div class="form-group" style="margin-top: 20px;">
+                    <label for="invNote">Invoice Note</label>
+                    <textarea id="invNote" class="form-control" rows="2" placeholder="Thank you for using our services." oninput="updateInvoice()"></textarea>
+                </div>
+
+            </div>
+
+            <!-- RIGHT COLUMN: LIVE A4 INVOICE PREVIEW -->
+            <div class="preview-wrapper">
+                <div class="invoice-paper" id="invoicePaper">
+                    <div>
+                        <!-- Invoice Header -->
+                        <div class="inv-header">
+                            <div>
+                                <div class="inv-brand-title" id="prevSupNameTitle">Your Company Name</div>
+                                <div style="font-size: 11px; color: var(--text-muted); margin-top: 2px;">Supplier Document</div>
+                            </div>
+                            <div class="inv-type-title">
+                                <h2>INVOICE</h2>
+                                <div class="inv-number">No. <span id="prevInvNumber">20260001</span></div>
+                            </div>
+                        </div>
+
+                        <!-- Parties Info -->
+                        <div class="inv-parties">
+                            <div class="inv-party-box">
+                                <h3>Supplier</h3>
+                                <div class="inv-party-name" id="prevSupName">Your Company Name</div>
+                                <div class="inv-party-details" id="prevSupAddress">
+                                    Street 123<br>000 00 City
+                                </div>
+                                <div class="inv-party-details" style="margin-top: 6px;" id="prevSupTaxInfo">
+                                    Company ID (IČO): 12345678<br>Tax ID: 2021234567
+                                </div>
+                            </div>
+                            <div class="inv-party-box">
+                                <h3>Customer</h3>
+                                <div class="inv-party-name" id="prevCustName">Customer Name</div>
+                                <div class="inv-party-details" id="prevCustAddress">
+                                    Customer Street 45<br>000 00 Customer City
+                                </div>
+                                <div class="inv-party-details" style="margin-top: 6px;" id="prevCustTaxInfo">
+                                    Company ID (IČO): 87654321<br>Tax ID: 2098765432
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Dates & Banking Strip -->
+                        <div class="inv-meta-grid">
+                            <div class="inv-meta-item">
+                                <label>Issue Date</label>
+                                <span id="prevDateIssue">01.01.2026</span>
+                            </div>
+                            <div class="inv-meta-item">
+                                <label>Supply Date</label>
+                                <span id="prevDateSupply">01.01.2026</span>
+                            </div>
+                            <div class="inv-meta-item">
+                                <label>Due Date</label>
+                                <span id="prevDateDue">15.01.2026</span>
+                            </div>
+                            <div class="inv-meta-item">
+                                <label>Variable Symbol</label>
+                                <span id="prevVS">20260001</span>
+                            </div>
+                            <div class="inv-meta-item">
+                                <label>Constant Symbol</label>
+                                <span id="prevKS">0308</span>
+                            </div>
+                            <div class="inv-meta-item">
+                                <label>IBAN</label>
+                                <span id="prevIban">SK00 0000 0000 0000</span>
+                            </div>
+                        </div>
+
+                        <!-- Items Table -->
+                        <table class="inv-table">
+                            <thead>
+                                <tr>
+                                    <th>Item / Service Description</th>
+                                    <th class="text-right">Quantity</th>
+                                    <th class="text-right">Unit Price</th>
+                                    <th class="text-right" id="thDphHeader" style="display:none;">DPH</th>
+                                    <th class="text-right">Total</th>
+                                </tr>
+                            </thead>
+                            <tbody id="prevItemsBody">
+                                <!-- Dynamic Render -->
+                            </tbody>
+                        </table>
+
+                        <!-- Totals & QR Section -->
+                        <div class="inv-bottom-section">
+                            <div class="inv-qr-block">
+                                <div id="qrcode"></div>
+                                <div class="qr-info">
+                                    <h4>SEPA QR (EPC)</h4>
+                                    <p>Scan the code using your mobile banking app to make a quick payment.</p>
+                                </div>
+                            </div>
+
+                            <div class="inv-totals-box">
+                                <div id="taxBreakdown"></div>
+                                <div class="inv-total-row"><span>Total:</span><span id="prevGross">0.00 €</span></div>
+                                <div class="inv-total-row"><span>Advance:</span><span id="prevAdvance">0.00 €</span></div>
+                                <div class="inv-total-row"><span>Paid:</span><span id="prevPaid">0.00 €</span></div>
+                                <div class="inv-total-row grand-total"><span>Amount Due:</span><span id="prevGrandTotal">0.00 €</span></div>
+                            </div>
+                        </div>
+
+                        <div id="prevExtra" style="margin-top:15px;font-size:11px;color:#475569;white-space:pre-line"></div>
+                        <div style="margin-top: 15px; font-size: 11px; color: #475569;" id="prevNoteBlock">
+                            <strong>Note:</strong> <span id="prevNote">--</span>
+                        </div>
+                    </div>
+
+                    <!-- Footer Note -->
+                    <div class="inv-footer-note">
+                        This invoice was generated using the free tool at <strong>DataPay.sk</strong> <br> Payroll, Accounting & HR.
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+    </main>
+
+    <!-- FOOTER -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-column">
+                    <h3>DataPay s.r.o.</h3>
+                    <p>Accounting, payroll, HR and professional consulting.</p>
+                    <p>We provide services to businesses throughout Slovakia.</p>
+                </div>
+                <div class="footer-column">
+                    <h3>Contact</h3>
+                    <p><a href="mailto:datapaysk@gmail.com">datapaysk@gmail.com</a></p>
+                    <p><a href="tel:+421903270664">+421 903 270 664</a></p>
+                    <p><a href="tel:+421907837030">+421 907 837 030</a></p>
+                </div>
+                <div class="footer-column">
+                    <h3>Company Details</h3>
+                    <p>Company ID (IČO): 57456615</p>
+                    <p>Tax ID: 2122742622</p>
+                    <p>VAT ID: Not VAT registered</p>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <a href="/en/GDPR.html">GDPR</a><br><br>
+                © 2026 DataPay s.r.o. All rights reserved.
+            </div>
+        </div>
+    </footer>
+
+    <!-- INTERACTIVE JAVASCRIPT LOGIC -->
+    <script>
+
+        // Company details: Subjekt API. Lookup is performed only when requested by the user.
+        function resetIcoStatus(prefix) {
+            const status = $(prefix + 'IcoStatus');
+            if (status) { status.textContent = ''; status.className = 'ico-status'; }
+        }
+        function setIcoStatus(prefix, message, kind = '') {
+            const status = $(prefix + 'IcoStatus');
+            if (status) { status.textContent = message; status.className = 'ico-status ' + kind; }
+        }
+        async function lookupCompany(prefix) {
+            if (!['sup', 'cust'].includes(prefix)) return;
+            const ico = val(prefix + 'Ico').replace(/\s/g, '');
+            if (!/^\d{8}$/.test(ico)) {
+                setIcoStatus(prefix, 'Please enter a valid 8-digit Company ID.', 'error'); return;
+            }
+            const btn = $(prefix + 'LookupBtn');
+            btn.disabled = true;
+            btn.textContent = 'Loading…';
+            setIcoStatus(prefix, 'Searching for company…');
+            try {
+                const controller = new AbortController();
+                const timeout = setTimeout(() => controller.abort(), 10000);
+                let response;
+                try {
+                    response = await fetch('https://api.subjekt.sk/v1/entity/' + encodeURIComponent(ico) + '?country=sk',
+                        { headers: { Accept: 'application/json' }, signal: controller.signal });
+                } finally { clearTimeout(timeout); }
+                if (response.status === 404) throw new Error('Company not found. You can enter the details manually.');
+                if (!response.ok) throw new Error('The registry is currently unavailable (HTTP ' + response.status + ').');
+                const payload = await response.json();
+                const entity = payload.data && typeof payload.data === 'object' ? payload.data : payload;
+                if (!entity || !entity.name || String(entity.ico || ico).replace(/\D/g, '') !== ico)
+                    throw new Error('The registry did not return matching details.');
+                // If the user changes the Company ID while the lookup is in progress, do not apply the result.
+                if (val(prefix + 'Ico').replace(/\s/g, '') !== ico) return;
+                const a = entity.address || {};
+                const street = typeof a === 'string' ? a : [a.street, a.building_no || a.buildingNo].filter(Boolean).join(' ');
+                const city = typeof a === 'object' ? [a.zip || a.postal_code || a.postalCode, a.city || a.municipality].filter(Boolean).join(' ') : '';
+                const fields = {
+                    Name: entity.name,
+                    Street: street,
+                    City: city,
+                    Dic: entity.dic || entity.tax_id || entity.taxId,
+                    Icdph: entity.ic_dph || entity.icdph || entity.vat_id || entity.vatId
+                };
+                // Do not invent unknown fields or overwrite them with empty values.
+                for (const [suffix, value] of Object.entries(fields)) {
+                    const field = $(prefix + suffix);
+                    if (field && value != null && String(value).trim()) field.value = String(value).trim();
+                }
+                updateInvoice();
+                setIcoStatus(prefix, 'Details loaded. Please review them before issuing the invoice.', 'ok');
+            } catch (err) {
+                setIcoStatus(prefix, err.name === 'AbortError' ? 'The search took too long. Please try again.' :
+                    (err instanceof TypeError ? 'Could not connect to the registry. Check your connection or enter the details manually.' : err.message), 'error');
+            } finally {
+                btn.disabled = false;
+                btn.textContent = 'Look Up';
+            }
+        }
+
+        const round2 = x => Math.round((Number(x) + Number.EPSILON) * 100) / 100;
+        const $ = id => document.getElementById(id);
+        const val = id => ($(id) ? $(id).value.trim() : '');
+        const num = id => ($(id) ? Number($(id).value) || 0 : 0);
+        const money = x => round2(x).toFixed(2) + ' ' + (val('currency') || 'EUR');
+
+        let itemsState = [];
+        let invoiceMode = 'simple';
+
+        window.addEventListener('DOMContentLoaded', () => {
+            setDefaultDates();
+            loadSampleData();
+        });
+
+        function setDefaultDates() {
+            const today = new Date();
+            const due = new Date();
+            due.setDate(today.getDate() + 14);
+
+            if ($('dateIssue')) $('dateIssue').valueAsDate = today;
+            if ($('dateSupply')) $('dateSupply').valueAsDate = today;
+            if ($('dateDue')) $('dateDue').valueAsDate = due;
+        }
+
+        function addItemRow(name = '', qty = 1, price = 0, discount = 0, vat = 23) {
+            itemsState.push({ name, qty: Number(qty), price: Number(price), discount: Number(discount), vat: Number(vat) });
+            renderItemsForm();
+            updateInvoice();
+        }
+
+        function removeItemRow(index) {
+            itemsState.splice(index, 1);
+            renderItemsForm();
+            updateInvoice();
+        }
+
+        function renderItemsForm() {
+            const tbody = $('itemsContainer');
+            if (!tbody) return;
+            tbody.replaceChildren();
+
+            itemsState.forEach((item, idx) => {
+                const tr = document.createElement('tr');
+                tr.innerHTML = `
+                    <td><input class="form-control" value="${escapeHTML(item.name)}" aria-label="Item description" oninput="updateItemField(${idx},'name',this.value)"></td>
+                    <td><input type="number" class="form-control" value="${item.qty}" min="0.001" step="any" aria-label="Quantity" oninput="updateItemField(${idx},'qty',this.value)"></td>
+                    <td><input type="number" class="form-control" value="${item.price}" min="0" step="0.01" aria-label="Price" oninput="updateItemField(${idx},'price',this.value)"></td>
+                    <td><input type="number" class="form-control" value="${item.discount || 0}" min="0" max="100" step="0.01" aria-label="Discount percentage" oninput="updateItemField(${idx},'discount',this.value)"></td>
+                    <td>
+                        <select class="form-control" aria-label="Item VAT rate" onchange="updateItemField(${idx},'vat',this.value)">
+                            ${[23, 19, 5, 0].map(r => `<option value="${r}" ${Number(item.vat) === r ? 'selected' : ''}>${r} %</option>`).join('')}
+                        </select>
+                    </td>
+                    <td><button class="btn-remove-row" aria-label="Remove item" onclick="removeItemRow(${idx})">×</button></td>
+                `;
+                tbody.append(tr);
+            });
+        }
+
+        function updateItemField(index, field, value) {
+            if (!itemsState[index]) return;
+            itemsState[index][field] = field === 'name' ? value : Number(value);
+            updateInvoice();
+        }
+
+        function formatDate(dateStr) {
+            if (!/^\d{4}-\d{2}-\d{2}$/.test(dateStr || '')) return '';
+            const [year, month, day] = dateStr.split('-');
+            return `${day}.${month}.${year}`;
+        }
+
+        function escapeHTML(value) {
+            return String(value ?? '').replace(/[&<>"']/g, char => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[char]));
+        }
+
+        function calculate() {
+            const payer = $('isDphPayer') ? $('isDphPayer').checked : false;
+            const mode = val('taxMode') || 'domestic';
+            const taxable = payer && mode === 'domestic';
+            const groups = new Map();
+            const rows = [];
+
+            for (const item of itemsState) {
+                const base = Number(item.qty) * Number(item.price) * (1 - Number(item.discount || 0) / 100);
+                const rate = taxable ? Number(item.vat) : 0;
+                groups.set(rate, (groups.get(rate) || 0) + base);
+                rows.push({ item, base, rate });
+            }
+
+            let base = 0, tax = 0;
+            const summary = [...groups.entries()].sort((a, b) => b[0] - a[0]).map(([rate, raw]) => {
+                const net = round2(raw);
+                const vat = round2(raw * rate / 100);
+                base += net;
+                tax += vat;
+                return { rate, net, vat };
+            });
+
+            const gross = round2(base + tax);
+            const due = round2(Math.max(0, gross - round2(num('advance')) - round2(num('paid'))));
+            return { payer, mode, taxable, rows, summary, base: round2(base), tax: round2(tax), gross, due };
+        }
+
+        function validateInvoice(forExport = false) {
+            const errors = [];
+            const c = calculate();
+            const requiredFields = [
+                ['invNumber', 'Invoice Number'], ['dateIssue', 'Issue Date'],
+                ['dateSupply', 'Supply Date'], ['dateDue', 'Due Date'],
+                ['supName', 'Supplier Name'], ['supStreet', 'Supplier Street'],
+                ['supCity', 'Supplier City and Postal Code'], ['custName', 'Customer Name'],
+                ['custStreet', 'Customer Street'], ['custCity', 'Customer City and Postal Code']
+            ];
+
+            for (const [id, label] of requiredFields) {
+                if (!val(id)) errors.push('Missing: ' + label);
+            }
+
+            if (val('dateDue') && val('dateIssue') && val('dateDue') < val('dateIssue')) {
+                errors.push('The due date is earlier than the issue date.');
+            }
+
+            if (c.payer && !val('supIcdph')) errors.push('A VAT-registered supplier must enter a VAT ID.');
+            if (c.mode !== 'domestic' && !c.payer) errors.push('The special scheme in this version requires the supplier to be VAT registered.');
+            if (c.mode !== 'domestic' && !val('legalRef')) errors.push('Please provide and verify the legal basis for the special scheme.');
+
+            if (!itemsState.length || itemsState.some(x => !String(x.name).trim() || !Number.isFinite(x.qty) || x.qty <= 0 || !Number.isFinite(x.price) || x.price < 0)) {
+                errors.push('Please check the invoice line items.');
+            }
+
+            if (val('paymentMethod') === 'Bank Transfer' && val('supIban') && !validIBAN(val('supIban'))) {
+                errors.push('Please enter a valid IBAN.');
+            }
+
+            const el = $('validationErrors');
+            if (el) {
+                el.textContent = errors.join('\n');
+                el.style.display = errors.length ? 'block' : 'none';
+                if (forExport && errors.length) el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            }
+
+            return !errors.length;
+        }
+
+        function formatIbanInput(input) {
+            if (!input) return;
+            const before = input.value.slice(0, input.selectionStart ?? input.value.length);
+            const countBefore = before.replace(/[^a-zA-Z0-9]/g, '').length;
+            const clean = input.value.replace(/[^a-zA-Z0-9]/g, '').toUpperCase().slice(0, 34);
+            const formatted = clean.replace(/(.{4})(?=.)/g, '$1 ');
+            input.value = formatted;
+            let cursor = 0, seen = 0;
+            while (cursor < formatted.length && seen < countBefore) {
+                if (/[A-Z0-9]/.test(formatted[cursor])) seen++;
+                cursor++;
+            }
+            if (formatted[cursor] === ' ' && cursor < formatted.length) cursor++;
+            input.setSelectionRange(cursor, cursor);
+            updateInvoice();
+        }
+
+        function validIBAN(value) {
+            const x = value.replace(/\s/g, '').toUpperCase();
+            if (!/^[A-Z]{2}[0-9]{2}[A-Z0-9]{11,30}$/.test(x)) return false;
+            const rearranged = x.slice(4) + x.slice(0, 4);
+            let remainder = 0;
+            for (const ch of rearranged) {
+                const str = /[A-Z]/.test(ch) ? String(ch.charCodeAt(0) - 55) : ch;
+                for (const digit of str) remainder = (remainder * 10 + Number(digit)) % 97;
+            }
+            return remainder === 1;
+        }
+
+        function updateInvoice() {
+            const c = calculate();
+            if ($('legalRefGroup')) $('legalRefGroup').style.display = c.mode === 'domestic' ? 'none' : 'block';
+
+            const txt = (id, value) => { if ($(id)) $(id).textContent = value; };
+
+            txt('prevSupNameTitle', val('supName') || 'Supplier');
+            txt('prevInvNumber', val('invNumber') || '---');
+            txt('prevSupName', val('supName') || 'Supplier');
+
+            if ($('prevSupAddress')) $('prevSupAddress').innerHTML = escapeHTML(val('supStreet')) + '<br>' + escapeHTML(val('supCity'));
+            if ($('prevSupTaxInfo')) {
+                $('prevSupTaxInfo').innerHTML = 'Company ID (IČO): ' + escapeHTML(val('supIco') || '---') + '<br>Tax ID: ' + escapeHTML(val('supDic') || '---') +
+                    (c.payer ? '<br>VAT ID: ' + escapeHTML(val('supIcdph') || '---') : '<br>Not VAT registered') +
+                    (val('registry') ? '<br>' + escapeHTML(val('registry')) : '');
+            }
+
+            txt('prevCustName', val('custName') || 'Customer');
+            if ($('prevCustAddress')) $('prevCustAddress').innerHTML = escapeHTML(val('custStreet')) + '<br>' + escapeHTML(val('custCity'));
+            if ($('prevCustTaxInfo')) {
+                $('prevCustTaxInfo').innerHTML = 'Company ID (IČO): ' + escapeHTML(val('custIco') || '---') + '<br>Tax ID: ' + escapeHTML(val('custDic') || '---') +
+                    (val('custIcdph') ? '<br>VAT ID: ' + escapeHTML(val('custIcdph')) : '');
+            }
+
+            for (const [dest, src] of [['prevDateIssue', 'dateIssue'], ['prevDateSupply', 'dateSupply'], ['prevDateDue', 'dateDue']]) {
+                txt(dest, formatDate(val(src)));
+            }
+
+            txt('prevVS', val('invVS') || '---');
+            txt('prevKS', val('invKS') || '---');
+            txt('prevIban', val('supIban') || '---');
+
+            if ($('thDphHeader')) $('thDphHeader').style.display = c.taxable ? 'table-cell' : 'none';
+            if ($('prevItemsBody')) {
+                $('prevItemsBody').replaceChildren();
+                for (const { item, base, rate } of c.rows) {
+                    const tr = document.createElement('tr');
+                    tr.innerHTML = `<td><strong>${escapeHTML(item.name || 'Item')}</strong>${Number(item.discount) > 0 ? `<br><small>Discount ${escapeHTML(item.discount)} %</small>` : ''}</td>
+                        <td class="text-right">${escapeHTML(item.qty)}</td>
+                        <td class="text-right">${money(item.price)}</td>
+                        ${c.taxable ? `<td class="text-right">${rate} %</td>` : ''}
+                        <td class="text-right"><strong>${money(base)}</strong></td>`;
+                    $('prevItemsBody').append(tr);
+                }
+            }
+
+            if ($('taxBreakdown')) {
+                $('taxBreakdown').replaceChildren();
+                for (const { rate, net, vat } of c.summary) {
+                    const row = document.createElement('div');
+                    row.innerHTML = `<div class="inv-total-row"><span>${c.taxable ? 'Net Amount ' + rate + ' %' : 'Net Amount'}:</span><span>${money(net)}</span></div>${c.taxable ? `<div class="inv-total-row"><span>VAT ${rate} %:</span><span>${money(vat)}</span></div>` : ''}`;
+                    $('taxBreakdown').append(row);
+                }
+            }
+
+            txt('prevGross', money(c.gross));
+            txt('prevAdvance', money(num('advance')));
+            txt('prevPaid', money(num('paid')));
+            txt('prevGrandTotal', money(c.due));
+
+            const notes = { reverse: 'Reverse charge', exempt: 'Tax exempt', intra: 'Intra-EU supply of goods – Section 43', export: 'Export of goods – Section 47' };
+            if ($('prevExtra')) {
+                $('prevExtra').textContent = [val('orderRef') ? 'Order: ' + val('orderRef') : '', 'Payment Method: ' + val('paymentMethod'), notes[c.mode] || '', val('legalRef')].filter(Boolean).join('\n');
+            }
+
+            if ($('prevNoteBlock')) $('prevNoteBlock').style.display = val('invNote') ? 'block' : 'none';
+            txt('prevNote', val('invNote'));
+
+            generateQRCode(val('supIban'), c.due, val('invVS'));
+            validateInvoice();
+        }
+
+        function setInvoiceMode(mode) {
+            if (mode !== 'simple' && mode !== 'advanced') return;
+            invoiceMode = mode;
+            document.body.classList.toggle('simple-mode', mode === 'simple');
+            if ($('modeSimple')) $('modeSimple').setAttribute('aria-pressed', String(mode === 'simple'));
+            if ($('modeAdvanced')) $('modeAdvanced').setAttribute('aria-pressed', String(mode === 'advanced'));
+            if ($('modeHint')) $('modeHint').textContent = mode === 'simple' ? 'Only the basic fields are displayed.' : 'All advanced settings are available.';
+            updateInvoice();
+        }
+
+        function generateQRCode(iban, amount, vs) {
+            const target = $('qrcode');
+            if (!target) return;
+            target.replaceChildren();
+
+            if (val('paymentMethod') !== 'Bank Transfer' || (val('currency') || 'EUR') !== 'EUR' || !validIBAN(iban) || !val('supName') || amount <= 0) {
+                target.textContent = 'SEPA QR code (for bank transfers in EUR)';
+                return;
+            }
+
+            if (typeof QRCode === 'undefined') {
+                target.textContent = 'Loading QR code...';
+                return;
+            }
+
+            const bic = val('supSwift').toUpperCase();
+            const payload = ['BCD', '002', '1', 'SCT', bic, val('supName').slice(0, 70), iban.replace(/\s/g, '').toUpperCase(), 'EUR' + amount.toFixed(2), '', 'VS ' + vs.replace(/\D/g, '').slice(0, 35), ''].join('\n');
+
+            try {
+                new QRCode(target, { text: payload, width: 90, height: 90, colorDark: '#052c64', colorLight: '#ffffff', correctLevel: QRCode.CorrectLevel.L });
+            } catch (e) {
+                target.textContent = 'QR code';
+            }
+        }
+
+        function loadSampleData() {
+            if ($('isDphPayer')) $('isDphPayer').checked = false;
+            if ($('supName')) $('supName').value = 'Sample Company s.r.o.';
+            if ($('supStreet')) $('supStreet').value = 'Mlynské Nivy 10';
+            if ($('supCity')) $('supCity').value = '821 09 Bratislava';
+            if ($('supIco')) $('supIco').value = '12345678';
+            if ($('supDic')) $('supDic').value = '2021234567';
+
+            if ($('custName')) $('custName').value = 'Sample Partner s.r.o.';
+            if ($('custStreet')) $('custStreet').value = 'Vajnorská 45/A';
+            if ($('custCity')) $('custCity').value = '831 04 Bratislava';
+            if ($('custIco')) $('custIco').value = '35890123';
+            if ($('custDic')) $('custDic').value = '2020123456';
+
+            if ($('invNumber')) $('invNumber').value = '20260012';
+            if ($('invVS')) $('invVS').value = '20260012';
+            if ($('invNote')) $('invNote').value = 'Payroll accounting services for October 2026.';
+
+            itemsState = [
+                { name: 'Payroll processing (15 employees)', qty: 1, price: 150.00, discount: 0, vat: 23 },
+                { name: 'Annual tax reconciliation and consulting', qty: 1, price: 50.00, discount: 0, vat: 23 }
+            ];
+
+            renderItemsForm();
+            updateInvoice();
+        }
+
+        function clearForm() {
+            if ($('isDphPayer')) $('isDphPayer').checked = false;
+            ['supName', 'supStreet', 'supCity', 'supIco', 'supDic', 'supIcdph', 'supIban', 'supSwift',
+             'custName', 'custStreet', 'custCity', 'custIco', 'custDic', 'custIcdph',
+             'invNumber', 'invVS', 'invNote'].forEach(id => { if ($(id)) $(id).value = ''; });
+
+            itemsState = [{ name: '', qty: 1, price: 0, discount: 0, vat: 23 }];
+            renderItemsForm();
+            updateInvoice();
+        }
+
+        function printInvoice() {
+            if (validateInvoice(true)) window.print();
+        }
+
+
+
+
+
+
+
+
+async function downloadPDF() {
+    if (!validateInvoice(true)) return;
+
+    if (typeof html2canvas === 'undefined' || !window.jspdf) {
+        alert('The PDF libraries could not be loaded. Please check your internet connection.');
+        return;
+    }
+
+    const original = document.getElementById('invoicePaper');
+
+    if (!original) {
+        alert('Invoice preview not found.');
+        return;
+    }
+
+    const invNum = (val('invNumber') || 'faktura')
+        .replace(/[^a-zA-Z0-9_-]/g, '_');
+
+    const wrapper = document.createElement('div');
+
+    Object.assign(wrapper.style, {
+        position: 'absolute',
+        left: '0',
+        top: '0',
+        width: '794px',
+        minWidth: '794px',
+        margin: '0',
+        padding: '0',
+        background: '#ffffff',
+        zIndex: '-1',
+        pointerEvents: 'none'
+    });
+
+    const clone = original.cloneNode(true);
+
+    Object.assign(clone.style, {
+        display: 'flex',
+        position: 'relative',
+        left: '0',
+        top: '0',
+        transform: 'none',
+        width: '794px',
+        minWidth: '794px',
+        maxWidth: '794px',
+        height: 'auto',
+        minHeight: '1123px',
+        margin: '0',
+        border: 'none',
+        borderRadius: '0',
+        boxShadow: 'none',
+        boxSizing: 'border-box',
+        overflow: 'visible',
+        background: '#ffffff'
+    });
+
+    wrapper.appendChild(clone);
+    document.body.appendChild(wrapper);
+
+    try {
+        // Preserve canvas content, such as the QR code.
+        const originalCanvases = original.querySelectorAll('canvas');
+        const clonedCanvases = clone.querySelectorAll('canvas');
+
+        originalCanvases.forEach((source, index) => {
+            const target = clonedCanvases[index];
+
+            if (target) {
+                target.width = source.width;
+                target.height = source.height;
+
+                const context = target.getContext('2d');
+                if (context) {
+                    context.drawImage(source, 0, 0);
+                }
+            }
+        });
+
+        await new Promise(resolve => {
+            requestAnimationFrame(() => {
+                requestAnimationFrame(resolve);
+            });
+        });
+
+        const canvas = await html2canvas(clone, {
+            scale: 2,
+            backgroundColor: '#ffffff',
+            useCORS: true,
+            logging: false,
+            scrollX: 0,
+            scrollY: 0,
+            width: 794,
+            windowWidth: 1200
+        });
+
+        const { jsPDF } = window.jspdf;
+
+        const pdf = new jsPDF({
+            orientation: 'portrait',
+            unit: 'mm',
+            format: 'a4',
+            compress: true
+        });
+
+        // Fit the entire invoice onto one A4 page.
+        const pageWidth = 210;
+        const pageHeight = 297;
+        const margin = 8;
+
+        const availableWidth = pageWidth - margin * 2;
+        const availableHeight = pageHeight - margin * 2;
+
+        const ratio = Math.min(
+            availableWidth / canvas.width,
+            availableHeight / canvas.height
+        );
+
+        const imageWidth = canvas.width * ratio;
+        const imageHeight = canvas.height * ratio;
+
+        const x = (pageWidth - imageWidth) / 2;
+        const y = (pageHeight - imageHeight) / 2;
+
+        const imageData = canvas.toDataURL('image/jpeg', 0.98);
+
+        pdf.addImage(
+            imageData,
+            'JPEG',
+            x,
+            y,
+            imageWidth,
+            imageHeight
+        );
+
+        pdf.save(`Faktura_${invNum}.pdf`);
+
+    } catch (error) {
+        console.error('Error creating PDF:', error);
+        alert('Could not generate the PDF. Open the browser console by pressing F12.');
+    } finally {
+        wrapper.remove();
+    }
+}
+
+
+
+    </script>
+</body>
+
+</html>
