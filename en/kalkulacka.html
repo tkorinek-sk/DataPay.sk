@@ -1,1 +1,562 @@
+<!DOCTYPE html>
+<html lang="en">
 
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Salary Calculator 2026 | Net Salary Calculation | DataPay s.r.o.</title>
+    <meta name="description" content="Free 2026 salary calculator. Calculate your net salary, social/health contributions, and total employer labor costs according to current Slovak legislation.">
+    <meta name="author" content="DataPay s.r.o.">
+    <meta name="theme-color" content="#052c64">
+    <link rel="icon" href="/favicon.png" type="image/png">
+    <link rel="canonical" href="https://datapay.sk/en/kalkulacka.html">
+
+    <style>
+        /* =====================================================
+            1. RESET & CORE VARIABLES (Matches DataPay.sk)
+        ===================================================== */
+        :root {
+            --primary: #052c64;
+            --primary-hover: #0b3e80;
+            --accent: #397bb8;
+            --accent-light: #eef5fc;
+            --text-dark: #172b4d;
+            --text-muted: #64748b;
+            --border-color: #e2e8f0;
+            --bg-light: #f7f9fc;
+            --white: #ffffff;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+            background-color: var(--bg-light);
+            color: var(--text-dark);
+            line-height: 1.6;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        /* =====================================================
+            2. HEADER & NAVIGATION (DataPay Style)
+        ===================================================== */
+        .site-header {
+            background: #ffffff;
+            border-bottom: 1px solid #e6ebf2;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .nav-container {
+            width: 90%;
+            max-width: 1200px;
+            min-height: 88px;
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 35px;
+        }
+
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+        }
+
+        .brand img {
+            width: 54px;
+            height: 54px;
+            object-fit: contain;
+            display: block;
+        }
+
+        .brand-text {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .brand-name {
+            color: #052c64;
+            font-size: 20px;
+            font-weight: 700;
+            line-height: 1.2;
+        }
+
+        .brand-subtitle {
+            color: #718096;
+            font-size: 12px;
+            margin-top: 4px;
+        }
+
+        .main-nav {
+            display: flex;
+            align-items: center;
+            gap: 28px;
+        }
+
+        .main-nav > a {
+            color: #334155;
+            font-size: 14px;
+            font-weight: 500;
+            transition: color 0.2s ease;
+        }
+
+        .main-nav > a:hover {
+            color: #052c64;
+        }
+
+        .main-nav > a.active {
+            color: #052c64;
+            font-weight: 700;
+        }
+
+        .language {
+            display: flex;
+            align-items: center;
+            gap: 7px;
+            margin-left: 5px;
+            font-size: 13px;
+        }
+
+        .language a {
+            color: #94a3b8;
+            font-weight: 500;
+        }
+
+        .language a.active {
+            color: #052c64;
+            font-weight: 700;
+        }
+
+        .language span {
+            color: #cbd5e1;
+        }
+
+        /* =====================================================
+            3. PAGE HERO STRIP
+        ===================================================== */
+        .page-banner {
+            background: linear-gradient(135deg, #ffffff 0%, #edf4fa 100%);
+            border-bottom: 1px solid var(--border-color);
+            padding: 35px 0;
+            text-align: center;
+        }
+
+        .page-banner h1 {
+            color: var(--primary);
+            font-size: clamp(28px, 4vw, 38px);
+            font-weight: 800;
+            margin-bottom: 8px;
+        }
+
+        .page-banner p {
+            color: var(--text-muted);
+            font-size: 15px;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        /* =====================================================
+            4. CALCULATOR WORKSPACE
+        ===================================================== */
+        .calc-wrapper {
+            width: 92%;
+            max-width: 1100px;
+            margin: 40px auto 60px;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            align-items: start;
+        }
+
+        .calc-card {
+            background: var(--white);
+            border: 1px solid var(--border-color);
+            border-radius: 14px;
+            padding: 30px;
+            box-shadow: 0 10px 30px rgba(5, 44, 100, 0.05);
+        }
+
+        .calc-card h2 {
+            font-size: 18px;
+            color: var(--primary);
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid var(--accent-light);
+        }
+
+        .form-group {
+            margin-bottom: 18px;
+        }
+
+        .form-group label {
+            display: block;
+            font-size: 13px;
+            font-weight: 700;
+            color: #334155;
+            margin-bottom: 6px;
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 11px 14px;
+            font-size: 15px;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            background-color: #ffffff;
+            color: var(--text-dark);
+            transition: border-color 0.2s, box-shadow 0.2s;
+        }
+
+        .form-control:focus {
+            outline: none;
+            border-color: var(--accent);
+            box-shadow: 0 0 0 3px rgba(57, 123, 184, 0.15);
+        }
+
+        /* Results Panel */
+        .result-card {
+            background: linear-gradient(145deg, #052c64, #0a427b);
+            color: var(--white);
+            border-radius: 14px;
+            padding: 30px;
+            box-shadow: 0 15px 35px rgba(5, 44, 100, 0.2);
+        }
+
+        .result-card h2 {
+            font-size: 18px;
+            color: #ffffff;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid rgba(255, 255, 255, 0.15);
+        }
+
+        .net-salary-box {
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 10px;
+            padding: 20px;
+            text-align: center;
+            margin-bottom: 25px;
+        }
+
+        .net-salary-box span {
+            display: block;
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: #94a3b8;
+            margin-bottom: 5px;
+        }
+
+        .net-salary-box strong {
+            font-size: 36px;
+            color: #6bc5ff;
+            font-weight: 800;
+        }
+
+        .breakdown-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 9px 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+            font-size: 14px;
+            color: #cbd5e1;
+        }
+
+        .breakdown-row span:last-child {
+            font-weight: 700;
+            color: #ffffff;
+        }
+
+        .breakdown-row.total-cost {
+            border-top: 2px solid rgba(255, 255, 255, 0.2);
+            margin-top: 10px;
+            padding-top: 12px;
+            font-size: 16px;
+            font-weight: 700;
+            color: #ffffff;
+        }
+
+        /* =====================================================
+            5. FOOTER (DataPay Style)
+        ===================================================== */
+        .footer {
+            background: #071c35;
+            color: #ffffff;
+            padding: 60px 0 25px;
+            margin-top: auto;
+        }
+
+        .footer .container {
+            width: min(1180px, 92%);
+            margin: 0 auto;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 50px;
+            padding-bottom: 40px;
+        }
+
+        .footer-column:nth-child(1) { text-align: left; }
+        .footer-column:nth-child(2) { text-align: center; }
+        .footer-column:nth-child(3) { text-align: right; }
+
+        .footer-column h3 {
+            font-size: 16px;
+            margin-bottom: 16px;
+        }
+
+        .footer-column p {
+            color: #aebdcd;
+            font-size: 13px;
+            line-height: 1.8;
+        }
+
+        .footer-column a {
+            color: #c8d6e5;
+            transition: color .2s ease;
+        }
+
+        .footer-column a:hover {
+            color: #ffffff;
+        }
+
+        .footer-bottom {
+            border-top: 1px solid rgba(255,255,255,.10);
+            padding-top: 22px;
+            color: #8fa1b4;
+            font-size: 11px;
+            text-align: center;
+        }
+
+        .footer-bottom a {
+            color: #c2d1df;
+        }
+
+        /* =====================================================
+            6. RESPONSIVE BREAKPOINTS
+        ===================================================== */
+        @media (max-width: 900px) {
+            .calc-wrapper {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 800px) {
+            .nav-container {
+                flex-direction: column;
+                justify-content: center;
+                padding: 18px 0;
+                gap: 15px;
+            }
+            .main-nav {
+                flex-wrap: wrap;
+                justify-content: center;
+                gap: 14px 20px;
+            }
+            .footer-content {
+                grid-template-columns: 1fr;
+                gap: 30px;
+            }
+            .footer-column:nth-child(n) {
+                text-align: center;
+            }
+        }
+
+        /* Compact expandable insurance breakdowns */
+        .insurance-detail {border-bottom:1px solid rgba(255,255,255,.08);font-size:14px;color:#cbd5e1}
+        .insurance-detail summary {display:flex;align-items:center;justify-content:space-between;gap:12px;padding:9px 0;cursor:pointer;list-style:none}
+        .insurance-detail summary::-webkit-details-marker {display:none}
+        .insurance-detail summary span {min-width:0}
+        .insurance-detail summary span::before {content:"▸";display:inline-block;margin-right:7px;transition:transform .2s}
+        .insurance-detail[open] summary span::before {transform:rotate(90deg)}
+        .insurance-detail summary small {display:block;margin-left:18px;font-size:11px;color:#a9c7e4;font-weight:400}
+        .insurance-detail summary strong {color:#fff;white-space:nowrap}
+        .insurance-parts {padding:0 0 7px 18px;border-left:2px solid rgba(255,255,255,.2);margin:0 0 8px 5px}
+        .insurance-parts .breakdown-row {font-size:12px;padding:5px 0}
+        .total-price-box {margin-top:24px;margin-bottom:0}
+    </style>
+</head>
+
+<body>
+
+    <!-- SITE HEADER & NAVIGATION -->
+    <header class="site-header">
+        <div class="nav-container">
+            <a class="brand" href="index.html">
+                <img alt="DataPay logo" src="logo.png"/>
+                <div class="brand-text">
+                    <div class="brand-name">DataPay s.r.o.</div>
+                    <div class="brand-subtitle">Payroll • Accounting • HR</div>
+                </div>
+            </a>
+            <nav class="main-nav">
+                <a href="index.html">Home</a>
+                <a href="About.html">About Us</a>
+                <a href="payroll.html">Services</a>
+                <a href="Cennik.html">Pricing</a>
+                <a href="FAQ.html">FAQ</a>
+                <a href="faktura.html">Invoice Generator</a>
+                <a href="kalkulacka.html" class="active">Salary Calculator</a>
+                <div class="language">
+                    <a href="../kalkulacka.html">SK</a>
+                    <span>/</span>
+                    <a class="active" href="kalkulacka.html">EN</a>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <!-- PAGE HERO -->
+    <section class="page-banner">
+        <div class="container">
+            <h1>Salary Calculator 2026</h1>
+            <p>Calculate your net salary, mandatory contributions, and total labor costs for 2026 according to current legislation.</p>
+        </div>
+    </section>
+
+    <!-- MAIN CALCULATOR WORKSPACE -->
+    <div class="calc-wrapper">
+      <div class="calc-card">
+        <h2>Input Data</h2>
+        <div class="form-group"><label for="grossSalary">Gross monthly salary (€)</label><input type="number" id="grossSalary" class="form-control" value="1200" min="0" step="0.01"></div>
+        <div class="form-group"><label for="bonusSalary">Taxable bonuses and allowances (€)</label><input type="number" id="bonusSalary" class="form-control" value="0" min="0" step="0.01"></div>
+        <div class="form-group"><label for="nczd">Apply monthly Tax-Free Allowance (signed declaration)?</label><select id="nczd" class="form-control"><option value="yes">Yes</option><option value="no">No</option></select></div>
+        <div class="form-group"><label for="healthType">Health insurance</label><select id="healthType" class="form-control"><option value="standard">Standard employee (5% / 11%)</option><option value="disabled">Person with disabilities (2.5% / 5.5%)</option></select></div>
+        <div class="form-group"><label for="hasTaxBonus">Apply child tax bonus?</label><select id="hasTaxBonus" class="form-control"><option value="no">No</option><option value="yes">Yes</option></select></div>
+        <div id="childrenGroup" style="display:none">
+          <div class="form-group"><label for="childrenUnder15">Number of eligible children under 15 (including the month of 15th birthday)</label><input type="number" id="childrenUnder15" class="form-control" min="0" max="20" value="0" step="1"></div>
+          <div class="form-group"><label for="children15to18">Number of eligible children aged 15–18 (including the month of 18th birthday)</label><input type="number" id="children15to18" class="form-control" min="0" max="20" value="0" step="1"></div>
+          <div class="form-group"><label for="bonusEligibility">Condition of at least 90% taxable income from the Slovak Republic is met</label><select id="bonusEligibility" class="form-control"><option value="yes">Yes – confirmed by user</option><option value="no">No / I don't know (bonus will not be included)</option></select></div>
+        </div>
+        <p style="font-size:12px;color:var(--text-muted)">Scope: standard monthly employment in SK, full month, without concurrent employment, sick leave, pension status, agreements (dohody), or special contribution regimes. Entered bonuses are considered fully taxable and subject to contributions. For concurrent employment or special regimes, please use payroll software.</p>
+      </div>
+      <div class="result-card">
+        <h2>Calculation Result</h2>
+        <div class="net-salary-box"><span>Net Salary (Take-home)</span><strong id="resNetSalary">—</strong></div>
+        <div id="results"></div>
+        <div class="net-salary-box total-price-box"><span>Total Labor Cost (Company cost)</span><strong id="resTotalPrice">—</strong></div>
+        <div id="warnings" role="status" style="font-size:12px;color:#e0ecff;margin-top:18px;line-height:1.6"></div>
+      </div>
+    </div>
+    <!-- FOOTER -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-column">
+                    <h3>DataPay s.r.o.</h3>
+                    <p>Accounting, payroll, HR, and expert advisory.</p>
+                    <p>We provide services to companies across Slovakia.</p>
+                </div>
+                <div class="footer-column">
+                    <h3>Contact</h3>
+                    <p><a href="mailto:datapaysk@gmail.com">datapaysk@gmail.com</a></p>
+                    <p><a href="tel:+421903270664">+421 903 270 664</a></p>
+                    <p><a href="tel:+421907837030">+421 907 837 030</a></p>
+                </div>
+                <div class="footer-column">
+                    <h3>Company Details</h3>
+                    <p>ID (IČO): 57456615</p>
+                    <p>Tax ID (DIČ): 2122742622</p>
+                    <p>VAT ID: We are not a VAT payer</p>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <a href="GDPR.html">GDPR</a><br><br>
+                © 2026 DataPay s.r.o. All rights reserved.
+            </div>
+        </div>
+    </footer>
+
+    <!-- CALCULATOR LOGIC: regular monthly employment, 2026 -->
+    <script>
+    "use strict";
+    const RULES = Object.freeze({ nczd:497.23, maxSocialBase:16764, bonusThreshold:2286,
+      brackets:[[3665.28,.19],[5029.10,.25],[6250.86,.30],[Infinity,.35]],
+      employeeSocial:[['Sickness',.014],['Old-age',.04],['Disability',.03],['Unemployment',.01]],
+      employerSocial:[['Sickness',.014],['Old-age',.14],['Disability',.03],['Unemployment',.01],['Guarantee',.0025],['Solidarity Reserve Fund',.0475]],
+      employerAccident:.008, limits:[0,.29,.36,.43,.50,.57,.64] });
+    const $=id=>document.getElementById(id);
+    const cents=x=>Math.round((x+Number.EPSILON)*100)/100;
+    const down=x=>Math.floor((x+1e-8)*100)/100;
+    const euro=x=>new Intl.NumberFormat('en-US',{style:'currency',currency:'EUR'}).format(x);
+    const value=id=>Number($(id).value);
+    const row=(label,v,cls='')=>`<div class="breakdown-row ${cls}"><span>${label}</span><span>${euro(v)}</span></div>`;
+    function progressiveTax(base){let previous=0,sum=0;for(const [limit,rate] of RULES.brackets){let part=Math.max(0,Math.min(base,limit)-previous);sum+=part*rate;previous=limit;if(base<=limit)break;}return down(sum);}
+    const detail=(label,total,parts)=>`<details class="insurance-detail"><summary><span>${label}<small>Click to expand detailed breakdown</small></span><strong>${euro(total)}</strong></summary><div class="insurance-parts">${parts.map(([n,v])=>row(n,v)).join('')}</div></details>`;
+    function calculateSalary(){
+      const ids=['grossSalary','bonusSalary','childrenUnder15','children15to18'];
+      if(ids.some(id=>!Number.isFinite(value(id))||value(id)<0)||['childrenUnder15','children15to18'].some(id=>!Number.isInteger(value(id))||value(id)>20)){
+        $('resNetSalary').textContent='—';$('resTotalPrice').textContent='—';$('results').innerHTML='';$('warnings').textContent='Please enter valid non-negative values and whole numbers of children (maximum 20).';return;
+      }
+      const gross=cents(value('grossSalary')+value('bonusSalary'));
+      const base=Math.min(gross,RULES.maxSocialBase);
+      // Social insurance: individual components rounded down to eurocents.
+      const empParts=RULES.employeeSocial.map(([name,rate])=>[name,down(base*rate)]);
+      const employerParts=RULES.employerSocial.map(([name,rate])=>[name,down(base*rate)]);
+      employerParts.push(['Accident (without cap)',down(gross*RULES.employerAccident)]);
+      const sum=parts=>cents(parts.reduce((a,[,v])=>a+v,0));
+      const socialEmp=sum(empParts), socialEmployer=sum(employerParts);
+      const healthDisabled=$('healthType').value==='disabled';
+      const healthEmp=down(gross*(healthDisabled?.025:.05));
+      const healthEmployer=down(gross*(healthDisabled?.055:.11));
+      const taxBase=cents(Math.max(0,gross-socialEmp-healthEmp));
+      const nczd=$('nczd').value==='yes'?Math.min(taxBase,RULES.nczd):0;
+      const taxable=cents(Math.max(0,taxBase-nczd));
+      const tax=progressiveTax(taxable);
+      const countUnder=value('childrenUnder15'), countOlder=value('children15to18');
+      const count=$('hasTaxBonus').value==='yes'?countUnder+countOlder:0;
+      const eligible=$('bonusEligibility').value==='yes';
+      const limit=RULES.limits[Math.min(count,6)];
+      // Monthly high-income taper: annual threshold 27,432 / 12 = 2,286; reduction per child 1/10 of excess.
+      const taper=down(Math.max(0,taxBase-RULES.bonusThreshold)*.1);
+      const theoretical=cents(countUnder*Math.max(0,100-taper)+countOlder*Math.max(0,50-taper));
+      const bonus=(count&&eligible)?Math.min(theoretical,down(taxBase*limit)):0;
+      const taxAfterBonus=Math.max(0,cents(tax-bonus));
+      const bonusPaid=Math.max(0,cents(bonus-tax));
+      const net=cents(gross-socialEmp-healthEmp-taxAfterBonus+bonusPaid);
+      const employerTotal=cents(socialEmployer+healthEmployer);
+      $('resNetSalary').textContent=euro(net);
+      $('resTotalPrice').textContent=euro(cents(gross+employerTotal));
+      $('results').innerHTML=row('Gross salary including bonuses',gross)+
+        detail('Employee social insurance',socialEmp,empParts)+
+        row('Employee health insurance',healthEmp)+row('Partial tax base',taxBase)+
+        row('Applied monthly tax-free allowance (NCZD)',nczd)+row('Taxable wage after tax-free allowance',taxable)+
+        row('Tax advance before bonus',tax)+row('Child tax bonus',bonus)+
+        row('Tax advance after bonus',taxAfterBonus)+row('Paid portion of bonus exceeding tax',bonusPaid)+
+        detail('Employer social insurance',socialEmployer,employerParts)+
+        row('Employer health insurance',healthEmployer)+row('Total employer contributions',employerTotal);
+      const warnings=[];
+      if(gross>RULES.maxSocialBase)warnings.push('Social insurance is capped at €16,764, accident insurance is not.');
+      if(count&&!eligible)warnings.push('Tax bonus is not included: the condition of SK income was not confirmed.');
+      if(count)warnings.push('Children calculations assume statutory conditions are met and entitlement applies for the entire selected month. Annual reconciliation may yield a different result.');
+      warnings.push('Informative monthly calculation for 2026. Does not include minimum health insurance advances, concurrent employments, special regimes, garnishments, sick leave, deductions, or annual reconciliation. Before use in active payroll operations, verify the result in payroll software.');
+      $('warnings').textContent=warnings.join(' ');
+    }
+    $('hasTaxBonus').addEventListener('change',()=>{$('childrenGroup').style.display=$('hasTaxBonus').value==='yes'?'block':'none';calculateSalary();});
+    document.querySelectorAll('.calc-card input,.calc-card select').forEach(el=>{el.addEventListener('input',calculateSalary);el.addEventListener('change',calculateSalary)});
+    calculateSalary();
+    </script>
+
+</body>
+</html>
