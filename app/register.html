@@ -230,7 +230,7 @@
             try {
                 const { data: { session } } = await supabaseClient.auth.getSession();
                 if (session?.user) {
-                    location.replace('onboarding.html');
+                    location.replace('company.html');
                 }
             } catch (err) {
                 console.error(err);
@@ -280,7 +280,7 @@
                         data: {
                             full_name: fullName
                         },
-                        emailRedirectTo: `${location.origin}${location.pathname.replace('register.html', 'onboarding.html')}`
+                        emailRedirectTo: `${location.origin}${location.pathname.replace('register.html', 'company.html')}`
                     }
                 });
 
@@ -288,7 +288,7 @@
 
                 // Ak má Supabase vypnuté povinné potvrdenie e-mailu, session vznikne okamžite
                 if (data?.session) {
-                    location.replace('onboarding.html');
+                    location.replace('company.html');
                 } else {
                     // Ak je zapnuté potvrdenie e-mailu v Supabase Auth
                     $('registerForm').style.display = 'none';
