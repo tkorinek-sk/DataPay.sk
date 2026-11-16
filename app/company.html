@@ -1,1386 +1,1055 @@
+
 <!DOCTYPE html>
 <html lang="sk">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Moja firma | DataPay</title>
+    <title>Podnikateľský profil | DataPay</title>
     <meta name="robots" content="noindex, nofollow">
     <meta name="theme-color" content="#052c64">
     <link rel="icon" href="../favicon.png" type="image/png">
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
     <style>
         :root {
-            --primary: #052c64;
-            --primary-hover: #0b3e80;
-            --accent: #397bb8;
-            --accent-light: #eef5fc;
-            --text: #172b4d;
-            --muted: #64748b;
-            --border: #e2e8f0;
-            --background: #f4f7fb;
-            --white: #ffffff;
-            --success: #059669;
-            --success-light: #ecfdf5;
-            --danger: #dc2626;
-            --danger-light: #fef2f2;
-            --sidebar-width: 250px;
+            --primary:#052c64;
+            --primary-hover:#0b3e80;
+            --accent:#397bb8;
+            --accent-light:#eef5fc;
+            --text:#172b4d;
+            --muted:#64748b;
+            --border:#e2e8f0;
+            --background:#f4f7fb;
+            --success:#059669;
+            --success-light:#ecfdf5;
+            --danger:#dc2626;
+            --danger-light:#fef2f2;
+            --sidebar-width:250px;
         }
 
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-        }
+        * {box-sizing:border-box;margin:0;padding:0}
 
         body {
-            min-height: 100vh;
-            background: var(--background);
-            color: var(--text);
-            font-family: Arial, Helvetica, sans-serif;
+            min-height:100vh;
+            background:var(--background);
+            color:var(--text);
+            font-family:Arial,Helvetica,sans-serif;
         }
 
-        button,
-        input,
-        select {
-            font: inherit;
-        }
-
-        button {
-            cursor: pointer;
-        }
-
-        a {
-            color: inherit;
-            text-decoration: none;
-        }
+        button,input,select {font:inherit}
+        button {cursor:pointer}
+        a {color:inherit;text-decoration:none}
 
         .page-loader {
-            position: fixed;
-            inset: 0;
-            z-index: 9999;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            background: var(--background);
+            position:fixed;inset:0;z-index:9999;
+            display:flex;align-items:center;justify-content:center;
+            background:var(--background);
         }
 
-        .loader-content {
-            text-align: center;
-            color: var(--primary);
-        }
-
+        .loader-content {text-align:center;color:var(--primary)}
         .loader-spinner {
-            width: 42px;
-            height: 42px;
-            margin: 0 auto 14px;
-            border: 4px solid #dbeafe;
-            border-top-color: var(--primary);
-            border-radius: 50%;
-            animation: spin 0.8s linear infinite;
+            width:42px;height:42px;margin:0 auto 14px;
+            border:4px solid #dbeafe;border-top-color:var(--primary);
+            border-radius:50%;animation:spin .8s linear infinite;
         }
+        @keyframes spin {to{transform:rotate(360deg)}}
 
-        @keyframes spin {
-            to {
-                transform: rotate(360deg);
-            }
-        }
-
-        .app {
-            display: none;
-            min-height: 100vh;
-        }
-
-        .app.ready {
-            display: flex;
-        }
+        .app {display:none;min-height:100vh}
+        .app.ready {display:flex}
 
         .sidebar {
-            position: fixed;
-            inset: 0 auto 0 0;
-            z-index: 1000;
-            width: var(--sidebar-width);
-            display: flex;
-            flex-direction: column;
-            background: #071c35;
-            color: #ffffff;
+            position:fixed;inset:0 auto 0 0;z-index:1000;
+            width:var(--sidebar-width);display:flex;flex-direction:column;
+            background:#071c35;color:#fff;
         }
 
         .sidebar-brand {
-            min-height: 84px;
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            padding: 18px 22px;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            min-height:84px;display:flex;align-items:center;gap:12px;
+            padding:18px 22px;border-bottom:1px solid rgba(255,255,255,.1);
         }
-
         .sidebar-brand img {
-            width: 46px;
-            height: 46px;
-            padding: 4px;
-            object-fit: contain;
-            background: #ffffff;
-            border-radius: 10px;
+            width:46px;height:46px;padding:4px;object-fit:contain;
+            background:#fff;border-radius:10px;
         }
+        .brand-name {font-size:18px;font-weight:800}
+        .brand-subtitle {margin-top:3px;color:#9fb1c5;font-size:11px}
 
-        .brand-name {
-            font-size: 18px;
-            font-weight: 800;
-        }
-
-        .brand-subtitle {
-            margin-top: 3px;
-            color: #9fb1c5;
-            font-size: 11px;
-        }
-
-        .sidebar-nav {
-            flex: 1;
-            padding: 20px 12px;
-            overflow-y: auto;
-        }
-
+        .sidebar-nav {flex:1;padding:20px 12px;overflow-y:auto}
         .nav-label {
-            margin: 5px 12px 9px;
-            color: #6f89a3;
-            font-size: 10px;
-            font-weight: 800;
-            text-transform: uppercase;
-            letter-spacing: 0.9px;
+            margin:5px 12px 9px;color:#6f89a3;font-size:10px;
+            font-weight:800;text-transform:uppercase;letter-spacing:.9px;
         }
-
         .nav-link {
-            min-height: 46px;
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            margin-bottom: 5px;
-            padding: 11px 13px;
-            border-radius: 9px;
-            color: #c4d2df;
-            font-size: 13px;
-            font-weight: 600;
+            min-height:46px;display:flex;align-items:center;gap:12px;
+            margin-bottom:5px;padding:11px 13px;border-radius:9px;
+            color:#c4d2df;font-size:13px;font-weight:600;
         }
-
-        .nav-link:hover {
-            color: #ffffff;
-            background: rgba(255, 255, 255, 0.08);
-        }
-
-        .nav-link.active {
-            color: #ffffff;
-            background: #174a7e;
-        }
-
-        .nav-icon {
-            width: 20px;
-            text-align: center;
-        }
+        .nav-link:hover {color:#fff;background:rgba(255,255,255,.08)}
+        .nav-link.active {color:#fff;background:#174a7e}
+        .nav-icon {width:20px;text-align:center}
 
         .sidebar-footer {
-            padding: 16px 14px;
-            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            padding:16px 14px;border-top:1px solid rgba(255,255,255,.1);
         }
-
         .user-card {
-            margin-bottom: 10px;
-            padding: 11px;
-            border-radius: 9px;
-            background: rgba(255, 255, 255, 0.06);
+            margin-bottom:10px;padding:11px;border-radius:9px;
+            background:rgba(255,255,255,.06);
         }
-
         .user-email {
-            overflow: hidden;
-            font-size: 12px;
-            font-weight: 700;
-            text-overflow: ellipsis;
-            white-space: nowrap;
+            overflow:hidden;font-size:12px;font-weight:700;
+            text-overflow:ellipsis;white-space:nowrap;
         }
-
-        .user-role {
-            margin-top: 3px;
-            color: #8fb2d5;
-            font-size: 10px;
-        }
-
+        .user-role {margin-top:3px;color:#8fb2d5;font-size:10px}
         .logout-button {
-            width: 100%;
-            padding: 10px;
-            border: 1px solid rgba(255, 255, 255, 0.16);
-            border-radius: 8px;
-            background: transparent;
-            color: #dce8f4;
-            font-size: 12px;
-            font-weight: 700;
+            width:100%;padding:10px;border:1px solid rgba(255,255,255,.16);
+            border-radius:8px;background:transparent;color:#dce8f4;
+            font-size:12px;font-weight:700;
         }
-
-        .logout-button:hover {
-            background: rgba(255, 255, 255, 0.08);
-            color: #ffffff;
-        }
+        .logout-button:hover {background:rgba(255,255,255,.08);color:#fff}
 
         .main {
-            width: calc(100% - var(--sidebar-width));
-            min-width: 0;
-            margin-left: var(--sidebar-width);
+            width:calc(100% - var(--sidebar-width));
+            min-width:0;margin-left:var(--sidebar-width);
         }
-
         .topbar {
-            position: sticky;
-            top: 0;
-            z-index: 900;
-            min-height: 72px;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            gap: 20px;
-            padding: 14px 30px;
-            background: rgba(255, 255, 255, 0.97);
-            border-bottom: 1px solid var(--border);
+            position:sticky;top:0;z-index:900;min-height:72px;
+            display:flex;align-items:center;justify-content:space-between;
+            gap:20px;padding:14px 30px;background:rgba(255,255,255,.97);
+            border-bottom:1px solid var(--border);
         }
-
-        .topbar-left {
-            display: flex;
-            align-items: center;
-            gap: 13px;
-        }
-
-        .topbar-title {
-            color: var(--primary);
-            font-size: 19px;
-            font-weight: 800;
-        }
-
-        .topbar-subtitle {
-            margin-top: 2px;
-            color: var(--muted);
-            font-size: 11px;
-        }
-
+        .topbar-left {display:flex;align-items:center;gap:13px}
+        .topbar-title {color:var(--primary);font-size:19px;font-weight:800}
+        .topbar-subtitle {margin-top:2px;color:var(--muted);font-size:11px}
         .menu-button {
-            display: none;
-            width: 40px;
-            height: 40px;
-            border: 1px solid var(--border);
-            border-radius: 8px;
-            background: #ffffff;
-            color: var(--primary);
-            font-size: 20px;
+            display:none;width:40px;height:40px;border:1px solid var(--border);
+            border-radius:8px;background:#fff;color:var(--primary);font-size:20px;
         }
 
         .button {
-            min-height: 42px;
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            gap: 8px;
-            padding: 10px 17px;
-            border: 1px solid transparent;
-            border-radius: 8px;
-            font-size: 13px;
-            font-weight: 800;
-            white-space: nowrap;
+            min-height:42px;display:inline-flex;align-items:center;
+            justify-content:center;gap:8px;padding:10px 17px;
+            border:1px solid transparent;border-radius:8px;
+            font-size:13px;font-weight:800;white-space:nowrap;
         }
+        .button:disabled {opacity:.6;cursor:not-allowed}
+        .button-primary {background:var(--primary);color:#fff}
+        .button-primary:hover:not(:disabled) {background:var(--primary-hover)}
+        .button-success {background:var(--success);color:#fff}
+        .button-success:hover:not(:disabled) {background:#047857}
+        .button-outline {background:#fff;color:var(--text);border-color:var(--border)}
+        .button-outline:hover:not(:disabled) {background:#f8fafc}
 
-        .button:disabled {
-            opacity: 0.65;
-            cursor: not-allowed;
-        }
-
-        .button-primary {
-            background: var(--primary);
-            color: #ffffff;
-        }
-
-        .button-primary:hover:not(:disabled) {
-            background: var(--primary-hover);
-        }
-
-        .button-success {
-            background: var(--success);
-            color: #ffffff;
-        }
-
-        .button-success:hover:not(:disabled) {
-            background: #047857;
-        }
-
-        .button-outline {
-            background: #ffffff;
-            color: var(--text);
-            border-color: var(--border);
-        }
-
-        .button-outline:hover:not(:disabled) {
-            background: #f8fafc;
-            border-color: #cbd5e1;
-        }
-
-        .content {
-            width: min(1100px, 100%);
-            margin: 0 auto;
-            padding: 30px;
-        }
-
-        .page-heading {
-            margin-bottom: 24px;
-        }
-
-        .page-heading h1 {
-            color: var(--primary);
-            font-size: 28px;
-        }
-
+        .content {width:min(1100px,100%);margin:0 auto;padding:30px}
+        .page-heading {margin-bottom:24px}
+        .page-heading h1 {color:var(--primary);font-size:28px}
         .page-heading p {
-            max-width: 720px;
-            margin-top: 7px;
-            color: var(--muted);
-            font-size: 14px;
-            line-height: 1.6;
+            max-width:720px;margin-top:7px;color:var(--muted);
+            font-size:14px;line-height:1.6;
         }
 
         .message {
-            display: none;
-            margin-bottom: 20px;
-            padding: 13px 15px;
-            border-radius: 9px;
-            font-size: 13px;
-            line-height: 1.5;
-            white-space: pre-line;
+            display:none;margin-bottom:20px;padding:13px 15px;
+            border-radius:9px;font-size:13px;line-height:1.5;white-space:pre-line;
         }
-
-        .message.show {
-            display: block;
-        }
-
-        .message-error {
-            color: #991b1b;
-            border: 1px solid #fecaca;
-            background: var(--danger-light);
-        }
-
-        .message-success {
-            color: #065f46;
-            border: 1px solid #a7f3d0;
-            background: var(--success-light);
-        }
+        .message.show {display:block}
+        .message-error {color:#991b1b;border:1px solid #fecaca;background:var(--danger-light)}
+        .message-success {color:#065f46;border:1px solid #a7f3d0;background:var(--success-light)}
 
         .company-layout {
-            display: grid;
-            grid-template-columns: minmax(0, 1fr) 310px;
-            gap: 22px;
-            align-items: start;
+            display:grid;grid-template-columns:minmax(0,1fr) 310px;
+            gap:22px;align-items:start;
         }
-
         .card {
-            margin-bottom: 18px;
-            padding: 23px;
-            background: #ffffff;
-            border: 1px solid var(--border);
-            border-radius: 12px;
-            box-shadow: 0 5px 18px rgba(15, 23, 42, 0.035);
+            margin-bottom:18px;padding:23px;background:#fff;
+            border:1px solid var(--border);border-radius:12px;
+            box-shadow:0 5px 18px rgba(15,23,42,.035);
         }
-
         .section-title {
-            margin-bottom: 18px;
-            padding-bottom: 10px;
-            color: var(--primary);
-            border-bottom: 2px solid var(--accent-light);
-            font-size: 14px;
-            font-weight: 800;
-            text-transform: uppercase;
-            letter-spacing: 0.4px;
+            margin-bottom:18px;padding-bottom:10px;color:var(--primary);
+            border-bottom:2px solid var(--accent-light);font-size:14px;
+            font-weight:800;text-transform:uppercase;letter-spacing:.4px;
         }
 
         .lookup-card {
-            margin-bottom: 19px;
-            padding: 16px;
-            border: 1px solid #a7d8bd;
-            border-radius: 10px;
-            background: #f0fdf4;
+            margin-bottom:19px;padding:16px;border:1px solid #a7d8bd;
+            border-radius:10px;background:#f0fdf4;
         }
-
-        .lookup-title {
-            margin-bottom: 5px;
-            color: #166534;
-            font-size: 13px;
-            font-weight: 800;
-        }
-
+        .lookup-title {margin-bottom:5px;color:#166534;font-size:13px;font-weight:800}
         .lookup-description {
-            margin-bottom: 12px;
-            color: #466b54;
-            font-size: 12px;
-            line-height: 1.5;
+            margin-bottom:12px;color:#466b54;font-size:12px;line-height:1.5;
         }
-
-        .lookup-row {
-            display: flex;
-            gap: 8px;
-        }
-
-        .lookup-row input {
-            min-width: 0;
-            flex: 1;
-        }
-
+        .lookup-row {display:flex;gap:8px}
+        .lookup-row input {min-width:0;flex:1}
         .lookup-status {
-            display: block;
-            min-height: 16px;
-            margin-top: 6px;
-            color: var(--muted);
-            font-size: 11px;
+            display:block;min-height:16px;margin-top:6px;
+            color:var(--muted);font-size:11px;
         }
+        .lookup-status.ok {color:var(--success)}
+        .lookup-status.error {color:var(--danger)}
 
-        .lookup-status.ok {
-            color: var(--success);
-        }
-
-        .lookup-status.error {
-            color: var(--danger);
-        }
-
-        .form-grid-2,
-        .form-grid-3 {
-            display: grid;
-            gap: 14px;
-        }
-
-        .form-grid-2 {
-            grid-template-columns: repeat(2, minmax(0, 1fr));
-        }
-
-        .form-grid-3 {
-            grid-template-columns: repeat(3, minmax(0, 1fr));
-        }
-
-        .form-group {
-            min-width: 0;
-            margin-bottom: 14px;
-        }
-
+        .form-grid-2,.form-grid-3 {display:grid;gap:14px}
+        .form-grid-2 {grid-template-columns:repeat(2,minmax(0,1fr))}
+        .form-grid-3 {grid-template-columns:repeat(3,minmax(0,1fr))}
+        .form-group {min-width:0;margin-bottom:14px}
         .form-group label {
-            display: block;
-            margin-bottom: 6px;
-            color: #334155;
-            font-size: 11px;
-            font-weight: 800;
+            display:block;margin-bottom:6px;color:#334155;
+            font-size:11px;font-weight:800;
         }
-
-        .required::after {
-            content: " *";
-            color: var(--danger);
-        }
-
+        .required::after {content:" *";color:var(--danger)}
         .form-control {
-            width: 100%;
-            min-height: 42px;
-            padding: 9px 12px;
-            border: 1px solid var(--border);
-            border-radius: 8px;
-            outline: none;
-            background: #ffffff;
-            color: var(--text);
-            font-size: 13px;
+            width:100%;min-height:42px;padding:9px 12px;
+            border:1px solid var(--border);border-radius:8px;
+            outline:none;background:#fff;color:var(--text);font-size:13px;
         }
-
         .form-control:focus {
-            border-color: var(--accent);
-            box-shadow: 0 0 0 3px rgba(57, 123, 184, 0.13);
+            border-color:var(--accent);
+            box-shadow:0 0 0 3px rgba(57,123,184,.13);
         }
-
-        .form-control.invalid {
-            border-color: var(--danger);
-            background: #fffafa;
-        }
-
         .field-note {
-            display: block;
-            margin-top: 5px;
-            color: var(--muted);
-            font-size: 10px;
-            line-height: 1.4;
+            display:block;margin-top:5px;color:var(--muted);
+            font-size:10px;line-height:1.5;
         }
-
         .form-actions {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: flex-end;
-            gap: 9px;
-            margin-top: 8px;
+            display:flex;flex-wrap:wrap;justify-content:flex-end;
+            gap:9px;margin-top:8px;
+        }
+        .section-description {
+            margin-bottom:15px;color:var(--muted);font-size:12px;line-height:1.6;
         }
 
-        .summary-card {
-            position: sticky;
-            top: 95px;
-        }
-
+        .summary-card {position:sticky;top:95px}
         .company-logo-placeholder {
-            width: 72px;
-            height: 72px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin-bottom: 16px;
-            border-radius: 16px;
-            background: var(--accent-light);
-            color: var(--primary);
-            font-size: 30px;
-            font-weight: 800;
+            width:72px;height:72px;display:flex;align-items:center;
+            justify-content:center;margin-bottom:16px;border-radius:16px;
+            background:var(--accent-light);color:var(--primary);
+            font-size:30px;font-weight:800;
         }
-
         .summary-name {
-            color: var(--primary);
-            font-size: 20px;
-            font-weight: 800;
-            overflow-wrap: anywhere;
+            color:var(--primary);font-size:20px;font-weight:800;
+            overflow-wrap:anywhere;
         }
-
         .summary-meta {
-            margin-top: 6px;
-            color: var(--muted);
-            font-size: 12px;
-            line-height: 1.6;
+            margin-top:6px;color:var(--muted);font-size:12px;line-height:1.6;
         }
-
-        .summary-list {
-            margin-top: 20px;
-            border-top: 1px solid var(--border);
-        }
-
-        .summary-row {
-            padding: 11px 0;
-            border-bottom: 1px solid var(--border);
-        }
-
+        .summary-list {margin-top:20px;border-top:1px solid var(--border)}
+        .summary-row {padding:11px 0;border-bottom:1px solid var(--border)}
         .summary-row span {
-            display: block;
-            margin-bottom: 3px;
-            color: var(--muted);
-            font-size: 10px;
-            font-weight: 800;
-            text-transform: uppercase;
+            display:block;margin-bottom:3px;color:var(--muted);
+            font-size:10px;font-weight:800;text-transform:uppercase;
         }
-
         .summary-row strong {
-            color: var(--text);
-            font-size: 12px;
-            overflow-wrap: anywhere;
+            color:var(--text);font-size:12px;overflow-wrap:anywhere;
         }
-
         .security-note {
-            margin-top: 18px;
-            padding: 12px;
-            border-radius: 8px;
-            background: #f8fafc;
-            color: var(--muted);
-            font-size: 10px;
-            line-height: 1.5;
+            margin-top:18px;padding:12px;border-radius:8px;
+            background:#f8fafc;color:var(--muted);font-size:10px;line-height:1.5;
         }
 
         .sidebar-overlay {
-            position: fixed;
-            inset: 0;
-            z-index: 990;
-            display: none;
-            background: rgba(15, 23, 42, 0.55);
+            position:fixed;inset:0;z-index:990;display:none;
+            background:rgba(15,23,42,.55);
         }
+        .sidebar-overlay.show {display:block}
 
-        .sidebar-overlay.show {
-            display: block;
+        @media(max-width:900px) {
+            .company-layout {grid-template-columns:1fr}
+            .summary-card {position:static}
         }
-
-        @media (max-width: 900px) {
-            .company-layout {
-                grid-template-columns: 1fr;
-            }
-
-            .summary-card {
-                position: static;
-            }
+        @media(max-width:850px) {
+            .sidebar {transform:translateX(-100%);transition:transform .25s ease}
+            .sidebar.open {transform:translateX(0)}
+            .main {width:100%;margin-left:0}
+            .menu-button {display:inline-flex;align-items:center;justify-content:center}
+            .topbar {padding:12px 18px}
+            .content {padding:22px 16px}
         }
-
-        @media (max-width: 850px) {
-            .sidebar {
-                transform: translateX(-100%);
-                transition: transform 0.25s ease;
-            }
-
-            .sidebar.open {
-                transform: translateX(0);
-            }
-
-            .main {
-                width: 100%;
-                margin-left: 0;
-            }
-
-            .menu-button {
-                display: inline-flex;
-                align-items: center;
-                justify-content: center;
-            }
-
-            .topbar {
-                padding: 12px 18px;
-            }
-
-            .content {
-                padding: 22px 16px;
-            }
-        }
-
-        @media (max-width: 620px) {
-            .form-grid-2,
-            .form-grid-3 {
-                grid-template-columns: 1fr;
-            }
-
-            .lookup-row {
-                flex-direction: column;
-            }
-
-            .lookup-row .button {
-                width: 100%;
-            }
-
-            .topbar .button {
-                padding: 9px 12px;
-            }
-
-            .page-heading h1 {
-                font-size: 24px;
-            }
+        @media(max-width:620px) {
+            .form-grid-2,.form-grid-3 {grid-template-columns:1fr}
+            .lookup-row {flex-direction:column}
+            .lookup-row .button {width:100%}
+            .topbar .button {padding:9px 12px}
+            .page-heading h1 {font-size:24px}
+            .card {padding:18px}
         }
     </style>
 </head>
 
 <body>
 
-    <div class="page-loader" id="pageLoader">
-        <div class="loader-content">
-            <div class="loader-spinner"></div>
-            <strong>Načítavam údaje firmy…</strong>
-        </div>
+<div class="page-loader" id="pageLoader">
+    <div class="loader-content">
+        <div class="loader-spinner"></div>
+        <strong>Načítavam podnikateľský profil…</strong>
     </div>
+</div>
 
-    <div class="sidebar-overlay" id="sidebarOverlay"></div>
+<div class="sidebar-overlay" id="sidebarOverlay"></div>
 
-    <div class="app" id="app">
+<div class="app" id="app">
 
-        <aside class="sidebar" id="sidebar">
+    <aside class="sidebar" id="sidebar">
+        <a class="sidebar-brand" href="dashboard.html">
+            <img src="../logo.png" alt="DataPay logo">
+            <div>
+                <div class="brand-name">DataPay</div>
+                <div class="brand-subtitle">Podnikateľský účet</div>
+            </div>
+        </a>
 
-            <a class="sidebar-brand" href="dashboard.html">
-                <img src="../logo.png" alt="DataPay logo">
-                <div>
-                    <div class="brand-name">DataPay</div>
-                    <div class="brand-subtitle">Firemná aplikácia</div>
-                </div>
+        <nav class="sidebar-nav">
+            <div class="nav-label">Prehľad</div>
+            <a class="nav-link" href="dashboard.html">
+                <span class="nav-icon">⌂</span><span>Dashboard</span>
             </a>
 
-            <nav class="sidebar-nav">
+            <div class="nav-label">Fakturácia</div>
+            <a class="nav-link" href="invoices.html">
+                <span class="nav-icon">▤</span><span>Faktúry</span>
+            </a>
+            <a class="nav-link" href="received-invoices.html">
+                <span class="nav-icon">⇩</span><span>Prijaté faktúry</span>
+            </a>
+            <a class="nav-link" href="invoice-new.html">
+                <span class="nav-icon">＋</span><span>Nová faktúra</span>
+            </a>
+            <a class="nav-link" href="contacts.html">
+                <span class="nav-icon">♙</span><span>Kontakty</span>
+            </a>
 
-                <div class="nav-label">Prehľad</div>
+            <div class="nav-label">Dane & nastavenia</div>
+            <a class="nav-link" href="tax.html">
+                <span class="nav-icon">§</span><span>Daňové priznanie</span>
+            </a>
+            <a class="nav-link active" href="company.html">
+                <span class="nav-icon">▣</span><span>Môj profil</span>
+            </a>
+            <a class="nav-link" href="../index.html">
+                <span class="nav-icon">↗</span><span>DataPay.sk</span>
+            </a>
+        </nav>
 
-                <a class="nav-link" href="dashboard.html">
-                    <span class="nav-icon">⌂</span>
-                    <span>Dashboard</span>
-                </a>
-
-                <div class="nav-label">Fakturácia</div>
-
-                <a class="nav-link" href="invoices.html">
-                    <span class="nav-icon">▤</span>
-                    <span>Faktúry</span>
-                </a>
-
-                <a class="nav-link" href="received-invoices.html">
-                    <span class="nav-icon">⇩</span>
-                    <span>Prijaté faktúry</span>
-                </a>
-
-                <a class="nav-link" href="invoice-new.html">
-                    <span class="nav-icon">＋</span>
-                    <span>Nová faktúra</span>
-                </a>
-
-                <a class="nav-link" href="contacts.html">
-                    <span class="nav-icon">♙</span>
-                    <span>Kontakty</span>
-                </a>
-
-                <div class="nav-label">Dane & Nastavenia</div>
-
-                <a class="nav-link" href="tax.html">
-                    <span class="nav-icon">§</span>
-                    <span>Daňové priznanie</span>
-                </a>
-
-                <a class="nav-link active" href="company.html">
-                    <span class="nav-icon">▣</span>
-                    <span>Moja firma</span>
-                </a>
-
-                <a class="nav-link" href="../index.html">
-                    <span class="nav-icon">↗</span>
-                    <span>DataPay.sk</span>
-                </a>
-
-            </nav>
-
-            <div class="sidebar-footer">
-
-                <div class="user-card">
-                    <div class="user-email" id="userEmail">
-                        Používateľ
-                    </div>
-                    <div class="user-role" id="userRole">
-                        Prihlásený účet
-                    </div>
-                </div>
-
-                <button type="button"
-                        class="logout-button"
-                        id="logoutButton">
-                    Odhlásiť sa
-                </button>
-
+        <div class="sidebar-footer">
+            <div class="user-card">
+                <div class="user-email" id="userEmail">Používateľ</div>
+                <div class="user-role" id="userRole">Prihlásený účet</div>
             </div>
+            <button type="button" class="logout-button" id="logoutButton">
+                Odhlásiť sa
+            </button>
+        </div>
+    </aside>
 
-        </aside>
+    <main class="main">
 
-        <main class="main">
-
-            <header class="topbar">
-
-                <div class="topbar-left">
-                    <button type="button"
-                            class="menu-button"
-                            id="menuButton"
-                            aria-label="Otvoriť menu">
-                        ☰
-                    </button>
-                    <div>
-                        <div class="topbar-title">Moja firma</div>
-                        <div class="topbar-subtitle">
-                            Firemné a fakturačné údaje
-                        </div>
-                    </div>
+        <header class="topbar">
+            <div class="topbar-left">
+                <button type="button" class="menu-button" id="menuButton"
+                        aria-label="Otvoriť menu">☰</button>
+                <div>
+                    <div class="topbar-title">Podnikateľský profil</div>
+                    <div class="topbar-subtitle">Vaše fakturačné a podnikateľské údaje</div>
                 </div>
+            </div>
+            <button type="button" class="button button-success" id="saveTopButton">
+                Uložiť údaje
+            </button>
+        </header>
 
-                <button type="button"
-                        class="button button-success"
-                        id="saveTopButton">
-                    Uložiť údaje
-                </button>
+        <div class="content">
 
-            </header>
+            <section class="page-heading">
+                <h1>Moje podnikateľské údaje</h1>
+                <p>
+                    Spravujte svoje identifikačné, fakturačné a kontaktné údaje.
+                    Tieto informácie sa môžu automaticky používať ako údaje
+                    dodávateľa na vašich faktúrach.
+                </p>
+            </section>
 
-            <div class="content">
+            <div id="pageMessage" class="message" role="alert" aria-live="polite"></div>
 
-                <section class="page-heading">
-                    <h1>Údaje vašej firmy</h1>
-                    <p>
-                        Tieto údaje sa budú automaticky použíwać ako
-                        dodávateľ na nových faktúrach. Pred uložením
-                        skontrolujte najmä IČO, adresu, IBAN a BIC.
-                    </p>
-                </section>
+            <div class="company-layout">
 
-                <div id="pageMessage"
-                     class="message"
-                     role="alert"
-                     aria-live="polite">
-                </div>
+                <section>
 
-                <div class="company-layout">
+                    <!-- IDENTIFIKÁCIA -->
+                    <div class="card">
+                        <div class="section-title">Identifikačné údaje</div>
 
-                    <section>
-
-                        <div class="card">
-
-                            <div class="section-title">
-                                Základné údaje firmy
+                        <div class="lookup-card">
+                            <div class="lookup-title">Rýchle načítanie podľa IČO</div>
+                            <div class="lookup-description">
+                                Ak máte pridelené IČO, zadajte ho a pokúsime sa
+                                načítať dostupné údaje z verejného registra.
+                                Táto možnosť je dobrovoľná.
                             </div>
-
-                            <div class="lookup-card">
-                                <div class="lookup-title">
-                                    Rýchle načítanie podľa IČO
-                                </div>
-                                <div class="lookup-description">
-                                    Zadajte 8-miestne IČO. Dostupné údaje
-                                    načítame z verejného registra. Pred
-                                    uložením ich vždy skontrolujte.
-                                </div>
-                                <div class="lookup-row">
-                                    <input id="companyIco"
-                                           class="form-control"
-                                           type="text"
-                                           maxlength="8"
-                                           inputmode="numeric"
-                                           placeholder="Napr. 57456615">
-                                    <button type="button"
-                                            class="button button-primary"
-                                            id="lookupButton">
-                                        Načítať podľa IČO
-                                    </button>
-                                </div>
-                                <small id="lookupStatus"
-                                       class="lookup-status"></small>
-                            </div>
-
-                            <div class="form-group">
-                                <label class="required" for="companyName">
-                                    Obchodné meno
-                                </label>
-                                <input id="companyName"
-                                       class="form-control"
-                                       type="text"
-                                       placeholder="Napr. Ján Mrkva - Živnostník">
-                            </div>
-
-                            <div class="form-grid-3">
-                                <div class="form-group">
-                                    <label for="companyDic">DIČ</label>
-                                    <input id="companyDic"
-                                           class="form-control"
-                                           type="text"
-                                           placeholder="1000000000">
-                                </div>
-                                <div class="form-group">
-                                    <label for="companyIcdph">IČ DPH</label>
-                                    <input id="companyIcdph"
-                                           class="form-control"
-                                           type="text"
-                                           placeholder="SK1000000000">
-                                    <small class="field-note">
-                                        Ak nie ste platiteľ DPH, nechajte prázdne.
-                                    </small>
-                                </div>
-                                <div class="form-group">
-                                    <label for="companyCountry">Krajina</label>
-                                    <select id="companyCountry"
-                                            class="form-control">
-                                        <option value="SK">Slovensko</option>
-                                        <option value="CZ">Česko</option>
-                                        <option value="AT">Rakúsko</option>
-                                        <option value="HU">Maďarsko</option>
-                                        <option value="PL">Poľsko</option>
-                                        <option value="DE">Nemecko</option>
-                                    </select>
-                                </div>
-                            </div>
-
-                        </div>
-
-                        <!-- SEKCIA: Mesačné odvody -->
-                        <div class="card">
-                            <div class="section-title">
-                                Mesačné odvody (Zdravotné & Sociálne)
-                            </div>
-                            <p style="margin-bottom: 15px; font-size: 12px; color: var(--muted); line-height: 1.5;">
-                                Zadajte svoje mesačné preddavky do poisťovní. Tieto údaje sa použijú na prehľad odvodov na dashboarde a na presnejší prehľad výdavkov.
-                            </p>
-                            <div class="form-grid-2">
-                                <div class="form-group">
-                                    <label for="healthInsuranceMonthly">Zdravotné poistenie (€ / mesiac)</label>
-                                    <input id="healthInsuranceMonthly"
-                                           class="form-control"
-                                           type="number"
-                                           step="0.01"
-                                           min="0"
-                                           placeholder="121.92">
-                                </div>
-                                <div class="form-group">
-                                    <label for="socialInsuranceMonthly">Sociálne poistenie (€ / mesiac)</label>
-                                    <input id="socialInsuranceMonthly"
-                                           class="form-control"
-                                           type="number"
-                                           step="0.01"
-                                           min="0"
-                                           placeholder="303.11">
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="card">
-                            <div class="section-title">
-                                Sídlo firmy
-                            </div>
-                            <div class="form-group">
-                                <label class="required" for="companyStreet">
-                                    Ulica a číslo
-                                </label>
-                                <input id="companyStreet"
-                                       class="form-control"
-                                       type="text"
-                                       placeholder="Hlavná 123/4">
-                            </div>
-                            <div class="form-grid-2">
-                                <div class="form-group">
-                                    <label class="required" for="companyPostalCode">
-                                        PSČ
-                                    </label>
-                                    <input id="companyPostalCode"
-                                           class="form-control"
-                                           type="text"
-                                           placeholder="811 01">
-                                </div>
-                                <div class="form-group">
-                                    <label class="required" for="companyCity">
-                                        Mesto
-                                    </label>
-                                    <input id="companyCity"
-                                           class="form-control"
-                                           type="text"
-                                           placeholder="Bratislava">
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="card">
-                            <div class="section-title">
-                                Bankové údaje
-                            </div>
-                            <div class="form-group">
-                                <label for="companyIban">IBAN</label>
-                                <input id="companyIban"
-                                       class="form-control"
-                                       type="text"
-                                       autocomplete="off"
-                                       spellcheck="false"
-                                       placeholder="SK00 0000 0000 0000 0000 0000">
-                                <small class="field-note">
-                                    IBAN sa používa na faktúre a na SEPA QR kód.
-                                </small>
-                            </div>
-                            <div class="form-group">
-                                <label for="companyBic">SWIFT/BIC</label>
-                                <input id="companyBic"
-                                       class="form-control"
-                                       type="text"
-                                       placeholder="SUBASKBX">
-                            </div>
-                        </div>
-
-                        <div class="card">
-                            <div class="section-title">
-                                Kontaktné údaje
-                            </div>
-                            <div class="form-grid-2">
-                                <div class="form-group">
-                                    <label for="companyEmail">E-mail</label>
-                                    <input id="companyEmail"
-                                           class="form-control"
-                                           type="email"
-                                           placeholder="firma@example.sk">
-                                </div>
-                                <div class="form-group">
-                                    <label for="companyPhone">Telefón</label>
-                                    <input id="companyPhone"
-                                           class="form-control"
-                                           type="tel"
-                                           placeholder="+421 900 000 000">
-                                </div>
-                            </div>
-                            <div class="form-actions">
-                                <a class="button button-outline" href="dashboard.html">
-                                    Zrušiť
-                                </a>
-                                <button type="button"
-                                        class="button button-success"
-                                        id="saveButton">
-                                    Uložiť firemné údaje
+                            <div class="lookup-row">
+                                <input id="companyIco" class="form-control"
+                                       type="text" maxlength="8" inputmode="numeric"
+                                       placeholder="Napr. 57456615">
+                                <button type="button" class="button button-primary"
+                                        id="lookupButton">
+                                    Načítať podľa IČO
                                 </button>
                             </div>
+                            <small id="lookupStatus" class="lookup-status"></small>
                         </div>
 
-                    </section>
+                        <div class="form-group">
+                            <label class="required" for="companyName">
+                                Meno a priezvisko / obchodné meno
+                            </label>
+                            <input id="companyName" class="form-control"
+                                   type="text" maxlength="200"
+                                   placeholder="Napr. Ján Mrkva alebo Ján Mrkva – Živnostník">
+                            <small class="field-note">
+                                Tento údaj je povinný, pretože databáza ho používa
+                                ako názov vášho podnikateľského profilu.
+                            </small>
+                        </div>
 
-                    <aside>
-                        <div class="card summary-card">
-                            <div class="company-logo-placeholder">
-                                DP
+                        <div class="form-grid-3">
+                            <div class="form-group">
+                                <label for="companyIco">IČO</label>
+                                <input id="companyIco" class="form-control"
+                                       type="text" maxlength="8"
+                                       placeholder="Nepovinné">
                             </div>
-                            <div class="summary-name" id="summaryName">
-                                Vaša firma
+                            <div class="form-group">
+                                <label for="companyDic">DIČ</label>
+                                <input id="companyDic" class="form-control"
+                                       type="text" maxlength="20"
+                                       placeholder="Nepovinné">
                             </div>
-                            <div class="summary-meta" id="summaryAddress">
-                                Firemné údaje zatiaľ nie sú vyplnené.
-                            </div>
-                            <div class="summary-list">
-                                <div class="summary-row">
-                                    <span>IČO</span>
-                                    <strong id="summaryIco">—</strong>
-                                </div>
-                                <div class="summary-row">
-                                    <span>DIČ</span>
-                                    <strong id="summaryDic">—</strong>
-                                </div>
-                                <div class="summary-row">
-                                    <span>IČ DPH</span>
-                                    <strong id="summaryIcdph">Nie je uvedené</strong>
-                                </div>
-                                <div class="summary-row">
-                                    <span>IBAN</span>
-                                    <strong id="summaryIban">—</strong>
-                                </div>
-                                <div class="summary-row">
-                                    <span>Kontakt</span>
-                                    <strong id="summaryContact">—</strong>
-                                </div>
-                            </div>
-                            <div class="security-note">
-                                Údaje sú uložené v databáze Supabase a používajú sa iba pre vašu firmu.
+                            <div class="form-group">
+                                <label for="companyIcdph">IČ DPH</label>
+                                <input id="companyIcdph" class="form-control"
+                                       type="text" maxlength="20"
+                                       placeholder="Nepovinné">
                             </div>
                         </div>
-                    </aside>
 
-                </div>
+                        <div class="form-grid-2">
+                            <div class="form-group">
+                                <label for="vatStatus">Režim DPH</label>
+                                <select id="vatStatus" class="form-control">
+                                    <option value="non_payer">Nie som platiteľ DPH</option>
+                                    <option value="payer">Som platiteľ DPH</option>
+                                    <option value="section_7_7a">Registrácia podľa § 7 / § 7a</option>
+                                </select>
+                                <small class="field-note">
+                                    Registrácia podľa § 7 alebo § 7a automaticky
+                                    neznamená, že ste platiteľom DPH.
+                                </small>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="companyCountry">Krajina</label>
+                                <select id="companyCountry" class="form-control">
+                                    <option value="SK">Slovensko</option>
+                                    <option value="CZ">Česko</option>
+                                    <option value="AT">Rakúsko</option>
+                                    <option value="HU">Maďarsko</option>
+                                    <option value="PL">Poľsko</option>
+                                    <option value="DE">Nemecko</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- ADRESA -->
+                    <div class="card">
+                        <div class="section-title">Miesto podnikania / fakturačná adresa</div>
+                        <p class="section-description">
+                            Uveďte adresu, ktorá sa má zobrazovať na vašich faktúrach.
+                            Nemusí ísť o sídlo obchodnej spoločnosti.
+                        </p>
+
+                        <div class="form-group">
+                            <label for="companyStreet">Ulica a číslo</label>
+                            <input id="companyStreet" class="form-control"
+                                   type="text" maxlength="200"
+                                   placeholder="Napr. Hlavná 123/4">
+                        </div>
+
+                        <div class="form-grid-2">
+                            <div class="form-group">
+                                <label for="companyPostalCode">PSČ</label>
+                                <input id="companyPostalCode" class="form-control"
+                                       type="text" maxlength="20" placeholder="811 01">
+                            </div>
+                            <div class="form-group">
+                                <label for="companyCity">Mesto / obec</label>
+                                <input id="companyCity" class="form-control"
+                                       type="text" maxlength="100" placeholder="Bratislava">
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- ODVODY -->
+                    <div class="card">
+                        <div class="section-title">Mesačné odvody</div>
+                        <p class="section-description">
+                            Zadajte aktuálne mesačné preddavky a platby do poisťovní.
+                            Slúžia na orientačný prehľad v aplikácii.
+                        </p>
+
+                        <div class="form-grid-2">
+                            <div class="form-group">
+                                <label for="healthInsuranceMonthly">
+                                    Zdravotné poistenie (€ / mesiac)
+                                </label>
+                                <input id="healthInsuranceMonthly" class="form-control"
+                                       type="number" step="0.01" min="0"
+                                       placeholder="Napr. 121.92">
+                            </div>
+                            <div class="form-group">
+                                <label for="socialInsuranceMonthly">
+                                    Sociálne poistenie (€ / mesiac)
+                                </label>
+                                <input id="socialInsuranceMonthly" class="form-control"
+                                       type="number" step="0.01" min="0"
+                                       placeholder="Napr. 303.11">
+                            </div>
+                        </div>
+                        <small class="field-note">
+                            Aktuálne mesačné sumy nie sú automaticky totožné
+                            so skutočne zaplatenými odvodmi za celé zdaňovacie obdobie.
+                        </small>
+                    </div>
+
+                    <!-- BANKA -->
+                    <div class="card">
+                        <div class="section-title">Bankové údaje</div>
+
+                        <div class="form-group">
+                            <label for="companyIban">IBAN</label>
+                            <input id="companyIban" class="form-control"
+                                   type="text" maxlength="34" autocomplete="off"
+                                   spellcheck="false"
+                                   placeholder="SK00 0000 0000 0000 0000 0000">
+                            <small class="field-note">
+                                IBAN sa používa na faktúrach a pri generovaní
+                                SEPA QR platobného kódu.
+                            </small>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="companyBic">SWIFT / BIC</label>
+                            <input id="companyBic" class="form-control"
+                                   type="text" maxlength="20" placeholder="SUBASKBX">
+                        </div>
+                    </div>
+
+                    <!-- KONTAKT -->
+                    <div class="card">
+                        <div class="section-title">Kontaktné údaje</div>
+
+                        <div class="form-grid-2">
+                            <div class="form-group">
+                                <label for="companyEmail">E-mail</label>
+                                <input id="companyEmail" class="form-control"
+                                       type="email" maxlength="200"
+                                       placeholder="vas@email.sk">
+                            </div>
+                            <div class="form-group">
+                                <label for="companyPhone">Telefón</label>
+                                <input id="companyPhone" class="form-control"
+                                       type="tel" maxlength="40"
+                                       placeholder="+421 900 000 000">
+                            </div>
+                        </div>
+
+                        <div class="form-actions">
+                            <a class="button button-outline" href="dashboard.html">Späť</a>
+                            <button type="button" class="button button-success" id="saveButton">
+                                Uložiť podnikateľský profil
+                            </button>
+                        </div>
+                    </div>
+
+                </section>
+
+                <!-- NÁHĽAD -->
+                <aside>
+                    <div class="card summary-card">
+                        <div class="company-logo-placeholder">DP</div>
+
+                        <div class="summary-name" id="summaryName">Môj profil</div>
+                        <div class="summary-meta" id="summaryAddress">
+                            Vaše podnikateľské údaje
+                        </div>
+
+                        <div class="summary-list">
+                            <div class="summary-row">
+                                <span>IČO</span>
+                                <strong id="summaryIco">—</strong>
+                            </div>
+                            <div class="summary-row">
+                                <span>DIČ</span>
+                                <strong id="summaryDic">—</strong>
+                            </div>
+                            <div class="summary-row">
+                                <span>IČ DPH</span>
+                                <strong id="summaryIcdph">—</strong>
+                            </div>
+                            <div class="summary-row">
+                                <span>Režim DPH</span>
+                                <strong id="summaryVatStatus">Neplatiteľ DPH</strong>
+                            </div>
+                            <div class="summary-row">
+                                <span>IBAN</span>
+                                <strong id="summaryIban">—</strong>
+                            </div>
+                            <div class="summary-row">
+                                <span>Kontakt</span>
+                                <strong id="summaryContact">—</strong>
+                            </div>
+                        </div>
+
+                        <div class="security-note">
+                            Vaše údaje sú uložené v databáze DataPay a zobrazujú
+                            sa v rámci vášho používateľského účtu.
+                        </div>
+                    </div>
+                </aside>
 
             </div>
+        </div>
+    </main>
+</div>
 
-        </main>
+<script>
+    const SUPABASE_URL = 'https://sqzxludiwdazcafcynwt.supabase.co';
+    const SUPABASE_ANON_KEY = 'sb_publishable_mWxTg8rzobN0zxgDl8QAxA_vCQ-CeGY';
 
-    </div>
+    const supabaseClient = window.supabase.createClient(
+        SUPABASE_URL,
+        SUPABASE_ANON_KEY
+    );
 
-    <!-- JAVASCRIPT ČASŤ, ABY STRÁNKU NAOZAJ NAČÍtalo -->
-    <script>
-        const SUPABASE_URL = 'https://sqzxludiwdazcafcynwt.supabase.co';
-        const SUPABASE_ANON_KEY = 'sb_publishable_mWxTg8rzobN0zxgDl8QAxA_vCQ-CeGY';
+    let currentUser = null;
+    let currentCompanyId = null;
+    let isSaving = false;
 
-        const supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+    const $ = id => document.getElementById(id);
 
-        let currentUser = null;
-        let currentCompanyId = null;
+    document.addEventListener('DOMContentLoaded', initializePage);
 
-        const $ = id => document.getElementById(id);
+    async function initializePage() {
+        setupEvents();
 
-        document.addEventListener('DOMContentLoaded', initializePage);
+        try {
+            const { data: { session }, error: sessionError } =
+                await supabaseClient.auth.getSession();
 
-        async function initializePage() {
-            try {
-                const { data: { session }, error } = await supabaseClient.auth.getSession();
-                if (error) throw error;
-                if (!session?.user) { location.replace('login.html'); return; }
-                currentUser = session.user;
-                $('userEmail').textContent = currentUser.email || 'Používateľ';
-                setupEvents();
+            if (sessionError) throw sessionError;
 
-                const { data: membership, error: memErr } = await supabaseClient
-                    .from('company_members')
-                    .select('company_id')
-                    .eq('user_id', currentUser.id)
-                    .limit(1)
-                    .maybeSingle();
-
-                if (memErr) throw memErr;
-
-                if (membership?.company_id) {
-                    currentCompanyId = membership.company_id;
-                    await loadCompanyData(currentCompanyId);
-                }
-
-                showApp();
-            } catch (e) {
-                console.error(e);
-                showApp();
-                showMessage(e.message, 'error');
-            }
-        }
-
-        async function loadCompanyData(companyId) {
-            const { data, error } = await supabaseClient
-                .from('companies')
-                .select('*')
-                .eq('id', companyId)
-                .single();
-
-            if (error) throw error;
-            if (data) {
-                $('companyIco').value = data.ico || '';
-                $('companyName').value = data.name || '';
-                $('companyDic').value = data.dic || '';
-                $('companyIcdph').value = data.ic_dph || '';
-                $('companyCountry').value = data.country || 'SK';
-                $('companyStreet').value = data.street || '';
-                $('companyPostalCode').value = data.postal_code || '';
-                $('companyCity').value = data.city || '';
-                $('companyIban').value = data.iban || '';
-                $('companyBic').value = data.bic || '';
-                $('companyEmail').value = data.email || '';
-                $('companyPhone').value = data.phone || '';
-                
-                if (data.health_insurance !== undefined) $('healthInsuranceMonthly').value = data.health_insurance || '';
-                if (data.social_insurance !== undefined) $('socialInsuranceMonthly').value = data.social_insurance || '';
-
-                updateSummary({
-                    name: data.name,
-                    ico: data.ico,
-                    dic: data.dic,
-                    icdph: data.ic_dph,
-                    street: data.street,
-                    postal: data.postal_code,
-                    city: data.city,
-                    iban: data.iban,
-                    email: data.email,
-                    phone: data.phone
-                });
-            }
-        }
-
-        async function saveCompanyData() {
-            try {
-                clearMessage();
-                const name = $('companyName').value.trim();
-                const street = $('companyStreet').value.trim();
-                const postal = $('companyPostalCode').value.trim();
-                const city = $('companyCity').value.trim();
-
-                if (!name || !street || !postal || !city) {
-                    throw new Error('Vyplňte povinné poliečka (Obchodné meno, Ulica, PSČ, Mesto).');
-                }
-
-                const payload = {
-                    name,
-                    ico: $('companyIco').value.trim(),
-                    dic: $('companyDic').value.trim(),
-                    ic_dph: $('companyIcdph').value.trim(),
-                    country: $('companyCountry').value,
-                    street,
-                    postal_code: postal,
-                    city,
-                    iban: $('companyIban').value.trim(),
-                    bic: $('companyBic').value.trim(),
-                    email: $('companyEmail').value.trim(),
-                    phone: $('companyPhone').value.trim(),
-                    health_insurance: parseFloat($('healthInsuranceMonthly').value) || 0,
-                    social_insurance: parseFloat($('socialInsuranceMonthly').value) || 0,
-                    updated_at: new Date()
-                };
-
-                if (currentCompanyId) {
-                    const { error } = await supabaseClient
-                        .from('companies')
-                        .update(payload)
-                        .eq('id', currentCompanyId);
-                    if (error) throw error;
-                } else {
-                    const { data, error } = await supabaseClient
-                        .from('companies')
-                        .insert([payload])
-                        .select()
-                        .single();
-                    if (error) throw error;
-                    currentCompanyId = data.id;
-
-                    await supabaseClient
-                        .from('company_members')
-                        .insert([{ company_id: currentCompanyId, user_id: currentUser.id, role: 'owner' }]);
-                }
-
-                showMessage('Firemné údaje a odvody boli úspešne uložené.', 'success');
-                loadCompanyData(currentCompanyId);
-            } catch (e) {
-                showMessage(e.message, 'error');
-            }
-        }
-
-        async function lookupAres() {
-            const ico = $('companyIco').value.trim();
-            if (ico.length !== 8) {
-                $('lookupStatus').textContent = 'IČO musí mať presne 8 číslic.';
-                $('lookupStatus').className = 'lookup-status error';
+            if (!session?.user) {
+                location.replace('login.html');
                 return;
             }
-            $('lookupStatus').textContent = 'Načítavam z registra...';
-            $('lookupStatus').className = 'lookup-status';
-            
-            try {
-                const response = await fetch(`https://ofis.sk/api/ore/v1/subjekt?ico=${ico}`);
-                if (!response.ok) throw new Error('Nepodarilo sa načítať údaje.');
-                const data = await response.json();
-                if (data && data.obchodneMeno) {
-                    $('companyName').value = data.obchodneMeno;
-                    if (data.ulica) $('companyStreet').value = data.ulica + ' ' + (data.cislo || '');
-                    if (data.psc) $('companyPostalCode').value = data.psc;
-                    if (data.obec) $('companyCity').value = data.obec;
-                    if (data.dic) $('companyDic').value = data.dic;
-                    $('lookupStatus').textContent = 'Údaje úspešne načítané!';
-                    $('lookupStatus').className = 'lookup-status ok';
-                }
-            } catch (err) {
-                $('lookupStatus').textContent = 'IČO skontrolované (zadajte detaily manuálne, ak sa nevyplnili).';
-                $('lookupStatus').className = 'lookup-status ok';
-            }
-        }
 
-        function updateSummary(d) {
-            $('summaryName').textContent = d.name || 'Vaša firma';
-            $('summaryAddress').textContent = [d.street, d.postal, d.city].filter(Boolean).join(', ') || 'Adresa nezadaná';
-            $('summaryIco').textContent = d.ico || '—';
-            $('summaryDic').textContent = d.dic || '—';
-            $('summaryIcdph').textContent = d.icdph || 'Nie je uvedené';
-            $('summaryIban').textContent = d.iban || '—';
-            $('summaryContact').textContent = [d.email, d.phone].filter(Boolean).join(' | ') || '—';
-        }
+            currentUser = session.user;
+            $('userEmail').textContent = currentUser.email || 'Používateľ';
 
-        function setupEvents() {
-            $('lookupButton').onclick = lookupAres;
-            $('saveButton').onclick = saveCompanyData;
-            $('saveTopButton').onclick = saveCompanyData;
-            $('logoutButton').onclick = async () => {
-                await supabaseClient.auth.signOut();
-                location.replace('login.html');
-            };
-            $('menuButton').onclick = () => {
-                $('sidebar').classList.add('open');
-                $('sidebarOverlay').classList.add('show');
-            };
-            $('sidebarOverlay').onclick = () => {
-                $('sidebar').classList.remove('open');
-                $('sidebarOverlay').classList.remove('show');
-            };
-        }
+            await loadMembershipAndCompany();
 
-        function clearMessage() {
-            const m = $('pageMessage');
-            m.textContent = '';
-            m.className = 'message';
-        }
+            showApp();
 
-        function showMessage(text, type) {
-            const m = $('pageMessage');
-            m.textContent = text;
-            m.className = `message show message-${type}`;
-            window.scrollTo({ top: 0, behavior: 'smooth' });
+        } catch (error) {
+            console.error('Inicializácia stránky:', error);
+            showApp();
+            showMessage(
+                'Nepodarilo sa načítať podnikateľský profil.\n' + error.message,
+                'error'
+            );
+            setSaveButtonsDisabled(true);
         }
-
-        function showApp() {
-            $('pageLoader').style.display = 'none';
-            $('app').classList.add('ready');
-        }
-        document.addEventListener('DOMContentLoaded', async () => {
-    // 1. Získame prihláseného používateľa a jeho firmu
-    const { data: { session } } = await supabaseClient.auth.getSession();
-    if (!session) {
-        location.replace('login.html');
-        return;
     }
 
-    // Zobrazenie e-mailu v menu
-    const emailEl = document.getElementById('userEmail');
-    if (emailEl) emailEl.textContent = session.user.email;
-
-    // Načítanie firemných údajov z DB
-    try {
-        const { data: member } = await supabaseClient
+    async function loadMembershipAndCompany() {
+        const { data: membership, error } = await supabaseClient
             .from('company_members')
-            .select('company_id, companies(*)')
-            .eq('user_id', session.user.id)
+            .select('company_id, role')
+            .eq('user_id', currentUser.id)
+            .limit(1)
+            .maybeSingle();
+
+        if (error) throw error;
+
+        if (!membership?.company_id) {
+            currentCompanyId = null;
+            $('userRole').textContent = 'Bez priradeného profilu';
+
+            throw new Error(
+                'K vášmu účtu nie je priradený podnikateľský profil. ' +
+                'Kontaktujte podporu DataPay.'
+            );
+        }
+
+        currentCompanyId = membership.company_id;
+
+        const roleLabels = {
+            owner: 'Vlastník profilu',
+            admin: 'Administrátor',
+            member: 'Člen účtu'
+        };
+
+        $('userRole').textContent =
+            roleLabels[membership.role] || 'Používateľský účet';
+
+        await loadCompanyData();
+    }
+
+    async function loadCompanyData() {
+        if (!currentCompanyId) {
+            throw new Error('Chýba identifikátor podnikateľského profilu.');
+        }
+
+        const { data, error } = await supabaseClient
+            .from('companies')
+            .select('*')
+            .eq('id', currentCompanyId)
             .single();
 
-        if (member && member.companies) {
-            const comp = member.companies;
-            
-            // Predvyplnenie formulára
-            if (document.getElementById('companyIco')) document.getElementById('companyIco').value = comp.ico || '';
-            if (document.getElementById('companyName')) document.getElementById('companyName').value = comp.name || '';
-            if (document.getElementById('companyDic')) document.getElementById('companyDic').value = comp.dic || '';
-            if (document.getElementById('companyIcdph')) document.getElementById('companyIcdph').value = comp.ic_dph || '';
-            if (document.getElementById('companyCountry')) document.getElementById('companyCountry').value = comp.country || 'SK';
-            if (document.getElementById('companyStreet')) document.getElementById('companyStreet').value = comp.street || '';
-            if (document.getElementById('companyPostalCode')) document.getElementById('companyPostalCode').value = comp.postal_code || '';
-            if (document.getElementById('companyCity')) document.getElementById('companyCity').value = comp.city || '';
-            if (document.getElementById('companyIban')) document.getElementById('companyIban').value = comp.iban || '';
-            if (document.getElementById('companyBic')) document.getElementById('companyBic').value = comp.bic || '';
-            if (document.getElementById('companyEmail')) document.getElementById('companyEmail').value = comp.email || session.user.email;
-            if (document.getElementById('companyPhone')) document.getElementById('companyPhone').value = comp.phone || '';
-            if (document.getElementById('healthInsuranceMonthly')) document.getElementById('healthInsuranceMonthly').value = comp.health_insurance_monthly || '';
-            if (document.getElementById('socialInsuranceMonthly')) document.getElementById('socialInsuranceMonthly').value = comp.social_insurance_monthly || '';
+        if (error) throw error;
+        if (!data) throw new Error('Podnikateľský profil sa nenašiel.');
 
-            // Uložíme si ID firmy do globálnej premennej alebo datasetu
-            window.currentCompanyId = comp.id;
-            updateSummaryPreview();
-        }
-    } catch (err) {
-        console.error('Chyba pri načítaní firmy:', err);
+        $('companyName').value = data.name || '';
+        $('companyIco').value = data.ico || '';
+        $('companyDic').value = data.dic || '';
+        $('companyIcdph').value = data.ic_dph || '';
+        $('vatStatus').value = data.vat_status || 'non_payer';
+        $('companyCountry').value = data.country || 'SK';
+
+        $('companyStreet').value = data.street || '';
+        $('companyPostalCode').value = data.postal_code || '';
+        $('companyCity').value = data.city || '';
+
+        $('companyIban').value = data.iban || '';
+        $('companyBic').value = data.bic || '';
+
+        $('companyEmail').value = data.email || currentUser.email || '';
+        $('companyPhone').value = data.phone || '';
+
+        $('healthInsuranceMonthly').value =
+            data.health_insurance ?? '';
+
+        $('socialInsuranceMonthly').value =
+            data.social_insurance ?? '';
+
+        updateSummary();
     }
 
-    // Skryjeme loader
-    const loader = document.getElementById('pageLoader');
-    if (loader) loader.style.display = 'none';
-    const app = document.getElementById('app');
-    if (app) app.classList.add('ready');
+    async function saveCompanyData() {
+        if (isSaving) return;
 
-    // 2. Uloženie údajov
-    const handleSave = async () => {
-        const name = document.getElementById('companyName').value.trim();
-        const ico = document.getElementById('companyIco').value.trim();
-        const street = document.getElementById('companyStreet').value.trim();
-        const postal_code = document.getElementById('companyPostalCode').value.trim();
-        const city = document.getElementById('companyCity').value.trim();
+        clearMessage();
 
-        if (!name || !ico || !street || !postal_code || !city) {
-            showMsg('Prosím vyplňte povinné údaje (Meno/Názov, IČO, Ulica, PSČ, Mesto).', 'error');
+        if (!currentUser || !currentCompanyId) {
+            showMessage(
+                'Nie je možné uložiť údaje. Chýba priradený podnikateľský profil.',
+                'error'
+            );
             return;
         }
 
+        const name = $('companyName').value.trim();
+
+        // Názov je jediný povinný údaj na uloženie,
+        // pretože companies.name má v databáze NOT NULL.
+        if (!name) {
+            $('companyName').classList.add('invalid');
+            showMessage(
+                'Vyplňte meno a priezvisko alebo obchodné meno.',
+                'error'
+            );
+            $('companyName').focus();
+            return;
+        }
+
+        $('companyName').classList.remove('invalid');
+
+        const healthValue = $('healthInsuranceMonthly').value;
+        const socialValue = $('socialInsuranceMonthly').value;
+
+        if (
+            (healthValue !== '' && (!Number.isFinite(Number(healthValue)) || Number(healthValue) < 0)) ||
+            (socialValue !== '' && (!Number.isFinite(Number(socialValue)) || Number(socialValue) < 0))
+        ) {
+            showMessage('Skontrolujte zadané sumy odvodov.', 'error');
+            return;
+        }
+
+        const street = $('companyStreet').value.trim();
+        const postal = $('companyPostalCode').value.trim();
+        const city = $('companyCity').value.trim();
+
+        // Onboarding dokončíme až po vyplnení základnej adresy.
+        const onboardingCompleted =
+            Boolean(name && street && postal && city);
+
         const payload = {
             name: name,
-            ico: ico,
-            dic: document.getElementById('companyDic').value.trim(),
-            ic_dph: document.getElementById('companyIcdph').value.trim(),
-            country: document.getElementById('companyCountry').value,
-            street: street,
-            postal_code: postal_code,
-            city: city,
-            iban: document.getElementById('companyIban').value.trim(),
-            bic: document.getElementById('companyBic').value.trim(),
-            email: document.getElementById('companyEmail').value.trim(),
-            phone: document.getElementById('companyPhone').value.trim(),
-            health_insurance_monthly: parseFloat(document.getElementById('healthInsuranceMonthly').value) || 0,
-            social_insurance_monthly: parseFloat(document.getElementById('socialInsuranceMonthly').value) || 0,
-            onboarding_completed: true // <-- TÝMTO OZNAČÍME, ŽE ONBOARDING JE HOTOVÝ
+            ico: $('companyIco').value.trim() || null,
+            dic: $('companyDic').value.trim() || null,
+            ic_dph: $('companyIcdph').value.trim() || null,
+            vat_status: $('vatStatus').value,
+            country: $('companyCountry').value || 'SK',
+
+            street: street || null,
+            postal_code: postal || null,
+            city: city || null,
+
+            iban: $('companyIban').value.trim() || null,
+            bic: $('companyBic').value.trim() || null,
+
+            email: $('companyEmail').value.trim() || null,
+            phone: $('companyPhone').value.trim() || null,
+
+            health_insurance: healthValue === '' ? 0 : Number(healthValue),
+            social_insurance: socialValue === '' ? 0 : Number(socialValue),
+
+            onboarding_completed: onboardingCompleted,
+            updated_at: new Date().toISOString()
         };
 
-        const saveBtns = [document.getElementById('saveButton'), document.getElementById('saveTopButton')];
-        saveBtns.forEach(b => { if(b) { b.disabled = true; b.textContent = 'Ukladám...'; } });
+        isSaving = true;
+        setSaveButtonsDisabled(true);
 
         try {
-            const { error } = await supabaseClient
+            // Aktualizujeme iba existujúci profil.
+            // Nikdy tu nevytvárame novú firmu ani členstvo.
+            const { data, error } = await supabaseClient
                 .from('companies')
                 .update(payload)
-                .eq('id', window.currentCompanyId);
+                .eq('id', currentCompanyId)
+                .select('id')
+                .maybeSingle();
 
             if (error) throw error;
 
-            showMsg('Údaje firmy boli úspešne uložené!', 'success');
-            
-            // Po 1.5 sekunde presmerujeme na dashboard
-            setTimeout(() => {
-                location.replace('dashboard.html');
-            }, 1500);
+            if (!data) {
+                throw new Error(
+                    'Databáza nepotvrdila aktualizáciu profilu. ' +
+                    'Skontrolujte oprávnenia používateľa a RLS politiky.'
+                );
+            }
 
-        } catch (err) {
-            console.error(err);
-            showMsg('Chyba pri ukladaní: ' + err.message, 'error');
-            saveBtns.forEach(b => { if(b) { b.disabled = false; b.textContent = 'Uložiť údaje'; } });
+            updateSummary();
+
+            if (onboardingCompleted) {
+                showMessage(
+                    'Podnikateľský profil bol úspešne uložený. Základné údaje profilu sú kompletné.',
+                    'success'
+                );
+            } else {
+                showMessage(
+                    'Údaje boli uložené. Profil môžete kedykoľvek doplniť. ' +
+                    'Na dokončenie základného nastavenia ešte vyplňte adresu podnikania.',
+                    'success'
+                );
+            }
+
+        } catch (error) {
+            console.error('Ukladanie profilu:', error);
+            showMessage('Chyba pri ukladaní: ' + error.message, 'error');
+
+        } finally {
+            isSaving = false;
+            setSaveButtonsDisabled(false);
         }
-    };
+    }
 
-    if (document.getElementById('saveButton')) document.getElementById('saveButton').addEventListener('click', handleSave);
-    if (document.getElementById('saveTopButton')) document.getElementById('saveTopButton').addEventListener('click', handleSave);
-});
+    async function lookupAres() {
+        const ico = $('companyIco').value.trim();
+        const status = $('lookupStatus');
 
-function showMsg(text, type) {
-    const msg = document.getElementById('pageMessage');
-    if (!msg) return;
-    msg.textContent = text;
-    msg.className = `message show message-${type}`;
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-}
-    </script>
+        if (!/^\d{8}$/.test(ico)) {
+            status.textContent = 'IČO musí obsahovať presne 8 číslic.';
+            status.className = 'lookup-status error';
+            return;
+        }
+
+        status.textContent = 'Načítavam údaje z registra…';
+        status.className = 'lookup-status';
+
+        $('lookupButton').disabled = true;
+
+        try {
+            const response = await fetch(
+                `https://ofis.sk/api/ore/v1/subjekt?ico=${encodeURIComponent(ico)}`
+            );
+
+            if (!response.ok) {
+                throw new Error('Register momentálne neodpovedá.');
+            }
+
+            const data = await response.json();
+
+            if (!data || !data.obchodneMeno) {
+                throw new Error('Pre zadané IČO sa nenašli použiteľné údaje.');
+            }
+
+            $('companyName').value = data.obchodneMeno;
+
+            if (data.ulica) {
+                $('companyStreet').value =
+                    data.ulica + (data.cislo ? ' ' + data.cislo : '');
+            }
+
+            if (data.psc) $('companyPostalCode').value = data.psc;
+            if (data.obec) $('companyCity').value = data.obec;
+            if (data.dic) $('companyDic').value = data.dic;
+
+            updateSummary();
+
+            status.textContent =
+                'Údaje boli načítané. Pred uložením ich skontrolujte.';
+            status.className = 'lookup-status ok';
+
+        } catch (error) {
+            console.error('Vyhľadávanie IČO:', error);
+            status.textContent = error.message ||
+                'Údaje sa nepodarilo načítať. Vyplňte ich manuálne.';
+            status.className = 'lookup-status error';
+
+        } finally {
+            $('lookupButton').disabled = false;
+        }
+    }
+
+    function getVatStatusLabel(value) {
+        const labels = {
+            non_payer: 'Neplatiteľ DPH',
+            payer: 'Platiteľ DPH',
+            section_7_7a: 'Registrácia podľa § 7 / § 7a'
+        };
+
+        return labels[value] || 'Neurčené';
+    }
+
+    function updateSummary() {
+        const name = $('companyName').value.trim();
+        const street = $('companyStreet').value.trim();
+        const postal = $('companyPostalCode').value.trim();
+        const city = $('companyCity').value.trim();
+
+        $('summaryName').textContent = name || 'Môj profil';
+
+        $('summaryAddress').textContent =
+            [street, postal, city].filter(Boolean).join(', ') ||
+            'Adresa zatiaľ nie je uvedená';
+
+        $('summaryIco').textContent =
+            $('companyIco').value.trim() || '—';
+
+        $('summaryDic').textContent =
+            $('companyDic').value.trim() || '—';
+
+        $('summaryIcdph').textContent =
+            $('companyIcdph').value.trim() || '—';
+
+        $('summaryVatStatus').textContent =
+            getVatStatusLabel($('vatStatus').value);
+
+        $('summaryIban').textContent =
+            $('companyIban').value.trim() || '—';
+
+        $('summaryContact').textContent =
+            [
+                $('companyEmail').value.trim(),
+                $('companyPhone').value.trim()
+            ].filter(Boolean).join(' | ') || '—';
+    }
+
+    function setSaveButtonsDisabled(disabled) {
+        const buttons = [$('saveButton'), $('saveTopButton')];
+
+        buttons.forEach(button => {
+            if (!button) return;
+
+            button.disabled = disabled;
+
+            if (disabled) {
+                button.dataset.originalText = button.textContent;
+                button.textContent = 'Ukladám…';
+            } else {
+                button.textContent =
+                    button.id === 'saveTopButton'
+                        ? 'Uložiť údaje'
+                        : 'Uložiť podnikateľský profil';
+            }
+        });
+    }
+
+    function setupEvents() {
+        $('lookupButton').addEventListener('click', lookupAres);
+
+        $('saveButton').addEventListener('click', saveCompanyData);
+        $('saveTopButton').addEventListener('click', saveCompanyData);
+
+        $('logoutButton').addEventListener('click', async () => {
+            const { error } = await supabaseClient.auth.signOut();
+
+            if (error) {
+                showMessage('Odhlásenie sa nepodarilo: ' + error.message, 'error');
+                return;
+            }
+
+            location.replace('login.html');
+        });
+
+        $('menuButton').addEventListener('click', () => {
+            $('sidebar').classList.add('open');
+            $('sidebarOverlay').classList.add('show');
+        });
+
+        $('sidebarOverlay').addEventListener('click', closeSidebar);
+
+        // Živý náhľad pri úprave formulára.
+        [
+            'companyName',
+            'companyIco',
+            'companyDic',
+            'companyIcdph',
+            'vatStatus',
+            'companyStreet',
+            'companyPostalCode',
+            'companyCity',
+            'companyIban',
+            'companyEmail',
+            'companyPhone'
+        ].forEach(id => {
+            $(id).addEventListener('input', updateSummary);
+            $(id).addEventListener('change', updateSummary);
+        });
+    }
+
+    function closeSidebar() {
+        $('sidebar').classList.remove('open');
+        $('sidebarOverlay').classList.remove('show');
+    }
+
+    function clearMessage() {
+        const message = $('pageMessage');
+        message.textContent = '';
+        message.className = 'message';
+    }
+
+    function showMessage(text, type) {
+        const message = $('pageMessage');
+        message.textContent = text;
+        message.className = `message show message-${type}`;
+        window.scrollTo({top:0, behavior:'smooth'});
+    }
+
+    function showApp() {
+        $('pageLoader').style.display = 'none';
+        $('app').classList.add('ready');
+    }
+</script>
+
 </body>
 </html>
