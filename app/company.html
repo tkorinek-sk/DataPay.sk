@@ -1261,6 +1261,126 @@
             $('pageLoader').style.display = 'none';
             $('app').classList.add('ready');
         }
+        document.addEventListener('DOMContentLoaded', async () => {
+    // 1. Získame prihláseného používateľa a jeho firmu
+    const { data: { session } } = await supabaseClient.auth.getSession();
+    if (!session) {
+        location.replace('login.html');
+        return;
+    }
+
+    // Zobrazenie e-mailu v menu
+    const emailEl = document.getElementById('userEmail');
+    if (emailEl) emailEl.textContent = session.user.email;
+
+    // Načítanie firemných údajov z DB
+    try {
+        const { data: member } = await supabaseClient
+            .from('company_members')
+            .select('company_id, companies(*)')
+            .eq('user_id', session.user.id)
+            .single();
+
+        if (member && member.companies) {
+            const comp = member.companies;
+            
+            // Predvyplnenie formulára
+            if (document.getElementById('companyIco')) document.getElementById('companyIco').value = comp.ico || '';
+            if (document.getElementById('companyName')) document.getElementById('companyName').value = comp.name || '';
+            if (document.getElementById('companyDic')) document.getElementById('companyDic').value = comp.dic || '';
+            if (document.getElementById('companyIcdph')) document.getElementById('companyIcdph').value = comp.ic_dph || '';
+            if (document.getElementById('companyCountry')) document.getElementById('companyCountry').value = comp.country || 'SK';
+            if (document.getElementById('companyStreet')) document.getElementById('companyStreet').value = comp.street || '';
+            if (document.getElementById('companyPostalCode')) document.getElementById('companyPostalCode').value = comp.postal_code || '';
+            if (document.getElementById('companyCity')) document.getElementById('companyCity').value = comp.city || '';
+            if (document.getElementById('companyIban')) document.getElementById('companyIban').value = comp.iban || '';
+            if (document.getElementById('companyBic')) document.getElementById('companyBic').value = comp.bic || '';
+            if (document.getElementById('companyEmail')) document.getElementById('companyEmail').value = comp.email || session.user.email;
+            if (document.getElementById('companyPhone')) document.getElementById('companyPhone').value = comp.phone || '';
+            if (document.getElementById('healthInsuranceMonthly')) document.getElementById('healthInsuranceMonthly').value = comp.health_insurance_monthly || '';
+            if (document.getElementById('socialInsuranceMonthly')) document.getElementById('socialInsuranceMonthly').value = comp.social_insurance_monthly || '';
+
+            // Uložíme si ID firmy do globálnej premennej alebo datasetu
+            window.currentCompanyId = comp.id;
+            updateSummaryPreview();
+        }
+    } catch (err) {
+        console.error('Chyba pri načítaní firmy:', err);
+    }
+
+    // Skryjeme loader
+    const loader = document.getElementById('pageLoader');
+    if (loader) loader.style.display = 'none';
+    const app = document.getElementById('app');
+    if (app) app.classList.add('ready');
+
+    // 2. Uloženie údajov
+    const handleSave = async () => {
+        const name = document.getElementById('companyName').value.trim();
+        const ico = document.getElementById('companyIco').value.trim();
+        const street = document.getElementById('companyStreet').value.trim();
+        const postal_code = document.getElementById('companyPostalCode').value.trim();
+        const city = document.getElementById('companyCity').value.trim();
+
+        if (!name || !ico || !street || !postal_code || !city) {
+            showMsg('Prosím vyplňte povinné údaje (Meno/Názov, IČO, Ulica, PSČ, Mesto).', 'error');
+            return;
+        }
+
+        const payload = {
+            name: name,
+            ico: ico,
+            dic: document.getElementById('companyDic').value.trim(),
+            ic_dph: document.getElementById('companyIcdph').value.trim(),
+            country: document.getElementById('companyCountry').value,
+            street: street,
+            postal_code: postal_code,
+            city: city,
+            iban: document.getElementById('companyIban').value.trim(),
+            bic: document.getElementById('companyBic').value.trim(),
+            email: document.getElementById('companyEmail').value.trim(),
+            phone: document.getElementById('companyPhone').value.trim(),
+            health_insurance_monthly: parseFloat(document.getElementById('healthInsuranceMonthly').value) || 0,
+            social_insurance_monthly: parseFloat(document.getElementById('socialInsuranceMonthly').value) || 0,
+            onboarding_completed: true // <-- TÝMTO OZNAČÍME, ŽE ONBOARDING JE HOTOVÝ
+        };
+
+        const saveBtns = [document.getElementById('saveButton'), document.getElementById('saveTopButton')];
+        saveBtns.forEach(b => { if(b) { b.disabled = true; b.textContent = 'Ukladám...'; } });
+
+        try {
+            const { error } = await supabaseClient
+                .from('companies')
+                .update(payload)
+                .eq('id', window.currentCompanyId);
+
+            if (error) throw error;
+
+            showMsg('Údaje firmy boli úspešne uložené!', 'success');
+            
+            // Po 1.5 sekunde presmerujeme na dashboard
+            setTimeout(() => {
+                location.replace('dashboard.html');
+            }, 1500);
+
+        } catch (err) {
+            console.error(err);
+            showMsg('Chyba pri ukladaní: ' + err.message, 'error');
+            saveBtns.forEach(b => { if(b) { b.disabled = false; b.textContent = 'Uložiť údaje'; } });
+        }
+    };
+
+    if (document.getElementById('saveButton')) document.getElementById('saveButton').addEventListener('click', handleSave);
+    if (document.getElementById('saveTopButton')) document.getElementById('saveTopButton').addEventListener('click', handleSave);
+});
+
+function showMsg(text, type) {
+    const msg = document.getElementById('pageMessage');
+    if (!msg) return;
+    msg.textContent = text;
+    msg.className = `message show message-${type}`;
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+}
     </script>
 </body>
 </html>
