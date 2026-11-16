@@ -996,16 +996,24 @@
         $('saveButton').addEventListener('click', saveCompanyData);
         $('saveTopButton').addEventListener('click', saveCompanyData);
 
-        $('logoutButton').addEventListener('click', async () => {
-            const { error } = await supabaseClient.auth.signOut();
+const logout = async () => {
+    const { error } = await supabaseClient.auth.signOut({
+        scope: 'local'
+    });
 
-            if (error) {
-                showMessage('Odhlásenie sa nepodarilo: ' + error.message, 'error');
-                return;
-            }
+    if (error) {
+        showMessage('Odhlásenie sa nepodarilo: ' + error.message, 'error');
+        return;
+    }
 
-            location.replace('login.html');
-        });
+    location.replace('login.html');
+};
+
+// Odhlásenie v bočnom menu
+$('logoutButton')?.addEventListener('click', logout);
+
+// Odhlásenie v hornej lište
+$('logoutTopButton')?.addEventListener('click', logout);
 
         $('menuButton').addEventListener('click', () => {
             $('sidebar').classList.add('open');
