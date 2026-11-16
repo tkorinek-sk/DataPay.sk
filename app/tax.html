@@ -43,31 +43,98 @@
         .topbar{position:sticky;top:0;z-index:900;min-height:72px;display:flex;align-items:center;justify-content:space-between;gap:20px;padding:14px 30px;background:rgba(255,255,255,.97);border-bottom:1px solid var(--border);backdrop-filter:blur(8px)}
         .topbar-left{display:flex;align-items:center;gap:14px}.menu-button{display:none;width:40px;height:40px;border:1px solid var(--border);border-radius:8px;background:#fff;color:var(--primary);font-size:20px}
         .topbar-title{color:var(--primary);font-size:19px;font-weight:800}.topbar-subtitle{margin-top:2px;color:var(--muted);font-size:11px}
-        .content{width:min(1200px,100%);margin:0 auto;padding:30px}
-        .page-heading{display:flex;align-items:flex-start;justify-content:space-between;gap:20px;margin-bottom:24px}
-        .page-heading h1{color:var(--primary);font-size:28px}.page-heading p{max-width:720px;margin-top:7px;color:var(--muted);font-size:14px;line-height:1.6}
-        .button{min-height:42px;display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:10px 17px;border:1px solid transparent;border-radius:8px;font-size:13px;font-weight:800;white-space:nowrap}
+        .topbar-controls{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+        .select-control{padding:8px 12px;border:1px solid var(--border);border-radius:8px;background:#fff;color:var(--text);font-size:13px;font-weight:700}
+        .content{width:min(1220px,100%);margin:0 auto;padding:28px 30px}
+        .page-heading{display:flex;align-items:flex-start;justify-content:space-between;gap:20px;margin-bottom:22px;flex-wrap:wrap}
+        .page-heading h1{color:var(--primary);font-size:26px}.page-heading p{max-width:720px;margin-top:6px;color:var(--muted);font-size:13.5px;line-height:1.5}
+        .button{min-height:40px;display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:9px 16px;border:1px solid transparent;border-radius:8px;font-size:13px;font-weight:800;white-space:nowrap;transition:.15s}
         .button-primary{background:var(--primary);color:#fff}.button-primary:hover{background:var(--primary-hover)}
         .button-success{background:var(--success);color:#fff}.button-success:hover{background:#047857}
-        .button-outline{background:#fff;color:var(--text);border-color:var(--border)}
-        .card{background:#fff;border:1px solid var(--border);border-radius:12px;box-shadow:0 5px 18px rgba(15,23,42,.035);padding:24px;margin-bottom:24px}
-        .summary-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px;margin-bottom:20px}
-        .stat-box{padding:18px;background:var(--accent-light);border-radius:10px;border:1px solid #dbeafe}
-        .stat-box-title{font-size:11px;color:var(--muted);font-weight:800;text-transform:uppercase}
-        .stat-box-value{font-size:22px;color:var(--primary);font-weight:800;margin-top:6px}
-        .tax-row{display:flex;justify-content:space-between;padding:12px 0;border-bottom:1px solid var(--border);font-size:13px}
-        .tax-row:last-child{border-bottom:0}
-        .tax-row strong{color:var(--primary)}
-        .mode-switcher{display:flex;gap:12px;margin-bottom:24px}
-        .mode-btn{flex:1;padding:14px;border:2px solid var(--border);border-radius:10px;background:#fff;color:var(--text);font-weight:800;font-size:14px;text-align:center;cursor:pointer;transition:.2s}
+        .button-outline{background:#fff;color:var(--text);border-color:var(--border)}.button-outline:hover{background:#f8fafc}
+        
+        /* View Tabs */
+        .view-tabs{display:flex;gap:8px;background:#e2e8f0;padding:4px;border-radius:10px;margin-bottom:22px;width:fit-content}
+        .view-tab{padding:9px 18px;border:none;border-radius:8px;background:transparent;color:var(--muted);font-size:13px;font-weight:800;transition:.15s}
+        .view-tab.active{background:#fff;color:var(--primary);box-shadow:0 2px 6px rgba(15,23,42,.08)}
+
+        /* Cards & Grids */
+        .card{background:#fff;border:1px solid var(--border);border-radius:12px;box-shadow:0 5px 18px rgba(15,23,42,.035);padding:22px;margin-bottom:20px}
+        .card-header{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:16px;padding-bottom:12px;border-bottom:1px solid var(--border)}
+        .card-title{font-size:15px;font-weight:800;color:var(--primary);display:flex;align-items:center;gap:8px}
+        .badge{display:inline-flex;align-items:center;padding:3px 9px;border-radius:999px;font-size:11px;font-weight:800}
+        .badge-blue{background:var(--accent-light);color:var(--primary)}
+        .badge-green{background:var(--success-light);color:var(--success)}
+        .badge-amber{background:var(--warning-light);color:var(--warning)}
+
+        .summary-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px;margin-bottom:20px}
+        .stat-box{padding:16px;background:#fff;border-radius:12px;border:1px solid var(--border);box-shadow:0 3px 10px rgba(15,23,42,.025)}
+        .stat-box.highlight{background:var(--accent-light);border-color:#bfdbfe}
+        .stat-box-title{font-size:11px;color:var(--muted);font-weight:800;text-transform:uppercase;letter-spacing:.4px}
+        .stat-box-value{font-size:21px;color:var(--primary);font-weight:800;margin-top:6px}
+        .stat-box-sub{font-size:11px;color:var(--muted);margin-top:4px}
+
+        .mode-switcher{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:20px}
+        .mode-btn{padding:15px;border:2px solid var(--border);border-radius:10px;background:#fff;color:var(--text);font-weight:800;font-size:14px;text-align:left;cursor:pointer;transition:.2s;display:flex;justify-content:space-between;align-items:center}
         .mode-btn.active{border-color:var(--primary);background:var(--accent-light);color:var(--primary)}
-        .message{display:none;margin-bottom:20px;padding:13px 15px;border-radius:9px;font-size:13px;line-height:1.5}.message.show{display:block}.message-error{color:#991b1b;border:1px solid #fecaca;background:var(--danger-light)}
+        .mode-compare{font-size:12px;padding:4px 10px;border-radius:6px;background:#fff;border:1px solid var(--border);color:var(--text)}
+
+        .two-col{display:grid;grid-template-columns:1.15fr 0.85fr;gap:20px}
+        .form-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+        .form-group{display:flex;flex-direction:column;gap:5px}
+        .form-group.full{grid-column:1/-1}
+        .form-label{font-size:11.5px;font-weight:700;color:var(--muted)}
+        .form-input{padding:9px 11px;border:1px solid var(--border);border-radius:8px;font-size:13px;color:var(--text);background:#fff;width:100%}
+        .form-input:focus{outline:none;border-color:var(--accent);box-shadow:0 0 0 3px rgba(57,123,184,.12)}
+        .checkbox-row{display:flex;align-items:center;gap:9px;padding:10px 12px;background:#f8fafc;border:1px solid var(--border);border-radius:8px;font-size:13px;font-weight:700;cursor:pointer}
+        .checkbox-row input{width:16px;height:16px;accent-color:var(--primary)}
+
+        .tax-row{display:flex;justify-content:space-between;align-items:center;padding:10px 0;border-bottom:1px solid var(--border);font-size:13px;gap:12px}
+        .tax-row:last-child{border-bottom:0}
+        .tax-row .row-num{display:inline-block;min-width:44px;padding:2px 6px;background:#f1f5f9;border:1px solid #cbd5e1;border-radius:4px;font-family:monospace;font-size:11px;font-weight:800;color:var(--primary);text-align:center;margin-right:8px}
+        .tax-row strong{color:var(--primary);white-space:nowrap}
+
+        /* OFICIÁLNY FORMULÁR DPFO TYP B (VIZUÁLNY NÁHĽAD TLAČIVA) */
+        .official-form-wrapper{background:#fff;border:2px solid #1e293b;padding:28px;border-radius:4px;box-shadow:0 10px 30px rgba(0,0,0,.08);max-width:960px;margin:0 auto;font-family:Arial,Helvetica,sans-serif;color:#000}
+        .of-header{display:flex;justify-content:space-between;align-items:flex-start;border-bottom:2px solid #000;padding-bottom:14px;margin-bottom:16px;gap:16px}
+        .of-title{font-size:16px;font-weight:900;text-transform:uppercase;line-height:1.3}
+        .of-subtitle{font-size:11px;color:#334155;margin-top:4px}
+        .of-code-box{border:2px solid #000;padding:6px 12px;font-weight:900;font-size:13px;text-align:center;background:#f8fafc}
+        .of-section{border:1.5px solid #000;margin-bottom:14px}
+        .of-section-head{background:#e2e8f0;border-bottom:1.5px solid #000;padding:6px 10px;font-weight:800;font-size:12px;text-transform:uppercase;letter-spacing:.3px}
+        .of-grid{display:grid;grid-template-columns:repeat(12,1fr)}
+        .of-cell{border-right:1px solid #94a3b8;border-bottom:1px solid #94a3b8;padding:6px 8px;font-size:11.5px}
+        .of-cell:last-child{border-right:none}
+        .of-cell-label{font-size:9.5px;color:#475569;text-transform:uppercase;font-weight:700;margin-bottom:3px;display:block}
+        .of-cell-val{font-weight:800;font-size:12.5px;font-family:'Courier New',monospace;letter-spacing:.5px}
+        .of-line{display:flex;align-items:stretch;border-bottom:1px solid #cbd5e1;font-size:12px}
+        .of-line:last-child{border-bottom:none}
+        .of-line-num{width:46px;flex-shrink:0;background:#f1f5f9;border-right:1px solid #94a3b8;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:11px;font-family:monospace}
+        .of-line-desc{flex:1;padding:7px 10px;display:flex;align-items:center}
+        .of-line-val{width:140px;flex-shrink:0;border-left:1px solid #94a3b8;padding:7px 10px;text-align:right;font-weight:800;font-family:'Courier New',monospace;font-size:13px;background:#fff}
+        .of-line.total-line{background:#eff6ff;font-weight:800}
+        .of-line.total-line .of-line-val{background:#dbeafe;color:#052c64}
+
+        .message{display:none;margin-bottom:18px;padding:12px 15px;border-radius:9px;font-size:13px;line-height:1.5}.message.show{display:block}
+        .message-error{color:#991b1b;border:1px solid #fecaca;background:var(--danger-light)}
+        .message-info{color:#1e40af;border:1px solid #bfdbfe;background:#eff6ff}
         .sidebar-overlay{position:fixed;inset:0;z-index:990;display:none;background:rgba(15,23,42,.55)}.sidebar-overlay.show{display:block}
-        @media(max-width:850px){.sidebar{transform:translateX(-100%);transition:.25s}.sidebar.open{transform:translateX(0)}.main{width:100%;margin-left:0}.menu-button{display:inline-flex;align-items:center;justify-content:center}.content{padding:22px 18px}.summary-grid,.mode-switcher{grid-template-columns:1fr}}
+
+        @media(max-width:980px){.summary-grid{grid-template-columns:repeat(2,1fr)}.two-col{grid-template-columns:1fr}}
+        @media(max-width:850px){.sidebar{transform:translateX(-100%);transition:.25s}.sidebar.open{transform:translateX(0)}.main{width:100%;margin-left:0}.menu-button{display:inline-flex;align-items:center;justify-content:center}.content{padding:18px 14px}.summary-grid,.mode-switcher,.form-grid{grid-template-columns:1fr}}
+
+        @media print {
+            body{background:#fff !important}
+            .sidebar,.topbar,.page-heading,.view-tabs,.no-print,#wizardView{display:none !important}
+            .main{width:100% !important;margin:0 !important}
+            .content{padding:0 !important;max-width:100% !important}
+            #formPreviewView{display:block !important}
+            .official-form-wrapper{border:2px solid #000;box-shadow:none;padding:14px;max-width:100%}
+        }
     </style>
 </head>
 <body>
-    <div class="page-loader" id="pageLoader"><div class="loader-content"><div class="loader-spinner"></div><strong>Načítavam daňové podklady…</strong></div></div>
+    <div class="page-loader" id="pageLoader"><div class="loader-content"><div class="loader-spinner"></div><strong>Načítavam daňové podklady zo Supabase…</strong></div></div>
     <div class="sidebar-overlay" id="sidebarOverlay"></div>
     <div class="app" id="app">
         <aside class="sidebar" id="sidebar">
@@ -88,78 +155,459 @@
             </nav>
             <div class="sidebar-footer"><div class="user-card"><div class="user-email" id="userEmail">Používateľ</div><div class="user-status">Živnostenský účet</div></div><button type="button" class="logout-button" id="logoutButton">Odhlásiť sa</button></div>
         </aside>
+
         <main class="main">
-            <header class="topbar"><div class="topbar-left"><button type="button" class="menu-button" id="menuButton">☰</button><div><div class="topbar-title">Daňové priznanie (DPFO typ B)</div><div class="topbar-subtitle">Generovanie XML a oficiálnych podkladov pre Finančnú správu</div></div></div></header>
+            <header class="topbar">
+                <div class="topbar-left">
+                    <button type="button" class="menu-button" id="menuButton">☰</button>
+                    <div>
+                        <div class="topbar-title">Daňové priznanie (DPFO typ B)</div>
+                        <div class="topbar-subtitle">Automatický výpočet dane, náhľad tlačiva a XML pre Finančnú správu SR</div>
+                    </div>
+                </div>
+                <div class="topbar-controls">
+                    <select id="taxYearSelect" class="select-control" onchange="onYearChange()">
+                        <option value="2026" selected>Zdaňovacie obdobie: 2026</option>
+                        <option value="2025">Zdaňovacie obdobie: 2025</option>
+                    </select>
+                    <select id="returnTypeSelect" class="select-control" onchange="recalculateAll()">
+                        <option value="R">Riadne priznanie</option>
+                        <option value="O">Opravné priznanie</option>
+                        <option value="D">Dodatočné priznanie</option>
+                    </select>
+                </div>
+            </header>
+
             <div class="content">
                 <div id="pageMessage" class="message" role="alert"></div>
+
                 <section class="page-heading">
                     <div>
-                        <h1>Daňové priznanie a podklady</h1>
-                        <p>Údaje sa načítavajú priamo z vašich databázových záznamov (vystavené faktúry, prijaté bločky, kniha jázd a odvody).</p>
+                        <h1>Daňové priznanie k dani z príjmov (typ B)</h1>
+                        <p>Dáta sú automaticky prepojené s vašimi faktúrami, bločkami, knihou jázd a odvodmi. Skontrolujte úľavy a vygenerujte si tlačivo alebo XML.</p>
+                    </div>
+                    <div style="display:flex; gap:10px; flex-wrap:wrap;">
+                        <button type="button" class="button button-outline" onclick="printOfficialForm()">🖨️ Vytlačiť / Uložiť PDF tlačivo</button>
+                        <button type="button" class="button button-primary" onclick="generateOfficialXML()">⚡ Stiahnuť XML pre Finančnú správu</button>
                     </div>
                 </section>
 
-                <!-- PREPÍNAČ REŽIMU VÝDAVKOV -->
-                <div class="mode-switcher">
-                    <button type="button" class="mode-btn active" id="modeFlatBtn" onclick="switchTaxMode('flat')">
-                        📊 Paušálne výdavky (60 %)
-                        <div style="font-size:11px; font-weight:normal; margin-top:4px; opacity:0.8;">Najobľúbenejšie pre živnostníkov</div>
-                    </button>
-                    <button type="button" class="mode-btn" id="modeRealBtn" onclick="switchTaxMode('real')">
-                        🧾 Skutočné výdavky (Daňová evidencia)
-                        <div style="font-size:11px; font-weight:normal; margin-top:4px; opacity:0.8;">Bločky, faktúry & Kniha jázd</div>
-                    </button>
+                <!-- PREPÍNAČ POHĽADU -->
+                <div class="view-tabs no-print">
+                    <button type="button" class="view-tab active" id="tabWizard" onclick="switchView('wizard')">1. Sprievodca a výpočet dane</button>
+                    <button type="button" class="view-tab" id="tabForm" onclick="switchView('form')">2. Náhľad formulára DPFO typ B</button>
                 </div>
 
-                <!-- Štatistiky -->
-                <div class="summary-grid">
-                    <div class="stat-box">
-                        <div class="stat-box-title">Celkové zdaniteľné príjmy</div>
-                        <div class="stat-box-value" id="taxRevenue">0,00 €</div>
+                <!-- ========================================================= -->
+                <!-- POHĽAD 1: SPRIEVODCA A VÝPOČET                            -->
+                <!-- ========================================================= -->
+                <div id="wizardView">
+                    <!-- Horné KPI karty -->
+                    <div class="summary-grid">
+                        <div class="stat-box">
+                            <div class="stat-box-title">Zdaniteľné príjmy (r. 37)</div>
+                            <div class="stat-box-value" id="kpiRevenue">0,00 €</div>
+                            <div class="stat-box-sub" id="kpiRevenueSub">0 dokladov</div>
+                        </div>
+                        <div class="stat-box">
+                            <div class="stat-box-title">Výdavky + Odvody (r. 38)</div>
+                            <div class="stat-box-value" id="kpiExpenses">0,00 €</div>
+                            <div class="stat-box-sub" id="kpiExpensesSub">Paušál 60 % + odvody</div>
+                        </div>
+                        <div class="stat-box">
+                            <div class="stat-box-title">Základ dane po NČZD (r. 80)</div>
+                            <div class="stat-box-value" id="kpiTaxBase">0,00 €</div>
+                            <div class="stat-box-sub" id="kpiTaxRateSub">Sadzba dane: 15 %</div>
+                        </div>
+                        <div class="stat-box highlight">
+                            <div class="stat-box-title" id="kpiFinalTaxLabel">Daň na úhradu (r. 135)</div>
+                            <div class="stat-box-value" id="kpiFinalTax" style="color:var(--success);">0,00 €</div>
+                            <div class="stat-box-sub" id="kpiFinalTaxSub">Po odpočítaní bonusov a preddavkov</div>
+                        </div>
                     </div>
-                    <div class="stat-box">
-                        <div class="stat-box-title" id="activeExpenseTitle">Paušálne výdavky (60%)</div>
-                        <div class="stat-box-value" id="taxExpenseValue">0,00 €</div>
+
+                    <!-- Prepínač režimu výdavkov s okamžitým porovnaním výhodnosti -->
+                    <div class="mode-switcher">
+                        <button type="button" class="mode-btn active" id="modeFlatBtn" onclick="switchTaxMode('flat')">
+                            <div>
+                                📊 Paušálne výdavky (60 %)
+                                <div style="font-size:11.5px; font-weight:normal; margin-top:4px; color:var(--muted);">Max. 20 000 € + zaplatené odvody do ZP a SP</div>
+                            </div>
+                            <span class="mode-compare" id="compareFlatBadge">Daň: 0,00 €</span>
+                        </button>
+                        <button type="button" class="mode-btn" id="modeRealBtn" onclick="switchTaxMode('real')">
+                            <div>
+                                🧾 Skutočné výdavky (Daňová evidencia)
+                                <div style="font-size:11.5px; font-weight:normal; margin-top:4px; color:var(--muted);">Prijaté faktúry, bločky, kniha jázd + odvody</div>
+                            </div>
+                            <span class="mode-compare" id="compareRealBadge">Daň: 0,00 €</span>
+                        </button>
                     </div>
-                    <div class="stat-box">
-                        <div class="stat-box-title">Predbežný základ dane</div>
-                        <div class="stat-box-value" id="taxBaseValue" style="color:var(--success);">0,00 €</div>
+
+                    <div class="two-col">
+                        <!-- ĽAVÝ STĹPEC: VSTUPNÉ ÚDAJE A ODDIELY -->
+                        <div>
+                            <!-- Príjmy a výdavky z DB -->
+                            <div class="card">
+                                <div class="card-header">
+                                    <div class="card-title">VI. Oddiel — Príjmy, výdavky a odvody (§ 6)</div>
+                                    <span class="badge badge-blue" id="vatStatusBadge">Neplatiteľ DPH</span>
+                                </div>
+
+                                <div style="margin-bottom:14px;">
+                                    <label class="checkbox-row">
+                                        <input type="checkbox" id="includeUnpaidCheckbox" onchange="recalculateAll()">
+                                        <span>Započítať aj neuhradené vystavené faktúry (len pre orientačný odhad)</span>
+                                    </label>
+                                    <div style="font-size:11px; color:var(--muted); margin-top:4px; padding-left:4px;">
+                                        Podľa zákona vstupujú do DP len príjmy skutočne uhradené do 31. 12. daného roka.
+                                    </div>
+                                </div>
+
+                                <div class="form-grid">
+                                    <div class="form-group">
+                                        <label class="form-label">Zaplatené zdravotné poistenie za rok (€)</label>
+                                        <input type="number" step="0.01" min="0" id="inputHealthIns" class="form-input" oninput="recalculateAll()">
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="form-label">Zaplatené sociálne poistenie za rok (€)</label>
+                                        <input type="number" step="0.01" min="0" id="inputSocialIns" class="form-input" oninput="recalculateAll()">
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="form-label">Prijaté faktúry & bločky z DB (€)</label>
+                                        <input type="text" id="displayRealDocs" class="form-input" readonly style="background:#f8fafc;">
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="form-label">Náhrady z knihy jázd z DB (€)</label>
+                                        <input type="text" id="displayTripsSum" class="form-input" readonly style="background:#f8fafc;">
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Nezdaniteľné časti a daňové bonusy -->
+                            <div class="card">
+                                <div class="card-header">
+                                    <div class="card-title">III., IV. a X. Oddiel — Nezdaniteľné časti a daňové bonusy</div>
+                                    <span class="badge badge-green">Znižuje daň</span>
+                                </div>
+
+                                <div style="display:flex; flex-direction:column; gap:12px;">
+                                    <label class="checkbox-row">
+                                        <input type="checkbox" id="applyNczdCheckbox" checked onchange="recalculateAll()">
+                                        <span>Uplatňujem nezdaniteľnú časť základu dane na daňovníka (r. 73)</span>
+                                    </label>
+
+                                    <div class="form-grid">
+                                        <div class="form-group">
+                                            <label class="form-label">Príspevky na III. pilier / DDS (max. 180 €)</label>
+                                            <input type="number" step="0.01" min="0" max="180" id="inputDds" class="form-input" value="0" oninput="recalculateAll()">
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="form-label">Zaplatené preddavky na daň počas roka (€)</label>
+                                            <input type="number" step="0.01" min="0" id="inputAdvances" class="form-input" value="0" oninput="recalculateAll()">
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="form-label">Ročný daňový bonus na deti celkom (€)</label>
+                                            <input type="number" step="0.01" min="0" id="inputChildBonus" class="form-input" value="0" oninput="recalculateAll()">
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="form-label">Daňový bonus na zaplatené úroky z hypotéky (€)</label>
+                                            <input type="number" step="0.01" min="0" id="inputMortgageBonus" class="form-input" value="0" oninput="recalculateAll()">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Oddiel I, II a XII -->
+                            <div class="card">
+                                <div class="card-header">
+                                    <div class="card-title">I., II. a XII. Oddiel — Identifikácia a 2 % z dane</div>
+                                    <span class="badge badge-amber">Pre XML export</span>
+                                </div>
+                                <div class="form-grid">
+                                    <div class="form-group">
+                                        <label class="form-label">Priezvisko</label>
+                                        <input type="text" id="inputLastName" class="form-input" oninput="recalculateAll()">
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="form-label">Meno</label>
+                                        <input type="text" id="inputFirstName" class="form-input" oninput="recalculateAll()">
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="form-label">DIČ (10 číslic)</label>
+                                        <input type="text" id="inputDic" class="form-input" oninput="recalculateAll()">
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="form-label">SK NACE (hlavná činnosť)</label>
+                                        <input type="text" id="inputSkNace" class="form-input" placeholder="napr. 62010" oninput="recalculateAll()">
+                                    </div>
+                                    <div class="form-group full">
+                                        <label class="form-label">IBAN pre vrátenie daňového preplatku / bonusu</label>
+                                        <input type="text" id="inputIban" class="form-input" oninput="recalculateAll()">
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="form-label">Poukázanie 2 % – IČO prijímateľa (voliteľné)</label>
+                                        <input type="text" id="input2PercIco" class="form-input" placeholder="napr. 12345678" oninput="recalculateAll()">
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="form-label">Poukázanie 2 % – Obchodné meno prijímateľa</label>
+                                        <input type="text" id="input2PercName" class="form-input" placeholder="Názov OZ / nadácie" oninput="recalculateAll()">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- PRAVÝ STĹPEC: PRESNÉ RIADKY TLAČIVA -->
+                        <div>
+                            <div class="card" style="position:sticky; top:92px;">
+                                <div class="card-header">
+                                    <div class="card-title">Rekapitulácia riadkov tlačiva DPFO typ B</div>
+                                </div>
+
+                                <div class="tax-row">
+                                    <div><span class="row-num">r. 37</span>Príjmy zo živnosti (§ 6 ods. 1 a 2)</div>
+                                    <strong id="sumR37">0,00 €</strong>
+                                </div>
+                                <div class="tax-row">
+                                    <div><span class="row-num">r. 38</span>Preukázateľné / paušálne výdavky <strong>vrátane odvodov</strong></div>
+                                    <strong id="sumR38">0,00 €</strong>
+                                </div>
+                                <div class="tax-row" style="background:#f8fafc; padding-left:8px; padding-right:8px; border-radius:6px;">
+                                    <div style="font-size:12px; color:var(--muted);">↳ z toho zaplatené odvody ZP + SP (pod Tab. 1)</div>
+                                    <span style="font-size:12px; font-weight:700;" id="sumInsuranceInfo">0,00 €</span>
+                                </div>
+                                <div class="tax-row">
+                                    <div><span class="row-num">r. 41</span>Čiastkový základ dane z podnikania (r. 37 − r. 38)</div>
+                                    <strong id="sumR41">0,00 €</strong>
+                                </div>
+                                <div class="tax-row">
+                                    <div><span class="row-num">r. 73</span>Nezdaniteľná časť na daňovníka (NČZD)</div>
+                                    <strong id="sumR73">0,00 €</strong>
+                                </div>
+                                <div class="tax-row">
+                                    <div><span class="row-num">r. 75</span>Príspevky na doplnkové dôchodkové sporenie (III. pilier)</div>
+                                    <strong id="sumR75">0,00 €</strong>
+                                </div>
+                                <div class="tax-row">
+                                    <div><span class="row-num">r. 77</span>Nezdaniteľné časti spolu (r. 73 + r. 75)</div>
+                                    <strong id="sumR77">0,00 €</strong>
+                                </div>
+                                <div class="tax-row">
+                                    <div><span class="row-num">r. 80</span>Základ dane znížený o NČZD (r. 41 − r. 77)</div>
+                                    <strong id="sumR80">0,00 €</strong>
+                                </div>
+                                <div class="tax-row">
+                                    <div><span class="row-num">r. 81</span>Vypočítaná daň (<span id="rateLabel">15 %</span>)</div>
+                                    <strong id="sumR81">0,00 €</strong>
+                                </div>
+                                <div class="tax-row">
+                                    <div><span class="row-num">r. 117</span>Daňový bonus na vyživované deti</div>
+                                    <strong id="sumR117">0,00 €</strong>
+                                </div>
+                                <div class="tax-row">
+                                    <div><span class="row-num">r. 123</span>Daňový bonus na zaplatené úroky</div>
+                                    <strong id="sumR123">0,00 €</strong>
+                                </div>
+                                <div class="tax-row">
+                                    <div><span class="row-num">r. 131</span>Zaplatené preddavky na daň</div>
+                                    <strong id="sumR131">0,00 €</strong>
+                                </div>
+                                <div class="tax-row" style="border-top:2px solid var(--primary); margin-top:8px; padding-top:14px; font-size:15px;">
+                                    <div><span class="row-num" id="finalRowBadge">r. 135</span><strong id="finalRowText">Daň na úhradu:</strong></div>
+                                    <strong id="sumFinal" style="font-size:17px; color:var(--success);">0,00 €</strong>
+                                </div>
+                                <div class="tax-row" style="font-size:12px; color:var(--muted);">
+                                    <div><span class="row-num">r. 152</span>Suma poukázaných 2 % (3 %) z dane</div>
+                                    <strong id="sumR152">0,00 €</strong>
+                                </div>
+
+                                <div style="margin-top:16px; display:flex; flex-direction:column; gap:8px;">
+                                    <button type="button" class="button button-outline" style="width:100%;" onclick="switchView('form')">👁️ Zobraziť náhľad formulára DPFO B</button>
+                                    <button type="button" class="button button-primary" style="width:100%;" onclick="generateOfficialXML()">⚡ Stiahnuť XML pre Finančnú správu</button>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
 
-                <!-- Detailný prehľad výpočtu -->
-                <div class="card">
-                    <h2 style="font-size:16px; margin-bottom:16px; color:var(--primary);" id="detailHeading">Podrobný rozpis riadkov pre DPFO typ B</h2>
-                    <div class="tax-row">
-                        <span>Riadok 37 – Príjmy zo živnosti (§ 6 ods. 1 a 2):</span>
-                        <strong id="detailRevenue">0,00 €</strong>
-                    </div>
-                    <div class="tax-row" id="rowFlatDetail">
-                        <span>Riadok 38 – Uplatnené paušálne výdavky (60 %, max. 20 000 €):</span>
-                        <strong id="detailFlat">0,00 €</strong>
-                    </div>
-                    <div class="tax-row" id="rowRealDetail" style="display:none;">
-                        <span>Riadok 38 – Uznané reálne výdavky (prijaté faktúry a bločky):</span>
-                        <strong id="detailRealExpenses">0,00 €</strong>
-                    </div>
-                    <div class="tax-row" id="rowTripsDetail" style="display:none;">
-                        <span>Cestovné náhrady z Knihy jázd (km + PHM):</span>
-                        <strong id="detailTrips">0,00 €</strong>
-                    </div>
-                    <div class="tax-row">
-                        <span>Riadok 39 – Zaplatené povinné odvody do ZP a SP:</span>
-                        <strong id="detailInsurance">0,00 €</strong>
-                    </div>
-                    <div class="tax-row" style="border-top: 2px solid var(--border); margin-top: 10px; padding-top: 15px; font-size: 15px;">
-                        <span><strong>Riadok 41 – Čiastkový základ dane:</strong></span>
-                        <strong id="detailTaxBase" style="color: var(--success);">0,00 €</strong>
-                    </div>
-                </div>
+                <!-- ========================================================= -->
+                <!-- POHĽAD 2: VIZUÁLNY NÁHĽAD OFICIÁLNEHO FORMULÁRA DPFO B    -->
+                <!-- ========================================================= -->
+                <div id="formPreviewView" style="display:none;">
+                    <div class="official-form-wrapper" id="officialFormDocument">
+                        <div class="of-header">
+                            <div>
+                                <div class="of-title">Daňové priznanie k dani z príjmov fyzickej osoby</div>
+                                <div style="font-size:12px; font-weight:700; margin-top:2px;">pre daňovníka, ktorý má príjmy podľa § 6 zákona č. 595/2003 Z. z. o dani z príjmov (živnosť)</div>
+                                <div class="of-subtitle">Vygenerované systémom MyDataPay • Zdaňovacie obdobie: <strong id="ofYear">2026</strong> • Druh: <strong id="ofType">Riadne (R)</strong></div>
+                            </div>
+                            <div class="of-code-box">
+                                TYP: B<br>
+                                <span style="font-size:10px; font-weight:normal;">DPFOBv25</span>
+                            </div>
+                        </div>
 
-                <!-- AKČNÉ TLAČIDLÁ -->
-                <div style="display: flex; gap: 12px; justify-content: flex-end; flex-wrap: wrap;">
-                    <button type="button" class="button button-outline" onclick="generateOfficialPDF()">📄 Stiahnuť úradné podklady ako PDF</button>
-                    <button type="button" class="button button-primary" onclick="generateOfficialXML()">⚡ Stiahnuť platné XML pre Finančnú správu</button>
+                        <!-- I. ODDIEL -->
+                        <div class="of-section">
+                            <div class="of-section-head">I. ODDIEL — Údaje o daňovníkovi</div>
+                            <div class="of-grid">
+                                <div class="of-cell" style="grid-column: span 4;">
+                                    <span class="of-cell-label">01 – DIČ</span>
+                                    <div class="of-cell-val" id="ofDic">—</div>
+                                </div>
+                                <div class="of-cell" style="grid-column: span 4;">
+                                    <span class="of-cell-label">IČO</span>
+                                    <div class="of-cell-val" id="ofIco">—</div>
+                                </div>
+                                <div class="of-cell" style="grid-column: span 4;">
+                                    <span class="of-cell-label">SK NACE</span>
+                                    <div class="of-cell-val" id="ofSkNace">—</div>
+                                </div>
+                                <div class="of-cell" style="grid-column: span 6;">
+                                    <span class="of-cell-label">04 – Priezvisko</span>
+                                    <div class="of-cell-val" id="ofLastName">—</div>
+                                </div>
+                                <div class="of-cell" style="grid-column: span 6;">
+                                    <span class="of-cell-label">05 – Meno</span>
+                                    <div class="of-cell-val" id="ofFirstName">—</div>
+                                </div>
+                                <div class="of-cell" style="grid-column: span 6;">
+                                    <span class="of-cell-label">07–08 – Ulica a súpisné/orientačné číslo</span>
+                                    <div class="of-cell-val" id="ofStreet">—</div>
+                                </div>
+                                <div class="of-cell" style="grid-column: span 2;">
+                                    <span class="of-cell-label">09 – PSČ</span>
+                                    <div class="of-cell-val" id="ofZip">—</div>
+                                </div>
+                                <div class="of-cell" style="grid-column: span 4;">
+                                    <span class="of-cell-label">10 – Obec</span>
+                                    <div class="of-cell-val" id="ofCity">—</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- VI. ODDIEL -->
+                        <div class="of-section">
+                            <div class="of-section-head">VI. ODDIEL — Výpočet základu dane z príjmov z podnikania (§ 6 ods. 1 a 2)</div>
+                            <div class="of-line">
+                                <div class="of-line-num">Tab.1</div>
+                                <div class="of-line-desc">Spôsob uplatňovania výdavkov: <strong id="ofExpenseMethod" style="margin-left:6px;">Paušálne výdavky (60 %)</strong></div>
+                                <div class="of-line-val" style="background:#f8fafc; font-size:11px;" id="ofExpenseFlag">[ X ] § 6 ods. 10</div>
+                            </div>
+                            <div class="of-line">
+                                <div class="of-line-num">37</div>
+                                <div class="of-line-desc">Úhrn príjmov z podnikania a z inej samostatnej zárobkovej činnosti (Tabuľka č. 1, stĺpec 1)</div>
+                                <div class="of-line-val" id="ofR37">0.00</div>
+                            </div>
+                            <div class="of-line">
+                                <div class="of-line-num">38</div>
+                                <div class="of-line-desc">Úhrn preukázateľne vynaložených / paušálnych výdavkov vrátane odvodov (Tabuľka č. 1, stĺpec 2)</div>
+                                <div class="of-line-val" id="ofR38">0.00</div>
+                            </div>
+                            <div class="of-line">
+                                <div class="of-line-num">Odv.</div>
+                                <div class="of-line-desc" style="font-size:11px; color:#334155;">Preukázateľne zaplatené poistné na zdravotné a sociálne poistenie zahrnuté vo výdavkoch</div>
+                                <div class="of-line-val" style="font-size:11.5px; color:#334155;" id="ofIns">0.00</div>
+                            </div>
+                            <div class="of-line total-line">
+                                <div class="of-line-num">41</div>
+                                <div class="of-line-desc">Základ dane (kladný rozdiel riadkov 37 a 38)</div>
+                                <div class="of-line-val" id="ofR41">0.00</div>
+                            </div>
+                        </div>
+
+                        <!-- III. & IX. ODDIEL -->
+                        <div class="of-section">
+                            <div class="of-section-head">III. a IX. ODDIEL — Výpočet základu dane a dane z príjmov</div>
+                            <div class="of-line">
+                                <div class="of-line-num">72</div>
+                                <div class="of-line-desc">Základ dane z príjmov podľa § 6 (prenesený z riadku 41)</div>
+                                <div class="of-line-val" id="ofR72">0.00</div>
+                            </div>
+                            <div class="of-line">
+                                <div class="of-line-num">73</div>
+                                <div class="of-line-desc">Nezdaniteľná časť základu dane na daňovníka (§ 11 ods. 2 zákona)</div>
+                                <div class="of-line-val" id="ofR73">0.00</div>
+                            </div>
+                            <div class="of-line">
+                                <div class="of-line-num">75</div>
+                                <div class="of-line-desc">Preukázateľne zaplatené príspevky na doplnkové dôchodkové sporenie (III. pilier)</div>
+                                <div class="of-line-val" id="ofR75">0.00</div>
+                            </div>
+                            <div class="of-line">
+                                <div class="of-line-num">77</div>
+                                <div class="of-line-desc">Nezdaniteľné časti základu dane spolu (r. 73 + r. 74 + r. 75)</div>
+                                <div class="of-line-val" id="ofR77">0.00</div>
+                            </div>
+                            <div class="of-line total-line">
+                                <div class="of-line-num">80</div>
+                                <div class="of-line-desc">Základ dane znížený o nezdaniteľnú časť základu dane (r. 72 − r. 77)</div>
+                                <div class="of-line-val" id="ofR80">0.00</div>
+                            </div>
+                            <div class="of-line total-line">
+                                <div class="of-line-num">81</div>
+                                <div class="of-line-desc">Daň zo základu dane z riadku 80 (<span id="ofRateDesc">sadzba 15 %</span>)</div>
+                                <div class="of-line-val" id="ofR81">0.00</div>
+                            </div>
+                        </div>
+
+                        <!-- X. & XI. ODDIEL -->
+                        <div class="of-section">
+                            <div class="of-section-head">X. a XI. ODDIEL — Daňové bonusy, preddavky a výsledok vyrovnania dane</div>
+                            <div class="of-line">
+                                <div class="of-line-num">117</div>
+                                <div class="of-line-desc">Daňový bonus na vyživované dieťa / deti (§ 33 zákona)</div>
+                                <div class="of-line-val" id="ofR117">0.00</div>
+                            </div>
+                            <div class="of-line">
+                                <div class="of-line-num">123</div>
+                                <div class="of-line-desc">Daňový bonus na zaplatené úroky (§ 33a zákona)</div>
+                                <div class="of-line-val" id="ofR123">0.00</div>
+                            </div>
+                            <div class="of-line">
+                                <div class="of-line-num">131</div>
+                                <div class="of-line-desc">Zaplatené preddavky na daň z príjmov fyzickej osoby (§ 34 zákona)</div>
+                                <div class="of-line-val" id="ofR131">0.00</div>
+                            </div>
+                            <div class="of-line total-line">
+                                <div class="of-line-num">135</div>
+                                <div class="of-line-desc">Daň na úhradu (+)</div>
+                                <div class="of-line-val" id="ofR135">0.00</div>
+                            </div>
+                            <div class="of-line">
+                                <div class="of-line-num">136</div>
+                                <div class="of-line-desc">Daňový preplatok (−) / Rozdiel daňového bonusu na vyplatenie</div>
+                                <div class="of-line-val" id="ofR136">0.00</div>
+                            </div>
+                        </div>
+
+                        <!-- XII. & XIII. ODDIEL -->
+                        <div class="of-section" style="margin-bottom:0;">
+                            <div class="of-section-head">XII. a XIII. ODDIEL — Poukázanie podielu zaplatenej dane (2 % / 3 %) a vyhlásenie</div>
+                            <div class="of-grid">
+                                <div class="of-cell" style="grid-column: span 4;">
+                                    <span class="of-cell-label">152 – Suma 2 % zo zaplatenej dane</span>
+                                    <div class="of-cell-val" id="ofR152">0.00 €</div>
+                                </div>
+                                <div class="of-cell" style="grid-column: span 3;">
+                                    <span class="of-cell-label">IČO prijímateľa</span>
+                                    <div class="of-cell-val" id="ofRecIco">—</div>
+                                </div>
+                                <div class="of-cell" style="grid-column: span 5;">
+                                    <span class="of-cell-label">Obchodné meno / Názov prijímateľa</span>
+                                    <div class="of-cell-val" id="ofRecName">—</div>
+                                </div>
+                                <div class="of-cell" style="grid-column: span 8;">
+                                    <span class="of-cell-label">IBAN pre vrátenie preplatku / bonusu</span>
+                                    <div class="of-cell-val" id="ofIban">—</div>
+                                </div>
+                                <div class="of-cell" style="grid-column: span 4;">
+                                    <span class="of-cell-label">Dátum a podpis daňovníka</span>
+                                    <div class="of-cell-val" id="ofDate">—</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </main>
@@ -168,9 +616,16 @@
     <script>
         let currentUser = null;
         let currentCompanyId = null;
-        let globalData = null;
+        let rawDbData = { company: null, invoices: [], expenses: [], trips: [] };
         let currentMode = 'flat';
+        let calculatedState = {};
         const $ = id => document.getElementById(id);
+
+        // Legislatívne konštanty SR (NČZD na daňovníka a hranice krátenia)
+        const TAX_CONSTANTS = {
+            '2025': { nczd: 5753.79, nczdThreshold: 25426.27, highTaxThreshold: 48441.43, microTurnoverLimit: 100000 },
+            '2026': { nczd: 5966.73, nczdThreshold: 26367.26, highTaxThreshold: 50234.18, microTurnoverLimit: 100000 }
+        };
 
         document.addEventListener('DOMContentLoaded', initializePage);
 
@@ -194,7 +649,9 @@
                 if (!membership?.company_id) throw new Error('Nie je priradená žiadna firma.');
                 currentCompanyId = membership.company_id;
 
-                await loadTaxData(currentCompanyId);
+                await loadDatabaseData(currentCompanyId);
+                prefillCompanyInputs();
+                recalculateAll();
                 showApp();
             } catch (e) {
                 console.error(e);
@@ -203,9 +660,7 @@
             }
         }
 
-        async function loadTaxData(companyId) {
-            const currentYear = new Date().getFullYear().toString();
-
+        async function loadDatabaseData(companyId) {
             const [compRes, invRes, expensesRes, tripsRes] = await Promise.all([
                 supabaseClient.from('companies').select('*').eq('id', companyId).single(),
                 supabaseClient.from('invoices').select('*').eq('user_id', currentUser.id),
@@ -215,256 +670,414 @@
 
             if (compRes.error) throw compRes.error;
 
-            globalData = {
+            rawDbData = {
                 company: compRes.data,
-                invoices: (invRes.data || []).filter(i => (i.issue_date || '').startsWith(currentYear) && i.status !== 'cancelled'),
-                expenses: (expensesRes.data || []).filter(e => (e.issue_date || '').startsWith(currentYear)),
-                trips: (tripsRes.data || []).filter(t => (t.trip_date || '').startsWith(currentYear))
+                invoices: invRes.data || [],
+                expenses: expensesRes.data || [],
+                trips: tripsRes.data || []
             };
+        }
 
-            renderTaxCalculations();
+        function prefillCompanyInputs() {
+            const c = rawDbData.company || {};
+            const isVatPayer = Boolean(c.ic_dph && c.ic_dph.trim().length > 0);
+            $('vatStatusBadge').textContent = isVatPayer ? `Platiteľ DPH (${c.ic_dph})` : 'Neplatiteľ DPH';
+            $('vatStatusBadge').className = isVatPayer ? 'badge badge-amber' : 'badge badge-blue';
+
+            // Rozdelenie mena a priezviska z company.name
+            const nameParts = (c.name || '').trim().split(/\s+/);
+            if (nameParts.length >= 2) {
+                $('inputFirstName').value = nameParts[0];
+                $('inputLastName').value = nameParts.slice(1).join(' ');
+            } else {
+                $('inputLastName').value = c.name || '';
+                $('inputFirstName').value = '';
+            }
+
+            $('inputDic').value = c.dic || '';
+            $('inputIban').value = c.iban || '';
+
+            // Predvyplnenie ročných odvodov (12 * mesačné odvody z profilu firmy)
+            $('inputHealthIns').value = (Number(c.health_insurance || 0) * 12).toFixed(2);
+            $('inputSocialIns').value = (Number(c.social_insurance || 0) * 12).toFixed(2);
+        }
+
+        function onYearChange() {
+            recalculateAll();
         }
 
         function switchTaxMode(mode) {
             currentMode = mode;
-            if (mode === 'flat') {
-                $('modeFlatBtn').className = 'mode-btn active';
-                $('modeRealBtn').className = 'mode-btn';
-            } else {
-                $('modeFlatBtn').className = 'mode-btn';
-                $('modeRealBtn').className = 'mode-btn active';
-            }
-            renderTaxCalculations();
+            $('modeFlatBtn').className = mode === 'flat' ? 'mode-btn active' : 'mode-btn';
+            $('modeRealBtn').className = mode === 'real' ? 'mode-btn active' : 'mode-btn';
+            recalculateAll();
         }
 
-        function renderTaxCalculations() {
-            if (!globalData) return;
-            const { company, invoices, expenses, trips } = globalData;
-
-            const totalRevenue = invoices.reduce((sum, i) => sum + Number(i.total || 0), 0);
-            const annualInsurance = (Number(company.health_insurance || 0) + Number(company.social_insurance || 0)) * 12;
-
-            $('taxRevenue').textContent = money(totalRevenue);
-            $('detailRevenue').textContent = money(totalRevenue);
-            $('detailInsurance').textContent = money(annualInsurance);
-
-            if (currentMode === 'flat') {
-                $('activeExpenseTitle').textContent = 'Paušálne výdavky (60%)';
-                $('detailHeading').textContent = 'Podrobný rozpis pre paušálne výdavky (DPFO B)';
-                $('rowFlatDetail').style.display = 'flex';
-                $('rowRealDetail').style.display = 'none';
-                $('rowTripsDetail').style.display = 'none';
-
-                let flatExpense = totalRevenue * 0.60;
-                if (flatExpense > 20000) flatExpense = 20000;
-
-                const taxBase = Math.max(0, totalRevenue - flatExpense - annualInsurance);
-
-                $('taxExpenseValue').textContent = money(flatExpense);
-                $('detailFlat').textContent = money(flatExpense);
-                $('taxBaseValue').textContent = money(taxBase);
-                $('detailTaxBase').textContent = money(taxBase);
+        function switchView(view) {
+            if (view === 'wizard') {
+                $('wizardView').style.display = 'block';
+                $('formPreviewView').style.display = 'none';
+                $('tabWizard').classList.add('active');
+                $('tabForm').classList.remove('active');
             } else {
-                $('activeExpenseTitle').textContent = 'Reálne výdavky + Náhrady';
-                $('detailHeading').textContent = 'Podrobný rozpis pre daňovú evidenciu (reálne výdavky)';
-                $('rowFlatDetail').style.display = 'none';
-                $('rowRealDetail').style.display = 'flex';
-                $('rowTripsDetail').style.display = 'flex';
-
-                const totalRealExpenses = expenses.reduce((sum, e) => sum + Number(e.total || 0), 0);
-                const totalTripsAllowance = trips.reduce((sum, t) => sum + Number(t.total_allowance || 0), 0);
-
-                const totalExpensesSum = totalRealExpenses + totalTripsAllowance + annualInsurance;
-                const taxBase = Math.max(0, totalRevenue - totalExpensesSum);
-
-                $('taxExpenseValue').textContent = money(totalRealExpenses + totalTripsAllowance);
-                $('detailRealExpenses').textContent = money(totalRealExpenses);
-                $('detailTrips').textContent = money(totalTripsAllowance) + ` (${trips.length} ciest)`;
-                $('taxBaseValue').textContent = money(taxBase);
-                $('detailTaxBase').textContent = money(taxBase);
+                $('wizardView').style.display = 'none';
+                $('formPreviewView').style.display = 'block';
+                $('tabWizard').classList.remove('active');
+                $('tabForm').classList.add('active');
             }
+        }
+
+        function computeTaxScenario(mode, revenue, realDocsSum, tripsSum, totalInsurance, year) {
+            const cfg = TAX_CONSTANTS[year] || TAX_CONSTANTS['2026'];
+
+            // 1. Výdavky pred odvodmi
+            let baseExpenses = 0;
+            if (mode === 'flat') {
+                baseExpenses = Math.min(revenue * 0.60, 20000);
+            } else {
+                baseExpenses = realDocsSum + tripsSum;
+            }
+
+            // Riadok 38 = výdavky + zaplatené odvody
+            const r38 = round2(baseExpenses + totalInsurance);
+            // Riadok 41 = čiastkový základ dane (nemôže byť záporný pri paušále, pri reálnych sa strata rieši osobitne)
+            const r41 = round2(Math.max(0, revenue - r38));
+
+            // 2. Nezdaniteľné časti základu dane (r. 73 a r. 75)
+            const applyNczd = $('applyNczdCheckbox').checked;
+            let r73 = 0;
+            if (applyNczd && r41 > 0) {
+                if (r41 <= cfg.nczdThreshold) {
+                    r73 = cfg.nczd;
+                } else {
+                    // Krátenie NČZD pri vyššom základe dane
+                    const reduced = cfg.nczd - ((r41 - cfg.nczdThreshold) / 4);
+                    r73 = Math.max(0, round2(reduced));
+                }
+            }
+            r73 = Math.min(r73, r41);
+
+            const ddsInput = Math.min(Math.max(0, Number($('inputDds').value || 0)), 180);
+            const r75 = round2(Math.min(ddsInput, Math.max(0, r41 - r73)));
+            const r77 = round2(r73 + r75);
+
+            // Riadok 80 = základ dane po odpočítaní NČZD
+            const r80 = round2(Math.max(0, r41 - r77));
+
+            // 3. Výpočet dane (r. 81): 15 % ak príjmy <= 100 000 €, inak progresívne 19 % / 25 %
+            let r81 = 0;
+            let rateText = '15 %';
+            if (revenue <= cfg.microTurnoverLimit) {
+                r81 = round2(r80 * 0.15);
+                rateText = '15 % (príjmy do 100 000 €)';
+            } else {
+                if (r80 <= cfg.highTaxThreshold) {
+                    r81 = round2(r80 * 0.19);
+                    rateText = '19 %';
+                } else {
+                    r81 = round2((cfg.highTaxThreshold * 0.19) + ((r80 - cfg.highTaxThreshold) * 0.25));
+                    rateText = '19 % / 25 %';
+                }
+            }
+
+            // 4. Daňové bonusy a preddavky
+            const r117 = round2(Math.max(0, Number($('inputChildBonus').value || 0)));
+            const r123 = round2(Math.max(0, Number($('inputMortgageBonus').value || 0)));
+            const r131 = round2(Math.max(0, Number($('inputAdvances').value || 0)));
+
+            // Daň po odpočítaní bonusov (môže ísť do mínusu = vyplatenie bonusu)
+            const taxAfterBonuses = round2(r81 - r117 - r123);
+            const netBalance = round2(taxAfterBonuses - r131);
+
+            const r135 = netBalance > 0 ? netBalance : 0; // Daň na úhradu
+            const r136 = netBalance < 0 ? Math.abs(netBalance) : 0; // Preplatok / bonus na vyplatenie
+
+            // 2 % z dane (počíta sa zo zaplatenej dane zníženej o bonusy, min. 3 €)
+            const taxFor2Perc = Math.max(0, taxAfterBonuses);
+            const r152 = taxFor2Perc > 0 ? round2(taxFor2Perc * 0.02) : 0;
+
+            return { r37: revenue, baseExpenses, totalInsurance, r38, r41, r73, r75, r77, r80, r81, rateText, r117, r123, r131, r135, r136, r152 };
+        }
+
+        function recalculateAll() {
+            const year = $('taxYearSelect').value;
+            const c = rawDbData.company || {};
+            const isVatPayer = Boolean(c.ic_dph && c.ic_dph.trim().length > 0);
+            const includeUnpaid = $('includeUnpaidCheckbox').checked;
+
+            // Filtrovanie faktúr za zvolený rok
+            const validInvoices = rawDbData.invoices.filter(inv => {
+                if (inv.status === 'cancelled' || inv.status === 'storno') return false;
+                const dateStr = inv.supply_date || inv.issue_date || '';
+                if (!dateStr.startsWith(year)) return false;
+                if (!includeUnpaid) {
+                    return inv.status === 'paid' || Number(inv.paid_amount || 0) > 0;
+                }
+                return true;
+            });
+
+            // Súčet príjmov (ak je platiteľ DPH, berieme subtotal bez DPH; ak nie, total)
+            const revenue = round2(validInvoices.reduce((sum, inv) => {
+                const amount = isVatPayer
+                    ? Number(inv.subtotal ?? inv.total ?? 0)
+                    : Number(inv.total ?? 0);
+                // Ak sa berú len uhradené a faktúra je uhradená čiastočne
+                if (!includeUnpaid && inv.status !== 'paid' && Number(inv.paid_amount || 0) > 0) {
+                    const ratio = Number(inv.total) > 0 ? (Number(inv.paid_amount) / Number(inv.total)) : 1;
+                    return sum + (amount * ratio);
+                }
+                return sum + amount;
+            }, 0));
+
+            // Filtrovanie prijatých faktúr a bločkov za zvolený rok
+            const validExpenses = rawDbData.expenses.filter(exp => {
+                if (exp.status === 'cancelled' || exp.status === 'storno') return false;
+                const dateStr = exp.delivery_date || exp.issue_date || '';
+                return dateStr.startsWith(year);
+            });
+
+            const realDocsSum = round2(validExpenses.reduce((sum, exp) => {
+                const val = isVatPayer
+                    ? Number(exp.amount_without_vat ?? exp.total_amount ?? 0)
+                    : Number(exp.total_amount ?? 0);
+                return sum + val;
+            }, 0));
+
+            // Filtrovanie knihy jázd za zvolený rok
+            const validTrips = rawDbData.trips.filter(t => (t.trip_date || '').startsWith(year));
+            const tripsSum = round2(validTrips.reduce((sum, t) => {
+                return sum + Number(t.total_allowance ?? t.allowance_total ?? 0);
+            }, 0));
+
+            const healthIns = Math.max(0, Number($('inputHealthIns').value || 0));
+            const socialIns = Math.max(0, Number($('inputSocialIns').value || 0));
+            const totalInsurance = round2(healthIns + socialIns);
+
+            $('displayRealDocs').value = `${money(realDocsSum)} (${validExpenses.length} dokladov)`;
+            $('displayTripsSum').value = `${money(tripsSum)} (${validTrips.length} jázd)`;
+
+            // Výpočet oboch variantov pre porovnanie
+            const flatRes = computeTaxScenario('flat', revenue, realDocsSum, tripsSum, totalInsurance, year);
+            const realRes = computeTaxScenario('real', revenue, realDocsSum, tripsSum, totalInsurance, year);
+
+            $('compareFlatBadge').textContent = `Daň: ${money(flatRes.r81)}`;
+            $('compareRealBadge').textContent = `Daň: ${money(realRes.r81)}`;
+
+            const active = currentMode === 'flat' ? flatRes : realRes;
+            calculatedState = { ...active, year, mode: currentMode, invoiceCount: validInvoices.length };
+
+            // Aktualizácia KPI kariet
+            $('kpiRevenue').textContent = money(active.r37);
+            $('kpiRevenueSub').textContent = `${validInvoices.length} ${includeUnpaid ? 'vystavených' : 'uhradených'} dokladov`;
+            $('kpiExpenses').textContent = money(active.r38);
+            $('kpiExpensesSub').textContent = currentMode === 'flat'
+                ? `Paušál ${money(active.baseExpenses)} + odvody ${money(totalInsurance)}`
+                : `Doklady/jazdy ${money(active.baseExpenses)} + odvody ${money(totalInsurance)}`;
+            $('kpiTaxBase').textContent = money(active.r80);
+            $('kpiTaxRateSub').textContent = `Sadzba: ${active.rateText}`;
+
+            if (active.r136 > 0) {
+                $('kpiFinalTaxLabel').textContent = 'Preplatok / Bonus (r. 136)';
+                $('kpiFinalTax').textContent = money(active.r136);
+                $('kpiFinalTax').style.color = 'var(--primary)';
+            } else {
+                $('kpiFinalTaxLabel').textContent = 'Daň na úhradu (r. 135)';
+                $('kpiFinalTax').textContent = money(active.r135);
+                $('kpiFinalTax').style.color = active.r135 > 0 ? 'var(--warning)' : 'var(--success)';
+            }
+
+            // Aktualizácia rekapitulácie riadkov
+            $('sumR37').textContent = money(active.r37);
+            $('sumR38').textContent = money(active.r38);
+            $('sumInsuranceInfo').textContent = money(active.totalInsurance);
+            $('sumR41').textContent = money(active.r41);
+            $('sumR73').textContent = money(active.r73);
+            $('sumR75').textContent = money(active.r75);
+            $('sumR77').textContent = money(active.r77);
+            $('sumR80').textContent = money(active.r80);
+            $('rateLabel').textContent = active.rateText;
+            $('sumR81').textContent = money(active.r81);
+            $('sumR117').textContent = money(active.r117);
+            $('sumR123').textContent = money(active.r123);
+            $('sumR131').textContent = money(active.r131);
+            $('sumR152').textContent = money(active.r152);
+
+            if (active.r136 > 0) {
+                $('finalRowBadge').textContent = 'r. 136';
+                $('finalRowText').textContent = 'Preplatok / Bonus na vyplatenie:';
+                $('sumFinal').textContent = money(active.r136);
+                $('sumFinal').style.color = 'var(--primary)';
+            } else {
+                $('finalRowBadge').textContent = 'r. 135';
+                $('finalRowText').textContent = 'Daň na úhradu:';
+                $('sumFinal').textContent = money(active.r135);
+                $('sumFinal').style.color = active.r135 > 0 ? 'var(--warning)' : 'var(--success)';
+            }
+
+            updateOfficialFormPreview(active);
+        }
+
+        function updateOfficialFormPreview(s) {
+            const c = rawDbData.company || {};
+            const rType = $('returnTypeSelect').value;
+            const rTypeMap = { R: 'Riadne (R)', O: 'Opravné (O)', D: 'Dodatočné (D)' };
+
+            $('ofYear').textContent = s.year;
+            $('ofType').textContent = rTypeMap[rType] || 'Riadne (R)';
+            $('ofDic').textContent = $('inputDic').value || c.dic || '—';
+            $('ofIco').textContent = c.ico || '—';
+            $('ofSkNace').textContent = $('inputSkNace').value || '—';
+            $('ofLastName').textContent = $('inputLastName').value || '—';
+            $('ofFirstName').textContent = $('inputFirstName').value || '—';
+            $('ofStreet').textContent = c.street || '—';
+            $('ofZip').textContent = c.postal_code || '—';
+            $('ofCity').textContent = c.city || '—';
+
+            $('ofExpenseMethod').textContent = s.mode === 'flat' ? 'Paušálne výdavky (60 %)' : 'Preukázateľné výdavky (Daňová evidencia)';
+            $('ofExpenseFlag').textContent = s.mode === 'flat' ? '[ X ] § 6 ods. 10' : '[ X ] § 6 ods. 11';
+
+            $('ofR37').textContent = s.r37.toFixed(2);
+            $('ofR38').textContent = s.r38.toFixed(2);
+            $('ofIns').textContent = s.totalInsurance.toFixed(2);
+            $('ofR41').textContent = s.r41.toFixed(2);
+
+            $('ofR72').textContent = s.r41.toFixed(2);
+            $('ofR73').textContent = s.r73.toFixed(2);
+            $('ofR75').textContent = s.r75.toFixed(2);
+            $('ofR77').textContent = s.r77.toFixed(2);
+            $('ofR80').textContent = s.r80.toFixed(2);
+            $('ofRateDesc').textContent = `sadzba ${s.rateText}`;
+            $('ofR81').textContent = s.r81.toFixed(2);
+
+            $('ofR117').textContent = s.r117.toFixed(2);
+            $('ofR123').textContent = s.r123.toFixed(2);
+            $('ofR131').textContent = s.r131.toFixed(2);
+            $('ofR135').textContent = s.r135.toFixed(2);
+            $('ofR136').textContent = s.r136.toFixed(2);
+
+            $('ofR152').textContent = `${s.r152.toFixed(2)} €`;
+            $('ofRecIco').textContent = $('input2PercIco').value || '—';
+            $('ofRecName').textContent = $('input2PercName').value || '—';
+            $('ofIban').textContent = $('inputIban').value || c.iban || '—';
+            $('ofDate').textContent = new Date().toLocaleDateString('sk-SK');
+        }
+
+        function printOfficialForm() {
+            switchView('form');
+            setTimeout(() => window.print(), 150);
         }
 
         // ==========================================
-        // 1. GENERÁTOR 100% PLATNÉHO XML PRE FINANČNÚ SPRÁVU
+        // GENERÁTOR XML PRE PORTÁL FINANČNEJ SPRÁVY SR
         // ==========================================
         function generateOfficialXML() {
-            if (!globalData) return;
-            const { company, invoices, expenses, trips } = globalData;
-            const currentYear = new Date().getFullYear();
+            const s = calculatedState;
+            const c = rawDbData.company || {};
+            const rType = $('returnTypeSelect').value;
+            const dic = $('inputDic').value.trim();
 
-            const totalRevenue = invoices.reduce((sum, i) => sum + Number(i.total || 0), 0);
-            const annualInsurance = (Number(company.health_insurance || 0) + Number(company.social_insurance || 0)) * 12;
-
-            let totalExpenses = 0;
-            let isPausal = (currentMode === 'flat') ? 1 : 0;
-
-            if (currentMode === 'flat') {
-                let flat = totalRevenue * 0.60;
-                if (flat > 20000) flat = 20000;
-                totalExpenses = flat;
-            } else {
-                const realExp = expenses.reduce((sum, e) => sum + Number(e.total || 0), 0);
-                const tripsAll = trips.reduce((sum, t) => sum + Number(t.total_allowance || 0), 0);
-                totalExpenses = realExp + tripsAll;
+            if (!dic) {
+                showMessage('Pred exportom XML prosím vyplňte DIČ v sekcii I. Oddiel (alebo v nastaveniach Moja firma).', 'error');
+                return;
             }
 
-            const taxBase = Math.max(0, totalRevenue - totalExpenses - annualInsurance);
+            const healthIns = Number($('inputHealthIns').value || 0);
+            const socialIns = Number($('inputSocialIns').value || 0);
+            const recIco = $('input2PercIco').value.trim();
+            const recName = $('input2PercName').value.trim();
+            const has2Perc = (s.r152 >= 3 && recIco.length > 0) ? 1 : 0;
+            const todayIso = new Date().toISOString().split('T')[0];
 
             const xmlContent = `<?xml version="1.0" encoding="UTF-8"?>
 <dokument xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
     <hlavicka>
-        <dic>${escapeXML(company.dic || '')}</dic>
-        <zaRok>${currentYear}</zaRok>
+        <dic>${escapeXML(dic)}</dic>
+        <zaRok>${escapeXML(s.year)}</zaRok>
         <druhDP>
-            <rdp>1</rdp>
+            <rdp>${rType === 'R' ? 1 : 0}</rdp>
+            <odp>${rType === 'O' ? 1 : 0}</odp>
+            <ddp>${rType === 'D' ? 1 : 0}</ddp>
         </druhDP>
+        <skNace>
+            <k1>${escapeXML($('inputSkNace').value.trim())}</k1>
+        </skNace>
         <fo>
-            <priezvisko>${escapeXML(company.name || '')}</priezvisko>
-            <meno></meno>
-            <titul></titul>
+            <priezvisko>${escapeXML($('inputLastName').value.trim())}</priezvisko>
+            <meno>${escapeXML($('inputFirstName').value.trim())}</meno>
+            <adresaTrvalehoPobytu>
+                <ulica>${escapeXML(c.street || '')}</ulica>
+                <psc>${escapeXML((c.postal_code || '').replace(/\s+/g, ''))}</psc>
+                <obec>${escapeXML(c.city || '')}</obec>
+                <stat>${escapeXML(c.country || 'Slovenská republika')}</stat>
+            </adresaTrvalehoPobytu>
         </fo>
-        <ico>${escapeXML(company.ico || '')}</ico>
+        <ico>${escapeXML(c.ico || '')}</ico>
     </hlavicka>
     <telo>
         <tabulka1>
-            <r01_s1>${totalRevenue.toFixed(2)}</r01_s1>
-            <r01_s2>${totalExpenses.toFixed(2)}</r01_s2>
+            <r02_s1>${s.r37.toFixed(2)}</r02_s1>
+            <r02_s2>${s.r38.toFixed(2)}</r02_s2>
+            <r10_s1>${s.r37.toFixed(2)}</r10_s1>
+            <r10_s2>${s.r38.toFixed(2)}</r10_s2>
         </tabulka1>
-        <uplatnujemPausalneVydavky>${isPausal}</uplatnujemPausalneVydavky>
-        <r37>${totalRevenue.toFixed(2)}</r37>
-        <r38>${totalExpenses.toFixed(2)}</r38>
-        <r39>${annualInsurance.toFixed(2)}</r39>
-        <r41>${taxBase.toFixed(2)}</r41>
+        <uplatnujemPausalneVydavky>${s.mode === 'flat' ? 1 : 0}</uplatnujemPausalneVydavky>
+        <vediemDanovuEvidenciu>${s.mode === 'real' ? 1 : 0}</vediemDanovuEvidenciu>
+        <preukazatelneZaplatenePoistne>
+            <spolu>${s.totalInsurance.toFixed(2)}</spolu>
+            <socialnePoistenie>${socialIns.toFixed(2)}</socialnePoistenie>
+            <zdravotnePoistenie>${healthIns.toFixed(2)}</zdravotnePoistenie>
+        </preukazatelneZaplatenePoistne>
+        <r37>${s.r37.toFixed(2)}</r37>
+        <r38>${s.r38.toFixed(2)}</r38>
+        <r41>${s.r41.toFixed(2)}</r41>
+        <r72>${s.r41.toFixed(2)}</r72>
+        <r73>${s.r73.toFixed(2)}</r73>
+        <r75>${s.r75.toFixed(2)}</r75>
+        <r77>${s.r77.toFixed(2)}</r77>
+        <r80>${s.r80.toFixed(2)}</r80>
+        <r81>${s.r81.toFixed(2)}</r81>
+        <r117>${s.r117.toFixed(2)}</r117>
+        <r123>${s.r123.toFixed(2)}</r123>
+        <r131>${s.r131.toFixed(2)}</r131>
+        <r135>${s.r135.toFixed(2)}</r135>
+        <r136>${s.r136.toFixed(2)}</r136>
+        <oddiel12>
+            <neuplatnujem>${has2Perc ? 0 : 1}</neuplatnujem>
+            <r152>${has2Perc ? s.r152.toFixed(2) : '0.00'}</r152>
+            <prijimatel>
+                <ico>${escapeXML(recIco)}</ico>
+                <obchodneMeno>${escapeXML(recName)}</obchodneMeno>
+            </prijimatel>
+        </oddiel12>
+        <ziadostOVrateniePreplatku>
+            <vratitDanovyPreplatok>${s.r136 > 0 ? 1 : 0}</vratitDanovyPreplatok>
+            <iban>${escapeXML(($('inputIban').value || '').replace(/\s+/g, ''))}</iban>
+        </ziadostOVrateniePreplatku>
+        <datumVyhlasenia>${todayIso}</datumVyhlasenia>
     </telo>
 </dokument>`;
 
             const blob = new Blob([xmlContent], { type: 'application/xml;charset=utf-8;' });
             const link = document.createElement('a');
             link.href = URL.createObjectURL(blob);
-            link.download = `DPFOB_${currentYear}_${company.dic || company.ico || 'zivnost'}.xml`;
+            link.download = `DPFOB_${s.year}_${dic}.xml`;
             link.click();
-        }
-
-        // ==========================================
-        // 2. ČISTÉ A STABILNÉ VYGENEROVANIE PDF PODKLADOV (A4 tlač)
-        // ==========================================
-        function generateOfficialPDF() {
-            if (!globalData) return;
-            const { company, invoices, expenses, trips } = globalData;
-            const currentYear = new Date().getFullYear();
-
-            const totalRevenue = invoices.reduce((sum, i) => sum + Number(i.total || 0), 0);
-            const annualInsurance = (Number(company.health_insurance || 0) + Number(company.social_insurance || 0)) * 12;
-
-            let totalExpenses = 0;
-            if (currentMode === 'flat') {
-                let flat = totalRevenue * 0.60;
-                if (flat > 20000) flat = 20000;
-                totalExpenses = flat;
-            } else {
-                const realExp = expenses.reduce((sum, e) => sum + Number(e.total || 0), 0);
-                const tripsAll = trips.reduce((sum, t) => sum + Number(t.total_allowance || 0), 0);
-                totalExpenses = realExp + tripsAll;
-            }
-            const taxBase = Math.max(0, totalRevenue - totalExpenses - annualInsurance);
-
-            const printWindow = window.open('', '_blank');
-            printWindow.document.write(`
-                <!DOCTYPE html>
-                <html lang="sk">
-                <head>
-                    <meta charset="UTF-8">
-                    <title>Daňové priznanie DPFO typ B - ${currentYear}</title>
-                    <style>
-                        body { font-family: Arial, sans-serif; font-size: 12px; color: #000; padding: 30px; line-height: 1.5; }
-                        h2 { text-align: center; text-transform: uppercase; font-size: 15px; margin-bottom: 5px; }
-                        .subtitle { text-align: center; font-size: 12px; margin-bottom: 25px; color: #444; }
-                        table { width: 100%; border-collapse: collapse; margin-bottom: 20px; }
-                        th, td { border: 1px solid #000; padding: 8px; text-align: left; }
-                        th { background: #f0f0f0; }
-                        .text-right { text-align: right; }
-                        .bold { font-weight: bold; }
-                        .footer { margin-top: 50px; display: flex; justify-content: space-between; }
-                    </style>
-                </head>
-                <body>
-                    <h2>DAŇOVÉ PRIZNANIE K DANI Z PRÍJMOV FYZICKEJ OSOBY (TYP B)</h2>
-                    <div class="subtitle">Za zdaňovacie obdobie rok ${currentYear} — Oficiálne podklady z databázy MyDataPay</div>
-
-                    <table>
-                        <tr>
-                            <td style="width: 30%;"><strong>Daňovník / Firma:</strong></td>
-                            <td>${escapeXML(company.name || '—')}</td>
-                        </tr>
-                        <tr>
-                            <td><strong>IČO / DIČ:</strong></td>
-                            <td>IČO: ${escapeXML(company.ico || '—')} | DIČ: ${escapeXML(company.dic || '—')}</td>
-                        </tr>
-                        <tr>
-                            <td><strong>Zvolený režim výdavkov:</strong></td>
-                            <td>${currentMode === 'flat' ? 'Paušálne výdavky (60%)' : 'Skutočné výdavky (Daňová evidencia)'}</td>
-                        </tr>
-                    </table>
-
-                    <table>
-                        <thead>
-                            <tr>
-                                <th>Označenie / Riadok tlačiva DPFO B</th>
-                                <th class="text-right" style="width: 120px;">Suma v €</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td><strong>Riadok 37</strong> – Príjmy zo živnosti a podnikania (§ 6 ods. 1 a 2)</td>
-                                <td class="text-right bold">${totalRevenue.toFixed(2)} €</td>
-                            </tr>
-                            <tr>
-                                <td><strong>Riadok 38</strong> – Uplatnené výdavky (${currentMode==='flat'?'60% paušál':'reálne výdavky'})</td>
-                                <td class="text-right bold">${totalExpenses.toFixed(2)} €</td>
-                            </tr>
-                            <tr>
-                                <td><strong>Riadok 39</strong> – Zaplatené povinné odvody do ZP a SP</td>
-                                <td class="text-right bold">${annualInsurance.toFixed(2)} €</td>
-                            </tr>
-                            <tr style="background: #eef5fc;">
-                                <td class="bold">Riadok 41 – Čiastkový základ dane z podnikania</td>
-                                <td class="text-right bold" style="color: #052c64; font-size: 14px;">${taxBase.toFixed(2)} €</td>
-                            </tr>
-                        </tbody>
-                    </table>
-
-                    <p style="font-size: 11px; color: #555;">Tento dokument slúži ako verný kontrolný podklad na kontrolu a prepis údajov do formulára na portáli Finančnej správy SR.</p>
-
-                    <div class="footer">
-                        <div>Dátum vyhotovenia: ${new Date().toLocaleDateString('sk-SK')}</div>
-                        <div style="border-top: 1px solid #000; width: 200px; text-align: center; padding-top: 5px;">Podpis daňovníka</div>
-                    </div>
-
-                  <script>
-    window.onload = function() {
-        window.print();
-    };
-<\/script>
-                </body>
-                </html>
-            `);
-            printWindow.document.close();
         }
 
         function escapeXML(str) {
             return String(str || '').replace(/[<>&'"]/g, c => ({ '<':'&lt;', '>':'&gt;', '&':'&amp;', "'":'&apos;', '"':'&quot;' }[c]));
         }
 
+        function round2(num) { return Math.round((Number(num) + Number.EPSILON) * 100) / 100; }
+        function money(val) { return new Intl.NumberFormat('sk-SK', { style: 'currency', currency: 'EUR' }).format(Number(val || 0)); }
+        function showMessage(msg, type) { const m = $('pageMessage'); m.textContent = msg; m.className = `message show message-${type}`; }
+        function showApp() { $('pageLoader').style.display = 'none'; $('app').classList.add('ready'); }
+
         function setupEvents() {
             $('logoutButton').onclick = async () => { await supabaseClient.auth.signOut(); location.replace('login.html'); };
             $('menuButton').onclick = () => { $('sidebar').classList.add('open'); $('sidebarOverlay').classList.add('show'); };
             $('sidebarOverlay').onclick = () => { $('sidebar').classList.remove('open'); $('sidebarOverlay').classList.remove('show'); };
         }
-
-        function money(val) { return new Intl.NumberFormat('sk-SK', { style: 'currency', currency: 'EUR' }).format(Number(val || 0)); }
-        function showMessage(msg, type) { const m = $('pageMessage'); m.textContent = msg; m.className = `message show message-${type}`; }
-        function showApp() { $('pageLoader').style.display = 'none'; $('app').classList.add('ready'); }
     </script>
     <script src="js/mydatapay-navigation.js"></script>
 </body>
