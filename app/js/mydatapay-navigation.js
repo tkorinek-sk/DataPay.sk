@@ -7,9 +7,11 @@
     { section: 'Prehľad', href: 'dashboard.html', icon: '⌂', label: 'Dashboard' },
     { section: 'Fakturácia', href: 'invoices.html', icon: '▤', label: 'Vystavené faktúry' },
     { section: 'Fakturácia', href: 'received-invoices.html', icon: '⇩', label: 'Prijaté faktúry' },
+    { section: 'Fakturácia', href: 'trips.html', icon: '🚗', label: 'Kniha jázd' },
     { section: 'Fakturácia', href: 'invoice-new.html', icon: '＋', label: 'Nová faktúra' },
     { section: 'Fakturácia', href: 'contacts.html', icon: '♙', label: 'Kontakty' },
-    { section: 'Nastavenia', href: 'company.html', icon: '▣', label: 'Moja firma' }
+    { section: 'Dane & Nastavenia', href: 'company.html', icon: '▣', label: 'Moja firma' },
+    { section: 'Dane & Nastavenia', href: 'tax.html', icon: '§', label: 'Daňové priznanie' }
   ];
 
   function buildNavigation(nav) {
