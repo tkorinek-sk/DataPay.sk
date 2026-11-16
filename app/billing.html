@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="sk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aktivácia predplatného | DataPay</title>
+    <meta name="robots" content="noindex, nofollow">
+    <link rel="icon" href="../favicon.png" type="image/png">
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="js/supabase.js"></script>
+    <style>
+        :root{--primary:#052c64;--accent:#397bb8;--border:#e2e8f0;--background:#f4f7fb;--text:#172b4d;--muted:#64748b}
+        *{box-sizing:border-box;margin:0;padding:0}
+        body{min-height:100vh;background:linear-gradient(135deg,#071c35 0%,#052c64 100%);color:var(--text);font-family:Arial,sans-serif;display:flex;align-items:center;justify-content:center;padding:20px}
+        .box{width:min(580px,100%);background:#fff;border-radius:16px;padding:40px;box-shadow:0 20px 40px rgba(0,0,0,0.3);text-align:center}
+        h1{color:var(--primary);font-size:24px;margin-bottom:10px}
+        p{color:var(--muted);font-size:14px;line-height:1.6;margin-bottom:24px}
+        .price-card{background:#f8fafc;border:2px solid var(--border);border-radius:12px;padding:20px;margin-bottom:24px;text-align:left}
+        .price-row{display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;font-size:14px}
+        .price-row:last-child{margin-bottom:0;border-top:1px solid var(--border);padding-top:12px;font-weight:bold;color:var(--primary)}
+        .logout-link{display:inline-block;margin-top:20px;color:var(--muted);font-size:13px;text-decoration:underline}
+    </style>
+</head>
+<body>
+    <div class="box">
+        <h1>Skúšobná doba vypršala</h1>
+        <p>Pre pokračovanie v používaní aplikácie DataPay a prístup k vašim faktúram a účtovníctvu je potrebné uhradiť ročné predplatné.</p>
+
+        <div class="price-card" id="paymentDetails">
+            <div class="price-row"><span>Služba:</span> <strong>DataPay Ročná licencia (Profi)</strong></div>
+            <div class="price-row"><span>Suma k úhrade:</span> <strong style="font-size:18px; color:#059669;">49,00 €</strong></div>
+            <div class="price-row"><span>Bankový účet (IBAN):</span> <strong id="lblIban">SK31 1111 0000 0012 3456 7890</strong></div>
+            <div class="price-row"><span>Variabilný symbol (VS):</span> <strong id="lblVs" style="color:#dc2626; font-size:16px;">Načítavam...</strong></div>
+        </div>
+
+        <p style="font-size:12px;">Akonáhle platbu zaevidujeme na účte, prístup vám automaticky predĺžime na 1 rok. (Zvyčajne do 1 pracovného dňa). Pre rýchlejšie schválenie môžete poslať potvrdenie o úhrade.</p>
+
+        <a href="login.html" class="logout-link" onclick="supabaseClient.auth.signOut()">Odhlásiť sa / Použiť iný účet</a>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', async () => {
+            const { data: { session } } = await supabaseClient.auth.getSession();
+            if (!session) {
+                location.replace('login.html');
+                return;
+            }
+
+            // Načítame variabilný symbol danej firmy
+            const { data: member } = await supabaseClient
+                .from('company_members')
+                .select('company_id, companies(variable_symbol, subscription_status, current_period_end)')
+                .eq('user_id', session.user.id)
+                .single();
+
+            if (member && member.companies) {
+                const comp = member.companies;
+                
+                // Ak má už medzitým zaplatené, pustíme ho do aplikácie
+                const now = new Date();
+                const subEnd = comp.current_period_end ? new Date(comp.current_period_end) : null;
+                if (comp.subscription_status === 'active' && subEnd && subEnd > now) {
+                    location.replace('dashboard.html');
+                    return;
+                }
+
+                document.getElementById('lblVs').textContent = comp.variable_symbol || 'Neuvedený';
+            }
+        });
+    </script>
+</body>
+</html>
